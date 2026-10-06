@@ -44,10 +44,11 @@ Copyright 2015 Google Inc. All Rights Reserved.
 Roboto is a trademark of Google.
 ```
 
-All six bundled decoder fonts use this base. They are modified derivatives
-under Apache License 2.0, with distinct decoder family names. Michael Brackx
-added decoder glyphs and OpenType substitution rules in 2026. Their embedded
-metadata preserves Google’s copyright, trademark, and license records and
-identifies these modifications and Michael Brackx’s copyright.
+All six bundled decoder fonts and the multi-format validator font use this
+base. They are modified derivatives under Apache License 2.0, with distinct
+family names. Michael Brackx added decoder and validator glyphs and OpenType
+substitution rules in 2026. Their embedded metadata preserves Google’s
+copyright, trademark, and license records and identifies these modifications
+and Michael Brackx’s copyright.
 
 The Snake fonts use original geometric outlines and do not incorporate Roboto.

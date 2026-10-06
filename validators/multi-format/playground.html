@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Multi-format validator — computational fonts</title>
+<style>
+@font-face { font-family: Validator; src: url('./validator-font.ttf?v=bounded-inline-color-symbols-1') format('truetype'); }
+:root { color-scheme: light dark; --border: #8886; --muted: #8882; }
+* { box-sizing: border-box; }
+body { margin: 0 auto; max-width: 960px; padding: 3rem 1.5rem; font: 16px/1.55 system-ui, sans-serif; }
+h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; margin: .6rem 0 1rem; }
+.eyebrow { letter-spacing: .12em; font-size: .75rem; text-transform: uppercase; }
+.intro { max-width: 700px; }
+.controls { display: flex; flex-wrap: wrap; gap: .75rem; align-items: center; margin: 2rem 0 1rem; }
+button, select { font: inherit; padding: .6rem .85rem; border: 1px solid var(--border); border-radius: .5rem; background: var(--muted); color: inherit; }
+button { cursor: pointer; }
+textarea { width: 100%; margin-top: .5rem; resize: vertical; min-height: 6rem; border: 1px solid var(--border); border-radius: .6rem; padding: 1rem; font: 16px/1.5 ui-monospace, monospace; background: transparent; color: inherit; }
+.result { border: 1px solid var(--border); border-radius: .6rem; padding: 1.25rem; margin: 1.25rem 0; }
+.preview { font: 38px/1.6 Validator; font-feature-settings: 'liga' 1, 'kern' 0; font-variant-ligatures: common-ligatures; white-space: pre; overflow-x: auto; min-height: 4rem; }
+.preview[hidden] { display: none; }
+.legend { display: grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap: 1rem; margin: 2rem 0; }
+.legend p { margin: .3rem 0; }
+small, .note { opacity: .8; }
+code { font-family: ui-monospace, monospace; }
+a { color: inherit; }
+</style>
+</head>
+<body>
+<div class="eyebrow">Computational fonts / Validators</div>
+<h1>A font that checks what you type.</h1>
+<p class="intro">Choose an example or enter an identifier below. The font preserves the value and adds its validation result. Finish a request with <code>?</code>.</p>
+<div class="controls">
+  <label for="format">Example</label>
+  <select id="format"></select>
+  <button id="load" type="button">Load example</button>
+  <button id="reset" type="button">Clear</button>
+</div>
+<label for="source"><strong>Underlying text</strong></label>
+<textarea id="source" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax"></textarea>
+<small id="syntax">Syntax: <code>format:value?</code>. Keep each request on one line. Passport MRZ uses <code>|</code> between its two lines.</small>
+<div class="result">
+  <strong>Font-rendered value and result</strong>
+  <p id="loading" role="status">Loading validator font…</p>
+  <div id="preview" class="preview" hidden aria-label="Value and visual result drawn by the validator font"></div>
+</div>
+<div class="legend">
+  <div><strong>✓ Valid</strong><p>Format and checksum pass. UUIDs and dates have structural checks only.</p></div>
+  <div><strong>✗ Invalid</strong><p>The format, calendar date, or checksum is incorrect.</p></div>
+  <div><strong>No result yet</strong><p>The value stays visible while you type. Add <code>?</code> to evaluate it.</p></div>
+</div>
+<p class="note">A passing identifier does not confirm registration, ownership, account existence, or passport authenticity. The result is visual: copying it preserves the underlying request.</p>
+<p><a href="./readme.md">Supported formats, rules, and build notes</a> · <a href="../../readme.md">Project readme</a></p>
+<script>
+const examples = {
+  iban: ['IBAN', 'BE68539007547034'],
+  isbn: ['ISBN-13', '978-0-306-40615-7'],
+  gtin: ['GTIN / EAN / UPC', '4006381333931'],
+  gln: ['GLN — locations', '9506000140445'],
+  sscc: ['SSCC — shipping units', '106141411234567897'],
+  issn: ['ISSN — journals', '0317-8471'],
+  orcid: ['ORCID — researchers', '0000-0002-1825-0097'],
+  imei: ['IMEI — mobile devices', '490154203237518'],
+  rf: ['RF creditor reference', 'RF541234'],
+  ogm: ['Belgian OGM / VCS', '+++123/4567/89002+++'],
+  lei: ['LEI — legal entities', '5493001KJTIIGC8Y1R12'],
+  isin: ['ISIN — securities', 'US0378331005'],
+  uuid4: ['UUID version 4', '550e8400-e29b-41d4-a716-446655440000'],
+  uuid7: ['UUID version 7', '019069c9-7c48-7cc2-9f00-0b58ae76e2f4'],
+  date: ['Calendar date', '2024-02-29'],
+  mrz: ['Passport MRZ — TD3', 'P<UTOERIKSSON<<ANNA<MARIA<<<<<<<<<<<<<<<<<<<|L898902C36UTO7408122F1204159ZE184226B<<<<<10']
+};
+const source = document.getElementById('source');
+const preview = document.getElementById('preview');
+const format = document.getElementById('format');
+for (const [mode, [label]] of Object.entries(examples)) {
+  const option = document.createElement('option');
+  option.value = mode;
+  option.textContent = label;
+  format.appendChild(option);
+}
+function render() { preview.textContent = source.value; }
+function loadExample() {
+  source.value = `${format.value}:${examples[format.value][1]}?`;
+  render();
+}
+source.addEventListener('input', render);
+format.addEventListener('change', loadExample);
+document.getElementById('load').addEventListener('click', loadExample);
+document.getElementById('reset').addEventListener('click', () => { source.value = ''; render(); source.focus(); });
+loadExample();
+document.fonts.load('38px Validator').then(fonts => {
+  if (!fonts.length) throw new Error('Font unavailable');
+  document.getElementById('loading').hidden = true;
+  preview.hidden = false;
+}).catch(() => {
+  document.getElementById('loading').textContent = 'The font could not load. Serve the project with python3 -m http.server 8000 and open this page through localhost.';
+});
+</script>
+</body>
+</html>

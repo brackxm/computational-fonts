@@ -1,8 +1,9 @@
 # computational-fonts
 
 Experiments that use fonts as computation rather than only presentation.
-This project combines classical-cipher decoders and Snake games implemented
-with OpenType shaping, substitutions, ligatures, and glyph composition.
+This project combines classical-cipher decoders, Snake games, and identifier
+validators implemented with OpenType shaping, substitutions, ligatures, and
+glyph composition.
 
 ## Projects
 
@@ -16,6 +17,7 @@ with OpenType shaping, substitutions, ligatures, and glyph composition.
 | [Lorenz SZ40/SZ42](decoders/lorenz-static/) | static decoder | machine/wheel settings baked into font |
 | [Snake — dynamic board](games/snake-dynamic/) | game prototype | `10x5b` builds a board; append `w`, `a`, `s`, and `d` to move |
 | [Snake — fixed board](games/snake-fixed/) | game prototype | fixed 20×11 board by default; `b` starts; WASD or `2`, `4`, `8`, `6` moves |
+| [Multi-format validator](validators/multi-format/) | dynamic validator | `format:value?`; 16 formats including IBAN, ISBN, ORCID, payment references, dates, UUIDs, and passport MRZ |
 
 Each project folder includes a `build.py` font generator, a bundled `.ttf`,
 a `playground.html` browser demo, and a `readme.md` with usage and build notes.
@@ -42,6 +44,9 @@ games/
     test_snake_controls.cjs
   snake-dynamic/
   snake-fixed/
+validators/
+  multi-format/
+    iban_registry.json
 ```
 
 ## Running a playground
@@ -57,6 +62,7 @@ Then open a demo, for example:
 - Dynamic-board Snake: <http://localhost:8000/games/snake-dynamic/playground.html>
 - Fixed-board Snake: <http://localhost:8000/games/snake-fixed/playground.html>
 - Vigenère: <http://localhost:8000/decoders/vigenere-dynamic/playground.html>
+- Validator: <http://localhost:8000/validators/multi-format/playground.html>
 
 ## Building fonts
 
@@ -90,9 +96,13 @@ cd games/snake-dynamic
 python3 build.py
 ```
 
-The bundled decoder fonts use Roboto outlines under Apache License 2.0.
-Each generated font retains Google’s copyright and identifies the decoder
-modifications by Michael Brackx. A custom base may require different terms.
+Build the multi-format validator demo with `python3 validators/multi-format/build.py --color`.
+It uses the bundled Roboto base and a checked-in SWIFT IBAN registry snapshot;
+validation executes in the font. See its readme for the supported rules.
+
+The bundled decoder and validator fonts use Roboto outlines under Apache
+License 2.0. Each generated font retains Google’s copyright and identifies
+the modifications by Michael Brackx. A custom base may require different terms.
 
 ## Tests
 
@@ -128,7 +138,22 @@ loss/win signals, and safe imports. The fixed suite also covers custom sizes,
 growth, collisions, food placement, and move limits. Node.js and `hb-shape`
 are required for the shared control checks.
 
+Run the validator suite with:
+
+```bash
+python3 -m unittest discover -s validators/multi-format -p 'test_*.py' -v
+```
+
+It checks fresh and bundled fonts with HarfBuzz, all 89 IBAN registry examples,
+the other 15 formats, checksum mutations, malformed input, and incomplete runs.
+
 ## Limitations
+
+Validator results establish only the implemented structure and checksum checks.
+They do not establish registration, account existence, ownership, or document
+authenticity. Keep requests in one shaping run with standard ligatures enabled;
+copying a visual verdict preserves its underlying request. See the validator
+readme for format-specific coverage and shaping limits.
 
 The decoders are computational/display fonts, not cryptographic security
 tools. Copying, searching, accessibility APIs, or software that bypasses
@@ -154,7 +179,7 @@ through ChatGPT and Codex.
 ## License
 
 Licensed under the Apache License 2.0. See [`LICENSE`](LICENSE).
-The bundled Roboto base and generated decoder fonts are also Apache-2.0;
+The bundled Roboto base and generated decoder and validator fonts are also Apache-2.0;
 Snake fonts use original outlines. Google’s font attribution and the required
 original MIT notice for imported decoder code are retained in
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
