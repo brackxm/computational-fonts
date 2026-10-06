@@ -1,0 +1,36 @@
+.controls {
+  display: grid;
+  grid-template-columns: repeat(3, 64px);
+  grid-template-areas: ". up ." "left down right";
+  gap: 8px;
+  width: max-content;
+  margin: 24px auto;
+}
+.controls [data-m="w"] { grid-area: up; }
+.controls [data-m="a"] { grid-area: left; }
+.controls [data-m="s"] { grid-area: down; }
+.controls [data-m="d"] { grid-area: right; }
+.controls button {
+  box-sizing: border-box;
+  width: 64px;
+  height: 64px;
+  padding: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font: inherit;
+  line-height: 1;
+  cursor: pointer;
+  border: 1px solid #666;
+  border-radius: 8px;
+  background: #fff;
+  color: #222;
+}
+.controls button span { font-size: 24px; }
+.controls button small { font-size: 12px; white-space: nowrap; }
+.controls button:hover { background: #eee; }
+.controls button:focus-visible { outline: 3px solid #444; outline-offset: 3px; }
+.controls button:disabled { opacity: .5; cursor: default; }
+.controls button:disabled:hover { background: #fff; }

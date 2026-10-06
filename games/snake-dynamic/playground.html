@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Snake — dynamic board</title>
+<link rel="stylesheet" href="../shared/snake-controls.css">
+<style>
+@font-face{font-family:SnakeDynamic;src:url('./snake-dynamic-font.ttf?v=6.3') format('truetype');font-display:block}
+:root{font-family:system-ui,sans-serif;color-scheme:light dark}body{max-width:900px;margin:40px auto;padding:0 20px}h1{margin-bottom:.2em}.muted{opacity:.7}.row{display:flex;gap:12px;align-items:end;flex-wrap:wrap}label{display:grid;gap:4px}input{font:inherit;padding:7px;width:90px}.board{margin:24px 0;min-height:360px;border:1px solid #8885;border-radius:12px;padding:24px;display:flex;align-items:center;justify-content:center;background:#fff;color:#000}
+.board-view{display:block;width:var(--board-width,640px);max-width:100%;height:auto;max-height:560px}
+.snake{font-family:SnakeDynamic;font-feature-settings:"liga" 1;font-variant-ligatures:common-ligatures;font-size:1000px;fill:currentColor;white-space:pre}
+button{font:inherit;padding:9px 14px;cursor:pointer}code{word-break:break-all}kbd{border:1px solid #8888;border-bottom-width:2px;border-radius:4px;padding:1px 5px}.warn{font-size:.9rem;opacity:.75}
+</style>
+</head>
+<body>
+<h1>Snake · dynamic board</h1>
+<p class="muted">The font's GSUB rules construct and update the board. Undo returns to the previous move.</p>
+<div class="row">
+<label>Width<input id="w" type="number" min="4" max="10" value="10"></label>
+<label>Height<input id="h" type="number" min="4" max="10" value="5"></label>
+<button id="build">Build / reset</button><button id="undo">Undo</button>
+</div>
+<div class="board">
+  <svg id="board-view" class="board-view" viewBox="0 0 1500 800" role="img" aria-label="Snake board">
+    <text id="snake" class="snake" x="0" y="800"></text>
+  </svg>
+</div>
+<div class="controls" aria-label="Movement controls">
+  <button type="button" data-m="w" aria-label="Move up"><span aria-hidden="true">↑</span><small aria-hidden="true">W · 2</small></button>
+  <button type="button" data-m="a" aria-label="Move left"><span aria-hidden="true">←</span><small aria-hidden="true">A · 4</small></button>
+  <button type="button" data-m="s" aria-label="Move down"><span aria-hidden="true">↓</span><small aria-hidden="true">S · 8</small></button>
+  <button type="button" data-m="d" aria-label="Move right"><span aria-hidden="true">→</span><small aria-hidden="true">D · 6</small></button>
+</div>
+<p>Raw text: <code id="raw"></code></p>
+<p id="game-status" role="status">Loading game font…</p>
+<p class="warn">Keyboard: arrow keys, WASD, or keypad digits <strong>2 / 4 / 6 / 8</strong>. This build evaluates up to 8 moves after <code>b</code>.</p>
+<script src="../shared/snake-controls.js"></script>
+<script>
+const s=document.querySelector('#snake'),raw=document.querySelector('#raw');
+const game=createSnakeSession({
+  fontFamily:'SnakeDynamic',maxMoves:8,
+  statusElement:document.querySelector('#game-status'),
+  onRender(text){s.textContent=text;raw.textContent=text;},
+});
+function dimension(selector,fallback){const value=Number(document.querySelector(selector).value);return Number.isFinite(value)?Math.max(4,Math.min(10,Math.round(value))):fallback}
+function build(){
+  const w=dimension('#w',10),h=dimension('#h',5);
+  document.querySelector('#w').value=w;document.querySelector('#h').value=h;
+  // SVG reserves the actual board area: the font's glyphs have zero advance.
+  // Its coordinate space also leaves room above the grid for the winning crown.
+  const view=document.querySelector('#board-view'),boardHeight=h*150+50;
+  view.setAttribute('viewBox',`0 0 ${w*150} ${boardHeight}`);
+  view.style.setProperty('--board-width',`${w*64}px`);
+  s.setAttribute('y',boardHeight);
+  game.reset(`${w}x${h}b`);
+}
+document.querySelector('#build').onclick=build;document.querySelector('#undo').onclick=game.undo;
+bindSnakeControls(game.move);
+build();
+</script>
+</body>
+</html>

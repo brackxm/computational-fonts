@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Snake — fixed 20×11 board</title>
+<link rel="stylesheet" href="../shared/snake-controls.css">
+<style>
+@font-face{font-family:SnakeFixed;src:url('./snake-fixed-font.ttf?v=3.1') format('truetype');font-display:block}
+*{box-sizing:border-box}
+:root{font-family:system-ui,sans-serif;color:#222;background:#f7f7f7}
+body{max-width:800px;margin:48px auto;padding:0 20px}
+h1{margin-bottom:8px;font-size:clamp(26px,5vw,38px)}
+p{line-height:1.5}.muted{color:#595959}
+.lcd{margin:28px 0;padding:24px 12px;background:#fff;border:10px solid #333;border-radius:14px;display:grid;place-items:center;min-height:220px;box-shadow:inset 0 0 18px #0000001a}
+.snake{font-family:SnakeFixed;font-feature-settings:"liga" 1,"kern" 0;font-variant-ligatures:common-ligatures;font-size:clamp(100px,34vw,220px);line-height:1.3;white-space:nowrap;color:#222}
+button{font:inherit;cursor:pointer;border:1px solid #666;border-radius:8px;padding:10px 16px;background:#fff;color:inherit}
+button:hover{background:#eee}button:focus-visible{outline:3px solid #444;outline-offset:3px}
+.toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.toolbar span{margin-left:auto;font-variant-numeric:tabular-nums}
+code{font-family:ui-monospace,monospace;overflow-wrap:anywhere}
+.raw{padding:12px;border:1px solid #ccc;border-radius:8px;min-height:48px}
+a{color:#333}.help{font-size:14px;color:#595959}
+</style>
+</head>
+<body>
+<h1>Snake · 20×11</h1>
+<p class="muted">A 20×11 board with its size fixed inside the font.</p>
+<div class="lcd"><div id="snake" class="snake" aria-label="Font-rendered Snake board"></div></div>
+<div class="toolbar">
+  <button id="reset" type="button">New game</button>
+  <button id="undo" type="button">Undo</button>
+  <span id="count">0 / 128 moves</span>
+</div>
+<div class="controls" aria-label="Movement controls">
+  <button type="button" data-m="w" aria-label="Move up"><span aria-hidden="true">↑</span><small aria-hidden="true">W · 2</small></button>
+  <button type="button" data-m="a" aria-label="Move left"><span aria-hidden="true">←</span><small aria-hidden="true">A · 4</small></button>
+  <button type="button" data-m="s" aria-label="Move down"><span aria-hidden="true">↓</span><small aria-hidden="true">S · 8</small></button>
+  <button type="button" data-m="d" aria-label="Move right"><span aria-hidden="true">→</span><small aria-hidden="true">D · 6</small></button>
+</div>
+<p>Use the arrow keys, WASD, or the keypad digits <strong>2 / 4 / 6 / 8</strong>.</p>
+<p class="help">Collect all eight food targets. Each pickup grows the snake
+and places the next food along a fixed circuit inside the walls. If its cell
+is occupied, food waits until the snake clears it. A crown marks
+the final win; an X marks a wall collision, reversal, or body collision.
+This build evaluates up to 128 moves. Undo lets you recover from a mistake.</p>
+<p><strong>Underlying text</strong></p>
+<div class="raw"><code id="raw"></code></div>
+<p id="game-status" class="help" role="status">Loading game font…</p>
+<p class="help"><a href="../snake-dynamic/playground.html">Dynamic-board Snake</a> ·
+<a href="readme.md">Build and usage notes</a></p>
+<script src="../shared/snake-controls.js"></script>
+<script>
+const maxMoves = 128;
+const board = document.querySelector('#snake');
+const raw = document.querySelector('#raw');
+const count = document.querySelector('#count');
+const game = createSnakeSession({
+  fontFamily: 'SnakeFixed', maxMoves,
+  statusElement: document.querySelector('#game-status'),
+  onRender(text, moveCount) {
+    board.textContent = text; raw.textContent = text;
+    count.textContent = `${moveCount} / ${maxMoves} moves`;
+  },
+});
+document.querySelector('#reset').onclick = () => game.reset('b', 2000);
+document.querySelector('#undo').onclick = game.undo;
+bindSnakeControls(game.move);
+game.reset('b', 2000);
+</script>
+</body>
+</html>
