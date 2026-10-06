@@ -51,4 +51,5 @@ substitution rules in 2026. Their embedded metadata preserves Google’s
 copyright, trademark, and license records and identifies these modifications
 and Michael Brackx’s copyright.
 
-The Snake fonts use original geometric outlines and do not incorporate Roboto.
+The Snake and turtle graphics fonts use original geometric outlines and do not
+incorporate Roboto.

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Turtle graphics · computational fonts</title>
+<style>
+@font-face{font-family:TurtleGraphics;src:url('./turtle-font.ttf?v=1.1') format('truetype');font-display:block}
+:root{font-family:system-ui,sans-serif;color-scheme:light dark}body{max-width:960px;margin:40px auto;padding:0 20px}h1{margin-bottom:.2em}.muted{opacity:.7}button,select,textarea{font:inherit}button,select{padding:9px 14px}button{cursor:pointer}button:disabled{cursor:default}textarea{box-sizing:border-box;width:100%;padding:12px;font-family:ui-monospace,monospace;resize:vertical}.row,.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.row{margin:16px 0}label{display:block;margin-bottom:6px}.board{margin:24px 0;border:1px solid #8885;border-radius:12px;padding:16px;background:#fff;color:#173f39}.board svg{display:block;width:100%;max-height:580px}.turtle{font-family:TurtleGraphics;font-feature-settings:"liga" 1,"kern" 0;font-variant-ligatures:common-ligatures;font-kerning:none;font-size:1000px;fill:currentColor;white-space:pre}code{word-break:break-all}kbd{border:1px solid #8888;border-bottom-width:2px;border-radius:4px;padding:1px 5px}.legend{line-height:1.8}.probe-holder{position:fixed;top:0;left:0;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none}.probe{display:inline-block;width:max-content;white-space:pre;font:1000px/1 TurtleGraphics;font-feature-settings:"liga" 1,"kern" 0;font-kerning:none;letter-spacing:normal;word-spacing:normal}
+</style>
+<style>
+.swatch{display:inline-block;width:.8em;height:.8em;border-radius:50%;background:var(--pen-color);margin-right:.4em;border:1px solid #8885}.colors{margin-top:12px}
+</style>
+</head>
+<body>
+<h1>Turtle graphics</h1>
+<p class="muted">The font executes the commands and draws the path. Start at the center facing east, with the pen down.</p>
+<div class="row">
+  <label for="example">Example</label>
+  <select id="example"><option value="colors" selected>Colorful square</option><option value="square">Square</option><option value="spiral">Spiral</option><option value="stairs">Staircase</option><option value="gap">Pen-up gap</option></select>
+  <button id="load-example" type="button">Load example</button>
+  <button id="reset" type="button">Clear / reset</button>
+  <button id="undo" type="button">Undo</button>
+</div>
+<label for="program">Commands <span id="count" class="muted"></span></label>
+<textarea id="program" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="legend status colors-legend">1ffffl 2ffffl 3ffffl 5ffffl</textarea>
+<div class="board">
+  <svg viewBox="-20 -20 2140 2140" role="img" aria-label="Turtle drawing on a 21 by 21 canvas">
+    <text id="drawing" class="turtle" x="0" y="2100"></text>
+  </svg>
+</div>
+<div class="controls" aria-label="Turtle controls">
+  <button type="button" data-command="f">Forward · F</button>
+  <button type="button" data-command="l">Turn left · L</button>
+  <button type="button" data-command="r">Turn right · R</button>
+  <button type="button" data-command="u">Pen up · U</button>
+  <button type="button" data-command="d">Pen down · D</button>
+</div>
+<div class="controls colors" aria-label="Pen colors">
+  <button type="button" data-command="0"><span class="swatch" style="--pen-color:#173f39" aria-hidden="true"></span>Ink · 0</button>
+  <button type="button" data-command="1"><span class="swatch" style="--pen-color:#d64045" aria-hidden="true"></span>Red · 1</button>
+  <button type="button" data-command="2"><span class="swatch" style="--pen-color:#2563eb" aria-hidden="true"></span>Blue · 2</button>
+  <button type="button" data-command="3"><span class="swatch" style="--pen-color:#168047" aria-hidden="true"></span>Green · 3</button>
+  <button type="button" data-command="4"><span class="swatch" style="--pen-color:#d97706" aria-hidden="true"></span>Orange · 4</button>
+  <button type="button" data-command="5"><span class="swatch" style="--pen-color:#9333ea" aria-hidden="true"></span>Purple · 5</button>
+</div>
+<p id="status" role="status">Loading turtle font…</p>
+<p id="legend" class="legend"><kbd>F</kbd> moves one cell. <kbd>L</kbd> / <kbd>R</kbd> turn 90°. <kbd>U</kbd> / <kbd>D</kbd> lift or lower the pen. A filled triangle means pen down; a hollow triangle means pen up. An X marks the canvas boundary.</p>
+<p id="colors-legend">Choose a pen color with <kbd>0</kbd>–<kbd>5</kbd> or the buttons. New strokes use that color; existing strokes keep theirs. The turtle marker shows the active color. Color changes count toward the command limit.</p>
+<p class="muted">Type commands above or use the buttons and keyboard. Spaces, line breaks, and uppercase are accepted. The font evaluates up to 128 commands in one text run. Undo restores the previous drawing.</p>
+<p>Font input: <code id="raw"></code></p>
+<script src="turtle-controls.js"></script>
+<script>createTurtlePlayground();</script>
+</body>
+</html>

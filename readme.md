@@ -1,9 +1,9 @@
 # computational-fonts
 
 Experiments that use fonts as computation rather than only presentation.
-This project combines classical-cipher decoders, Snake games, and identifier
-validators implemented with OpenType shaping, substitutions, ligatures, and
-glyph composition.
+This project combines classical-cipher decoders, Snake games, turtle graphics,
+and identifier validators implemented with OpenType shaping, substitutions,
+ligatures, and glyph composition.
 
 ## Projects
 
@@ -17,6 +17,7 @@ glyph composition.
 | [Lorenz SZ40/SZ42](decoders/lorenz-static/) | static decoder | machine/wheel settings baked into font |
 | [Snake — dynamic board](games/snake-dynamic/) | game prototype | `10x5b` builds a board; append `w`, `a`, `s`, and `d` to move |
 | [Snake — fixed board](games/snake-fixed/) | game prototype | fixed 20×11 board by default; `b` starts; WASD or `2`, `4`, `8`, `6` moves |
+| [Turtle graphics](graphics/turtle/) | drawing interpreter | `b` starts; `f`, `l`, `r`, `u`, `d` move, turn, and control the pen; `0`–`5` select colors |
 | [Multi-format validator](validators/multi-format/) | dynamic validator | `format:value?`; 16 formats including IBAN, ISBN, ORCID, payment references, dates, UUIDs, and passport MRZ |
 
 Each project folder includes a `build.py` font generator, a bundled `.ttf`,
@@ -44,6 +45,8 @@ games/
     test_snake_controls.cjs
   snake-dynamic/
   snake-fixed/
+graphics/
+  turtle/
 validators/
   multi-format/
     iban_registry.json
@@ -62,6 +65,7 @@ Then open a demo, for example:
 - Dynamic-board Snake: <http://localhost:8000/games/snake-dynamic/playground.html>
 - Fixed-board Snake: <http://localhost:8000/games/snake-fixed/playground.html>
 - Vigenère: <http://localhost:8000/decoders/vigenere-dynamic/playground.html>
+- Turtle graphics: <http://localhost:8000/graphics/turtle/playground.html>
 - Validator: <http://localhost:8000/validators/multi-format/playground.html>
 
 ## Building fonts
@@ -95,6 +99,15 @@ For dynamic-board Snake:
 cd games/snake-dynamic
 python3 build.py
 ```
+
+For turtle graphics (21×21 canvas by default):
+
+```bash
+python3 graphics/turtle/build.py
+```
+
+Use `--size WIDTHxHEIGHT` to build a custom turtle canvas; each dimension
+must be between 3 and 25. See its [readme](graphics/turtle/readme.md) for details.
 
 Build the multi-format validator demo with `python3 validators/multi-format/build.py --color`.
 It uses the bundled Roboto base and a checked-in SWIFT IBAN registry snapshot;
@@ -138,6 +151,17 @@ loss/win signals, and safe imports. The fixed suite also covers custom sizes,
 growth, collisions, food placement, and move limits. Node.js and `hb-shape`
 are required for the shared control checks.
 
+Run the turtle font and playground checks:
+
+```bash
+python3 -m unittest discover -s graphics/turtle -p 'test_*.py' -v
+node graphics/turtle/test_turtle_controls.cjs
+```
+
+These verify paths against an independent interpreter, turns, pen state,
+boundaries, command limits, custom canvas builds, and playground controls.
+FontTools is required; shaping checks require `hb-shape`.
+
 Run the validator suite with:
 
 ```bash
@@ -171,6 +195,11 @@ targets. Walls, reversals, and body collisions end the game.
 Food waits if its next cell is occupied. Both playgrounds stop accepting moves
 after a win, loss, or their move limit, and Undo restores the previous position.
 
+[Turtle graphics](graphics/turtle/) uses single-cell steps and 90° turns on a
+fixed canvas, six pen colors, and up to 128 commands. A boundary stops execution;
+pen-up moves leave no strokes. It requires `liga` and one uninterrupted
+left-to-right run.
+
 ## AI disclosure
 
 This project includes work developed with assistance from OpenAI GPT models
@@ -179,7 +208,8 @@ through ChatGPT and Codex.
 ## License
 
 Licensed under the Apache License 2.0. See [`LICENSE`](LICENSE).
-The bundled Roboto base and generated decoder and validator fonts are also Apache-2.0;
-Snake fonts use original outlines. Google’s font attribution and the required
-original MIT notice for imported decoder code are retained in
+The bundled Roboto base and generated decoder and validator fonts are also
+Apache-2.0; Snake and turtle fonts use original outlines. Google’s font
+attribution and the required original MIT notice for imported decoder code
+are retained in
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
