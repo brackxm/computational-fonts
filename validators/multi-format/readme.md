@@ -4,6 +4,13 @@ A single computational OpenType font checks 16 formats. Python generates the
 rules at build time; **the font performs validation at shaping time**. The
 playground's JavaScript only selects examples and copies input into the preview.
 
+## Editable document
+
+Open [validator.odt](validator.odt) in LibreOffice Writer. It embeds the font
+and shows the same editable sample text in an ordinary font and in this
+computational font. Follow the document's "Try it" instructions to change
+the result directly in the text.
+
 ## Usage
 
 Enter a complete request as `format:value?`, with standard ligatures (`liga`)

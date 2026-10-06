@@ -4,6 +4,13 @@
 
 Lorenz SZ40/SZ42 teleprinter decoding with wheel state baked into the font.
 
+## Editable document
+
+Open [lorenz-static.odt](lorenz-static.odt) in LibreOffice Writer. It embeds the font
+and shows the same editable sample text in an ordinary font and in this
+computational font. Follow the document's "Try it" instructions to change
+the result directly in the text.
+
 ## Bundled example
 
 Underlying text:

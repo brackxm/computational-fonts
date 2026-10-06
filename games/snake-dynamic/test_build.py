@@ -91,6 +91,7 @@ class DynamicSnakeTests(unittest.TestCase):
             with self.subTest(font=path), TTFont(path) as font:
                 self.assertEqual(font["name"].getDebugName(0), "Copyright 2026 Michael Brackx")
                 self.assertIn("Apache License, Version 2.0", font["name"].getDebugName(13))
+                self.assertEqual(font["OS/2"].fsType, 0, "Allow editable document embedding")
                 for name in font.getGlyphOrder():
                     glyph = font["glyf"][name]
                     if glyph.numberOfContours:

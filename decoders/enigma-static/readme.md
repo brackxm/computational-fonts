@@ -4,6 +4,13 @@
 
 A fixed-key historical Enigma-I decoder implemented as an OpenType state machine.
 
+## Editable document
+
+Open [enigma-static.odt](enigma-static.odt) in LibreOffice Writer. It embeds the font
+and shows the same editable sample text in an ordinary font and in this
+computational font. Follow the document's "Try it" instructions to change
+the result directly in the text.
+
 ## Bundled example
 
 Underlying text:

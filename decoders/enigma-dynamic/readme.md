@@ -4,6 +4,13 @@
 
 Runtime Enigma rotor order, starting positions and Ringstellung; plugboard supplied to build.py.
 
+## Editable document
+
+Open [enigma-dynamic.odt](enigma-dynamic.odt) in LibreOffice Writer. It embeds the font
+and shows the same editable sample text in an ordinary font and in this
+computational font. Follow the document's "Try it" instructions to change
+the result directly in the text.
+
 ## Bundled example
 
 Underlying text:

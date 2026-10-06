@@ -104,6 +104,7 @@ class TurtleTests(unittest.TestCase):
                 self.assertEqual(font["name"].getDebugName(0), "Copyright 2026 Michael Brackx")
                 self.assertIn("Apache License, Version 2.0", font["name"].getDebugName(13))
                 self.assertEqual(font["name"].getDebugName(14), "https://www.apache.org/licenses/LICENSE-2.0")
+                self.assertEqual(font["OS/2"].fsType, 0, "Allow editable document embedding")
                 for name in font.getGlyphOrder():
                     glyph = font["glyf"][name]
                     if not glyph.numberOfContours:

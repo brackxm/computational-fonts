@@ -35,6 +35,7 @@ class SnakeBuildTests(unittest.TestCase):
         with TTFont(Path(__file__).with_name("snake-fixed-font.ttf")) as font:
             self.assertEqual(font["name"].getDebugName(0), "Copyright 2026 Michael Brackx")
             self.assertIn("Apache License, Version 2.0", font["name"].getDebugName(13))
+            self.assertEqual(font["OS/2"].fsType, 0, "Allow editable document embedding")
             for name in font.getGlyphOrder():
                 glyph = font["glyf"][name]
                 if glyph.numberOfContours:
@@ -66,6 +67,7 @@ class SnakeBuildTests(unittest.TestCase):
                             "--output", str(explicit)], check=True, capture_output=True)
             with TTFont(explicit) as font:
                 self.assertEqual(font["name"].getDebugName(16), "Snake Fixed 16x10")
+                self.assertEqual(font["OS/2"].fsType, 0)
             for value in ("20", "20x11.5", "3x11", "20x0", "132x1", "64x64", "33x32"):
                 result = subprocess.run([sys.executable, str(script), "--size", value,
                                          "--output", str(root / "invalid.ttf")],

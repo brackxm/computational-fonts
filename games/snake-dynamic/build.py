@@ -218,7 +218,8 @@ def build_font(output):
         'licenseDescription': 'Licensed under the Apache License, Version 2.0',
         'licenseInfoURL': 'https://www.apache.org/licenses/LICENSE-2.0',
     })
-    fb.setupOS2(sTypoAscender=MAX_ASC, sTypoDescender=-100, usWinAscent=MAX_ASC, usWinDescent=100)
+    fb.setupOS2(sTypoAscender=MAX_ASC, sTypoDescender=-100,
+                usWinAscent=MAX_ASC, usWinDescent=100, fsType=0)
     fb.setupPost()
     fb.setupMaxp()
     font = fb.font

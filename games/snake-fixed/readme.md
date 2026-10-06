@@ -4,6 +4,13 @@ A second computational OpenType Snake prototype, with the board size baked
 into its font: **20 columns × 11 rows (220 cells)** by default.
 Choose a different size when building the font.
 
+## Editable document
+
+Open [snake-fixed.odt](snake-fixed.odt) in LibreOffice Writer. It embeds the font
+and shows the same editable sample text in an ordinary font and in this
+computational font. Follow the document's "Try it" instructions to change
+the result directly in the text.
+
 ## Usage
 
 Start the board with `b`. Append `w`, `a`, `s`, and `d` to move up, left,

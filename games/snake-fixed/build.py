@@ -319,7 +319,7 @@ def build_font(output, width=DEFAULT_WIDTH, height=DEFAULT_HEIGHT):
         "licenseInfoURL": "https://www.apache.org/licenses/LICENSE-2.0",
     })
     builder.setupOS2(sTypoAscender=ascent, sTypoDescender=-50,
-                     usWinAscent=ascent, usWinDescent=50)
+                     usWinAscent=ascent, usWinDescent=50, fsType=0)
     builder.setupPost()
     builder.setupMaxp()
     font = builder.font

@@ -7,21 +7,41 @@ ligatures, and glyph composition.
 
 ## Projects
 
-| Project | Mode | Input or configuration |
-| --- | --- | --- |
-| [Playfair](decoders/playfair-static/) | static decoder | key baked into font |
-| [Vigenère](decoders/vigenere-static/) | static decoder | key baked into font |
-| [Vigenère](decoders/vigenere-dynamic/) | dynamic decoder | `KEY~CIPHERTEXT` |
-| [Enigma I](decoders/enigma-static/) | static decoder | machine settings baked into font |
-| [Enigma I](decoders/enigma-dynamic/) | dynamic decoder | `ROTORS/POSITIONS/RINGS~CIPHERTEXT`; plugboard baked at build time |
-| [Lorenz SZ40/SZ42](decoders/lorenz-static/) | static decoder | machine/wheel settings baked into font |
-| [Snake — dynamic board](games/snake-dynamic/) | game prototype | `10x5b` builds a board; append `w`, `a`, `s`, and `d` to move |
-| [Snake — fixed board](games/snake-fixed/) | game prototype | fixed 20×11 board by default; `b` starts; WASD or `2`, `4`, `8`, `6` moves |
-| [Turtle graphics](graphics/turtle/) | drawing interpreter | `b` starts; `f`, `l`, `r`, `u`, `d` move, turn, and control the pen; `0`–`5` select colors |
-| [Multi-format validator](validators/multi-format/) | dynamic validator | `format:value?`; 16 formats including IBAN, ISBN, ORCID, payment references, dates, UUIDs, and passport MRZ |
+| Project | Mode | Input or configuration | Editable document |
+| --- | --- | --- | --- |
+| [Playfair](decoders/playfair-static/) | static decoder | key baked into font | [ODT specimen](decoders/playfair-static/playfair-static.odt) |
+| [Vigenère](decoders/vigenere-static/) | static decoder | key baked into font | [ODT specimen](decoders/vigenere-static/vigenere-static.odt) |
+| [Vigenère](decoders/vigenere-dynamic/) | dynamic decoder | `KEY~CIPHERTEXT` | [ODT specimen](decoders/vigenere-dynamic/vigenere-dynamic.odt) |
+| [Enigma I](decoders/enigma-static/) | static decoder | machine settings baked into font | [ODT specimen](decoders/enigma-static/enigma-static.odt) |
+| [Enigma I](decoders/enigma-dynamic/) | dynamic decoder | `ROTORS/POSITIONS/RINGS~CIPHERTEXT`; plugboard baked at build time | [ODT specimen](decoders/enigma-dynamic/enigma-dynamic.odt) |
+| [Lorenz SZ40/SZ42](decoders/lorenz-static/) | static decoder | machine/wheel settings baked into font | [ODT specimen](decoders/lorenz-static/lorenz-static.odt) |
+| [Snake — dynamic board](games/snake-dynamic/) | game prototype | `10x5b` builds a board; append `w`, `a`, `s`, and `d` to move | [ODT specimen](games/snake-dynamic/snake-dynamic.odt) |
+| [Snake — fixed board](games/snake-fixed/) | game prototype | fixed 20×11 board by default; `b` starts; WASD or `2`, `4`, `8`, `6` moves | [ODT specimen](games/snake-fixed/snake-fixed.odt) |
+| [Turtle graphics](graphics/turtle/) | drawing interpreter | `b` starts; `f`, `l`, `r`, `u`, `d` move, turn, and control the pen; `0`–`5` select colors | [ODT specimen](graphics/turtle/turtle.odt) |
+| [Multi-format validator](validators/multi-format/) | dynamic validator | `format:value?`; 16 formats including IBAN, ISBN, ORCID, payment references, dates, UUIDs, and passport MRZ | [ODT specimen](validators/multi-format/validator.odt) |
 
 Each project folder includes a `build.py` font generator, a bundled `.ttf`,
 a `playground.html` browser demo, and a `readme.md` with usage and build notes.
+Each also includes an editable `.odt` document named after the font, without
+the trailing `-font`.
+
+## Trying a font in a document
+
+Open a project's **ODT specimen in LibreOffice Writer**. It embeds both the
+computational font and the ordinary Roboto font, so no font installation or
+local web server is needed. Each example shows identical underlying text in
+both fonts. Edit a blue block to change the decoded text, validation result,
+Snake board, or Turtle drawing. Each copy can be edited independently.
+
+The documents contain ordinary editable text and no macros or JavaScript.
+Copying a computed result preserves the original input. Keep each computational
+example on one line with consistent formatting and standard ligatures enabled;
+other applications may shape the text differently.
+
+The [validator specimen](validators/multi-format/validator.odt) includes
+identifiers embedded in a sentence, checksum failures, and leap-year examples.
+See [specimen build notes](specimens/readme.md) to regenerate the documents
+after changing a bundled font.
 
 ## Repository layout
 

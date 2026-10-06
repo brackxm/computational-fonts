@@ -4,6 +4,13 @@
 
 A single Vigenère font reads the key from the text at shaping time.
 
+## Editable document
+
+Open [vigenere-dynamic.odt](vigenere-dynamic.odt) in LibreOffice Writer. It embeds the font
+and shows the same editable sample text in an ordinary font and in this
+computational font. Follow the document's "Try it" instructions to change
+the result directly in the text.
+
 ## Bundled example
 
 Underlying text:

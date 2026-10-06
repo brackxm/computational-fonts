@@ -4,6 +4,13 @@ A turtle interpreter implemented in an OpenType font. GSUB substitutions
 track position, heading, pen state, and color; the glyph outlines draw the path.
 The browser only supplies text and measures the font's boundary signal.
 
+## Editable document
+
+Open [turtle.odt](turtle.odt) in LibreOffice Writer. It embeds the font and
+shows the same editable commands in an ordinary font and as a colorful
+drawing. Follow the document's "Try it" instructions to change the path,
+pen state, and color directly in the text.
+
 ## Commands
 
 Start a program with `b`. The turtle starts in the center of a 21×21 canvas,

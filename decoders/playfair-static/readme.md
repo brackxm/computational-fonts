@@ -4,6 +4,13 @@
 
 Playfair decryption with the key baked into the generated font.
 
+## Editable document
+
+Open [playfair-static.odt](playfair-static.odt) in LibreOffice Writer. It embeds the font
+and shows the same editable sample text in an ordinary font and in this
+computational font. Follow the document's "Try it" instructions to change
+the result directly in the text.
+
 ## Bundled example
 
 Underlying text:

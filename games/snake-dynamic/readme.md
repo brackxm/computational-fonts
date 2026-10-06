@@ -8,6 +8,13 @@ For a 20×11 board built into the font, see the second
 
 Unlike a version that stores one glyph for every complete board state, this prototype uses reusable coordinate/cell glyphs and OpenType GSUB substitutions to mutate game state as movement characters are appended.
 
+## Editable document
+
+Open [snake-dynamic.odt](snake-dynamic.odt) in LibreOffice Writer. It embeds the font
+and shows the same editable sample text in an ordinary font and in this
+computational font. Follow the document's "Try it" instructions to change
+the result directly in the text.
+
 ## Syntax
 
 Start a game with:
