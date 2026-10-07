@@ -56,6 +56,27 @@ class Specimen:
 
 SPECS = (
     Specimen(
+        "languages/mini-basic", "mini-basic-font.ttf", "Mini BASIC / a language in a font",
+        "The font parses and executes this BASIC program, drawing its output and final variables.",
+        (Example("Descending with labelled output",
+                 'RUN:10 FOR A=9 TO 2 STEP -2:20 PRINT "A=";A;", square=";A*A:30 NEXT A:40 END:!',
+                 "Four output rows: A=9, square=81; A=7, square=49; A=5, square=25; A=3, square=9. A=01 and DONE."),),
+        "In the blue block, change STEP -2 to STEP -3 to print 9, 6 and 3. "
+        "Edit the quoted labels to change their wording. "
+        "Use colons between statements, semicolons between PRINT items, and keep the final !.",
+        "Variables A-D and integers 0-99; optional LET, PRINT expressions, +, -, *, /, MOD, "
+        "IF ... THEN [GOTO] line [ELSE [GOTO] line], GOTO, GOSUB/RETURN, FOR/NEXT, WHILE/WEND, END and REM. "
+        "IF and WHILE accept two comparisons joined by AND or OR, with NOT on either comparison. "
+        "PRINT joins up to four strings or expressions into a row of at most 24 characters. "
+        "Up to four call levels share variables A-D. Counted loops use constant bounds "
+        "and optional nonzero STEP values from -99 to 99. WHILE retests before each iteration. "
+        "One loop may be active; nesting is unsupported. "
+        "At most 16 ordered lines, 128 executed instructions and eight output rows. "
+        "Use printable ASCII. Arithmetic outside 0-99 stops execution. "
+        "The font restarts from zero whenever the source changes.",
+        size=70, line_height="100%", compact=True, unbroken_run=True,
+    ),
+    Specimen(
         "formatters/json", "json-font.ttf", "JSON / formatting in a font",
         "The font highlights JSON tokens and normalizes spaces around punctuation.",
         (

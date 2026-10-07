@@ -7,6 +7,7 @@ substitutions, ligatures, and glyph composition.
 
 | Project | Mode | Input or configuration | Editable document |
 | --- | --- | --- | --- |
+| [Mini BASIC](languages/mini-basic/) | programming language | numbered BASIC statements | [ODT specimen](languages/mini-basic/mini-basic.odt) |
 | [JSON formatter](formatters/json/) | text formatter | JSON text | [ODT specimen](formatters/json/json.odt) |
 | [Markdown-style formatter](formatters/markdown/) | text formatter | flat emphasis, inline code, strikethrough and heading markers | [ODT specimen](formatters/markdown/markdown.odt) |
 | [Morse code](decoders/morse/) | code decoder | dots and hyphens; spaces between letters, `/` between words | [ODT specimen](decoders/morse/morse.odt) |

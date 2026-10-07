@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mini BASIC — a programming language in a font</title>
+<style>
+@font-face{font-family:MiniBasic;src:url('./mini-basic-font.ttf?v=12') format('truetype')}
+:root{color-scheme:light;font-family:system-ui,sans-serif;background:#f5f4ee;color:#203a42}
+*{box-sizing:border-box}
+body{max-width:1100px;margin:0 auto;padding:40px 24px;line-height:1.6}
+.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#52747a}
+h1{font-family:Georgia,serif;font-size:clamp(36px,7vw,58px);font-weight:400;line-height:1.15;margin:14px 0}
+.intro{max-width:760px;color:#52656b}
+label,.label{display:block;font-size:13px;font-weight:650;margin:20px 0 9px}
+textarea{width:100%;min-height:215px;padding:18px;border:1px solid #8ea3a6;border-radius:8px;background:#fffef9;color:#203a42;font:16px/1.65 ui-monospace,monospace;resize:vertical;white-space:pre}
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 24px}
+button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid #8ea3a6;border-radius:5px;background:transparent;color:#203a42;cursor:pointer}
+button:hover{background:#e4ece8}textarea:focus-visible,button:focus-visible{outline:2px solid #287b87;outline-offset:3px}
+.screen{background:#fffef9;border-radius:8px;overflow:hidden;padding:12px}
+svg{width:100%;height:auto;display:block}.screen[hidden]{display:none}
+#terminal{font-family:MiniBasic;font-feature-settings:"rlig" 1,"kern" 0;fill:#203a42}
+.hint,#status{font-size:13px;color:#52656b}#status.error{color:#94362d}
+code,pre{font-family:ui-monospace,monospace}pre{padding:12px;background:#e4e9e2;border-radius:5px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
+details{font-size:13px;margin:16px 0}summary{cursor:pointer}
+footer{border-top:1px solid #c9d2ca;margin-top:28px;padding-top:18px;font-size:13px;display:flex;gap:20px;flex-wrap:wrap}
+a{color:#226a77;text-underline-offset:3px}
+@media(max-width:480px){body{padding:28px 16px}textarea{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="eyebrow">Computational fonts · Mini BASIC</div>
+<h1>A program inside a font.</h1>
+<p class="intro">Write a small BASIC program. OpenType rules inside the font execute assignments, arithmetic, branches, loops and subroutines, then draw the output and final variables.</p>
+<label for="source">BASIC source</label>
+<textarea id="source" rows="8" wrap="off" spellcheck="false" autocapitalize="off" aria-describedby="format">10 FOR A=1 TO 5
+20 PRINT A*A
+30 NEXT A
+40 END</textarea>
+<p id="format" class="hint">Number lines from 1–99 in increasing order. Variables A–D hold 0–99. Use +, -, *, / or MOD, with one operator per expression.</p>
+<div class="examples" aria-label="Example programs">
+<button type="button" id="count">Squares with FOR</button>
+<button type="button" id="step">Count with STEP</button>
+<button type="button" id="greeting">Hello &amp; arithmetic</button>
+<button type="button" id="branch">Conditional jumps</button>
+<button type="button" id="subroutine">Subroutines</button>
+<button type="button" id="logic">Logical conditions</button>
+<button type="button" id="while">WHILE loop</button>
+<button type="button" id="else">IF / ELSE</button>
+<button type="button" id="list">PRINT lists</button>
+<button type="button" id="descending">Descending FOR</button>
+<button type="button" id="limit">Endless loop</button>
+</div>
+<div class="label">Font-rendered output</div>
+<div id="screen" class="screen" hidden><svg viewBox="0 0 13000 6000" role="img" aria-label="Output and final variables drawn by the Mini BASIC font"><text id="terminal" x="0" y="6000" font-size="2048"></text></svg></div>
+<p id="status" role="status">Loading the interpreter font…</p>
+<p class="hint">Up to 16 statements, 128 executed instructions, eight output rows and 24 characters per output row. PRINT joins up to four strings or expressions with semicolons. IF and WHILE accept two comparisons joined by AND or OR, with optional NOT before either comparison. IF may include ELSE with a second jump target. Division returns an integer. FOR uses constant bounds and an optional nonzero STEP from −99 to 99. Negative steps count down; variables stay within 0–99. WHILE/WEND retests its condition before each iteration; one loop may be active at a time. GOSUB/RETURN supports four call levels, sharing variables A–D. The page supplies source text; the font performs parsing and execution.</p>
+<details><summary>Underlying font input</summary><pre id="raw"></pre><p>Copy this text to save the program or use it directly with the font. Output is drawn as glyph outlines; copying it preserves this source.</p></details>
+<footer><a href="mini-basic.odt">Editable ODT specimen</a><a href="readme.md">Language &amp; build notes</a><a href="../../readme.md">All fonts</a></footer>
+<script src="controls.js"></script>
+<script>MiniBasic.createPlayground();</script>
+</body>
+</html>
