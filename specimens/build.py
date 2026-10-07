@@ -55,6 +55,22 @@ class Specimen:
 
 SPECS = (
     Specimen(
+        "decoders/morse", "morse-font.ttf", "Morse / a decoding font",
+        "The font decodes International Morse code as it draws your text. "
+        "Spaces separate letters; / separates words.",
+        (
+            Example("A greeting", ".... . .-.. .-.. --- / .-- --- .-. .-.. -..", "HELLO WORLD"),
+            Example("Digits and punctuation", "..--- ----- ..--- -.... / ..-.. .-.-.-", "2026 É."),
+        ),
+        "In the greeting's blue block, type ... --- ... / .... . .-.. .--. "
+        "to display SOS HELP. Use a dot or hyphen for each signal, "
+        "spaces between letters and / between words.",
+        "Supports A-Z, É, 0-9 and 13 punctuation marks. "
+        "Unknown groups stay visible. Copying a blue block keeps the Morse source, "
+        "and each Roboto copy is independent.",
+        size=28,
+    ),
+    Specimen(
         "validators/multi-format", "validator-font.ttf", "A font that checks your text",
         "Identifiers and dates are checked as the font draws the text. "
         "The value stays visible; a final ? becomes a check mark or a cross.",

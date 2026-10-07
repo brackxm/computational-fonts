@@ -1,14 +1,13 @@
 # computational-fonts
 
-Experiments that use fonts as computation rather than only presentation.
-This project combines classical-cipher decoders, Snake games, a text adventure,
-turtle graphics, and identifier validators implemented with OpenType shaping,
+Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 ## Projects
 
 | Project | Mode | Input or configuration | Editable document |
 | --- | --- | --- | --- |
+| [Morse code](decoders/morse/) | code decoder | dots and hyphens; spaces between letters, `/` between words | [ODT specimen](decoders/morse/morse.odt) |
 | [Playfair](decoders/playfair-static/) | static decoder | key baked into font | [ODT specimen](decoders/playfair-static/playfair-static.odt) |
 | [Vigenère](decoders/vigenere-static/) | static decoder | key baked into font | [ODT specimen](decoders/vigenere-static/vigenere-static.odt) |
 | [Vigenère](decoders/vigenere-dynamic/) | dynamic decoder | `KEY~CIPHERTEXT` | [ODT specimen](decoders/vigenere-dynamic/vigenere-dynamic.odt) |
@@ -53,6 +52,7 @@ decoders/
   enigma-dynamic/
   enigma-static/
   lorenz-static/
+  morse/
   playfair-static/
   shared/
     __init__.py
@@ -90,6 +90,7 @@ Then open a demo, for example:
 - Fixed-board Snake: <http://localhost:8000/games/snake-fixed/playground.html>
 - Text adventure: <http://localhost:8000/games/text-adventure/playground.html>
 - Vigenère: <http://localhost:8000/decoders/vigenere-dynamic/playground.html>
+- Morse code: <http://localhost:8000/decoders/morse/playground.html>
 - Turtle graphics: <http://localhost:8000/graphics/turtle/playground.html>
 - Validator: <http://localhost:8000/validators/multi-format/playground.html>
 
@@ -153,7 +154,8 @@ python3 -m unittest discover -s decoders -p 'test_*.py' -v
 The suite requires FontTools. Install HarfBuzz's `hb-shape` command to run
 the font shaping checks; without it, those checks are reported as skipped.
 Tests cover known plaintext vectors, all Playfair letter pairs (including
-the J/I alias), runtime keys and machine settings, Enigma double stepping,
+the J/I alias), all Morse characters and whole-group boundaries, runtime keys
+and machine settings, Enigma double stepping,
 Lorenz shift controls and all three models, text limits, font names, and
 builder output paths. Both bundled fonts and fresh builds are shaped.
 Builds use a small original fixture font and the bundled Roboto base in

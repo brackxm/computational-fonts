@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Morse code — decoding font</title>
+<style>
+@font-face{font-family:MorseDecoder;src:url('./morse-font.ttf?v=1') format('truetype')}
+:root{color-scheme:light;font-family:system-ui,sans-serif;background:#f5f4ee;color:#203a42}
+*{box-sizing:border-box}
+body{max-width:900px;margin:0 auto;padding:48px 24px;line-height:1.6}
+.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#52747a}
+h1{font-family:Georgia,serif;font-size:clamp(36px,7vw,60px);font-weight:400;line-height:1.15;margin:14px 0}
+.intro{max-width:670px;color:#52656b;margin-bottom:28px}
+label,.label{display:block;font-size:13px;font-weight:650;margin:22px 0 9px}
+textarea{width:100%;min-height:130px;padding:18px;border:1px solid #8ea3a6;border-radius:8px;background:#fffef9;color:#203a42;font:19px/1.6 ui-monospace,monospace;resize:vertical}
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 28px}
+button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid #8ea3a6;border-radius:5px;background:transparent;color:#203a42;cursor:pointer}
+button:hover{background:#e4ece8}
+textarea:focus-visible,button:focus-visible{outline:2px solid #287b87;outline-offset:3px}
+.preview{padding:24px;border-radius:8px;background:#153e48;color:#f0f8e8;min-height:120px;overflow:auto;white-space:pre;font:48px/1.4 MorseDecoder;font-feature-settings:"rlig" 1,"liga" 1,"kern" 0}
+.preview.loading{font:18px/1.6 ui-monospace,monospace}
+.expected,.hint,#status{font-size:13px;color:#52656b}
+#status.error{color:#94362d}
+code{font-family:ui-monospace,monospace;background:#e4e9e2;padding:1px 5px;border-radius:3px}
+footer{border-top:1px solid #c9d2ca;margin-top:32px;padding-top:18px;font-size:13px;display:flex;gap:20px;flex-wrap:wrap}
+a{color:#226a77;text-underline-offset:3px}
+@media(max-width:480px){body{padding:28px 16px}.preview{font-size:36px;padding:18px}textarea{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="eyebrow">Computational fonts · Morse code</div>
+<h1>Dots and dashes.<br>Letters in the font.</h1>
+<p class="intro">Type Morse code below. OpenType substitutions in the font draw the decoded message. Your text stays Morse code when you copy it.</p>
+<label for="source">Underlying Morse text</label>
+<textarea id="source" spellcheck="false" autocapitalize="off" aria-describedby="format">.... . .-.. .-.. --- / .-- --- .-. .-.. -..</textarea>
+<p id="format" class="hint">Use <code>.</code> and <code>-</code> for signals, spaces between letters, and <code>/</code> between words. Unknown groups stay visible.</p>
+<div class="examples" aria-label="Example messages">
+  <button type="button" data-source=".... . .-.. .-.. --- / .-- --- .-. .-.. -.." data-expected="HELLO WORLD">Greeting</button>
+  <button type="button" data-source="... --- ..." data-expected="SOS">SOS</button>
+  <button type="button" data-source="..--- ----- ..--- -.... / ..-.. .-.-.-" data-expected="2026 É.">Digits &amp; punctuation</button>
+</div>
+<div class="label">Font-rendered message</div>
+<div id="preview" class="preview loading" role="img" aria-label="Morse text rendered by the decoding font"></div>
+<p id="expected" class="expected">Example result: HELLO WORLD</p>
+<p id="status" role="status">Loading decoder font…</p>
+<p class="hint">No JavaScript decoder runs here. The font supports A–Z, É, 0–9 and 13 punctuation marks. Decoded letters are glyph outlines; copying and accessibility APIs expose the original Morse text. Long lines scroll horizontally.</p>
+<footer><a href="morse.odt">Editable ODT specimen</a><a href="readme.md">Usage &amp; build notes</a><a href="../../readme.md">All fonts</a></footer>
+<script>
+const source = document.querySelector('#source');
+const preview = document.querySelector('#preview');
+const expected = document.querySelector('#expected');
+const status = document.querySelector('#status');
+function render() { preview.textContent = source.value; }
+source.addEventListener('input', () => { render(); expected.hidden = true; });
+document.querySelectorAll('[data-source]').forEach(button => {
+  button.addEventListener('click', () => {
+    source.value = button.dataset.source;
+    expected.textContent = `Example result: ${button.dataset.expected}`;
+    expected.hidden = false;
+    render();
+  });
+});
+render();
+(async () => {
+  try {
+    const fonts = await document.fonts.load('48px MorseDecoder', '... --- ...');
+    if (!fonts.length) throw new Error('The decoding font could not load.');
+    preview.classList.remove('loading');
+    status.textContent = 'Decoder font ready. Edit the signals to change the message.';
+  } catch (error) {
+    status.classList.add('error');
+    status.textContent = `${error.message} Serve the repository with python3 -m http.server and reload.`;
+  }
+})();
+</script>
+</body>
+</html>

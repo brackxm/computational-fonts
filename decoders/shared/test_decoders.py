@@ -52,6 +52,7 @@ LORENZ_PLAIN = (
 )
 LORENZ_STARTS = "20,32,9,51,47,2,18,26,6,29,16,4"
 EXAMPLES = {
+    "morse": (".... . .-.. .-.. --- / .-- --- .-. .-.. -..", "HELLO WORLD"),
     "playfair-static": ("BMODZBXDNABEKUDMUIXMMOUVIF", "HIDETHEGOLDINTHETREXESTUMP"),
     "vigenere-static": ("LXFOPVEFRNHR", "ATTACKATDAWN"),
     "vigenere-dynamic": ("LEMON~LXFOPVEFRNHR", "ATTACKATDAWN"),
@@ -60,6 +61,7 @@ EXAMPLES = {
     "lorenz-static": ("~" + LORENZ_CIPHER, LORENZ_PLAIN),
 }
 BUILD_ARGS = {
+    "morse": [],
     "playfair-static": ["--key", "PLAYFAIR EXAMPLE"],
     "vigenere-static": ["--key", "LEMON"],
     "vigenere-dynamic": ["--max-key", "6", "--max-text", "24"],
@@ -70,6 +72,7 @@ BUILD_ARGS = {
 }
 # Destination checks need only a small font; shaping checks use the limits above.
 SMALL_LIMITS = {
+    "morse": [],
     "playfair-static": [], "vigenere-static": [],
     "vigenere-dynamic": ["--max-key", "2", "--max-text", "2"],
     "enigma-static": ["--max-letters", "2"],
@@ -90,7 +93,7 @@ BUILDERS = {name: load_builder(name) for name in EXAMPLES}
 
 def fixture_font(path):
     """Original geometric outlines with unique metrics and stale preferred names."""
-    chars = string.ascii_letters + string.digits + string.punctuation + " £"
+    chars = string.ascii_letters + string.digits + string.punctuation + " £É"
     cmap = {ord(ch): f"uni{ord(ch):04X}" for ch in chars}
     glyphs, metrics = {}, {}
     for code, name in [(0, ".notdef"), *cmap.items()]:
@@ -142,7 +145,7 @@ def shape(font, text):
 def display(font, glyphs):
     """Read actual source outlines/components, rather than decoder glyph names."""
     cmap = {name: chr(code) for code, name in font.getBestCmap().items()
-            if 32 <= code < 127 or code == 163}
+            if 32 <= code < 127 or code in (163, 201)}
 
     def character(name):
         if name == ".notdef":
@@ -172,6 +175,29 @@ def display(font, glyphs):
 
 
 class BaseFontTests(unittest.TestCase):
+    def test_morse_rejects_missing_characters_and_aliased_signals(self):
+        with tempfile.TemporaryDirectory() as directory:
+            base = Path(directory) / "base.ttf"
+            output = Path(directory) / "out.ttf"
+            fixture_font(base)
+            for missing, marker, alias, error in (
+                ("É", None, None, "missing required characters"),
+                (None, ".", "-", "glyph must be distinct"),
+                (None, " ", "/", "glyph must be distinct"),
+            ):
+                invalid = Path(directory) / "invalid.ttf"
+                with TTFont(base) as font:
+                    for table in font["cmap"].tables:
+                        if table.isUnicode():
+                            if missing:
+                                table.cmap.pop(ord(missing), None)
+                            else:
+                                table.cmap[ord(marker)] = table.cmap[ord(alias)]
+                    font.save(invalid)
+                with self.subTest(missing=missing, marker=marker), self.assertRaisesRegex(ValueError, error):
+                    BUILDERS["morse"].build_font(invalid, output)
+                self.assertFalse(output.exists())
+
     def test_pinned_roboto_base_integrity_and_coverage(self):
         directory = ROOT / "shared" / "fonts" / "roboto-2"
         path = directory / "Roboto-Regular.ttf"
@@ -237,6 +263,17 @@ class BaseFontTests(unittest.TestCase):
 
 
 class ReferenceTests(unittest.TestCase):
+    def test_morse_known_plaintexts_and_separators(self):
+        decoder = BUILDERS["morse"].decode_text
+        for text, plain in (("... --- ...", "SOS"), EXAMPLES["morse"],
+                            (" ..--- ----- ..--- -.... / ..-.. .-.-.- ", "2026 É."),
+                            (".   -", "ET"), ("-..-. / -....- / .-.-.-", "/ - ."),
+                            ("........ ...", "........S"), ("", "")):
+            with self.subTest(text=text):
+                self.assertEqual(decoder(text), plain)
+        with self.assertRaises(ValueError):
+            decoder("··· ——— ···")
+
     def test_playfair_known_plaintext(self):
         cipher, plain = EXAMPLES["playfair-static"]
         self.assertEqual(BUILDERS["playfair-static"].decrypt_text(cipher, "PLAYFAIR EXAMPLE"), plain)
@@ -393,6 +430,7 @@ class FontTests(unittest.TestCase):
 
     def test_invalid_cli_settings_do_not_write_a_font(self):
         invalid = {
+            "morse": ["--test", "not Morse"],
             "playfair-static": ["--key", "123"],
             "vigenere-static": ["--key", "123"],
             "vigenere-dynamic": ["--max-text", "0"],
@@ -525,6 +563,7 @@ class FontTests(unittest.TestCase):
 
     def test_reserved_glyph_collisions_do_not_write_fonts(self):
         collisions = [("vigenere-static", "vigP00.s0"),
+                      ("morse", "morse.out.0041"),
                       ("vigenere-dynamic", "vsk.delim.1"),
                       ("vigenere-dynamic", "vsk.out.A"),
                       ("enigma-dynamic", "esk.OUT.A"),
@@ -657,6 +696,42 @@ class FontTests(unittest.TestCase):
             for path in self.sources(name):
                 with self.subTest(decoder=name, font=path):
                     self.assert_display(path, cipher, plain)
+
+    @NEEDS_SHAPER
+    def test_morse_all_characters_and_punctuation_outputs(self):
+        builder = BUILDERS["morse"]
+        text = " ".join(builder.MORSE.values())
+        expected = "".join(builder.MORSE)
+        for path in self.sources("morse"):
+            with self.subTest(font=path):
+                self.assert_display(path, text, expected)
+                self.assert_display(path, "  ...   --- ... / -..-. / -....- / .-.-.-  ", "SOS / - .")
+                self.assert_display(path, ". / - / .. / --", "E T I M")
+                self.assert_display(path, ".../---/...", "S O S")
+                self.assert_display(path, "... " * 200, "S" * 200)
+
+    @NEEDS_SHAPER
+    def test_morse_exhaustive_group_boundaries_and_unknown_recovery(self):
+        builder = BUILDERS["morse"]
+        # Every dot/dash group through eight signals, including all supported
+        # codes and invalid groups containing valid prefixes and suffixes.
+        groups = ["".join(signals) for length in range(1, 9)
+                  for signals in itertools.product(".-", repeat=length)]
+        inputs = [f"{group} / ... {group} ---" for group in groups]
+        expected = [builder.DECODE.get(group, group) + " S" +
+                    builder.DECODE.get(group, group) + "O" for group in groups]
+        for path in self.sources("morse"):
+            result = subprocess.run(
+                [SHAPER, str(path), "--text-file=-", "--output-format=json", "--no-glyph-names",
+                 "--direction=ltr", "--script=latn", "--features=rlig=1,liga=1,clig=1,kern=0"],
+                input="\n".join(inputs) + "\n", text=True, capture_output=True, check=True, timeout=30)
+            outputs = [json.loads(line) for line in result.stdout.splitlines()]
+            self.assertEqual(len(outputs), len(inputs))
+            with TTFont(path) as font:
+                for text, glyphs, plain in zip(inputs, outputs, expected):
+                    with self.subTest(font=path, text=text):
+                        self.assertEqual(display(font, glyphs), plain)
+            self.assert_display(path, "x... ...x x.-x / ...", "x......xx.-x S")
 
     @NEEDS_SHAPER
     def test_playfair_all_digraphs_including_j(self):
