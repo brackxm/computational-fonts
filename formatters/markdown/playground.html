@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Markdown-style formatting font</title>
+<style>
+@font-face{font-family:MarkdownFormatter;src:url('./markdown-font.ttf?v=1') format('truetype')}
+:root{color-scheme:light;font-family:system-ui,sans-serif;background:#f5f4ee;color:#203a42}
+*{box-sizing:border-box}
+body{max-width:1000px;margin:0 auto;padding:40px 24px;line-height:1.6}
+.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#52747a}
+h1{font-family:Georgia,serif;font-size:clamp(36px,7vw,58px);font-weight:400;line-height:1.15;margin:14px 0}
+.intro{max-width:720px;color:#52656b;margin-bottom:24px}
+label,.label{display:block;font-size:13px;font-weight:650;margin:20px 0 9px}
+textarea{width:100%;min-height:210px;padding:18px;border:1px solid #8ea3a6;border-radius:8px;background:#fffef9;color:#203a42;font:16px/1.6 ui-monospace,monospace;resize:vertical}
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 24px}
+button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid #8ea3a6;border-radius:5px;background:transparent;color:#203a42;cursor:pointer}
+button:hover{background:#e4ece8}
+textarea:focus-visible,button:focus-visible{outline:2px solid #287b87;outline-offset:3px}
+.preview{padding:22px;border-radius:8px;background:#153e48;color:#f0f8e8;overflow:auto;font:28px/1.9 MarkdownFormatter;font-feature-settings:"rlig" 1,"kern" 0}
+.preview>div{white-space:pre;min-height:1.9em}
+.preview.loading{font:16px/1.9 ui-monospace,monospace}
+.hint,#status{font-size:13px;color:#52656b}
+#status.error{color:#94362d}
+code{font-family:ui-monospace,monospace;background:#e4e9e2;padding:1px 5px;border-radius:3px}
+footer{border-top:1px solid #c9d2ca;margin-top:28px;padding-top:18px;font-size:13px;display:flex;gap:20px;flex-wrap:wrap}
+a{color:#226a77;text-underline-offset:3px}
+@media(max-width:480px){body{padding:28px 16px}.preview{font-size:22px;padding:16px}textarea{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="eyebrow">Computational fonts · Markdown-style formatter</div>
+<h1>A little markup.<br>A font with formatting.</h1>
+<p class="intro">Type plain text with Markdown-style markers. The font draws bold, italic, code, strikethrough and headings. Copying the preview keeps your original markup.</p>
+<label for="source">Underlying text</label>
+<textarea id="source" spellcheck="false" autocapitalize="off" aria-describedby="format"># A page inside the font
+## A smaller heading
+**Bold** and *italic*, or ***both***.
+Use `x = 3` and ~~remove this~~.
+Escape \*markers\* or leave **unfinished</textarea>
+<p id="format" class="hint">Use <code>**bold**</code>, <code>*italic*</code>, <code>***both***</code>, <code>`code`</code>, <code>~~strike~~</code> and <code># </code> through <code>### </code> at the start of a line.</p>
+<div class="examples" aria-label="Example text">
+  <button type="button" id="styles">All styles</button>
+  <button type="button" id="notes">Notes</button>
+  <button type="button" id="literal">Literal markers</button>
+</div>
+<div class="label">Font-rendered text</div>
+<div id="preview" class="preview loading" aria-label="Text drawn with the Markdown-style formatting font"></div>
+<p id="status" role="status">Loading formatting font…</p>
+<p class="hint">A small, flat subset: no nested styles, lists or links. Heading text stays literal. Each line is a separate text run; long lines scroll horizontally. The page only copies text into the preview — OpenType rules inside the font perform the formatting.</p>
+<footer><a href="markdown.odt">Editable ODT specimen</a><a href="readme.md">Usage &amp; build notes</a><a href="../../readme.md">All fonts</a></footer>
+<script>
+const source = document.querySelector('#source');
+const preview = document.querySelector('#preview');
+const status = document.querySelector('#status');
+const examples = {
+  styles: source.value,
+  notes: '# Field notes\n### A small observation\nThe café has **excellent coffee**.\nTry `order("espresso")` then ~~wait~~ *enjoy*.',
+  literal: 'Escaped: \\*literal stars\\* and \\# hash\nCode shields markup: `**bold** and \\*stars\\*`\nUnfinished: **still open\nLong runs: ****literal**** and ``literal``'
+};
+function render() {
+  preview.replaceChildren(...source.value.split('\n').map(text => {
+    const line = document.createElement('div');
+    line.textContent = text;
+    return line;
+  }));
+}
+source.addEventListener('input', render);
+Object.entries(examples).forEach(([id, text]) => {
+  document.getElementById(id).addEventListener('click', () => { source.value = text; render(); });
+});
+render();
+(async () => {
+  try {
+    const fonts = await document.fonts.load('28px MarkdownFormatter', '**bold**');
+    if (!fonts.length) throw new Error('The formatting font could not load.');
+    preview.classList.remove('loading');
+    status.textContent = 'Formatting font ready. Edit the markers to change the text.';
+  } catch (error) {
+    status.classList.add('error');
+    status.textContent = `${error.message} Serve the repository with python3 -m http.server and reload.`;
+  }
+})();
+</script>
+</body>
+</html>

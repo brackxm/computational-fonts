@@ -15,7 +15,7 @@
 #
 # Retained third-party notices: see THIRD_PARTY_NOTICES.md at the project root.
 
-"""Decoder base validation and derivative attribution metadata."""
+"""Base-font validation and derivative attribution metadata."""
 
 import hashlib
 from io import BytesIO
@@ -99,11 +99,13 @@ def replace_font_names(font, replacements):
         table.setName(value, name_id, 1, 0, 0)
 
 
-def mark_modified_font(font, decoder):
+def mark_modified_font(font, decoder, *, kind="decoder"):
     """Keep the base's copyright/license and identify our changes explicitly."""
-    _append_notice(font, 0, MODIFICATION_COPYRIGHT)
+    notice = (MODIFICATION_COPYRIGHT if kind == "decoder" else
+              f"Copyright 2026 Michael Brackx. {kind.capitalize()} modifications.")
+    _append_notice(font, 0, notice)
     _append_notice(font, 10, f"Modified by Michael Brackx (2026) for computational-fonts: "
-                   f"{decoder} decoder glyphs and OpenType substitution rules added. "
+                   f"{decoder} {kind} glyphs and OpenType substitution rules added. "
                    "The base font's license and attribution are retained.")
     # Family names stay readable; unique and PostScript names distinguish
     # settings (including plugboard/wheel settings) and different base fonts.

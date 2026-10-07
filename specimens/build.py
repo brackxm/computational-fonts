@@ -55,6 +55,18 @@ class Specimen:
 
 SPECS = (
     Specimen(
+        "formatters/markdown", "markdown-font.ttf", "Markdown / formatting in a font",
+        "The font draws headings, emphasis, code and strikethrough from plain-text markers.",
+        (
+            Example("A heading", "# A page inside the font", "The prefix disappears; the text becomes a large bold heading."),
+            Example("Inline styles", "**Bold** *italic* ~~removed~~", "Bold, italic and strikethrough, without visible delimiters."),
+            Example("Code and combined emphasis", "Use `x = 3` or ***both***.", "Fixed-width code and combined bold italic."),
+        ),
+        "Edit a blue block: try **hello** or *hello*, then delete the closing marker.",
+        "Flat styles only; no nesting, lists or links. Use a new paragraph for each heading.",
+        size=20, line_height=34,
+    ),
+    Specimen(
         "decoders/morse", "morse-font.ttf", "Morse / a decoding font",
         "The font decodes International Morse code as it draws your text. "
         "Spaces separate letters; / separates words.",

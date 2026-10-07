@@ -1,7 +1,7 @@
 # Third-party notices
 
 The project is distributed under Apache License 2.0. Original notices for
-imported decoder code and the bundled Roboto base are retained below.
+imported decoder code and the bundled Roboto sources are retained below.
 Fonts generated with a custom `--base` remain subject to that base’s terms.
 
 ## Imported decoder code
@@ -32,19 +32,19 @@ SOFTWARE.
 
 ## Roboto 2 font outlines
 
-The unmodified [Roboto-Regular.ttf](decoders/shared/fonts/roboto-2/Roboto-Regular.ttf)
-is bundled from the official `googlefonts/roboto-2` repository, tag `v2.138`:
-[source font](https://github.com/googlefonts/roboto-2/blob/v2.138/src/hinted/Roboto-Regular.ttf).
-It is licensed under **Apache License 2.0**; the upstream license is included
+The unmodified fonts in [decoders/shared/fonts/roboto-2](decoders/shared/fonts/roboto-2/)
+are bundled from the official `googlefonts/roboto-2` repository, tag `v2.138`:
+[source fonts](https://github.com/googlefonts/roboto-2/tree/v2.138/src/hinted).
+They are licensed under **Apache License 2.0**; the upstream license is included
 unchanged in [decoders/shared/fonts/roboto-2/LICENSE](decoders/shared/fonts/roboto-2/LICENSE).
-See the [font provenance](decoders/shared/fonts/roboto-2/readme.md) for its checksum.
+See the [font provenance](decoders/shared/fonts/roboto-2/readme.md) for source checksums.
 
 ```text
 Copyright 2015 Google Inc. All Rights Reserved.
 Roboto is a trademark of Google.
 ```
 
-Bundled computational fonts derived from this base are modified derivatives
+Bundled computational fonts derived from these sources are modified derivatives
 under Apache License 2.0, with distinct family names. Michael Brackx added
 computational glyphs and OpenType substitution rules. Their embedded metadata
 preserves Google’s copyright, trademark, and license records and identifies

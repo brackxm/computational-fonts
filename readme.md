@@ -7,6 +7,7 @@ substitutions, ligatures, and glyph composition.
 
 | Project | Mode | Input or configuration | Editable document |
 | --- | --- | --- | --- |
+| [Markdown-style formatter](formatters/markdown/) | text formatter | flat emphasis, inline code, strikethrough and heading markers | [ODT specimen](formatters/markdown/markdown.odt) |
 | [Morse code](decoders/morse/) | code decoder | dots and hyphens; spaces between letters, `/` between words | [ODT specimen](decoders/morse/morse.odt) |
 | [Playfair](decoders/playfair-static/) | static decoder | key baked into font | [ODT specimen](decoders/playfair-static/playfair-static.odt) |
 | [Vigenère](decoders/vigenere-static/) | static decoder | key baked into font | [ODT specimen](decoders/vigenere-static/vigenere-static.odt) |
@@ -31,7 +32,7 @@ Open a project's **ODT specimen in LibreOffice Writer**. It embeds both the
 computational font and the ordinary Roboto font, so no font installation or
 local web server is needed. Each example shows identical underlying text in
 both fonts. Edit a blue block to change the decoded text, validation result,
-Snake board, Turtle drawing, or adventure scene. Each copy can be edited independently.
+Snake board, Turtle drawing, adventure scene, or text formatting. Each copy can be edited independently.
 
 The documents contain ordinary editable text and no macros or JavaScript.
 Copying a computed result preserves the original input. Keep each computational
@@ -61,6 +62,8 @@ decoders/
     test_decoders.py
   vigenere-dynamic/
   vigenere-static/
+formatters/
+  markdown/
 games/
   shared/
     snake-controls.css
@@ -91,6 +94,7 @@ Then open a demo, for example:
 - Text adventure: <http://localhost:8000/games/text-adventure/playground.html>
 - Vigenère: <http://localhost:8000/decoders/vigenere-dynamic/playground.html>
 - Morse code: <http://localhost:8000/decoders/morse/playground.html>
+- Markdown-style formatter: <http://localhost:8000/formatters/markdown/playground.html>
 - Turtle graphics: <http://localhost:8000/graphics/turtle/playground.html>
 - Validator: <http://localhost:8000/validators/multi-format/playground.html>
 
@@ -139,7 +143,11 @@ Build the multi-format validator demo with `python3 validators/multi-format/buil
 It uses the bundled Roboto base and a checked-in SWIFT IBAN registry snapshot;
 validation executes in the font. See its readme for the supported rules.
 
-The bundled decoder and validator fonts use Roboto outlines under Apache
+Build the Markdown-style formatter with `python3 formatters/markdown/build.py`.
+It combines regular, bold and italic Roboto outlines with formatting rules.
+See its [readme](formatters/markdown/readme.md) for the supported subset.
+
+The bundled fonts derived from Roboto use its outlines under Apache
 License 2.0. Each generated font retains Google’s copyright and identifies
 the modifications by Michael Brackx. A custom base may require different terms.
 
@@ -244,7 +252,7 @@ through ChatGPT and Codex.
 ## License
 
 Licensed under the Apache License 2.0. See [`LICENSE`](LICENSE).
-The bundled Roboto base and generated decoder and validator fonts are also
+The bundled Roboto sources and fonts derived from them are also
 Apache-2.0; Snake, turtle and text-adventure fonts use original outlines.
 Google’s font attribution and the required original MIT notice for imported decoder code
 are retained in
