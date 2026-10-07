@@ -20,6 +20,8 @@ The [PGM specimen](../graphics/pgm/pgm.odt) draws sixteen shades from an editabl
 P2 header and decimal samples. Change a sample to change a shade.
 The [PBM specimen](../graphics/pbm/pbm.odt) draws a bitmap from an editable
 single-line P1 header and raster. Change a bit to change a pixel.
+All three image specimens use 64 × 64 rasters. Their complete Roboto source
+copies follow the rendered images and editing instructions in a plain-text appendix.
 The [Morse specimen](../decoders/morse/morse.odt) shows a greeting and digits
 with punctuation, with editable dots, hyphens and separators.
 The [Markdown-style specimen](../formatters/markdown/markdown.odt) shows

@@ -1,40 +1,19 @@
 // Copyright 2026 Michael Brackx
 // SPDX-License-Identifier: Apache-2.0
 
-const PGM_MAX_SOURCE = 8192;
+const PGM_MAX_SOURCE = 16384;
+
+function pgmExample(label, pixel) {
+  // Generate built-in text examples only; user input is interpreted by the font.
+  const rows = Array.from({length: 64}, (_, y) =>
+    Array.from({length: 64}, (_, x) => pixel(x, y)).join(' '));
+  return ['P2', `# ${label}`, '64 64', '15', ...rows].join('\n');
+}
+
 const PGM_EXAMPLES = {
-  gradient: `P2
-# Sixteen display-gray levels, from black to white
-16 16
-15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15
-0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15`,
-  checker: `P2
-8 8
-15
-0 0 15 15 0 0 15 15
-0 0 15 15 0 0 15 15
-15 15 0 0 15 15 0 0
-15 15 0 0 15 15 0 0
-0 0 15 15 0 0 15 15
-0 0 15 15 0 0 15 15
-15 15 0 0 15 15 0 0
-15 15 0 0 15 15 0 0`,
-  shades: 'P2\n4 4\n15\n0 1 2 3\n4 5 6 7\n8 9 10 11\n12 13 14 15',
+  gradient: pgmExample('Sixteen display-gray levels, from black to white', x => x >> 2),
+  checker: pgmExample('Eight-by-eight checkerboard', (x, y) => (((x >> 3) + (y >> 3)) % 2) * 15),
+  shades: pgmExample('Sixteen gray levels in a four-by-four grid', (x, y) => (y >> 4) * 4 + (x >> 4)),
 };
 
 function pgmSource(value) {
@@ -86,12 +65,12 @@ function createPGMPlayground() {
       state = 'empty';
       status.textContent = 'Enter a P2 image or load an example.';
     } else {
-      // An invalid run advances 2049 units. Valid image widths are multiples
+      // An invalid run advances 4097 units. Valid image widths are multiples
       // of 64. This reads the font's result without interpreting the image.
       const advance = width(source);
-      state = advance >= 64 && advance <= 2048 && advance % 64 === 0 ? 'ready' : 'error';
+      state = advance >= 64 && advance <= 4096 && advance % 64 === 0 ? 'ready' : 'error';
       status.textContent = state === 'ready' ? 'Image rendered by the font. Edit a sample to change a shade.' :
-        'Invalid PGM. Use P2, dimensions 1–32, maxval 15, and exactly width × height samples (0–15).';
+        'Invalid PGM. Use P2, dimensions 1–64, maxval 15, and exactly width × height samples (0–15).';
     }
     program.setAttribute('aria-invalid', String(state === 'error'));
   }
@@ -104,8 +83,8 @@ function createPGMPlayground() {
   document.querySelector('#clear').onclick = () => { program.value = ''; render(); };
   program.value = PGM_EXAMPLES.gradient;
   render();
-  const ready = document.fonts.load('2048px PGMRenderer', 'P2 1 1 15 0').then(fonts => {
-    if (!fonts.length || width('P2 1 1 15 0') !== 64 || width('P2 1 1 15 0 1') !== 2049) {
+  const ready = document.fonts.load('4096px PGMRenderer', 'P2 1 1 15 0').then(fonts => {
+    if (!fonts.length || width('P2 1 1 15 0') !== 64 || width('P2 1 1 15 0 1') !== 4097) {
       throw new Error('Incompatible PGM font');
     }
     loaded = true;

@@ -1,54 +1,38 @@
 // Copyright 2026 Michael Brackx
 // SPDX-License-Identifier: Apache-2.0
 
-const PBM_MAX_SOURCE = 8192;
+const PBM_MAX_SOURCE = 16384;
+
+const PBM_HEART = [
+  '0000000000000000',
+  '0001110000111000',
+  '0011111001111100',
+  '0111111111111110',
+  '0111111111111110',
+  '0111111111111110',
+  '0011111111111100',
+  '0001111111111000',
+  '0000111111110000',
+  '0000011111100000',
+  '0000001111000000',
+  '0000000110000000',
+  '0000000000000000',
+  '0000000000000000',
+  '0000000000000000',
+  '0000000000000000',
+];
+
+function pbmExample(label, pixel) {
+  // Generate built-in text examples only; user input is interpreted by the font.
+  const rows = Array.from({length: 64}, (_, y) =>
+    Array.from({length: 64}, (_, x) => pixel(x, y)).join(''));
+  return ['P1', `# ${label}`, '64 64', ...rows].join('\n');
+}
+
 const PBM_EXAMPLES = {
-  heart: `P1
-# A thirty-two-pixel heart
-32 32
-00000000000000000000000000000000
-00000000000000000000000000000000
-00000011111100000000111111000000
-00000011111100000000111111000000
-00001111111111000011111111110000
-00001111111111000011111111110000
-00111111111111111111111111111100
-00111111111111111111111111111100
-00111111111111111111111111111100
-00111111111111111111111111111100
-00111111111111111111111111111100
-00111111111111111111111111111100
-00001111111111111111111111110000
-00001111111111111111111111110000
-00000011111111111111111111000000
-00000011111111111111111111000000
-00000000111111111111111100000000
-00000000111111111111111100000000
-00000000001111111111110000000000
-00000000001111111111110000000000
-00000000000011111111000000000000
-00000000000011111111000000000000
-00000000000000111100000000000000
-00000000000000111100000000000000
-00000000000000000000000000000000
-00000000000000000000000000000000
-00000000000000000000000000000000
-00000000000000000000000000000000
-00000000000000000000000000000000
-00000000000000000000000000000000
-00000000000000000000000000000000
-00000000000000000000000000000000`,
-  checker: `P1
-8 8
-00110011
-00110011
-11001100
-11001100
-00110011
-00110011
-11001100
-11001100`,
-  diagonal: 'P1\n4 4\n1000\n0100\n0010\n0001',
+  heart: pbmExample('A sixty-four-pixel heart', (x, y) => PBM_HEART[y >> 2][x >> 2]),
+  checker: pbmExample('Eight-by-eight checkerboard', (x, y) => ((x >> 3) + (y >> 3)) % 2),
+  diagonal: pbmExample('A one-pixel diagonal', (x, y) => Number(x === y)),
 };
 
 function pbmSource(value) {
@@ -100,12 +84,12 @@ function createPBMPlayground() {
       state = 'empty';
       status.textContent = 'Enter a P1 image or load an example.';
     } else {
-      // An invalid run advances 2049 units. Valid image widths are multiples
+      // An invalid run advances 4097 units. Valid image widths are multiples
       // of 64. This reads the font's result without interpreting the image.
       const advance = width(source);
-      state = advance >= 64 && advance <= 2048 && advance % 64 === 0 ? 'ready' : 'error';
+      state = advance >= 64 && advance <= 4096 && advance % 64 === 0 ? 'ready' : 'error';
       status.textContent = state === 'ready' ? 'Image rendered by the font. Edit a bit to change a pixel.' :
-        'Invalid PBM. Use P1, dimensions 1–32, and exactly width × height bits (0 or 1).';
+        'Invalid PBM. Use P1, dimensions 1–64, and exactly width × height bits (0 or 1).';
     }
     program.setAttribute('aria-invalid', String(state === 'error'));
   }
@@ -118,8 +102,8 @@ function createPBMPlayground() {
   document.querySelector('#clear').onclick = () => { program.value = ''; render(); };
   program.value = PBM_EXAMPLES.heart;
   render();
-  const ready = document.fonts.load('2048px PBMRenderer', 'P1 1 1 0').then(fonts => {
-    if (!fonts.length || width('P1 1 1 0') !== 64 || width('P1 1 1 01') !== 2049) {
+  const ready = document.fonts.load('4096px PBMRenderer', 'P1 1 1 0').then(fonts => {
+    if (!fonts.length || width('P1 1 1 0') !== 64 || width('P1 1 1 01') !== 4097) {
       throw new Error('Incompatible PBM font');
     }
     loaded = true;

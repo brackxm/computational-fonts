@@ -4,6 +4,7 @@
 
 import argparse
 from dataclasses import dataclass
+from math import ceil
 from pathlib import Path
 import re
 from xml.etree import ElementTree as ET
@@ -52,67 +53,73 @@ class Specimen:
     line_height: int | str | None = None
     compact: bool = False
     unbroken_run: bool = False
+    source_appendix: bool = False
+
+
+PBM_HEART = (
+    "0000000000000000",
+    "0001110000111000",
+    "0011111001111100",
+    "0111111111111110",
+    "0111111111111110",
+    "0111111111111110",
+    "0011111111111100",
+    "0001111111111000",
+    "0000111111110000",
+    "0000011111100000",
+    "0000001111000000",
+    "0000000110000000",
+    "0000000000000000",
+    "0000000000000000",
+    "0000000000000000",
+    "0000000000000000",
+)
 
 
 SPECS = (
     Specimen(
         "graphics/ppm", "ppm-font.ttf", "PPM / color in text",
         "The font reads this plain PPM image and draws its RGB pixels.",
-        (Example("Color bars", "P3 16 8 3 " + " ".join(
-            str(channel) for row in range(8)
+        (Example("Color bars · 64 × 64", "P3 64 64 3 " + " ".join(
+            str(channel) for row in range(64)
             for rgb in ((3, 0, 0), (3, 3, 0), (0, 3, 0), (0, 3, 3),
                         (0, 0, 3), (3, 0, 3), (3, 3, 3), (0, 0, 0))
-            for repeat in range(2) for channel in rgb),
+            for repeat in range(8) for channel in rgb),
             "Eight bars: red, yellow, green, cyan, blue, magenta, white and black."),),
         "Change an RGB triple in the blue block: 3 0 0 is red, 0 3 0 is green, "
         "and 0 0 3 is blue. Keep spaces between samples and the image in one paragraph.",
-        "Plain P3 only; dimensions 1–32, maxval 3, exactly three samples (0–3) per pixel in RGB order. "
+        "Plain P3 only; dimensions 1–64, maxval 3, exactly three samples (0–3) per pixel in RGB order. "
         "Use prepared single-line source without comments; one space between header fields. "
         "Colors use sRGB channel values. Color-font support is needed for RGB output.",
-        size=160, line_height="100%", compact=True, unbroken_run=True,
+        size=160, line_height="100%", compact=True, unbroken_run=True, source_appendix=True,
     ),
     Specimen(
         "graphics/pgm", "pgm-font.ttf", "PGM / shades in text",
         "The font reads this plain PGM image and draws sixteen shades of gray.",
-        (Example("Sixteen shades", "P2 16 8 15 " + " ".join(
-            str(value) for row in range(8) for value in range(16)),
-            "A sixteen-by-eight gradient from black to white."),),
+        (Example("Sixteen shades · 64 × 64", "P2 64 64 15 " + " ".join(
+            str(column // 4) for row in range(64) for column in range(64)),
+            "A sixty-four-by-sixty-four gradient from black to white."),),
         "Change a sample in the blue block to a number from 0 to 15. "
         "Try P2 2 2 15 0 5 10 15 for four shades. "
         "Keep spaces between samples and the image in one paragraph.",
-        "Plain P2 only; dimensions 1–32, maxval 15, exactly width × height samples (0 black, 15 white). "
+        "Plain P2 only; dimensions 1–64, maxval 15, exactly width × height samples (0 black, 15 white). "
         "Use prepared single-line source without comments; one space between header fields. "
         "Gray levels are evenly spaced display values. Color-font support is needed for solid grays.",
-        size=160, line_height="100%", compact=True, unbroken_run=True,
+        size=160, line_height="100%", compact=True, unbroken_run=True, source_appendix=True,
     ),
     Specimen(
         "graphics/pbm", "pbm-font.ttf", "PBM / an image in text",
         "The font reads this plain PBM image and draws its black-and-white pixels.",
-        (Example("A heart", "P1 32 32 " + "".join((
-            "00000000000000000000000000000000", "00000000000000000000000000000000",
-            "00000011111100000000111111000000", "00000011111100000000111111000000",
-            "00001111111111000011111111110000", "00001111111111000011111111110000",
-            "00111111111111111111111111111100", "00111111111111111111111111111100",
-            "00111111111111111111111111111100", "00111111111111111111111111111100",
-            "00111111111111111111111111111100", "00111111111111111111111111111100",
-            "00001111111111111111111111110000", "00001111111111111111111111110000",
-            "00000011111111111111111111000000", "00000011111111111111111111000000",
-            "00000000111111111111111100000000", "00000000111111111111111100000000",
-            "00000000001111111111110000000000", "00000000001111111111110000000000",
-            "00000000000011111111000000000000", "00000000000011111111000000000000",
-            "00000000000000111100000000000000", "00000000000000111100000000000000",
-            "00000000000000000000000000000000", "00000000000000000000000000000000",
-            "00000000000000000000000000000000", "00000000000000000000000000000000",
-            "00000000000000000000000000000000", "00000000000000000000000000000000",
-            "00000000000000000000000000000000", "00000000000000000000000000000000",
-        )), "A thirty-two-by-thirty-two image with a black heart on white."),),
+        (Example("A heart · 64 × 64", "P1 64 64 " + "".join(
+            PBM_HEART[row // 4][column // 4] for row in range(64) for column in range(64)),
+            "A sixty-four-by-sixty-four image with a black heart on white."),),
         "Change a 0 to 1 in the blue block to turn a white pixel black. "
         "Try P1 2 2 0110 for a two-by-two checkerboard. "
         "Keep the full image in one paragraph with the same formatting.",
-        "Plain P1 only; dimensions 1–32, with exactly width × height bits (0 white, 1 black). "
+        "Plain P1 only; dimensions 1–64, with exactly width × height bits (0 white, 1 black). "
         "Use one space between the header fields and raster; raster spaces are optional. "
         "Use prepared single-line source without comments.",
-        size=110, line_height="100%", compact=True, unbroken_run=True,
+        size=160, line_height="100%", compact=True, unbroken_run=True, source_appendix=True,
     ),
     Specimen(
         "languages/mini-basic", "mini-basic-font.ttf", "Mini BASIC / a language in a font",
@@ -371,6 +378,10 @@ def declare_fonts(root, family):
 
 def styles_xml(spec, family):
     compact = spec.compact or len(spec.examples) > 1
+    # Writer estimates line breaks before the input collapses through GSUB.
+    # Reserve one em per source character, plus room for editing the example.
+    shaping_margin = max(2000, ceil(max(len(e.source) for e in spec.examples)
+                                    * spec.size * 2.54 / 72) + 2000)
     root = document("styles")
     declare_fonts(root, family)
     styles = element(root, "office:styles")
@@ -396,16 +407,19 @@ def styles_xml(spec, family):
                      "fo:keep-with-next": "always"}, {"fo:font-size": "13pt"}),
         "Label": ({"fo:margin-bottom": "0.08cm", "fo:keep-with-next": "always"},
                   {"fo:font-size": "8pt", "fo:color": "#5E707C"}),
+        "SourceAppendix": ({"fo:break-before": "page", "fo:keep-with-next": "always",
+                            "fo:margin-bottom": "0.2cm"}, {"fo:font-size": "13pt"}),
         "Source": ({"fo:background-color": "#F1F3F5",
                     "fo:padding": "0.14cm" if compact else "0.2cm",
-                    "fo:margin-bottom": "0.15cm", "fo:keep-with-next": "always"},
+                    "fo:margin-bottom": "0.15cm",
+                    "fo:keep-with-next": "auto" if spec.source_appendix else "always"},
                    {"fo:font-size": "10pt"}),
         "Rendered": ({"fo:background-color": "#EAF3F8",
                       "fo:padding": "0.14cm" if compact else "0.2cm",
                       "fo:margin-bottom": "0.12cm", "fo:keep-with-next": "always",
                       **({"fo:line-height": spec.line_height if isinstance(spec.line_height, str)
                           else f"{spec.line_height}pt"} if spec.line_height else {}),
-                      **({"fo:margin-right": "-2000cm", "fo:padding": "0cm",
+                      **({"fo:margin-right": f"-{shaping_margin}cm", "fo:padding": "0cm",
                           "fo:background-color": "transparent"} if spec.unbroken_run else {})},
                      {"style:font-name": "ComputeFont", "fo:font-size": f"{spec.size}pt",
                       "style:letter-kerning": "false"}),
@@ -471,11 +485,14 @@ def content_xml(spec, family):
     paragraph("Eyebrow", "COMPUTATIONAL FONTS  /  " + spec.folder.split("/")[0].upper())
     paragraph("Title", spec.title)
     paragraph("Body", spec.description)
-    paragraph("Body", "Each pair is identical text in two embedded fonts. Edit the blue block directly.")
+    paragraph("Body", "Edit the blue block directly. Its complete plain-text copy is in the appendix."
+              if spec.source_appendix else
+              "Each pair is identical text in two embedded fonts. Edit the blue block directly.")
     for index, example in enumerate(spec.examples, 1):
         paragraph("Section", example.label)
-        paragraph("Label", "UNDERLYING TEXT / ROBOTO")
-        paragraph("Source", example.source)
+        if not spec.source_appendix:
+            paragraph("Label", "UNDERLYING TEXT / ROBOTO")
+            paragraph("Source", example.source)
         paragraph("Label", "SAME TEXT / COMPUTATIONAL FONT")
         if spec.unbroken_run:
             table = element(text, "table:table", {
@@ -494,6 +511,11 @@ def content_xml(spec, family):
     paragraph("Note", "Open in LibreOffice Writer. Keep each blue block on one line "
               "with consistent formatting and standard ligatures enabled. "
               "Copying it preserves the underlying text.")
+    if spec.source_appendix:
+        for example in spec.examples:
+            paragraph("SourceAppendix", example.label + " / plain text")
+            paragraph("Label", "UNDERLYING TEXT / ROBOTO")
+            paragraph("Source", example.source)
     return xml_bytes(root)
 
 

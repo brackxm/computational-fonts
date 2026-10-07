@@ -49,7 +49,7 @@ use ordered dithering based on weighted display brightness (0.299 R + 0.587 G +
 ## Limits
 
 - Plain PPM `P3` only; no raw PPM `P6`, PBM `P1` or PGM `P2`.
-- Width and height each range from 1 to 32. Dimensions use one or two decimal
+- Width and height each range from 1 to 64. Dimensions use one or two decimal
   digits; two-digit dimensions with a leading zero are accepted.
 - Fixed maxval `3`, giving four values per channel and 64 RGB colors.
   Other maximum values are unsupported.
@@ -64,13 +64,13 @@ use ordered dithering based on weighted display brightness (0.299 R + 0.587 G +
   PPM specification's BT.709 transfer function.
 - Direct font input needs the prepared header spacing above. It does not remove
   comments or combine paragraphs.
-- The playground accepts up to 8,192 source characters and ASCII outside comments.
-  This accommodates a full 32 × 32 image with single spaces between samples.
-  Its viewport reserves a 32 × 32 canvas; smaller images occupy the upper-left.
+- The playground accepts up to 32,768 source characters and ASCII outside comments.
+  This accommodates a full 64 × 64 image with single spaces between samples.
+  Its viewport reserves a 64 × 64 canvas; smaller images occupy the upper-left.
 - Required ligatures (`rlig`), mark-to-base (`mark`) and mark-to-mark (`mkmk`)
   positioning are needed. Color-font support is needed for RGB output.
 
-The bundled font is about 591 KB. It uses the [shared Netpbm generator](../shared/readme.md), also used by
+The bundled font is about 3.03 MB. It uses the [shared Netpbm generator](../shared/readme.md), also used by
 PBM and PGM. Its palette does not multiply the counting or positioning states.
 
 ## Build
@@ -83,7 +83,16 @@ python3 specimens/build.py --project graphics/ppm
 ```
 
 `--output PATH` selects a font destination relative to the current directory.
-Importing the builder does not write files.
+`--max-size N` sets the maximum width and height (1–64; default 64):
+
+```bash
+python3 graphics/ppm/build.py --max-size 64 --output /tmp/ppm-64.ttf
+```
+
+The Python wrapper accepts `build_font(output, max_size=64)` too. See the
+[shared builder documentation](../shared/readme.md) for custom-font metrics and
+host layout requirements. The bundled font, playground and ODT retain their
+64 × 64 default. Importing the builder does not write files.
 
 ## Tests
 
@@ -96,6 +105,7 @@ The font suite requires HarfBuzz's `hb-shape`. It checks every supported dimensi
 random RGB pixels, all 64 colors, channel order, separators, extreme rasters,
 incomplete and extra triples, malformed headers, invalid channels, palette
 values, monochrome primary-color dithers, color-independent counting, font-size
-budgets, regenerated tables and embedded ODT input. Controller tests cover
+budgets, regenerated tables and embedded ODT input. The 64 × 64 examples exercise
+full rasters and counter rollover. Controller tests cover
 lexical preparation, examples, input limits, errors and loading failures.
 Run PBM and PGM tests too when changing the shared builder.

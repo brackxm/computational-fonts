@@ -1,41 +1,27 @@
 // Copyright 2026 Michael Brackx
 // SPDX-License-Identifier: Apache-2.0
 
-const PPM_MAX_SOURCE = 8192;
+const PPM_MAX_SOURCE = 32768;
+
+const PPM_BARS = [
+  '3 0 0', '3 3 0', '0 3 0', '0 3 3', '0 0 3', '3 0 3', '3 3 3', '0 0 0',
+];
+
+function ppmExample(label, pixel) {
+  // Generate built-in text examples only; user input is interpreted by the font.
+  const rows = Array.from({length: 64}, (_, y) =>
+    Array.from({length: 64}, (_, x) => pixel(x, y)).join(' '));
+  return ['P3', `# ${label}`, '64 64', '3', ...rows].join('\n');
+}
+
 const PPM_EXAMPLES = {
-  bars: `P3
-# RGB color bars
-16 16
-3
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0
-3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 0 0 3 3 0 3 3 0 0 3 0 0 3 3 0 3 3 0 3 3 3 3 3 3 3 0 0 0 0 0 0`,
-  palette: `P3
-# All 64 RGB colors
-8 8
-3
-0 0 0 0 0 1 0 0 2 0 0 3 0 1 0 0 1 1 0 1 2 0 1 3
-0 2 0 0 2 1 0 2 2 0 2 3 0 3 0 0 3 1 0 3 2 0 3 3
-1 0 0 1 0 1 1 0 2 1 0 3 1 1 0 1 1 1 1 1 2 1 1 3
-1 2 0 1 2 1 1 2 2 1 2 3 1 3 0 1 3 1 1 3 2 1 3 3
-2 0 0 2 0 1 2 0 2 2 0 3 2 1 0 2 1 1 2 1 2 2 1 3
-2 2 0 2 2 1 2 2 2 2 2 3 2 3 0 2 3 1 2 3 2 2 3 3
-3 0 0 3 0 1 3 0 2 3 0 3 3 1 0 3 1 1 3 1 2 3 1 3
-3 2 0 3 2 1 3 2 2 3 2 3 3 3 0 3 3 1 3 3 2 3 3 3`,
-  checker: 'P3\n2 2\n3\n3 0 0   0 3 0\n0 0 3   3 3 3',
+  bars: ppmExample('Eight RGB color bars', x => PPM_BARS[x >> 3]),
+  palette: ppmExample('All 64 RGB colors in an eight-by-eight grid', (x, y) => {
+    const value = (y >> 3) * 8 + (x >> 3);
+    return `${value >> 4} ${(value >> 2) % 4} ${value % 4}`;
+  }),
+  checker: ppmExample('Red and green above blue and white', (x, y) =>
+    ['3 0 0', '0 3 0', '0 0 3', '3 3 3'][(y >> 5) * 2 + (x >> 5)]),
 };
 
 function ppmSource(value) {
@@ -87,12 +73,12 @@ function createPPMPlayground() {
       state = 'empty';
       status.textContent = 'Enter a P3 image or load an example.';
     } else {
-      // An invalid run advances 2049 units. Valid image widths are multiples
+      // An invalid run advances 4097 units. Valid image widths are multiples
       // of 64. This reads the font's result without interpreting the image.
       const advance = width(source);
-      state = advance >= 64 && advance <= 2048 && advance % 64 === 0 ? 'ready' : 'error';
+      state = advance >= 64 && advance <= 4096 && advance % 64 === 0 ? 'ready' : 'error';
       status.textContent = state === 'ready' ? 'Image rendered by the font. Edit RGB samples to change a color.' :
-        'Invalid PPM. Use P3, dimensions 1–32, maxval 3, and three samples (0–3) per pixel.';
+        'Invalid PPM. Use P3, dimensions 1–64, maxval 3, and three samples (0–3) per pixel.';
     }
     program.setAttribute('aria-invalid', String(state === 'error'));
   }
@@ -105,8 +91,8 @@ function createPPMPlayground() {
   document.querySelector('#clear').onclick = () => { program.value = ''; render(); };
   program.value = PPM_EXAMPLES.bars;
   render();
-  const ready = document.fonts.load('2048px PPMRenderer', 'P3 1 1 3 0 0 0').then(fonts => {
-    if (!fonts.length || width('P3 1 1 3 0 0 0') !== 64 || width('P3 1 1 3 0 0 0 1') !== 2049) {
+  const ready = document.fonts.load('4096px PPMRenderer', 'P3 1 1 3 0 0 0').then(fonts => {
+    if (!fonts.length || width('P3 1 1 3 0 0 0') !== 64 || width('P3 1 1 3 0 0 0 1') !== 4097) {
       throw new Error('Incompatible PPM font');
     }
     loaded = true;

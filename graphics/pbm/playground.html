@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>PBM images · computational fonts</title>
 <style>
-@font-face{font-family:PBMRenderer;src:url('./pbm-font.ttf?v=shared-counter') format('truetype');font-display:block}
+@font-face{font-family:PBMRenderer;src:url('./pbm-font.ttf?v=64-grid') format('truetype');font-display:block}
 :root{font-family:system-ui,sans-serif;color-scheme:light dark}
 body{max-width:1000px;margin:40px auto;padding:0 20px}h1{margin-bottom:.2em}.muted{opacity:.7}
 button,select,textarea{font:inherit}button,select{padding:9px 14px}button{cursor:pointer}
@@ -14,10 +14,10 @@ button,select,textarea{font:inherit}button,select{padding:9px 14px}button{cursor
 label{display:block;margin-bottom:8px}textarea{box-sizing:border-box;width:100%;padding:14px;font-family:ui-monospace,monospace;line-height:1.4;resize:vertical}
 .image{border:1px solid #8885;border-radius:12px;background:#fff;padding:16px;color:#000}
 .image svg{display:block;width:100%;aspect-ratio:1}
-.pbm{font-family:PBMRenderer;font-size:2048px;font-feature-settings:"rlig" 1,"mark" 1,"mkmk" 1;font-kerning:none;white-space:pre;fill:#000}
+.pbm{font-family:PBMRenderer;font-size:4096px;font-feature-settings:"rlig" 1,"mark" 1,"mkmk" 1;font-kerning:none;white-space:pre;fill:#000}
 code{word-break:break-all}.source{max-height:100px;overflow:auto;padding:12px;border:1px solid #8885;border-radius:8px}
 .probe-holder{position:fixed;top:0;left:0;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none}
-.probe{display:inline-block;width:max-content;white-space:pre;font:2048px/1 PBMRenderer;font-feature-settings:"rlig" 1,"mark" 1,"mkmk" 1;font-kerning:none;letter-spacing:normal;word-spacing:normal}
+.probe{display:inline-block;width:max-content;white-space:pre;font:4096px/1 PBMRenderer;font-feature-settings:"rlig" 1,"mark" 1,"mkmk" 1;font-kerning:none;letter-spacing:normal;word-spacing:normal}
 @media(max-width:650px){.workspace{grid-template-columns:1fr}.image{max-width:420px}}
 </style>
 </head>
@@ -26,7 +26,7 @@ code{word-break:break-all}.source{max-height:100px;overflow:auto;padding:12px;bo
 <p class="muted">A text image drawn by an OpenType font. The font reads the dimensions, checks the pixels and renders the bitmap.</p>
 <div class="controls">
   <label for="example">Example</label>
-  <select id="example"><option value="heart">Heart · 32 × 32</option><option value="checker">Checkerboard · 8 × 8</option><option value="diagonal">Diagonal · 4 × 4</option></select>
+  <select id="example"><option value="heart">Heart · 64 × 64</option><option value="checker">Checkerboard · 64 × 64</option><option value="diagonal">Diagonal · 64 × 64</option></select>
   <button id="load-example" type="button">Load example</button>
   <button id="clear" type="button">Clear</button>
 </div>
@@ -35,12 +35,12 @@ code{word-break:break-all}.source{max-height:100px;overflow:auto;padding:12px;bo
     <textarea id="program" rows="21" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="format status"></textarea>
   </div>
   <div><label>Font output</label>
-    <div class="image"><svg viewBox="0 0 2048 2048" role="img" aria-label="PBM bitmap rendered from the editable source"><text id="drawing" class="pbm" x="0" y="2048"></text></svg></div>
+    <div class="image"><svg viewBox="0 0 4096 4096" role="img" aria-label="PBM bitmap rendered from the editable source"><text id="drawing" class="pbm" x="0" y="4096"></text></svg></div>
     <p id="status" role="status">Loading PBM font…</p>
   </div>
 </div>
-<p id="format"><code>P1</code>, width and height, then pixels: <code>0</code> is white and <code>1</code> is black. Each dimension is 1–32. Pixels run left to right, top to bottom; spaces between bits are optional.</p>
-<p class="muted">The page removes # comments and folds whitespace for a single shaping run. It accepts up to 8,192 source characters. Extra pixels and trailing data are rejected. The preview reserves a 32 × 32 canvas.</p>
+<p id="format"><code>P1</code>, width and height, then pixels: <code>0</code> is white and <code>1</code> is black. Each dimension is 1–64. Pixels run left to right, top to bottom; spaces between bits are optional.</p>
+<p class="muted">The page removes # comments and folds whitespace for a single shaping run. It accepts up to 16,384 source characters. Extra pixels and trailing data are rejected. The preview reserves a 64 × 64 canvas.</p>
 <details><summary>Prepared font input</summary><p class="source"><code id="raw"></code></p></details>
 <p><a href="pbm.odt">Editable ODT specimen</a> · <a href="pbm-font.ttf">Download font</a> · <a href="https://netpbm.sourceforge.net/doc/pbm.html">PBM specification</a></p>
 <script src="pbm-controls.js"></script>

@@ -12,10 +12,14 @@ from fontTools.fontBuilder import FontBuilder
 from fontTools.otlLib.builder import buildAnchor, buildLookup, buildMarkBasePosSubtable
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 
-MAX_SIZE, CELL, UPM = 32, 64, 2048
-MAX_PIXELS = MAX_SIZE * MAX_SIZE
-TOP = MAX_SIZE * CELL
-ERROR_ADVANCE = TOP + 1
+MAX_SIZE, CELL = 64, 64
+MAX_SIZE_LIMIT = 64
+
+
+def validate_max_size(max_size):
+    if type(max_size) is not int or not 1 <= max_size <= MAX_SIZE_LIMIT:
+        raise ValueError(f"max_size must be an integer from 1 to {MAX_SIZE_LIMIT}")
+    return max_size
 
 
 def rectangle(pen, x, y, width, height):
@@ -45,7 +49,7 @@ PPM = ImageFormat("PPM", 3,
                   tuple(f"rgb_{r}_{g}_{b}_cell" for r, g, b in product(range(4), repeat=3)), 3, 3)
 
 
-def error_glyph(format):
+def error_glyph(format, top):
     # Original five-by-seven lettering; no external font source is needed.
     letters = {
         "I": (31, 4, 4, 4, 4, 4, 31), "N": (17, 25, 25, 21, 19, 19, 17),
@@ -56,11 +60,12 @@ def error_glyph(format):
         "G": (14, 17, 16, 23, 17, 17, 14),
     }
     pen = TTGlyphPen(None)
+    unit = min(30, top / 65)
     for column, letter in enumerate(f"INVALID {format.name}"):
         for row, bits in enumerate(letters.get(letter, ())):
             for bit in range(5):
                 if bits & (1 << (4 - bit)):
-                    rectangle(pen, (column * 6 + bit) * 30, TOP - (row + 1) * 30, 30, 30)
+                    rectangle(pen, (column * 6 + bit) * unit, top - (row + 1) * unit, unit, unit)
     return pen.glyph()
 
 
@@ -93,7 +98,12 @@ def sample_features(format):
     return rules
 
 
-def build_font(output, format=PBM):
+def build_font(output, format=PBM, *, max_size=MAX_SIZE):
+    """Build a font for dimensions 1..max_size; each build has its own bounds."""
+    validate_max_size(max_size)
+    max_pixels = max_size * max_size
+    top = upm = max_size * CELL
+    error_advance = top + 1
     glyphs, metrics, layers = {}, {}, {}
 
     def add(name, glyph=None, advance=0):
@@ -106,7 +116,7 @@ def build_font(output, format=PBM):
     raw = [".notdef", "raw_invalid", "raw_P", "space", *(f"digit_{i}" for i in range(10))]
     for name in [*raw, "hidden", "eof"]:
         add(name)
-    add("error", error_glyph(format), ERROR_ADVANCE)
+    add("error", error_glyph(format, top), error_advance)
     pen = TTGlyphPen(None)
     rectangle(pen, 0, 0, CELL, CELL)
     add("ink_cell", pen.glyph())
@@ -133,22 +143,22 @@ def build_font(output, format=PBM):
         palette = list(format.colors)
         layers["black_cell"] = [("ink_cell", 1)]
     headers, frames, boards, backgrounds = [], [], [], []
-    for width in range(1, MAX_SIZE + 1):
+    for width in range(1, max_size + 1):
         board = f"board_{width}"
         boards.append(board)
         add(board, advance=width * CELL)
-        for height in range(1, MAX_SIZE + 1):
+        for height in range(1, max_size + 1):
             header, frame = f"header_{width}_{height}", f"frame_{width}_{height}"
             headers.append(header)
             frames.append(frame)
             pen = TTGlyphPen(glyphs)
             pen.addComponent("error", (1, 0, 0, 1, 0, 0))
-            add(header, pen.glyph(), ERROR_ADVANCE)
+            add(header, pen.glyph(), error_advance)
             add(frame)
             pen = TTGlyphPen(None)
             # The paper follows the advancing board. Its negative x origin
             # brings it back to the board's left edge without a GPOS anchor.
-            rectangle(pen, -width * CELL, TOP - height * CELL, width * CELL, height * CELL)
+            rectangle(pen, -width * CELL, top - height * CELL, width * CELL, height * CELL)
             background = f"background_{width}_{height}"
             paper = f"paper_{width}_{height}"
             backgrounds.append(background)
@@ -156,17 +166,20 @@ def build_font(output, format=PBM):
             add(background)
             layers[background] = [(paper, 0)]
 
-    tags = [f"pixel_{i}" for i in range(MAX_PIXELS)]
-    ends = [f"end_{i}" for i in range(MAX_PIXELS)]
-    drawn = [f"draw_{i}" for i in range(MAX_PIXELS)]
+    tags = [f"pixel_{i}" for i in range(max_pixels)]
+    ends = [f"end_{i}" for i in range(max_pixels)]
+    drawn = [f"draw_{i}" for i in range(max_pixels)]
     samples = [f"sample_{i}" for i in range(len(format.colors))]
     tones = [f"tone_{i}" for i in range(len(format.colors))]
     channels = [f"channel_{i}" for i in range(format.maxval + 1)] if format.channels == 3 else []
-    for name in ["cursor", *channels, *tags, *ends, *drawn, *samples, *tones,
-                 *(f"index_{i}" for i in range(MAX_PIXELS))]:
+    lows = [f"low_{i}" for i in range(max_size)]
+    highs = [f"high_{i}" for i in range(max_size)]
+    pending = ["cursor", "high_cursor", *lows, *highs, *channels]
+    for name in [*pending, *tags, *ends, *drawn, *samples, *tones,
+                 *(f"index_{i}" for i in range(max_pixels))]:
         add(name)
 
-    builder = FontBuilder(UPM, isTTF=True)
+    builder = FontBuilder(upm, isTTF=True)
     builder.setupGlyphOrder(list(glyphs))
     cmap = {code: "raw_invalid" for code in range(32, 127)}
     cmap.update({ord("P"): "raw_P", ord(" "): "space"})
@@ -174,7 +187,7 @@ def build_font(output, format=PBM):
     builder.setupCharacterMap(cmap)
     builder.setupGlyf(glyphs)
     builder.setupHorizontalMetrics(metrics)
-    builder.setupHorizontalHeader(ascent=TOP, descent=0)
+    builder.setupHorizontalHeader(ascent=top, descent=0)
     builder.setupNameTable({
         "familyName": f"{format.name} Renderer", "styleName": "Regular", "fullName": f"{format.name} Renderer",
         "psName": f"{format.name}Renderer-Regular", "uniqueFontIdentifier": f"{format.name}Renderer-1.2",
@@ -183,7 +196,7 @@ def build_font(output, format=PBM):
         "licenseDescription": "Licensed under the Apache License, Version 2.0",
         "licenseInfoURL": "https://www.apache.org/licenses/LICENSE-2.0",
     })
-    builder.setupOS2(sTypoAscender=TOP, sTypoDescender=0, usWinAscent=TOP,
+    builder.setupOS2(sTypoAscender=top, sTypoDescender=0, usWinAscent=top,
                      usWinDescent=0, fsType=0)
     builder.setupPost()
     builder.setupMaxp()
@@ -200,9 +213,10 @@ def build_font(output, format=PBM):
         group("RAW", raw), group("ACTIVE_RAW", active_raw),
         group("HEADER", headers), group("FRAME", frames), group("BOARD", boards),
         group("TAG", tags), group("END", ends), group("DRAW", drawn),
-        group("SAMPLE", samples), group("TONE", tones), group("PENDING", ["cursor", *channels]),
-        group("MARKS", [*raw, "hidden", "eof", "cursor", *channels, *tags, *ends, *drawn, *samples, *tones, *backgrounds,
-                        *(f"index_{i}" for i in range(MAX_PIXELS)), *format.cells]),
+        group("SAMPLE", samples), group("TONE", tones), group("PENDING", pending),
+        group("LOW", lows), group("LOW_REST", lows[1:]), group("HIGH", highs),
+        group("MARKS", [*raw, "hidden", "eof", *pending, *tags, *ends, *drawn, *samples, *tones, *backgrounds,
+                        *(f"index_{i}" for i in range(max_pixels)), *format.cells]),
         "table GDEF { GlyphClassDef [error @HEADER @FRAME @BOARD], , @MARKS, ; } GDEF;",
         "lookup APPEND_END {",
         *(f"sub {name} by {name} eof;" for name in raw),
@@ -218,41 +232,63 @@ def build_font(output, format=PBM):
         "} START_OF_RUN;",
         "lookup HEADER useExtension {",
     ]
-    for width in range(1, MAX_SIZE + 1):
-        for height in range(1, MAX_SIZE + 1):
+    for width in range(1, max_size + 1):
+        for height in range(1, max_size + 1):
             for w in (str(width), f"{width:02}") if width < 10 else (str(width),):
                 for h in (str(height), f"{height:02}") if height < 10 else (str(height),):
                     dimensions = " space ".join(" ".join(f"digit_{d}" for d in n) for n in (w, h))
                     maxval = "" if format.maxval is None else " ".join(f"digit_{d}" for d in str(format.maxval)) + " space "
                     feature.append(f"sub error raw_P digit_{format.magic} space {dimensions} space {maxval}by header_{width}_{height};")
+        # All headers start with the same glyph. FontTools cannot automatically
+        # split that single ligature set when its 16-bit offsets overflow.
+        if width < max_size:
+            feature.append("subtable;")
     feature.append("} HEADER;")
     feature.extend(sample_features(format))
     sample_lookups = "lookup SAMPLES; " + ("lookup RGB_TRIPLES; " if format.channels == 3 else "")
     feature.extend([
         "lookup EXPAND_SAMPLES {",
-        *(f"sub sample_{i} by cursor tone_{i};" for i in range(len(format.colors))),
+        *(f"sub sample_{i} by cursor high_cursor tone_{i};" for i in range(len(format.colors))),
         "} EXPAND_SAMPLES;",
     ])
-    for index in range(MAX_PIXELS):
-        feature.append(f"lookup NUMBER_{index} {{ sub cursor by pixel_{index}; }} NUMBER_{index};")
+    # Count in two radix-max_size passes. Only the low counter wraps; the high
+    # counter stops at its limit, leaving pending glyphs to reject excess input.
+    # This needs 2*max_size helpers rather than one helper for every pixel.
+    for index in range(max_size):
+        feature.append(f"lookup LOW_{index} {{ sub cursor by low_{index}; }} LOW_{index};")
+        feature.append(f"lookup HIGH_{index} {{ sub high_cursor by high_{index}; }} HIGH_{index};")
     feature.extend([
-        "lookup NUMBER useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @TAG cursor eof];",
-        "sub @HEADER cursor' lookup NUMBER_0;",
-        *(f"sub pixel_{i - 1} cursor' lookup NUMBER_{i};" for i in range(1, MAX_PIXELS)),
-        "} NUMBER;",
-        "lookup FINISH useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @TAG cursor eof];",
-        *(f"sub pixel_{i} eof by end_{i};" for i in range(MAX_PIXELS)),
+        "lookup NUMBER_LOW useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @LOW cursor eof];",
+        "sub @HEADER cursor' lookup LOW_0;",
+        *(f"sub low_{(i - 1) % max_size} cursor' lookup LOW_{i};" for i in range(max_size)),
+        "} NUMBER_LOW;",
+        "lookup NUMBER_HIGH useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @LOW @HIGH cursor high_cursor eof];",
+        "sub @HEADER low_0 high_cursor' lookup HIGH_0;",
+        *(f"sub high_{i} @LOW_REST high_cursor' lookup HIGH_{i};" for i in range(max_size) if max_size > 1),
+        *(f"sub high_{i - 1} low_0 high_cursor' lookup HIGH_{i};" for i in range(1, max_size)),
+        "} NUMBER_HIGH;",
+        "lookup NUMBER_PIXEL useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @PENDING eof];",
+        *(f"sub low_{i % max_size} high_{i // max_size} by pixel_{i};" for i in range(max_pixels)),
+        "} NUMBER_PIXEL;",
+        "lookup FINISH useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @TAG @PENDING eof];",
+        *(f"sub pixel_{i} eof by end_{i};" for i in range(max_pixels)),
         "} FINISH;",
         # Colors and counted pixels are skipped. Unparsed raw characters,
         # uncounted cursors and the last counted pixel remain barriers.
-        "lookup VALIDATE useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @END cursor eof];",
-        *(f"sub header_{w}_{h}' end_{w * h - 1} by frame_{w}_{h};"
-          for w in range(1, MAX_SIZE + 1) for h in range(1, MAX_SIZE + 1)),
+        # Explicitly share the substitution: implicit contextual substitutions
+        # make feaLib repeatedly search growing mappings for a compatible rule.
+        "lookup VALIDATE_HEADER useExtension {",
+        *(f"sub header_{w}_{h} by frame_{w}_{h};"
+          for w in range(1, max_size + 1) for h in range(1, max_size + 1)),
+        "} VALIDATE_HEADER;",
+        "lookup VALIDATE useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @END @PENDING eof];",
+        *(f"sub header_{w}_{h}' lookup VALIDATE_HEADER end_{w * h - 1};"
+          for w in range(1, max_size + 1) for h in range(1, max_size + 1)),
         "} VALIDATE;",
         "lookup DRAW_PIXEL {",
-        *(f"sub {prefix}_{i} by draw_{i};" for prefix in ("pixel", "end") for i in range(MAX_PIXELS)),
+        *(f"sub {prefix}_{i} by draw_{i};" for prefix in ("pixel", "end") for i in range(max_pixels)),
         "} DRAW_PIXEL;",
-        "lookup DRAW useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @TAG @END @DRAW cursor eof];",
+        "lookup DRAW useExtension { lookupflag UseMarkFilteringSet [@ACTIVE_RAW @TAG @END @DRAW @PENDING eof];",
         "sub @FRAME [@TAG @END]' lookup DRAW_PIXEL;",
         "sub @DRAW [@TAG @END]' lookup DRAW_PIXEL;",
         "} DRAW;",
@@ -264,26 +300,26 @@ def build_font(output, format=PBM):
         "} CLEANUP;",
         "lookup LAYOUT useExtension {",
         *(f"sub frame_{w}_{h} by board_{w} background_{w}_{h};"
-          for w in range(1, MAX_SIZE + 1) for h in range(1, MAX_SIZE + 1)),
-        *(f"sub draw_{i} by index_{i};" for i in range(MAX_PIXELS)),
+          for w in range(1, max_size + 1) for h in range(1, max_size + 1)),
+        *(f"sub draw_{i} by index_{i};" for i in range(max_pixels)),
         "} LAYOUT;",
-        "feature rlig { lookup END_OF_RUN; lookup START_OF_RUN; lookup HEADER; " + sample_lookups + "lookup EXPAND_SAMPLES; lookup NUMBER; lookup FINISH; lookup VALIDATE; lookup DRAW; lookup COLOR; lookup CLEANUP; lookup LAYOUT; } rlig;",
+        "feature rlig { lookup END_OF_RUN; lookup START_OF_RUN; lookup HEADER; " + sample_lookups + "lookup EXPAND_SAMPLES; lookup NUMBER_LOW; lookup NUMBER_HIGH; lookup NUMBER_PIXEL; lookup FINISH; lookup VALIDATE; lookup DRAW; lookup COLOR; lookup CLEANUP; lookup LAYOUT; } rlig;",
         # A placeholder creates the standard mark feature and script wiring.
         "markClass index_0 <anchor 0 0> @ORIGIN;",
         "feature mark { pos base board_1 <anchor 0 0> mark @ORIGIN; } mark;",
         f"markClass [{' '.join(format.cells)}] <anchor 0 0> @CELL;",
         "feature mkmk {",
-        *(f"pos mark index_{i} <anchor 0 0> mark @CELL;" for i in range(MAX_PIXELS)),
+        *(f"pos mark index_{i} <anchor 0 0> mark @CELL;" for i in range(max_pixels)),
         "} mkmk;",
     ])
     addOpenTypeFeaturesFromString(font, "\n".join(feature))
     subtables = []
-    for width in range(1, MAX_SIZE + 1):
+    for width in range(1, max_size + 1):
         # Only indices that fit this width can occur. Narrow boards therefore
         # need fewer mark classes and never get out-of-range y coordinates.
-        marks = {f"index_{i}": (i, buildAnchor(0, 0)) for i in range(width * MAX_SIZE)}
-        anchors = {i: buildAnchor(i % width * CELL, TOP - (i // width + 1) * CELL)
-                   for i in range(width * MAX_SIZE)}
+        marks = {f"index_{i}": (i, buildAnchor(0, 0)) for i in range(width * max_size)}
+        anchors = {i: buildAnchor(i % width * CELL, top - (i // width + 1) * CELL)
+                   for i in range(width * max_size)}
         bases = {f"board_{width}": anchors}
         subtables.append(buildMarkBasePosSubtable(marks, bases, font.getReverseGlyphMap()))
     # One advancing base per width shares positioning across every height.
@@ -297,4 +333,4 @@ def build_font(output, format=PBM):
     output.parent.mkdir(parents=True, exist_ok=True)
     font.save(output)
     font.close()
-    print(f"Saved {output}: plain {format.name}, dimensions 1–{MAX_SIZE}, up to {MAX_PIXELS} pixels")
+    print(f"Saved {output}: plain {format.name}, dimensions 1–{max_size}, up to {max_pixels} pixels")

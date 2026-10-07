@@ -22,6 +22,18 @@ test('preparation strips comments and folds only PGM whitespace', () => {
   assert.throws(() => pgmSource(' '.repeat(PGM_MAX_SOURCE + 1)), /at most/);
 });
 
+test('all examples contain a complete 64 × 64 raster within the source limit', () => {
+  for (const [name, example] of Object.entries(PGM_EXAMPLES)) {
+    assert.ok(example.length <= PGM_MAX_SOURCE, name);
+    const tokens = pgmSource(example).split(' ');
+    assert.deepEqual(tokens.slice(0, 3), ['P2', '64', '64'], name);
+    assert.equal(tokens[3], '15');
+    const samples = tokens.slice(4);
+    assert.equal(samples.length, 4096, name);
+    assert.ok(samples.every(value => /^\d+$/.test(value) && Number(value) <= 15), name);
+  }
+});
+
 function harness({missing = false, incompatible = false, rejected = false} = {}) {
   function element() {
     return {value: '', textContent: '', attributes: {}, listeners: {},
@@ -30,7 +42,7 @@ function harness({missing = false, incompatible = false, rejected = false} = {})
       getBoundingClientRect() {
         if (incompatible) return {width: 0};
         const output = execFileSync('hb-shape', [path.join(__dirname, 'pgm-font.ttf'),
-          this.textContent, '--output-format=json'], {encoding: 'utf8'});
+          this.textContent, '--output-format=json'], {encoding: 'utf8', maxBuffer: 8 * 1024 * 1024});
         return {width: JSON.parse(output).reduce((total, glyph) => total + glyph.ax, 0)};
       },
     };
@@ -68,13 +80,13 @@ test('controller uses the bundled font for examples, invalid images and edits', 
   assert.equal(h.session.state, 'error');
   assert.match(e.status.textContent, /Invalid PGM/);
   assert.equal(e.program.attributes['aria-invalid'], 'true');
-  h.input('P2 17 1 15 ' + '0 '.repeat(17));
-  assert.equal(h.session.state, 'ready', 'Widths above the old maximum are supported');
-  h.input('P2 32 32 15 ' + '15 '.repeat(1024));
-  assert.equal(h.session.state, 'ready', 'The full 32 × 32 raster is supported');
-  h.input('P2 32 32 15 ' + '0 '.repeat(1025));
-  assert.equal(h.session.state, 'error', 'Extra pixels are rejected at the new maximum');
   h.input('P2 33 1 15 ' + '0 '.repeat(33));
+  assert.equal(h.session.state, 'ready', 'Widths above the old maximum are supported');
+  h.input('P2 64 64 15 ' + '15 '.repeat(4096));
+  assert.equal(h.session.state, 'ready', 'The full 64 × 64 raster is supported');
+  h.input('P2 64 64 15 ' + '0 '.repeat(4097));
+  assert.equal(h.session.state, 'error', 'Extra pixels are rejected at the new maximum');
+  h.input('P2 65 1 15 ' + '0 '.repeat(65));
   assert.equal(h.session.state, 'error');
   h.input('P2 1 1 15 0');
   assert.equal(h.session.state, 'ready');

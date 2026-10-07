@@ -49,21 +49,21 @@ The outlines and lettering are original; no base font is imported.
 ## Limits
 
 - Plain PBM `P1` only; no raw PBM `P4`, grayscale `P2` or RGB `P3`.
-- Width and height each range from 1 to 32. Decimal dimensions use one or two
+- Width and height each range from 1 to 64. Decimal dimensions use one or two
   digits; two-digit dimensions with a leading zero are accepted.
 - Exactly width × height raster bits. Extra bits and trailing non-whitespace
   data are rejected, although the PBM specification allows trailing junk
   separated from the raster by whitespace.
 - The direct font input requires the prepared header spacing described above.
   It does not strip comments or combine separate paragraphs.
-- The playground accepts at most 8,192 source characters and ASCII outside
-  comments. Its fixed viewport reserves a 32 × 32 canvas; smaller images occupy
+- The playground accepts at most 16,384 source characters and ASCII outside
+  comments. Its fixed viewport reserves a 64 × 64 canvas; smaller images occupy
   the upper-left portion.
 - The font needs required ligatures (`rlig`), mark-to-base positioning (`mark`)
   and mark-to-mark positioning (`mkmk`).
   Applications may differ in color-font and shaping support.
 
-The bundled font is about 571 KB, with 1,024 available raster positions.
+The bundled font is about 2.99 MB, with 4,096 available raster positions.
 Its positioning tables cover only indices that fit each width.
 Its thin builder uses the [shared Netpbm generator](../shared/readme.md),
 also used by PGM.
@@ -78,7 +78,16 @@ python3 specimens/build.py --project graphics/pbm
 ```
 
 `--output PATH` selects a font destination relative to the current directory.
-Importing the builder does not write files.
+`--max-size N` sets the maximum width and height (1–64; default 64):
+
+```bash
+python3 graphics/pbm/build.py --max-size 64 --output /tmp/pbm-64.ttf
+```
+
+The Python wrapper accepts `build_font(output, max_size=64)` too. See the
+[shared builder documentation](../shared/readme.md) for custom-font metrics and
+host layout requirements. The bundled font, playground and ODT retain their
+64 × 64 default. Importing the builder does not write files.
 
 ## Tests
 

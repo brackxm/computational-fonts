@@ -19,17 +19,17 @@ from fontTools.ttLib import TTFont
 HERE = Path(__file__).resolve().parent
 SHAPER = shutil.which("hb-shape")
 sys.path.insert(0, str(HERE.parent / "shared"))
-from testing import FontFixture, odf_text
+from testing import BuilderOptionsTests, FontFixture, odf_text
 
 
-class BuildTests(FontFixture, unittest.TestCase):
+class BuildTests(BuilderOptionsTests, FontFixture, unittest.TestCase):
     project = HERE
 
     def test_safe_import(self):
         spec = importlib.util.spec_from_file_location("pgm_builder", HERE / "build.py")
         module = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(module)
-        self.assertEqual(module.MAX_SIZE, 32)
+        self.assertEqual(module.MAX_SIZE, 64)
         self.assertFalse((self.directory / "pgm-font.ttf").exists())
 
     def test_bundled_font_matches_build(self):
@@ -43,12 +43,12 @@ class BuildTests(FontFixture, unittest.TestCase):
             self.assertIn("Michael Brackx", font["name"].getDebugName(0))
             self.assertIn("Apache License, Version 2.0", font["name"].getDebugName(13))
             self.assertEqual(font["OS/2"].fsType, 0)
-            self.assertEqual(font["head"].unitsPerEm, 2048)
-            self.assertLess(self.generated.stat().st_size, 700_000)
-            self.assertLess(len(font.getGlyphOrder()), 9_500)
-            self.assertLess(len(font["GSUB"].compile(font)), 180_000)
-            self.assertLess(len(font["GPOS"].compile(font)), 260_000)
-            self.assertLess(font["GSUB"].table.LookupList.LookupCount, 1150)
+            self.assertEqual(font["head"].unitsPerEm, 4096)
+            self.assertLess(self.generated.stat().st_size, 3_525_000)
+            self.assertLess(len(font.getGlyphOrder()), 33_500)
+            self.assertLess(len(font["GSUB"].compile(font)), 525_000)
+            self.assertLess(len(font["GPOS"].compile(font)), 1_700_000)
+            self.assertLess(font["GSUB"].table.LookupList.LookupCount, 175)
             self.assertEqual(len(font["CPAL"].palettes[0]), 17)
             for value in range(16):
                 color = font["CPAL"].palettes[0][value + 1]
@@ -63,8 +63,8 @@ class BuildTests(FontFixture, unittest.TestCase):
                     self.assertEqual(font["glyf"][glyph].numberOfContours, 0)
             # Counting state stays independent of the 16 color values.
             for prefix in ("pixel", "end", "draw", "index"):
-                self.assertEqual(sum(g.startswith(prefix + "_") for g in font.getGlyphOrder()), 1024)
-            self.assertEqual(len(font["GPOS"].table.LookupList.Lookup[0].SubTable), 32)
+                self.assertEqual(sum(g.startswith(prefix + "_") for g in font.getGlyphOrder()), 4096)
+            self.assertEqual(len(font["GPOS"].table.LookupList.Lookup[0].SubTable), 64)
             self.assertEqual(font["GPOS"].table.LookupList.Lookup[1].SubTable[0].Mark1Array.MarkCount, 16)
 
     @unittest.skipUnless(SHAPER, "hb-shape is required")
@@ -79,6 +79,7 @@ class BuildTests(FontFixture, unittest.TestCase):
             self.assertEqual(len(sources), 2)
             self.assertEqual(sources[0], sources[1])
             width, height, maxval = map(int, sources[0].split()[1:4])
+            self.assertEqual((width, height), (64, 64))
             self.assertEqual(maxval, 15)
             self.assertEqual(len(sources[0].split()[4:]), width * height)
             output = json.loads(subprocess.check_output(
@@ -109,14 +110,14 @@ class ShapingTests(FontFixture, unittest.TestCase):
             self.assertEqual(marker["g"], f"index_{i}")
             self.assertEqual(cell["g"], f"gray_{value}_cell")
             self.assertEqual((cell["dx"] + width * 64, cell["dy"]),
-                             (i % width * 64, 2048 - (i // width + 1) * 64))
+                             (i % width * 64, 4096 - (i // width + 1) * 64))
             self.assertEqual((marker["dx"], marker["dy"]), (cell["dx"], cell["dy"]))
             self.assertEqual(cell["ax"], 0)
 
     def test_every_dimension_and_random_shades(self):
         rng = random.Random(402)
-        for width in range(1, 33):
-            for height in range(1, 33):
+        for width in range(1, 65):
+            for height in range(1, 65):
                 with self.subTest(width=width, height=height):
                     samples = [rng.randrange(16) for _ in range(width * height)]
                     self.assert_image(f"P2 {width} {height} 15 " + " ".join(map(str, samples)),
@@ -127,7 +128,7 @@ class ShapingTests(FontFixture, unittest.TestCase):
             self.assert_image(f"P2 1 1 15 {value}", 1, 1, [value])
         for source in ("P2 02 02 15 0 5 10 15", "P2 2 2 15 0  5   10 15   "):
             self.assert_image(source, 2, 2, [0, 5, 10, 15])
-        for width, height in ((1, 32), (32, 1), (32, 32)):
+        for width, height in ((1, 64), (64, 1), (64, 64)):
             for value in (0, 15):
                 samples = [value] * (width * height)
                 self.assert_image(f"P2 {width} {height} 15 " + " ".join(map(str, samples)),
@@ -138,16 +139,16 @@ class ShapingTests(FontFixture, unittest.TestCase):
                  "P2 1 1 15 1.0", "P2 1 1 15 015", "P2 1 1 15 00", "P2 1 1 15 1x",
                  "P2 1 1 15 0 0", "P2 2 1 15 10", "P2 2 1 15 015", "P2 2 1 15 1 0 0",
                  "P2 2 2 15 0 1 2", "P2 2 2 15 0 1 2 3 junk", "P2 1 1 15 0#comment",
-                 "P2 1 1 15 ☃", "P2 0 1 15 0", "P2 33 1 15 " + "0 " * 33,
-                 "P2 1 33 15 " + "0 " * 33, "P2 001 1 15 0", "P2 1 1 015 0",
+                 "P2 1 1 15 ☃", "P2 0 1 15 0", "P2 65 1 15 " + "0 " * 65,
+                 "P2 1 65 15 " + "0 " * 65, "P2 001 1 15 0", "P2 1 1 015 0",
                  "P2 1 1 255 0", "P2 1 1 3 0", "P2 1 1 0 0", "P2  1 1 15 0",
                  " P2 1 1 15 0", "P1 1 1 15 0", "P3 1 1 15 0", "P5 1 1 15 0",
-                 "P2 32 32 15 " + "0 " * 1025, "P2 32 32 15 " + "15 " * 1023]
+                 "P2 64 64 15 " + "0 " * 4097, "P2 64 64 15 " + "15 " * 4095]
         for source in cases:
             with self.subTest(source=source[:40]):
                 output = self.shape(source)
                 self.assertEqual(output[0]["g"], "error")
-                self.assertEqual(sum(g["ax"] for g in output), 2049)
+                self.assertEqual(sum(g["ax"] for g in output), 4097)
                 self.assertTrue(all(g["g"] in ("error", "hidden") for g in output))
 
 
