@@ -83,8 +83,10 @@ cannot safely accommodate the growing snake's full circuit.
 The generator uses original geometric glyph outlines and does not require
 a base font.
 
-With FontTools and HarfBuzz's `hb-shape` installed, run the builder and font
-regression checks:
+## Tests
+
+From the repository root, with FontTools and HarfBuzz's `hb-shape`, run the
+builder and font regression checks:
 
 ```bash
 python3 -m unittest discover -s games/snake-fixed -p 'test_*.py'
@@ -96,6 +98,11 @@ the bundled fonts:
 ```bash
 node games/shared/test_snake_controls.cjs
 ```
+
+The suite checks bundled and fresh fonts, custom board sizes, growth, walls,
+reversals, body collisions, occupied food targets and move limits. Builder
+checks cover output paths, metadata and metrics; shared controller checks
+cover movement, terminal signals and Undo in both playgrounds.
 
 ## Implementation and limits
 

@@ -25,6 +25,18 @@ Expected visual output:
 ATTACKATDAWN
 ```
 
+## Playground
+
+From the repository root:
+
+```bash
+python3 -m http.server 8000
+```
+
+Open <http://localhost:8000/decoders/vigenere-dynamic/playground.html>.
+The preview renders the input with the bundled font; the ordinary text copy
+preserves the ciphertext and any runtime configuration.
+
 ## Build
 
 Install the shared dependency:
@@ -37,6 +49,9 @@ The default base is the bundled Apache-2.0 [Roboto 2 font](../shared/fonts/robot
 No system font is selected automatically. You can supply another TrueType font
 with `--base`, subject to its own license. Generated fonts retain the base
 attribution and license metadata and identify Michael Brackx’s modifications.
+
+See the [shared decoder notes](../shared/readme.md#base-fonts) for base-font
+validation and shaping precautions.
 
 Example build command:
 
@@ -67,6 +82,16 @@ generally remains the original ciphertext/configuration.
 
 ## Tests
 
-See the repository [test instructions](../../readme.md#tests). The shared
-decoder suite checks this decoder's reference implementation, bundled font,
-and fresh builds.
+From the repository root, with FontTools and HarfBuzz's `hb-shape`:
+
+```bash
+python3 -m unittest discover -s decoders -p 'test_*.py' -v
+```
+
+The shared suite checks this decoder's reference implementation, bundled
+font and fresh builds.
+
+Coverage includes runtime keys and letter case, oversized keys, ciphertext
+limits, invisible prefixes and rejected delimiters.
+See the [shared decoder test notes](../shared/readme.md#tests) for dependencies
+and checks common to the builders.

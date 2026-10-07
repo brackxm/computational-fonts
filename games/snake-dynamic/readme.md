@@ -52,6 +52,19 @@ its SVG text viewport keeps the grid centered and reserves room for the crown.
 
 The dimension range exists because OpenType cannot dynamically allocate new glyph records during shaping. The font predefines a coordinate grid up to 10×10, but does **not** enumerate every possible complete Snake board or move history.
 
+## Playground
+
+From the repository root:
+
+```bash
+python3 -m http.server 8000
+```
+
+Open <http://localhost:8000/games/snake-dynamic/playground.html>.
+Choose the board dimensions, then use the directional pad, arrow keys,
+WASD or keypad digits to move. New game resets the history; Undo removes
+the last move.
+
 ## Files
 
 - `snake-dynamic-font.ttf` — generated font
@@ -81,6 +94,10 @@ From the repository root, with FontTools and `hb-shape` installed:
 python3 -m unittest discover -s games/snake-dynamic -p 'test_*.py' -v
 node games/shared/test_snake_controls.cjs
 ```
+
+The suite checks all 49 supported board sizes, fresh builds, loss/win signals,
+output paths, metrics and safe imports. The shared browser control checks
+require Node.js and `hb-shape` and exercise both Snake playgrounds.
 
 ## License
 

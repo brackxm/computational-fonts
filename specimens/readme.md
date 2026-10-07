@@ -18,6 +18,8 @@ The [Morse specimen](../decoders/morse/morse.odt) shows a greeting and digits
 with punctuation, with editable dots, hyphens and separators.
 The [Markdown-style specimen](../formatters/markdown/markdown.odt) shows
 headings, emphasis, code and strikethrough drawn from editable markup.
+The [JSON specimen](../formatters/json/json.odt) shows token colors and normalized
+punctuation spacing while preserving spaces inside string values.
 The [text-adventure specimen](../games/text-adventure/text-adventure.odt)
 contains a playable starting scene. Append semicolon-terminated commands to
 its blue block, keeping the full history in one paragraph. Its font draws

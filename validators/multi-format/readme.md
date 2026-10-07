@@ -11,6 +11,9 @@ and shows the same editable sample text in an ordinary font and in this
 computational font. Follow the document's "Try it" instructions to change
 the result directly in the text.
 
+The specimen includes identifiers embedded in a sentence, checksum failures
+and leap-year examples.
+
 ## Usage
 
 Enter a complete request as `format:value?`, with standard ligatures (`liga`)

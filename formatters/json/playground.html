@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>JSON — formatting font</title>
+<style>
+@font-face{font-family:JSONFormatter;src:url('./json-font.ttf?v=1') format('truetype')}
+:root{color-scheme:light;font-family:system-ui,sans-serif;background:#f5f4ee;color:#203a42}
+*{box-sizing:border-box}
+body{max-width:1100px;margin:0 auto;padding:40px 24px;line-height:1.6}
+.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#52747a}
+h1{font-family:Georgia,serif;font-size:clamp(36px,7vw,58px);font-weight:400;line-height:1.15;margin:14px 0}
+.intro{max-width:740px;color:#52656b;margin-bottom:24px}
+label,.label{display:block;font-size:13px;font-weight:650;margin:20px 0 9px}
+textarea{width:100%;min-height:130px;padding:18px;border:1px solid #8ea3a6;border-radius:8px;background:#fffef9;color:#203a42;font:16px/1.6 ui-monospace,monospace;resize:vertical;white-space:pre}
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 24px}
+button{font:inherit;font-size:13px;padding:7px 12px;border:1px solid #8ea3a6;border-radius:5px;background:transparent;color:#203a42;cursor:pointer}
+button:hover{background:#e4ece8}
+textarea:focus-visible,button:focus-visible{outline:2px solid #287b87;outline-offset:3px}
+.preview{padding:24px;border:1px solid #c0cbc2;border-radius:8px;background:#fffef9;overflow:auto;min-height:110px;font:26px/1.7 JSONFormatter;font-feature-settings:"rlig" 1,"kern" 0}
+.preview>div{white-space:pre;min-height:1.7em}
+.preview.plain{font:16px/1.7 ui-monospace,monospace}
+.legend{display:flex;flex-wrap:wrap;gap:18px;font-size:13px;margin:12px 0}
+.key{color:#9c3f12}.string{color:#25663f}.number{color:#185db2}.literal{color:#723ca6}.punct{color:#54656b}
+.hint,#status{font-size:13px;color:#52656b}
+#status.error{color:#94362d}
+footer{border-top:1px solid #c9d2ca;margin-top:28px;padding-top:18px;font-size:13px;display:flex;gap:20px;flex-wrap:wrap}
+a{color:#226a77;text-underline-offset:3px}
+@media(max-width:480px){body{padding:28px 16px}.preview{font-size:22px;padding:16px}textarea{font-size:14px}}
+</style>
+</head>
+<body>
+<div class="eyebrow">Computational fonts · JSON formatter</div>
+<h1>JSON, styled by a font.</h1>
+<p class="intro">Type JSON below. OpenType rules in the font highlight tokens and tidy spaces around punctuation. Strings keep their contents; copying the preview keeps your original source.</p>
+<label for="source">Underlying JSON</label>
+<textarea id="source" wrap="off" spellcheck="false" autocapitalize="off" aria-describedby="format">{  "name" : "Ada  Lovelace" , "count":3,"active":true,"note":null }</textarea>
+<p id="format" class="hint">Use printable ASCII and JSON Unicode escapes for other characters. Long lines scroll horizontally. This version keeps layout inline.</p>
+<div class="examples" aria-label="Example JSON">
+  <button type="button" id="profile">Profile</button>
+  <button type="button" id="nested">Nested values</button>
+  <button type="button" id="escaped">Strings &amp; escapes</button>
+  <button type="button" id="numbers">Numbers</button>
+</div>
+<div class="label">JSON preview</div>
+<div id="preview" class="preview plain" aria-label="Original JSON without formatting"></div>
+<div class="legend" aria-label="Token colors"><span class="key">Keys</span><span class="string">Strings</span><span class="number">Numbers</span><span class="literal">true / false / null</span><span class="punct">Punctuation</span></div>
+<p id="status" role="status">Loading formatting font…</p>
+<p class="hint">The font colors and spaces the text; no JavaScript JSON parser or formatter runs here. Highlighting is cosmetic and does not establish valid JSON. Each source line is a separate shaping run.</p>
+<footer><a href="json.odt">Editable ODT specimen</a><a href="readme.md">Usage &amp; build notes</a><a href="../../readme.md">All fonts</a></footer>
+<script>
+const source = document.querySelector('#source');
+const preview = document.querySelector('#preview');
+const status = document.querySelector('#status');
+let fontState = 'loading';
+let fontError = '';
+const examples = {
+  profile: source.value,
+  nested: '{"user":{"name":"Ada","roles":["editor","reader"]},"enabled":true}',
+  escaped: String.raw`{"text":"comma, colon: and true stay literal","quote":"say \"hi\"","path":"C:\\tmp"}`,
+  numbers: '[0,-0,42,-12.5,6.02e23,1E-9,true,false,null]'
+};
+function render() {
+  preview.replaceChildren(...source.value.split('\n').map(text => {
+    const line = document.createElement('div');
+    line.textContent = text;
+    return line;
+  }));
+  // Script changes, font fallback and controls can split a font's stateful
+  // shaping run. Keep those inputs visible without applying the formatter.
+  const supported = !/[^\x20-\x7e\n]/.test(source.value);
+  const formatted = supported && fontState === 'ready';
+  preview.classList.toggle('plain', !formatted);
+  preview.setAttribute('aria-label', formatted ? 'JSON drawn with the formatting font' : 'Original JSON without formatting');
+  status.classList.toggle('error', !supported || fontState === 'error');
+  if (!supported) {
+    status.textContent = 'Showing the original text without formatting. Use printable ASCII and JSON Unicode escapes for other characters or controls.';
+  } else if (fontState === 'error') {
+    status.textContent = `${fontError} Serve the repository with python3 -m http.server and reload.`;
+  } else {
+    status.textContent = fontState === 'ready' ? 'Formatting font ready. Edit the JSON to change its appearance.' : 'Loading formatting font…';
+  }
+}
+source.addEventListener('input', render);
+Object.entries(examples).forEach(([id, text]) => {
+  document.getElementById(id).addEventListener('click', () => { source.value = text; render(); });
+});
+render();
+(async () => {
+  try {
+    const fonts = await document.fonts.load('26px JSONFormatter', '{"a":1}');
+    if (!fonts.length) throw new Error('The formatting font could not load.');
+    fontState = 'ready';
+  } catch (error) {
+    fontState = 'error';
+    fontError = error.message;
+  }
+  render();
+})();
+</script>
+</body>
+</html>

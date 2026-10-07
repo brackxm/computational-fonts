@@ -112,6 +112,10 @@ def mark_modified_font(font, decoder, *, kind="decoder"):
     digest = hashlib.sha256(font._decoder_base_digest)
     for tag in ("GSUB", "glyf", "hmtx"):
         digest.update(font[tag].compile(font))
+    for tag in ("COLR", "CPAL"):
+        if tag in font:
+            digest.update(tag.encode("ascii"))
+            digest.update(font[tag].compile(font))
     identity = digest.hexdigest()[:12]
     for name_id in (3, 6):
         if font["name"].getName(name_id, 3, 1, 0x409) is None:

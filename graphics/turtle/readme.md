@@ -120,9 +120,10 @@ node graphics/turtle/test_turtle_controls.cjs
 ```
 
 FontTools is required; font-shaping tests additionally require HarfBuzz's
-`hb-shape`. Tests check the bundled and newly generated fonts against an
-independent interpreter, including custom canvases, random paths, all four
-boundaries, pen changes, repeated turns, whitespace, colors, palette tables,
+`hb-shape`. Browser controller checks require Node.js. Tests check the bundled
+and newly generated fonts against an independent interpreter, including
+custom canvases, random paths, all four boundaries, pen changes, repeated
+turns, whitespace, colors, palette tables,
 fallback outlines, and the command limit.
 
 This is discrete turtle graphics: quarter turns and single-cell steps, with

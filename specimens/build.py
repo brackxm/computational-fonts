@@ -5,6 +5,7 @@
 import argparse
 from dataclasses import dataclass
 from pathlib import Path
+import re
 from xml.etree import ElementTree as ET
 from zipfile import ZIP_DEFLATED, ZIP_STORED, ZipFile, ZipInfo
 
@@ -54,6 +55,22 @@ class Specimen:
 
 
 SPECS = (
+    Specimen(
+        "formatters/json", "json-font.ttf", "JSON / formatting in a font",
+        "The font highlights JSON tokens and normalizes spaces around punctuation.",
+        (
+            Example("A small object", '{  "name" : "Ada  Lovelace" , "n":3 }',
+                    "Colored keys and values; the two spaces inside the name remain."),
+            Example("Numbers and keywords", '[0,-12.5,1e+3,true,false,null]',
+                    "Numbers are blue; keywords are purple; commas add one space."),
+        ),
+        "Edit a blue block. Put a colon or comma inside a quoted string to see it "
+        "stay literal. Add spaces outside the strings to see them normalize.",
+        "Inline formatting only, in one text run. Highlighting does not validate JSON. "
+        "Use printable ASCII and JSON Unicode escapes for other characters. "
+        "Copying preserves the original source.",
+        size=20, line_height=28,
+    ),
     Specimen(
         "formatters/markdown", "markdown-font.ttf", "Markdown / formatting in a font",
         "The font draws headings, emphasis, code and strikethrough from plain-text markers.",
@@ -228,6 +245,18 @@ def element(parent, tag, attrs=None, text=None):
     return node
 
 
+def literal_text(node, value):
+    """Keep source spaces editable: ODF collapses ordinary XML whitespace."""
+    previous = None
+    for part in re.findall(r" +|[^ ]+", value):
+        if part.startswith(" "):
+            previous = element(node, "text:s", {"text:c": len(part)})
+        elif previous is None:
+            node.text = part
+        else:
+            previous.tail = part
+
+
 def document(kind):
     return ET.Element(f"{{{NS['office']}}}document-{kind}", {
         f"{{{NS['office']}}}version": "1.3",
@@ -354,7 +383,11 @@ def content_xml(spec, family):
     body = element(root, "office:body")
     text = element(body, "office:text")
     def paragraph(style, value):
-        element(text, "text:p", {"text:style-name": style}, value)
+        node = element(text, "text:p", {"text:style-name": style})
+        if style in ("Source", "Rendered"):
+            literal_text(node, value)
+        else:
+            node.text = value
     paragraph("Eyebrow", "COMPUTATIONAL FONTS  /  " + spec.folder.split("/")[0].upper())
     paragraph("Title", spec.title)
     paragraph("Body", spec.description)
@@ -371,7 +404,7 @@ def content_xml(spec, family):
             element(table, "table:table-column", {"table:style-name": "SceneColumn"})
             row = element(table, "table:table-row")
             cell = element(row, "table:table-cell", {"table:style-name": "SceneCell"})
-            element(cell, "text:p", {"text:style-name": "Rendered"}, example.source)
+            literal_text(element(cell, "text:p", {"text:style-name": "Rendered"}), example.source)
         else:
             paragraph("Rendered", example.source)
         paragraph("Caption", "Expected: " + example.expected)
