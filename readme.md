@@ -7,6 +7,9 @@ substitutions, ligatures, and glyph composition.
 
 | Project | Mode | Input or configuration | Editable document |
 | --- | --- | --- | --- |
+| [PPM image renderer](graphics/ppm/) | text image format | plain PPM (`P3`) RGB | [ODT specimen](graphics/ppm/ppm.odt) |
+| [PGM image renderer](graphics/pgm/) | text image format | plain PGM (`P2`) grayscale | [ODT specimen](graphics/pgm/pgm.odt) |
+| [PBM image renderer](graphics/pbm/) | text image format | plain PBM (`P1`) bitmap | [ODT specimen](graphics/pbm/pbm.odt) |
 | [Mini BASIC](languages/mini-basic/) | programming language | numbered BASIC statements | [ODT specimen](languages/mini-basic/mini-basic.odt) |
 | [JSON formatter](formatters/json/) | text formatter | JSON text | [ODT specimen](formatters/json/json.odt) |
 | [Markdown-style formatter](formatters/markdown/) | text formatter | flat emphasis, inline code, strikethrough and heading markers | [ODT specimen](formatters/markdown/markdown.odt) |

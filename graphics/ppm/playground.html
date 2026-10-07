@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PPM images · computational fonts</title>
+<style>
+@font-face{font-family:PPMRenderer;src:url('./ppm-font.ttf?v=64-colors') format('truetype');font-display:block}
+:root{font-family:system-ui,sans-serif;color-scheme:light dark}
+body{max-width:1000px;margin:40px auto;padding:0 20px}h1{margin-bottom:.2em}.muted{opacity:.7}
+button,select,textarea{font:inherit}button,select{padding:9px 14px}button{cursor:pointer}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:20px 0}
+.workspace{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+label{display:block;margin-bottom:8px}textarea{box-sizing:border-box;width:100%;padding:14px;font-family:ui-monospace,monospace;line-height:1.4;resize:vertical}
+.image{border:1px solid #8885;border-radius:12px;background:#fff;padding:16px;color:#000}
+.image svg{display:block;width:100%;aspect-ratio:1}
+.ppm{font-family:PPMRenderer;font-size:2048px;font-feature-settings:"rlig" 1,"mark" 1,"mkmk" 1;font-kerning:none;white-space:pre;fill:#000}
+code{word-break:break-all}.source{max-height:100px;overflow:auto;padding:12px;border:1px solid #8885;border-radius:8px}
+.probe-holder{position:fixed;top:0;left:0;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none}
+.probe{display:inline-block;width:max-content;white-space:pre;font:2048px/1 PPMRenderer;font-feature-settings:"rlig" 1,"mark" 1,"mkmk" 1;font-kerning:none;letter-spacing:normal;word-spacing:normal}
+@media(max-width:650px){.workspace{grid-template-columns:1fr}.image{max-width:420px}}
+</style>
+</head>
+<body>
+<h1>PPM images</h1>
+<p class="muted">A text image drawn by an OpenType font. The font reads the dimensions, checks the samples and renders the color image.</p>
+<div class="controls">
+  <label for="example">Example</label>
+  <select id="example"><option value="bars">Color bars · 16 × 16</option><option value="palette">All 64 colors · 8 × 8</option><option value="checker">RGB checker · 2 × 2</option></select>
+  <button id="load-example" type="button">Load example</button>
+  <button id="clear" type="button">Clear</button>
+</div>
+<div class="workspace">
+  <div><label for="program">Plain PPM source</label>
+    <textarea id="program" rows="21" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="format status"></textarea>
+  </div>
+  <div><label>Font output</label>
+    <div class="image"><svg viewBox="0 0 2048 2048" role="img" aria-label="PPM bitmap rendered from the editable source"><text id="drawing" class="ppm" x="0" y="2048"></text></svg></div>
+    <p id="status" role="status">Loading PPM font…</p>
+  </div>
+</div>
+<p id="format"><code>P3</code>, width and height, <code>3</code> for maxval, then three samples per pixel in red, green, blue order. Each sample is <code>0</code>–<code>3</code>; <code>3 0 0</code> is red and <code>3 3 3</code> is white. Each dimension is 1–32. Separate every sample with whitespace. Colors use evenly spaced sRGB channel values.</p>
+<p class="muted">The page removes # comments and folds whitespace for a single shaping run. It accepts up to 8,192 source characters. Extra pixels and trailing data are rejected. The preview reserves a 32 × 32 canvas.</p>
+<details><summary>Prepared font input</summary><p class="source"><code id="raw"></code></p></details>
+<p><a href="ppm.odt">Editable ODT specimen</a> · <a href="ppm-font.ttf">Download font</a> · <a href="https://netpbm.sourceforge.net/doc/ppm.html">PPM specification</a></p>
+<script src="ppm-controls.js"></script>
+<script>createPPMPlayground();</script>
+</body>
+</html>

@@ -56,6 +56,65 @@ class Specimen:
 
 SPECS = (
     Specimen(
+        "graphics/ppm", "ppm-font.ttf", "PPM / color in text",
+        "The font reads this plain PPM image and draws its RGB pixels.",
+        (Example("Color bars", "P3 16 8 3 " + " ".join(
+            str(channel) for row in range(8)
+            for rgb in ((3, 0, 0), (3, 3, 0), (0, 3, 0), (0, 3, 3),
+                        (0, 0, 3), (3, 0, 3), (3, 3, 3), (0, 0, 0))
+            for repeat in range(2) for channel in rgb),
+            "Eight bars: red, yellow, green, cyan, blue, magenta, white and black."),),
+        "Change an RGB triple in the blue block: 3 0 0 is red, 0 3 0 is green, "
+        "and 0 0 3 is blue. Keep spaces between samples and the image in one paragraph.",
+        "Plain P3 only; dimensions 1–32, maxval 3, exactly three samples (0–3) per pixel in RGB order. "
+        "Use prepared single-line source without comments; one space between header fields. "
+        "Colors use sRGB channel values. Color-font support is needed for RGB output.",
+        size=160, line_height="100%", compact=True, unbroken_run=True,
+    ),
+    Specimen(
+        "graphics/pgm", "pgm-font.ttf", "PGM / shades in text",
+        "The font reads this plain PGM image and draws sixteen shades of gray.",
+        (Example("Sixteen shades", "P2 16 8 15 " + " ".join(
+            str(value) for row in range(8) for value in range(16)),
+            "A sixteen-by-eight gradient from black to white."),),
+        "Change a sample in the blue block to a number from 0 to 15. "
+        "Try P2 2 2 15 0 5 10 15 for four shades. "
+        "Keep spaces between samples and the image in one paragraph.",
+        "Plain P2 only; dimensions 1–32, maxval 15, exactly width × height samples (0 black, 15 white). "
+        "Use prepared single-line source without comments; one space between header fields. "
+        "Gray levels are evenly spaced display values. Color-font support is needed for solid grays.",
+        size=160, line_height="100%", compact=True, unbroken_run=True,
+    ),
+    Specimen(
+        "graphics/pbm", "pbm-font.ttf", "PBM / an image in text",
+        "The font reads this plain PBM image and draws its black-and-white pixels.",
+        (Example("A heart", "P1 32 32 " + "".join((
+            "00000000000000000000000000000000", "00000000000000000000000000000000",
+            "00000011111100000000111111000000", "00000011111100000000111111000000",
+            "00001111111111000011111111110000", "00001111111111000011111111110000",
+            "00111111111111111111111111111100", "00111111111111111111111111111100",
+            "00111111111111111111111111111100", "00111111111111111111111111111100",
+            "00111111111111111111111111111100", "00111111111111111111111111111100",
+            "00001111111111111111111111110000", "00001111111111111111111111110000",
+            "00000011111111111111111111000000", "00000011111111111111111111000000",
+            "00000000111111111111111100000000", "00000000111111111111111100000000",
+            "00000000001111111111110000000000", "00000000001111111111110000000000",
+            "00000000000011111111000000000000", "00000000000011111111000000000000",
+            "00000000000000111100000000000000", "00000000000000111100000000000000",
+            "00000000000000000000000000000000", "00000000000000000000000000000000",
+            "00000000000000000000000000000000", "00000000000000000000000000000000",
+            "00000000000000000000000000000000", "00000000000000000000000000000000",
+            "00000000000000000000000000000000", "00000000000000000000000000000000",
+        )), "A thirty-two-by-thirty-two image with a black heart on white."),),
+        "Change a 0 to 1 in the blue block to turn a white pixel black. "
+        "Try P1 2 2 0110 for a two-by-two checkerboard. "
+        "Keep the full image in one paragraph with the same formatting.",
+        "Plain P1 only; dimensions 1–32, with exactly width × height bits (0 white, 1 black). "
+        "Use one space between the header fields and raster; raster spaces are optional. "
+        "Use prepared single-line source without comments.",
+        size=110, line_height="100%", compact=True, unbroken_run=True,
+    ),
+    Specimen(
         "languages/mini-basic", "mini-basic-font.ttf", "Mini BASIC / a language in a font",
         "The font parses and executes this BASIC program, drawing its output and final variables.",
         (Example("Descending with labelled output",

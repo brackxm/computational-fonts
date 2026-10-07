@@ -14,6 +14,12 @@ editable move histories and instructions for a complete winning route on the
 dynamic board.
 The Turtle specimen draws a square in four colors and explains how to edit
 the path, lift the pen, and change the color.
+The [PPM specimen](../graphics/ppm/ppm.odt) draws color bars from an editable
+P3 header and RGB triples. Change three samples to change a pixel color.
+The [PGM specimen](../graphics/pgm/pgm.odt) draws sixteen shades from an editable
+P2 header and decimal samples. Change a sample to change a shade.
+The [PBM specimen](../graphics/pbm/pbm.odt) draws a bitmap from an editable
+single-line P1 header and raster. Change a bit to change a pixel.
 The [Morse specimen](../decoders/morse/morse.odt) shows a greeting and digits
 with punctuation, with editable dots, hyphens and separators.
 The [Markdown-style specimen](../formatters/markdown/markdown.odt) shows
