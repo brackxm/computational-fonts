@@ -14,6 +14,12 @@ editable move histories and instructions for a complete winning route on the
 dynamic board.
 The Turtle specimen draws a square in four colors and explains how to edit
 the path, lift the pen, and change the color.
+The [text-adventure specimen](../games/text-adventure/text-adventure.odt)
+contains a playable starting scene. Append semicolon-terminated commands to
+its blue block, keeping the full history in one paragraph. Its font draws
+the latest room, inventory and reply; no game interpreter or macros are used.
+Its blue table cell bounds the visible scene, while a wide paragraph inside
+the cell prevents Writer from breaking long command histories before shaping.
 
 ## Regenerate
 
@@ -32,7 +38,7 @@ python3 specimens/build.py --project validators/multi-format
 
 Outputs always go beside each project's bundled font, using its filename without
 the trailing `-font` and with an `.odt` extension. For example,
-`validator-font.ttf` becomes `validator.odt`. All ten documents can be
+`validator-font.ttf` becomes `validator.odt`. All eleven documents can be
 downloaded into one directory.
 Rebuild the relevant font first if its generator or settings changed. The
 examples assume the bundled settings documented in each project's readme.

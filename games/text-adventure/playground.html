@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The Last Light · a font adventure</title>
+<style>
+@font-face{font-family:LastLight;src:url('./text-adventure-font.ttf?v=1.3') format('truetype');font-display:block}
+*{box-sizing:border-box}
+:root{color-scheme:dark;font-family:system-ui,sans-serif;background:#101713;color:#ecefe7}
+body{max-width:860px;margin:0 auto;padding:42px 24px 32px}
+.eyebrow{font-size:11px;font-weight:650;letter-spacing:.2em;text-transform:uppercase;color:#9caf9d}
+h1{font-family:Georgia,serif;font-weight:400;font-size:clamp(36px,7vw,64px);margin:12px 0}
+.intro{color:#b4c1b3;line-height:1.6;max-width:620px;margin:0 0 28px}
+.screen{background:#09110c;border:1px solid #415147;border-radius:12px;padding:24px;overflow:hidden;box-shadow:0 14px 48px #0005,inset 0 0 60px #12261a;min-height:220px}
+.adventure{display:block;font-family:LastLight;font-variant-ligatures:common-ligatures;font-feature-settings:"liga" 1,"kern" 0;white-space:pre;font-size:100px;line-height:4;color:#d5e9b5;min-height:4em}
+.loading{font-family:system-ui,sans-serif;font-size:16px;line-height:1.5;min-height:0}
+.toolbar{display:flex;align-items:center;gap:10px;margin:18px 0;flex-wrap:wrap}
+.counter{margin-left:auto;color:#a4b6a7;font-size:13px;font-variant-numeric:tabular-nums}
+button,input,textarea{font:inherit}
+button{cursor:pointer;border:1px solid #586d5e;border-radius:6px;padding:9px 14px;background:#1b2c21;color:#ecf2e4}
+button:hover{background:#294331}button:disabled{opacity:.45;cursor:default}
+button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid #d5e9b5;outline-offset:3px}
+label{display:block;font-size:13px;color:#b4c1b3;margin:0 0 8px}
+.command-row{display:flex;gap:10px}
+input,textarea{border:1px solid #586d5e;border-radius:6px;background:#0c140f;color:#ecefe7;padding:12px;min-width:0}
+input{flex:1}button.primary{background:#d5e9b5;color:#142017;border-color:#d5e9b5}
+.shortcuts{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.shortcuts button{font-size:12px;padding:7px 11px;background:transparent}
+.hint,.status,details{font-size:13px;line-height:1.6;color:#a4b6a7}
+.status{min-height:1.6em}.status.error{color:#ffb5a6}
+details{margin-top:26px;border-top:1px solid #334639;padding-top:16px}
+summary{cursor:pointer;color:#cbd7c6}
+textarea{display:block;width:100%;height:110px;margin:14px 0;font-family:ui-monospace,monospace;font-size:12px;resize:vertical}
+.history-actions{display:flex;gap:8px}
+footer{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:30px;font-size:12px;color:#8da18f}
+a{color:#b8cbaa;text-underline-offset:3px}
+@media(max-width:480px){body{padding:24px 14px}.screen{padding:14px}.toolbar button{padding:8px 10px}.command-row button{padding:10px}.counter{font-size:11px}}
+</style>
+</head>
+<body>
+<div class="eyebrow">Computational fonts · Adventure 01</div>
+<h1>The Last Light</h1>
+<p class="intro">A locked house. Four scattered objects. One way out.<br>Explore the rooms, restore the light, and open the gate.</p>
+<div class="screen" id="screen">
+  <div id="adventure" class="adventure loading" role="img" aria-label="Adventure scene rendered by the game font">Loading the house…</div>
+</div>
+<div class="toolbar">
+  <button id="reset" type="button" disabled>New game</button>
+  <button id="undo" type="button" disabled>Undo</button>
+  <span id="count" class="counter">0 / 128 commands</span>
+</div>
+<form id="command-form">
+  <label for="command">What will you do?</label>
+  <div class="command-row">
+    <input id="command" name="command" placeholder="Try north, look, or take key" maxlength="24" autocomplete="off" autocapitalize="none" spellcheck="false" disabled>
+    <button class="primary" id="submit" type="submit" disabled>Enter ↵</button>
+  </div>
+</form>
+<div class="shortcuts" aria-label="Common commands">
+  <button data-command="north" disabled>North ↑</button>
+  <button data-command="west" disabled>West ←</button>
+  <button data-command="east" disabled>East →</button>
+  <button data-command="south" disabled>South ↓</button>
+  <button data-command="look" disabled>Look</button>
+  <button data-command="inventory" disabled>Inventory</button>
+  <button data-command="help" disabled>Help</button>
+</div>
+<p class="hint">Type <strong>help</strong> for the full command list. Undo lets you retrace your steps.</p>
+<p id="status" class="status" role="status" aria-live="polite">Loading game font…</p>
+<details>
+  <summary>Save or restore your journey</summary>
+  <p>Your journey is the text below. Copy it to save, or paste a saved journey and choose Restore. It also works in a text editor using the game font with ligatures enabled.</p>
+  <label for="history">Command history</label>
+  <textarea id="history" spellcheck="false" aria-label="Editable command history">start;</textarea>
+  <div class="history-actions">
+    <button id="copy" type="button" disabled>Copy journey</button>
+    <button id="restore" type="button" disabled>Restore</button>
+  </div>
+</details>
+<footer><span>The font runs the house.</span><span><a href="readme.md">How it works</a> · <a href="../snake-fixed/playground.html">Play Snake</a></span></footer>
+<script src="controls.js"></script>
+<script>
+const board = document.querySelector('#adventure');
+const history = document.querySelector('#history');
+const status = document.querySelector('#status');
+const command = document.querySelector('#command');
+let ready = false;
+function notify(message, error = false) {
+  status.textContent = message;
+  status.classList.toggle('error', error);
+}
+const game = createAdventureSession({
+  onRender(text, count) {
+    if (ready) board.textContent = text;
+    history.value = text;
+    document.querySelector('#count').textContent = `${count} / 128 commands`;
+    document.querySelector('#undo').disabled = !ready || count === 0;
+  },
+});
+function enter(text) {
+  if (!ready) return;
+  try {
+    game.enter(text);
+    command.value = '';
+    notify('Command entered. Read the house’s reply above.');
+    command.focus();
+  } catch (error) { notify(error.message, true); }
+}
+document.querySelector('#command-form').addEventListener('submit', event => {
+  event.preventDefault(); enter(command.value);
+});
+document.querySelectorAll('[data-command]').forEach(button => {
+  button.addEventListener('click', () => enter(button.dataset.command));
+});
+document.querySelector('#undo').onclick = () => { game.undo(); notify('Last command removed.'); command.focus(); };
+document.querySelector('#reset').onclick = () => { game.reset(); notify('A new journey begins.'); command.focus(); };
+document.querySelector('#restore').onclick = () => {
+  try { game.restore(history.value); notify('Journey restored.'); command.focus(); }
+  catch (error) { notify(error.message, true); }
+};
+document.querySelector('#copy').onclick = async () => {
+  try { await navigator.clipboard.writeText(game.text()); notify('Journey copied.'); }
+  catch { history.value = game.text(); history.focus(); history.select(); notify('Select Copy from your browser to save the selected journey.'); }
+};
+function fitScene() {
+  if (!ready) return;
+  const width = document.querySelector('#screen').clientWidth;
+  const padding = parseFloat(getComputedStyle(document.querySelector('#screen')).paddingLeft) * 2;
+  board.style.fontSize = `${(width - padding) / 5.76}px`;
+}
+new ResizeObserver(fitScene).observe(document.querySelector('#screen'));
+(async () => {
+  try {
+    const fonts = await document.fonts.load('100px LastLight', 'start;');
+    if (!fonts.length) throw new Error('The game font could not be loaded.');
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    context.font = '100px LastLight';
+    if (Math.abs(context.measureText('start;').width - 576) > 0.5)
+      throw new Error('This browser could not shape the game font. Enable standard ligatures.');
+    ready = true;
+    board.classList.remove('loading');
+    document.querySelectorAll('button, #command').forEach(element => { element.disabled = false; });
+    game.reset(); fitScene(); notify('The house is ready. Enter your first command.');
+  } catch (error) {
+    board.textContent = 'The house could not load.';
+    notify(`${error.message} Serve this folder with a local web server and reload.`, true);
+  }
+})();
+</script>
+</body>
+</html>

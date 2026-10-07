@@ -25,6 +25,7 @@ NS = {
     "meta": "urn:oasis:names:tc:opendocument:xmlns:meta:1.0",
     "dc": "http://purl.org/dc/elements/1.1/",
     "config": "urn:oasis:names:tc:opendocument:xmlns:config:1.0",
+    "table": "urn:oasis:names:tc:opendocument:xmlns:table:1.0",
 }
 for prefix, uri in NS.items():
     ET.register_namespace(prefix, uri)
@@ -47,7 +48,9 @@ class Specimen:
     exercise: str
     note: str
     size: int = 20
-    line_height: int | None = None
+    line_height: int | str | None = None
+    compact: bool = False
+    unbroken_run: bool = False
 
 
 SPECS = (
@@ -169,6 +172,20 @@ SPECS = (
         "Font limit: 128 commands; application shaping limits can be lower.",
         size=85, line_height=230,
     ),
+    Specimen(
+        "games/text-adventure", "text-adventure-font.ttf", "The Last Light / a font adventure",
+        "Explore a locked house and solve its puzzles to escape. "
+        "The font draws the current room, inventory and reply from your commands.",
+        (Example("Your journey begins", "start;", "The atrium, an empty inventory and a prompt to find a way out."),),
+        "Click the blue scene and press End. Append east;take key; to enter the study "
+        "and collect its key, then west; to return. Type help; for commands. "
+        "End each command with a semicolon. Delete a command to undo; replace the "
+        "history with start; to begin again.",
+        "Up to 128 commands of at most 24 ASCII characters each. "
+        "Keep the history in one paragraph and one font; do not press Enter inside it. "
+        "Copy the scene to save its underlying history. The Roboto copy is independent.",
+        size=64, line_height="100%", compact=True, unbroken_run=True,
+    ),
 )
 
 
@@ -216,7 +233,7 @@ def declare_fonts(root, family):
 
 
 def styles_xml(spec, family):
-    compact = len(spec.examples) > 1
+    compact = spec.compact or len(spec.examples) > 1
     root = document("styles")
     declare_fonts(root, family)
     styles = element(root, "office:styles")
@@ -249,7 +266,10 @@ def styles_xml(spec, family):
         "Rendered": ({"fo:background-color": "#EAF3F8",
                       "fo:padding": "0.14cm" if compact else "0.2cm",
                       "fo:margin-bottom": "0.12cm", "fo:keep-with-next": "always",
-                      **({"fo:line-height": f"{spec.line_height}pt"} if spec.line_height else {})},
+                      **({"fo:line-height": spec.line_height if isinstance(spec.line_height, str)
+                          else f"{spec.line_height}pt"} if spec.line_height else {}),
+                      **({"fo:margin-right": "-2000cm", "fo:padding": "0cm",
+                          "fo:background-color": "transparent"} if spec.unbroken_run else {})},
                      {"style:font-name": "ComputeFont", "fo:font-size": f"{spec.size}pt",
                       "style:letter-kerning": "false"}),
         "Caption": ({"fo:margin-bottom": "0.2cm"},
@@ -288,6 +308,21 @@ def styles_xml(spec, family):
 def content_xml(spec, family):
     root = document("content")
     declare_fonts(root, family)
+    if spec.unbroken_run:
+        # Writer can estimate line breaks before applying GSUB. Give long
+        # histories a wide shaping paragraph, inside a page-width blue cell.
+        # The scene's final advance still fits the page; the input stays intact.
+        auto = element(root, "office:automatic-styles")
+        for name, style_family, properties, attrs in (
+            ("SceneTable", "table", "table-properties",
+             {"style:width": "17cm", "table:align": "left", "fo:keep-with-next": "always"}),
+            ("SceneColumn", "table-column", "table-column-properties",
+             {"style:column-width": "17cm"}),
+            ("SceneCell", "table-cell", "table-cell-properties",
+             {"fo:padding": "0.2cm", "fo:background-color": "#EAF3F8"}),
+        ):
+            style = element(auto, "style:style", {"style:name": name, "style:family": style_family})
+            element(style, "style:" + properties, attrs)
     body = element(root, "office:body")
     text = element(body, "office:text")
     def paragraph(style, value):
@@ -296,12 +331,21 @@ def content_xml(spec, family):
     paragraph("Title", spec.title)
     paragraph("Body", spec.description)
     paragraph("Body", "Each pair is identical text in two embedded fonts. Edit the blue block directly.")
-    for example in spec.examples:
+    for index, example in enumerate(spec.examples, 1):
         paragraph("Section", example.label)
         paragraph("Label", "UNDERLYING TEXT / ROBOTO")
         paragraph("Source", example.source)
         paragraph("Label", "SAME TEXT / COMPUTATIONAL FONT")
-        paragraph("Rendered", example.source)
+        if spec.unbroken_run:
+            table = element(text, "table:table", {
+                "table:name": f"Scene{index}", "table:style-name": "SceneTable",
+            })
+            element(table, "table:table-column", {"table:style-name": "SceneColumn"})
+            row = element(table, "table:table-row")
+            cell = element(row, "table:table-cell", {"table:style-name": "SceneCell"})
+            element(cell, "text:p", {"text:style-name": "Rendered"}, example.source)
+        else:
+            paragraph("Rendered", example.source)
         paragraph("Caption", "Expected: " + example.expected)
     paragraph("Section", "Try it")
     paragraph("Body", spec.exercise)

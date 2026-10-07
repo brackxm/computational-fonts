@@ -1,9 +1,9 @@
 # computational-fonts
 
 Experiments that use fonts as computation rather than only presentation.
-This project combines classical-cipher decoders, Snake games, turtle graphics,
-and identifier validators implemented with OpenType shaping, substitutions,
-ligatures, and glyph composition.
+This project combines classical-cipher decoders, Snake games, a text adventure,
+turtle graphics, and identifier validators implemented with OpenType shaping,
+substitutions, ligatures, and glyph composition.
 
 ## Projects
 
@@ -17,6 +17,7 @@ ligatures, and glyph composition.
 | [Lorenz SZ40/SZ42](decoders/lorenz-static/) | static decoder | machine/wheel settings baked into font | [ODT specimen](decoders/lorenz-static/lorenz-static.odt) |
 | [Snake — dynamic board](games/snake-dynamic/) | game prototype | `10x5b` builds a board; append `w`, `a`, `s`, and `d` to move | [ODT specimen](games/snake-dynamic/snake-dynamic.odt) |
 | [Snake — fixed board](games/snake-fixed/) | game prototype | fixed 20×11 board by default; `b` starts; WASD or `2`, `4`, `8`, `6` moves | [ODT specimen](games/snake-fixed/snake-fixed.odt) |
+| [The Last Light — text adventure](games/text-adventure/) | escape-room game | `start;` begins; append commands such as `east;take key;` | [ODT specimen](games/text-adventure/text-adventure.odt) |
 | [Turtle graphics](graphics/turtle/) | drawing interpreter | `b` starts; `f`, `l`, `r`, `u`, `d` move, turn, and control the pen; `0`–`5` select colors | [ODT specimen](graphics/turtle/turtle.odt) |
 | [Multi-format validator](validators/multi-format/) | dynamic validator | `format:value?`; 16 formats including IBAN, ISBN, ORCID, payment references, dates, UUIDs, and passport MRZ | [ODT specimen](validators/multi-format/validator.odt) |
 
@@ -31,7 +32,7 @@ Open a project's **ODT specimen in LibreOffice Writer**. It embeds both the
 computational font and the ordinary Roboto font, so no font installation or
 local web server is needed. Each example shows identical underlying text in
 both fonts. Edit a blue block to change the decoded text, validation result,
-Snake board, or Turtle drawing. Each copy can be edited independently.
+Snake board, Turtle drawing, or adventure scene. Each copy can be edited independently.
 
 The documents contain ordinary editable text and no macros or JavaScript.
 Copying a computed result preserves the original input. Keep each computational
@@ -42,6 +43,8 @@ The [validator specimen](validators/multi-format/validator.odt) includes
 identifiers embedded in a sentence, checksum failures, and leap-year examples.
 See [specimen build notes](specimens/readme.md) to regenerate the documents
 after changing a bundled font.
+The [adventure specimen](games/text-adventure/text-adventure.odt) starts a
+playable journey; append commands such as `east;take key;` to its blue block.
 
 ## Repository layout
 
@@ -65,6 +68,7 @@ games/
     test_snake_controls.cjs
   snake-dynamic/
   snake-fixed/
+  text-adventure/
 graphics/
   turtle/
 validators/
@@ -84,6 +88,7 @@ Then open a demo, for example:
 
 - Dynamic-board Snake: <http://localhost:8000/games/snake-dynamic/playground.html>
 - Fixed-board Snake: <http://localhost:8000/games/snake-fixed/playground.html>
+- Text adventure: <http://localhost:8000/games/text-adventure/playground.html>
 - Vigenère: <http://localhost:8000/decoders/vigenere-dynamic/playground.html>
 - Turtle graphics: <http://localhost:8000/graphics/turtle/playground.html>
 - Validator: <http://localhost:8000/validators/multi-format/playground.html>
@@ -158,12 +163,14 @@ validation, oversized runtime keys, malformed base-font tables and wheel-pattern
 localized font names, reserved
 glyph collisions, custom-base spacing, and protection against overwriting the base.
 
-Run the Snake suites and shared control checks:
+Run the game suites and browser control checks:
 
 ```bash
 python3 -m unittest discover -s games/snake-dynamic -p 'test_*.py' -v
 python3 -m unittest discover -s games/snake-fixed -p 'test_*.py' -v
 node games/shared/test_snake_controls.cjs
+python3 -m unittest discover -s games/text-adventure -p 'test_*.py' -v
+node games/text-adventure/test_controls.cjs
 ```
 
 The dynamic Snake suite checks all 49 supported board sizes, fresh builds,
@@ -215,6 +222,13 @@ targets. Walls, reversals, and body collisions end the game.
 Food waits if its next cell is occupied. Both playgrounds stop accepting moves
 after a win, loss, or their move limit, and Undo restores the previous position.
 
+[The Last Light](games/text-adventure/) has eight rooms, four collectible items,
+and puzzles involving a locked door, a lamp, a generator and an exit gate.
+Its font evaluates up to 128 semicolon-terminated commands of at most 24 ASCII
+characters each, in one uninterrupted run. It displays the latest scene as
+glyph outlines; copying or accessibility APIs expose the command history.
+The browser controller edits that history and provides Undo and save/restore.
+
 [Turtle graphics](graphics/turtle/) uses single-cell steps and 90° turns on a
 fixed canvas, six pen colors, and up to 128 commands. A boundary stops execution;
 pen-up moves leave no strokes. It requires `liga` and one uninterrupted
@@ -229,7 +243,7 @@ through ChatGPT and Codex.
 
 Licensed under the Apache License 2.0. See [`LICENSE`](LICENSE).
 The bundled Roboto base and generated decoder and validator fonts are also
-Apache-2.0; Snake and turtle fonts use original outlines. Google’s font
-attribution and the required original MIT notice for imported decoder code
+Apache-2.0; Snake, turtle and text-adventure fonts use original outlines.
+Google’s font attribution and the required original MIT notice for imported decoder code
 are retained in
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).

@@ -51,5 +51,6 @@ substitution rules in 2026. Their embedded metadata preserves Google’s
 copyright, trademark, and license records and identifies these modifications
 and Michael Brackx’s copyright.
 
-The Snake and turtle graphics fonts use original geometric outlines and do not
-incorporate Roboto.
+The Snake, turtle graphics and text-adventure fonts use original geometric
+outlines and do not incorporate Roboto. The Last Light uses an original story
+and game rules.
