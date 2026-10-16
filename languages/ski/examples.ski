@@ -1,0 +1,18 @@
+I a
+K a b
+S K K a
+S K K (I a)
+S K K (K a b)
+S K K (S K K a)
+K a (S I I b)
+K a ((S I I) (S I I))
+S a b (K c d)
+S (I a) b (I c)
+S (I a) (K b c) (S K K d)
+S I I (S I I)
+I
+K
+S
+K a
+S K
+S K K

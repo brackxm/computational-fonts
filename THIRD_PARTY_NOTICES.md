@@ -51,3 +51,11 @@ preserves Google’s copyright, trademark, and license records and identifies
 these modifications and Michael Brackx’s copyright.
 
 Fonts built from original geometric outlines do not incorporate Roboto.
+
+## SKI evaluator
+
+The visible `languages/ski/ski-font.ttf` uses decomposed outlines from the same
+pinned Roboto Regular source described above. Its generated metadata retains
+Google's copyright, Roboto attribution and Apache-2.0 license and identifies
+Michael Brackx's SKI interpreter modifications. The separate invisible machine
+font `languages/ski/ski.ttf` contains original empty outlines and no Roboto.

@@ -143,6 +143,29 @@ SPECS = (
         size=70, line_height="100%", compact=True, unbroken_run=True,
     ),
     Specimen(
+        "languages/ski", "ski-font.ttf", "SKI / three rules in a font",
+        "The font parses prefix application, evaluates S, K and I in normal order, "
+        "and draws the resulting expression, status and remaining fuel.",
+        (
+            Example("Identity", "SKI;@Ia!" + "." * 191, "NORMAL a, with 31 fuel remaining."),
+            Example("Compound operands", "SKI;@@@S@Iab@Ic!" + "." * 191,
+                    "NORMAL ((a c) (b c)), with 28 fuel remaining."),
+        ),
+        "In the first blue block, change a to b. Then replace @Ia with @I@Ia "
+        "to apply I twice. Keep the SKI; prefix and final !. "
+        "@ applies the next two expressions: @Ia means I a; @@@SKKa means S K K a. "
+        "In the second block, change SKI; to SKI1; to stop after S copies its last argument. "
+        "Keep the trailing dots: they reserve shaping workspace and disappear in the font. "
+        "The playground converts ordinary parenthesized notation into this editable input.",
+        "Use S, K, I and lowercase atoms in explicit @ prefix notation. "
+        "SKI; supplies 32 reductions; SKI0; through SKI32; set a smaller budget. "
+        "Depth at most 5 edges, 63 tree slots. NORMAL means no redex remains; "
+        "STEP LIMIT and DEPTH LIMIT retain the last valid expression. "
+        "Input errors are drawn by the font. All parsing and reduction run in GSUB. "
+        "Enable required ligatures (rlig) and keep each complete input in one paragraph.",
+        size=14, line_height=28, compact=True, unbroken_run=True,
+    ),
+    Specimen(
         "formatters/json", "json-font.ttf", "JSON / formatting in a font",
         "The font highlights JSON tokens and normalizes spaces around punctuation.",
         (

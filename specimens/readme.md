@@ -30,6 +30,10 @@ The [Mini BASIC specimen](../languages/mini-basic/mini-basic.odt) executes an
 editable descending `FOR` loop with mixed text-and-number `PRINT` lists, final variables and
 execution status.
 Statements use colons and `PRINT` items use semicolons inside a single paragraph.
+The [SKI specimen](../languages/ski/ski.odt) evaluates editable prefix expressions
+such as `SKI;@Ia!`. Its font parses and reduces I/K/S, draws fully parenthesized
+output, and reports status and unused fuel. Change the atoms or application
+markers in a blue block; no host-language evaluator is used.
 The [JSON specimen](../formatters/json/json.odt) shows token colors and normalized
 punctuation spacing while preserving spaces inside string values.
 The [text-adventure specimen](../games/text-adventure/text-adventure.odt)

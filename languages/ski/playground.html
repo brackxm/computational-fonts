@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SKI — combinatory logic in a font</title>
+<style>
+@font-face{font-family:SKIEvaluator;src:url('./ski-font.ttf?v=1') format('truetype');font-display:block}
+:root{color-scheme:light;font-family:system-ui,sans-serif;background:#f5f4ee;color:#203a42}
+*{box-sizing:border-box}body{max-width:1100px;margin:0 auto;padding:40px 24px;line-height:1.6}
+.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#52747a}
+h1{font-family:Georgia,serif;font-size:clamp(36px,7vw,58px);font-weight:400;line-height:1.15;margin:14px 0}
+.intro{max-width:760px;color:#52656b}.rules{display:flex;gap:12px;flex-wrap:wrap;margin:24px 0}
+.rules code{padding:8px 12px;background:#e4e9e2;border-radius:5px;font-size:14px}
+label,.label{display:block;font-size:13px;font-weight:650;margin:20px 0 9px}
+textarea{width:100%;min-height:105px;padding:18px;border:1px solid #8ea3a6;border-radius:8px;background:#fffef9;color:#203a42;font:18px/1.65 ui-monospace,monospace;resize:vertical}
+.examples{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 24px}
+button,input{font:inherit;font-size:13px;padding:7px 12px;border:1px solid #8ea3a6;border-radius:5px;background:transparent;color:#203a42}
+button{cursor:pointer}button:hover{background:#e4ece8}input{width:88px;background:#fffef9}
+textarea:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid #287b87;outline-offset:3px}
+.screen{background:#fffef9;border:1px solid #c9d2ca;border-radius:8px;padding:22px 18px;overflow:auto;min-height:84px}.screen[hidden]{display:none}
+#terminal{display:block;white-space:pre;font:24px/1.5 SKIEvaluator;font-feature-settings:"rlig" 1,"calt" 0,"kern" 0;font-variant-ligatures:normal;direction:ltr;unicode-bidi:isolate}
+.hint,#status{font-size:13px;color:#52656b}#status.error{color:#94362d}.settings{display:flex;align-items:center;gap:12px;flex-wrap:wrap}.settings label{margin:0}
+code,pre{font-family:ui-monospace,monospace}pre{padding:12px;background:#e4e9e2;border-radius:5px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px}
+details{font-size:13px;margin:20px 0}summary{cursor:pointer}footer{border-top:1px solid #c9d2ca;margin-top:28px;padding-top:18px;font-size:13px;display:flex;gap:20px;flex-wrap:wrap}a{color:#226a77;text-underline-offset:3px}
+@media(max-width:480px){body{padding:28px 16px}.rules{gap:7px}#terminal{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="eyebrow">Computational fonts · SKI</div>
+<h1>Three rules. A language in a font.</h1>
+<p class="intro">Write an expression using S, K, I and lowercase atoms. OpenType rules inside the font select reductions, duplicate subtrees, and draw the resulting expression. Evaluation follows normal order within a fixed tree and reduction budget.</p>
+<div class="rules" aria-label="Reduction rules"><code>I x → x</code><code>K x y → x</code><code>S x y z → x z (y z)</code></div>
+<label for="source">SKI expression</label>
+<textarea id="source" rows="2" spellcheck="false" autocapitalize="off" aria-describedby="format">S (I a) b (I c)</textarea>
+<p id="format" class="hint">Application associates left: S K K a means ((S K) K) a. Use parentheses for compound arguments, or explicit prefix syntax such as @@@SKKa.</p>
+<div class="examples" aria-label="Example expressions">
+<button type="button" id="identity">Identity</button><button type="button" id="constant">Constant</button>
+<button type="button" id="substitution">S K K</button><button type="button" id="compound">Compound operands</button>
+<button type="button" id="discard">Discard a loop</button><button type="button" id="budget">Stop after S</button>
+<button type="button" id="partial">Partial application</button><button type="button" id="overflow">Depth limit</button>
+</div>
+<div class="settings"><label for="fuel">Reduction budget</label><input id="fuel" type="number" min="0" max="32" step="1" value="32" aria-describedby="capacity"><span id="capacity" class="hint"></span></div>
+<div class="label">Font-rendered result</div>
+<div id="screen" class="screen" hidden><span id="terminal" role="img" aria-label="Result, status and remaining fuel drawn by the SKI evaluator font"></span></div>
+<p id="status" role="status">Loading the SKI evaluator font…</p>
+<p class="hint">NORMAL means no reduction remains. STEP LIMIT preserves the expression when fuel runs out. DEPTH LIMIT preserves it when an S expansion would exceed depth 5. The bracket shows unused fuel. Scroll long results horizontally. Input can occupy up to 63 tree slots; each edit starts a fresh evaluation.</p>
+<details><summary>Underlying font input</summary><pre id="raw"></pre><p>The page converts notation to prefix input. The font parses that input, performs all reductions, and draws a fully parenthesized result. Copy this single line into the ODT specimen, or use it directly with SKI Evaluator Regular. Keep the trailing dots: they reserve shaping workspace and disappear in the font. Copying the rendered result preserves this source.</p></details>
+<footer><a href="ski.odt">Editable ODT specimen</a><a href="ski-font.ttf" download>Download font</a><a href="readme.md">Language &amp; build notes</a><a href="../../readme.md">All fonts</a></footer>
+<script src="controls.js"></script><script>SKI.createPlayground();</script>
+</body>
+</html>
