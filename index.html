@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Play games, draw pictures, decode messages, and run programs with computational OpenType fonts. Try 19 interactive browser demos, with no installation needed.">
+<title>Computational fonts — try the demos</title>
+<style>
+:root{color-scheme:light;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f4ee;color:#203a42;--muted:#52656b;--line:#c9d2ca;--accent:#226a77}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{max-width:1140px;margin:0 auto;padding:0 28px;line-height:1.6}
+a{color:var(--accent);text-underline-offset:4px}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid #287b87;outline-offset:5px}
+.skip{position:absolute;left:20px;top:-100px;padding:10px;background:#fff;z-index:1}
+.skip:focus{top:10px}
+header{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:25px 0;border-bottom:1px solid var(--line);font-size:14px}
+.brand{font-weight:700;letter-spacing:-.02em;color:inherit;text-decoration:none}
+nav{display:flex;gap:22px}
+nav a{color:var(--muted);text-decoration:none}
+nav a:hover{text-decoration:underline}
+.hero{padding:66px 0 38px;max-width:790px}
+.eyebrow{font-size:12px;font-weight:650;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:0 0 18px}
+h1,h2,h3,p{margin-top:0}
+h1,h2{font-family:Georgia,"Times New Roman",serif;font-weight:400;letter-spacing:-.035em;line-height:1.08}
+h1{font-size:clamp(48px,8vw,88px);margin-bottom:22px}
+.hero>p:last-child{font-size:19px;color:var(--muted);max-width:650px;margin-bottom:0}
+h2{font-size:clamp(30px,4vw,40px);margin-bottom:12px}
+h3{font-size:20px;line-height:1.3;margin-bottom:10px;letter-spacing:-.02em}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:22px}
+.section-head p{color:var(--muted);font-size:14px;margin:0}
+.featured{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin:0 0 52px}
+.feature{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:12px;background:#fffef9;overflow:hidden;text-decoration:none;color:inherit;transition:transform .15s,border-color .15s}
+.feature:hover{transform:translateY(-3px);border-color:var(--accent)}
+.illustration{height:176px;display:flex;align-items:center;justify-content:center;background:#e5ebe3;overflow:hidden}
+.illustration svg{width:190px;height:140px}
+.morse{flex-direction:column;background:#153e48;color:#f0f8e8;font-family:ui-monospace,monospace;gap:7px}
+.morse span{font-size:18px;letter-spacing:.1em}.morse strong{font-size:36px;font-weight:500;letter-spacing:.12em}
+.feature-body{padding:22px;display:flex;flex-direction:column;flex:1}
+.feature p{font-size:14px;color:var(--muted);margin-bottom:18px}
+.action{margin-top:auto;color:var(--accent);font-size:14px;font-weight:650}
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}
+.filters[hidden]{display:none}
+button{font:inherit;font-size:13px;border:1px solid #8ea3a6;border-radius:30px;background:transparent;color:inherit;padding:8px 16px;cursor:pointer}
+button:hover{background:#e4ece8}
+button[aria-pressed="true"]{color:#fffef9;background:#203a42;border-color:#203a42}
+.catalog{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.demo{display:flex;flex-direction:column;padding:24px;border:1px solid var(--line);border-radius:10px;background:#fffef9}
+.demo[hidden]{display:none}
+.category{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:650;color:var(--muted);margin-bottom:12px}
+.demo p{font-size:14px;color:var(--muted);margin-bottom:22px}
+.demo a{margin-top:auto;font-size:14px;font-weight:650;align-self:flex-start}
+.about{display:grid;grid-template-columns:1fr 1fr;gap:50px;border-top:1px solid var(--line);padding:36px 0;margin-top:48px}
+.about p{font-size:15px;color:var(--muted)}
+.about h2{font-size:30px}
+details{font-size:14px;color:var(--muted)}
+summary{font-weight:650;cursor:pointer;color:#203a42;margin-bottom:10px}
+details p{margin-bottom:0}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;border-top:1px solid var(--line);padding:22px 0 30px;font-size:12px;color:var(--muted)}
+footer p{margin:0}footer div{display:flex;gap:20px}
+@media(max-width:800px){.catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.feature-body{padding:18px}.illustration{height:150px}}
+@media(max-width:600px){body{padding:0 18px}header{font-size:12px}nav{gap:14px}.hero{padding:44px 0 30px}.hero>p:last-child{font-size:17px}.featured,.catalog,.about{grid-template-columns:1fr}.feature{flex-direction:row}.illustration{width:115px;height:auto;min-height:168px;flex-shrink:0}.illustration svg{width:105px}.morse span{font-size:11px}.morse strong{font-size:23px}.feature p{margin-bottom:10px}.featured{gap:12px;margin-bottom:38px}.section-head{align-items:flex-start;flex-direction:column;gap:0}.about{gap:22px}.demo{padding:22px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.feature{transition:none}.feature:hover{transform:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#demos">Skip to demos</a>
+<header>
+  <a class="brand" href="./">Computational fonts</a>
+  <nav aria-label="Main navigation"><a href="#demos">Demos</a><a href="https://github.com/brackxm/computational-fonts">Source ↗</a></nav>
+</header>
+<main>
+  <section class="hero" aria-labelledby="title">
+    <p class="eyebrow">An OpenType experiment</p>
+    <h1>Fonts that compute.</h1>
+    <p>Play a game. Draw a picture. Decode a message. These fonts use text shaping to do more than draw letters. Open a demo and try it yourself—no installation needed.</p>
+  </section>
+  <section aria-labelledby="start-title">
+    <div class="section-head"><h2 id="start-title">Start here</h2><p>Three ways to see what a font can do.</p></div>
+    <div class="featured">
+      <a class="feature" href="games/snake-fixed/playground.html">
+        <div class="illustration" aria-hidden="true">
+          <svg viewBox="0 0 190 140" fill="none"><rect x="19" y="13" width="152" height="114" rx="5" fill="#fffef9" stroke="#91a69b"/><path d="M38 51H76V89H114V70H133" stroke="#226a77" stroke-width="15" stroke-linejoin="round"/><circle cx="137" cy="67" r="2" fill="#fffef9"/><rect x="126" y="32" width="12" height="12" rx="3" fill="#b8503c"/></svg>
+        </div>
+        <div class="feature-body"><h3>Play Snake</h3><p>Steer the snake. The font tracks the board and movement history.</p><span class="action">Play the demo →</span></div>
+      </a>
+      <a class="feature" href="graphics/turtle/playground.html">
+        <div class="illustration" aria-hidden="true">
+          <svg viewBox="0 0 190 140" fill="none" stroke-width="4"><path d="M49 109V31H127" stroke="#b8503c"/><path d="M127 31V109H49" stroke="#226a77"/><path d="M64 94V46H112" stroke="#c58a27"/><path d="M112 46V94H64" stroke="#65734a"/><path d="M78 79V61H98" stroke="#795c91"/><path d="m98 54 11 7-11 7Z" fill="#795c91" stroke="none"/></svg>
+        </div>
+        <div class="feature-body"><h3>Draw with a turtle</h3><p>Turn text commands into colorful paths, drawn by the font.</p><span class="action">Try drawing →</span></div>
+      </a>
+      <a class="feature" href="decoders/morse/playground.html">
+        <div class="illustration morse" aria-hidden="true"><span>... --- ...</span><span>↓</span><strong>SOS</strong></div>
+        <div class="feature-body"><h3>Decode Morse</h3><p>Type dots and dashes. Watch the font turn them into letters.</p><span class="action">Try decoding →</span></div>
+      </a>
+    </div>
+  </section>
+  <section id="demos" aria-labelledby="demos-title">
+    <div class="section-head"><h2 id="demos-title">Explore the demos</h2><p id="count" role="status" aria-live="polite" aria-atomic="true">19 demos</p></div>
+    <div class="filters" role="group" aria-label="Filter demos by category" hidden>
+      <button type="button" data-filter="all" aria-pressed="true" aria-controls="catalog">All demos</button>
+      <button type="button" data-filter="games" aria-pressed="false" aria-controls="catalog">Games</button>
+      <button type="button" data-filter="graphics" aria-pressed="false" aria-controls="catalog">Graphics</button>
+      <button type="button" data-filter="languages" aria-pressed="false" aria-controls="catalog">Languages</button>
+      <button type="button" data-filter="decoders" aria-pressed="false" aria-controls="catalog">Decoders</button>
+      <button type="button" data-filter="formatters" aria-pressed="false" aria-controls="catalog">Formatters</button>
+      <button type="button" data-filter="validators" aria-pressed="false" aria-controls="catalog">Validators</button>
+    </div>
+    <div class="catalog" id="catalog">
+      <article class="demo" data-category="games"><span class="category">Games</span><h3>Snake · fixed board</h3><p>A classic game on a 20 × 11 board, with movement and state handled by the font.</p><a href="games/snake-fixed/playground.html" aria-label="Play Snake on a fixed board">Play demo →</a></article>
+      <article class="demo" data-category="games"><span class="category">Games</span><h3>Snake · dynamic board</h3><p>Change the board dimensions in the input text, then take the snake for a spin.</p><a href="games/snake-dynamic/playground.html" aria-label="Play Snake on a dynamic board">Play demo →</a></article>
+      <article class="demo" data-category="games"><span class="category">Games</span><h3>The Last Light</h3><p>Explore eight rooms, collect items, and solve puzzles in a text adventure inside a font.</p><a href="games/text-adventure/playground.html" aria-label="Play The Last Light">Play demo →</a></article>
+      <article class="demo" data-category="graphics"><span class="category">Graphics</span><h3>Turtle graphics</h3><p>Move, turn, and change pen colors to draw a picture from text commands.</p><a href="graphics/turtle/playground.html" aria-label="Try Turtle graphics">Try demo →</a></article>
+      <article class="demo" data-category="graphics"><span class="category">Graphics</span><h3>PPM · color images</h3><p>Turn a plain-text RGB image into a color picture through glyph composition.</p><a href="graphics/ppm/playground.html" aria-label="Try the PPM color image renderer">Try demo →</a></article>
+      <article class="demo" data-category="graphics"><span class="category">Graphics</span><h3>PGM · grayscale images</h3><p>Edit plain-text grayscale pixels and see the font render the image.</p><a href="graphics/pgm/playground.html" aria-label="Try the PGM grayscale image renderer">Try demo →</a></article>
+      <article class="demo" data-category="graphics"><span class="category">Graphics</span><h3>PBM · bitmap images</h3><p>Draw a black-and-white bitmap using a text image format and a font.</p><a href="graphics/pbm/playground.html" aria-label="Try the PBM bitmap image renderer">Try demo →</a></article>
+      <article class="demo" data-category="languages"><span class="category">Languages</span><h3>Mini BASIC</h3><p>Write a small program with numbered BASIC statements and let the font execute it.</p><a href="languages/mini-basic/playground.html" aria-label="Try Mini BASIC">Try demo →</a></article>
+      <article class="demo" data-category="languages"><span class="category">Languages</span><h3>SKI evaluator</h3><p>Explore combinatory logic: the font reduces expressions built from S, K, and I.</p><a href="languages/ski/playground.html" aria-label="Try the SKI evaluator">Try demo →</a></article>
+      <article class="demo" data-category="decoders"><span class="category">Decoders</span><h3>Morse code</h3><p>Decode dots and dashes into letters, digits, and punctuation.</p><a href="decoders/morse/playground.html" aria-label="Try the Morse code decoder">Try demo →</a></article>
+      <article class="demo" data-category="decoders"><span class="category">Decoders</span><h3>Playfair</h3><p>Decode letter pairs with a Playfair key built into the font.</p><a href="decoders/playfair-static/playground.html" aria-label="Try the Playfair decoder">Try demo →</a></article>
+      <article class="demo" data-category="decoders"><span class="category">Decoders</span><h3>Vigenère · fixed key</h3><p>Try a classical cipher with its decoding key baked into the font.</p><a href="decoders/vigenere-static/playground.html" aria-label="Try Vigenère with a fixed key">Try demo →</a></article>
+      <article class="demo" data-category="decoders"><span class="category">Decoders</span><h3>Vigenère · editable key</h3><p>Supply a key alongside the ciphertext and let the font decode it.</p><a href="decoders/vigenere-dynamic/playground.html" aria-label="Try Vigenère with an editable key">Try demo →</a></article>
+      <article class="demo" data-category="decoders"><span class="category">Decoders</span><h3>Enigma I · fixed settings</h3><p>Explore an Enigma decoder with machine settings built into the font.</p><a href="decoders/enigma-static/playground.html" aria-label="Try Enigma I with fixed settings">Try demo →</a></article>
+      <article class="demo" data-category="decoders"><span class="category">Decoders</span><h3>Enigma I · editable settings</h3><p>Set the rotors, positions, and rings in the input text before decoding.</p><a href="decoders/enigma-dynamic/playground.html" aria-label="Try Enigma I with editable settings">Try demo →</a></article>
+      <article class="demo" data-category="decoders"><span class="category">Decoders</span><h3>Lorenz SZ40/SZ42</h3><p>Try a teleprinter cipher with machine and wheel settings baked into the font.</p><a href="decoders/lorenz-static/playground.html" aria-label="Try the Lorenz decoder">Try demo →</a></article>
+      <article class="demo" data-category="formatters"><span class="category">Formatters</span><h3>JSON formatter</h3><p>See a font apply visual formatting to JSON while the underlying text stays intact.</p><a href="formatters/json/playground.html" aria-label="Try the JSON formatter">Try demo →</a></article>
+      <article class="demo" data-category="formatters"><span class="category">Formatters</span><h3>Markdown-style formatter</h3><p>Try emphasis, inline code, strikethrough, and headings through font substitutions.</p><a href="formatters/markdown/playground.html" aria-label="Try the Markdown-style formatter">Try demo →</a></article>
+      <article class="demo" data-category="validators"><span class="category">Validators</span><h3>Multi-format validator</h3><p>Check dates, identifiers, and checksums across 16 formats using a single font.</p><a href="validators/multi-format/playground.html" aria-label="Try the multi-format validator">Try demo →</a></article>
+    </div>
+  </section>
+  <section class="about" aria-labelledby="about-title">
+    <div><h2 id="about-title">The font does the work.</h2><p>OpenType substitutions, ligatures, and glyph composition turn the input text into the result you see. The playgrounds provide controls and prepare text for the font; the computation happens during text shaping.</p><a href="https://github.com/brackxm/computational-fonts#readme">Read about the project →</a></div>
+    <div>
+      <details open><summary>Can I try these in a document?</summary><p>Yes. Each project includes an editable ODT specimen with embedded fonts. Open it in LibreOffice Writer and change the examples. Look for the document link in the demo or project folder.</p></details>
+      <details style="margin-top:20px"><summary>What happens when I copy a result?</summary><p>The result is made of glyphs. Copying it preserves the original input text, rather than the computed appearance. These are experimental fonts with documented limits; rendering can vary between applications.</p></details>
+    </div>
+  </section>
+</main>
+<footer><p>Computational fonts · Experiments in text shaping</p><div><a href="https://github.com/brackxm/computational-fonts">GitHub</a><a href="LICENSE">Apache 2.0</a><a href="THIRD_PARTY_NOTICES.md">Attribution</a></div></footer>
+<script>
+const filters = document.querySelector('.filters');
+const buttons = Array.from(filters.querySelectorAll('button'));
+const demos = Array.from(document.querySelectorAll('.demo'));
+const count = document.querySelector('#count');
+filters.addEventListener('click', (event) => {
+  const button = event.target.closest('button[data-filter]');
+  if (!button || !filters.contains(button)) return;
+  const category = button.dataset.filter;
+  buttons.forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+  let visible = 0;
+  demos.forEach((demo) => {
+    demo.hidden = category !== 'all' && demo.dataset.category !== category;
+    if (!demo.hidden) visible += 1;
+  });
+  count.textContent = `${visible} ${visible === 1 ? 'demo' : 'demos'}${category === 'all' ? '' : ' · ' + button.textContent}`;
+});
+filters.hidden = false;
+</script>
+</body>
+</html>
