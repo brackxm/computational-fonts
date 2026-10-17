@@ -1,6 +1,6 @@
 # Copyright 2026 Michael Brackx
 # SPDX-License-Identifier: Apache-2.0
-"""Build editable ODF specimens from the bundled fonts. Requires FontTools."""
+"""Build editable ODT or DOCX specimens from the bundled fonts. Requires FontTools."""
 
 import argparse
 from dataclasses import dataclass
@@ -603,10 +603,17 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--project", choices=[s.folder for s in SPECS],
                         help=f"Build one project instead of all {len(SPECS)} specimens")
+    parser.add_argument("--format", choices=("odt", "docx", "all"), default="odt",
+                        help="Document format (default: odt); docx also requires python-docx")
     args = parser.parse_args()
     for spec in SPECS:
         if args.project is None or spec.folder == args.project:
-            build(spec)
+            if args.format in ("odt", "all"):
+                build(spec)
+            if args.format in ("docx", "all"):
+                from word import build as build_word
+                output = build_word(spec, ROOT, BASE, font_family)
+                print(output.relative_to(ROOT))
 
 
 if __name__ == "__main__":

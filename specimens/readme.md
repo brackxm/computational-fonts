@@ -1,9 +1,35 @@
-# Editable ODF specimens
+# Editable document specimens
 
 Each project has an `.odt` document with editable sample text, its bundled
 computational font, and the ordinary Roboto 2 font embedded in the package.
 Open it in LibreOffice Writer and follow its "Try it" instructions. Font
 installation, macros, JavaScript, and a web server are unnecessary.
+
+Each project also has a native `.docx` specimen for desktop Microsoft Word.
+It embeds the complete computational font and Roboto as obfuscated OpenType
+parts, with explicit font relationships and font embedding settings. The
+computational blocks enable standard and contextual ligatures and contextual
+alternates, disable proofing, and preserve each input as one editable text run.
+Fonts are not subsetted: new input needs glyphs and substitution rules that
+may not appear in the initial example.
+
+The DOCX specimens are candidates for Word compatibility, not a claim of
+verified Word rendering. Automated checks cover the package, font recovery,
+source text, settings and reproducibility. LibreOffice previews check layout
+and computations in that engine. Microsoft Word on Windows and Mac still
+needs separate testing, especially for long inputs and color glyphs. An intact
+text run in the file does not guarantee an application shapes it as one run.
+The image, BASIC, SKI and adventure canvases use a wide shaping paragraph
+inside a page-width cell, as in the ODT builder. Word may normalize extreme
+paragraph indents; these examples especially need testing in Word before
+being distributed as working Word demonstrations.
+The ODT files continue to target LibreOffice Writer.
+
+Word can open ODT but may display the source if the embedded font or required
+shaping is unavailable. Use the native DOCX for Word; simply saving an ODT as
+DOCX does not add the embedded font parts and shaping settings generated here.
+See Microsoft's [font embedding guidance](https://support.microsoft.com/en-us/office/fonts/benefits-of-embedding-custom-fonts)
+and [DOCX font part documentation](https://learn.microsoft.com/en-us/openspecs/office_standards/ms-oi29500/ea097c57-5794-4624-b08e-017b47051b1d).
 
 Each example contains two independent copies of the same text: a normal-font
 source block and an editable computational-font block. The font performs the
@@ -58,9 +84,23 @@ Build only one document:
 python3 specimens/build.py --project validators/multi-format
 ```
 
+Build Word documents, or both formats (the default remains ODT):
+
+```bash
+python3 -m pip install fonttools python-docx
+python3 specimens/build.py --format docx
+python3 specimens/build.py --format all --project decoders/morse
+```
+
+Run the DOCX regression checks:
+
+```bash
+python3 -m unittest discover -s specimens -p 'test_word.py'
+```
+
 Outputs always go beside each project's bundled font, using its filename without
-the trailing `-font` and with an `.odt` extension. For example,
-`validator-font.ttf` becomes `validator.odt`. The documents can be
+the trailing `-font` and with an `.odt` or `.docx` extension. For example,
+`validator-font.ttf` becomes `validator.odt` or `validator.docx`. The documents can be
 downloaded into one directory.
 Rebuild the relevant font first if its generator or settings changed. The
 examples assume the bundled settings documented in each project's readme.
