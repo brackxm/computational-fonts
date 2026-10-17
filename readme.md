@@ -3,6 +3,9 @@
 Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
+**[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
+explore all 19 playgrounds in your browser, with no installation needed.
+
 ## Projects
 
 | Project | Mode | Input or configuration | Editable document |
