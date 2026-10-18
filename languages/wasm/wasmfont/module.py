@@ -1,10 +1,10 @@
-"""Bounded core Wasm module loader: memory, integer globals, active data segments.
+"""Bounded core Wasm module loader: memory, integer globals, data segments.
 
 Uses the existing function decoder; unsupported module constructs fail closed.
 """
 from dataclasses import dataclass, field
 from pathlib import Path
-from .ir import parse_binary, uleb, sleb
+from .ir import parse_binary, uleb, sleb, section_order
 from .state import MachineState
 from .validation import validate_supported
 
@@ -16,8 +16,10 @@ class Module:
     globals: list = field(default_factory=list)
     global_types: list = field(default_factory=list)
     mutable: list = field(default_factory=list)
-    segments: list = field(default_factory=list)
+    segments: list = field(default_factory=list) # (offset, bytes); None marks passive data.
     exports: dict = field(default_factory=dict)
+    table: list[int | None] | None = None
+    table_maximum: int | None = None
 
     def invoke(self, export_name, args, *, state=None, fuel=100000):
         """Execute an exported function against a module instance (reference VM)."""
@@ -34,8 +36,11 @@ class Module:
     def instantiate(self):
         state = MachineState(pages=self.initial_pages, max_pages=self.maximum_pages,
                              globals=self.globals.copy(), global_types=self.global_types.copy(),
-                             mutable=self.mutable.copy())
+                             mutable=self.mutable.copy(),
+                             data_segments=[payload if offset is None else b'' for offset,payload in self.segments],
+                             table=self.table.copy() if self.table is not None else [])
         for offset, payload in self.segments:
+            if offset is None:continue
             state.bounds(offset, len(payload))
             state.memory[offset:offset+len(payload)] = payload
         return state
@@ -50,8 +55,8 @@ def load_binary(path):
         size,pos=uleb(data,pos);end=pos+size
         if end>len(data):raise ValueError('truncated section')
         if section:
-            if section in sections or section<previous:raise ValueError('duplicate/out-of-order section')
-            previous=section;sections[section]=data[pos:end]
+            if section in sections or section_order(section)<previous:raise ValueError('duplicate/out-of-order section')
+            previous=section_order(section);sections[section]=data[pos:end]
         pos=end
     def vector(section, parser):
         b=sections.get(section,b'\0');p=0;count,p=uleb(b,p);items=[]
@@ -81,14 +86,38 @@ def load_binary(path):
         if typ is None or mut not in (0,1):raise NotImplementedError('unsupported global type')
         value,p=init_expr(b,p)
         return (typ,bool(mut),value),p
+    def table_type(b,p):
+        if b[p]!=0x70:raise NotImplementedError('only funcref tables supported')
+        flag,p=uleb(b,p+1)
+        if flag not in (0,1):raise NotImplementedError('unsupported table limits')
+        minimum,p=uleb(b,p);maximum=None
+        if flag:maximum,p=uleb(b,p)
+        if minimum>256 or maximum is not None and not minimum<=maximum<=256:
+            raise ValueError('table limits must be within 0..256')
+        return (minimum,maximum),p
+    def element(b,p):
+        flag,p=uleb(b,p)
+        if flag==2:
+            table_index,p=uleb(b,p)
+            if table_index!=0:raise NotImplementedError('multiple tables unsupported')
+        elif flag!=0:raise NotImplementedError('only active function-index element segments supported')
+        offset,p=init_expr(b,p)
+        if flag==2:
+            if b[p]!=0:raise NotImplementedError('only function-index element segments supported')
+            p+=1
+        count,p=uleb(b,p);entries=[]
+        for _ in range(count):
+            index,p=uleb(b,p);entries.append(index)
+        return (offset,entries),p
     def segment(b,p):
         flag,p=uleb(b,p)
         if flag==0:offset,p=init_expr(b,p)
+        elif flag==1:offset=None
         elif flag==2:
             index,p=uleb(b,p)
             if index!=0:raise NotImplementedError('multiple memories unsupported')
             offset,p=init_expr(b,p)
-        else:raise NotImplementedError('passive data segments unsupported')
+        else:raise NotImplementedError('unsupported data segment mode')
         length,p=uleb(b,p)
         if p+length>len(b):raise ValueError('truncated data segment')
         return (offset,b[p:p+length]),p+length
@@ -103,15 +132,25 @@ def load_binary(path):
     segments=vector(11,segment)
     exports=vector(7,export)
     functions=parse_binary(path)
+    tables=vector(4,table_type)
+    if len(tables)>1:raise NotImplementedError('multiple tables unsupported')
+    elements=vector(9,element)
+    table=[None]*tables[0][0] if tables else None
+    for offset,entries in elements:
+        if table is None:raise ValueError('element segment without table')
+        if not 0<=offset<=len(table)-len(entries):raise ValueError('element segment out of table bounds')
+        if any(index>=len(functions) for index in entries):raise ValueError('invalid element function index')
+        table[offset:offset+len(entries)]=entries
     mapping={}
     for name,kind,index in exports:
         if name in mapping:raise ValueError('duplicate export')
         if kind==0 and index>=len(functions):raise ValueError('invalid function export')
         mapping[name]=(kind,index)
-    if segments and not memories:raise ValueError('data segment without memory')
+    if any(offset is not None for offset,_ in segments) and not memories:raise ValueError('data segment without memory')
     m=Module(functions,*(memories[0] if memories else (0,0)),
              [v for _,_,v in globals_],[t for t,_,_ in globals_],
              [mut for _,mut,_ in globals_],segments,mapping)
     m.has_memory=bool(memories)
+    m.table=table;m.table_maximum=tables[0][1] if tables else None
     m.instantiate() # validate segment bounds immediately
     return m

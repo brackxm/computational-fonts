@@ -2,7 +2,7 @@
 Unsupported instructions fail closed; this is not a complete Wasm validator.
 """
 import re
-from .opcodes import EXTRA
+from .opcodes import EXTRA, BULK_MEMORY
 from .conversions import CONVERSIONS, convert
 from dataclasses import dataclass
 from pathlib import Path
@@ -15,6 +15,19 @@ class Function:
     results:list
     locals:list
     code:list
+
+@dataclass(frozen=True)
+class BlockType:
+    params: tuple[str, ...] = ()
+    results: tuple[str, ...] = ()
+
+
+def block_signature(arg):
+    """Resolve both compact MVP block types and integer function signatures."""
+    if isinstance(arg,BlockType):return arg
+    if arg in (None,0x40):return BlockType()
+    if arg in (0x7f,0x7e):return BlockType(results=('i32' if arg==0x7f else 'i64',))
+    raise NotImplementedError('unsupported block signature')
 
 def uleb(b,p):
     n=0
@@ -38,6 +51,10 @@ def vec(b,p,fn):
         v,p=fn(b,p);out.append(v)
     return out,p
 MEMOPS={0x28:'i32.load',0x29:'i64.load',0x2c:'i32.load8_s',0x2d:'i32.load8_u',0x2e:'i32.load16_s',0x2f:'i32.load16_u',0x30:'i64.load8_s',0x31:'i64.load8_u',0x32:'i64.load16_s',0x33:'i64.load16_u',0x34:'i64.load32_s',0x35:'i64.load32_u',0x36:'i32.store',0x37:'i64.store',0x3a:'i32.store8',0x3b:'i32.store16',0x3c:'i64.store8',0x3d:'i64.store16',0x3e:'i64.store32'}
+def section_order(sid):
+    # The data-count section precedes code and data despite its larger ID.
+    return {12:10,10:11,11:12}.get(sid,sid)
+
 def parse_binary(path):
     b=Path(path).read_bytes()
     if b[:8]!=b'\0asm\x01\0\0\0':raise ValueError('bad Wasm header')
@@ -47,8 +64,8 @@ def parse_binary(path):
         if p+n>len(b):raise ValueError('truncated section')
         if sid>12:raise ValueError('unknown section id')
         if sid and sid in sections:raise ValueError('duplicate section')
-        if sid and sid<=last_section:raise ValueError('out-of-order section')
-        if sid:last_section=sid
+        if sid and section_order(sid)<=last_section:raise ValueError('out-of-order section')
+        if sid:last_section=section_order(sid)
         sections[sid]=b[p:p+n];p+=n
     def valtype(b,p):
         if p>=len(b) or b[p] not in (0x7f,0x7e):raise NotImplementedError('only integer value types')
@@ -88,17 +105,39 @@ def parse_binary(path):
             elif op in (0x23,0x24):
                 idx,p=uleb(body,p);instructions.append(('global.get' if op==0x23 else 'global.set',idx))
             elif op in (0x3f,0x40):
-                if p>=len(body) or body[p]!=0:raise ValueError('invalid memory index')
-                p+=1;instructions.append(('memory.size' if op==0x3f else 'memory.grow',None))
+                memory_index,p=uleb(body,p)
+                if memory_index!=0:raise NotImplementedError('multiple memories unsupported')
+                instructions.append(('memory.size' if op==0x3f else 'memory.grow',None))
+            elif op==0xfc:
+                subopcode,p=uleb(body,p)
+                name=next((name for name,code in BULK_MEMORY.items() if code==subopcode),None)
+                if name is None:raise NotImplementedError(f'unsupported Wasm opcode 0xfc {subopcode}')
+                arg=None
+                if name in ('memory.init','data.drop'):arg,p=uleb(body,p)
+                for _ in range(2 if name=='memory.copy' else 0 if name=='data.drop' else 1):
+                    memory_index,p=uleb(body,p)
+                    if memory_index!=0:raise NotImplementedError('multiple memories unsupported')
+                instructions.append((name,arg))
             elif op in OPS:instructions.append((OPS[op],None))
             elif op in CONVERSIONS:instructions.append((CONVERSIONS[op],None))
             elif op in EXTRA:
                 name=EXTRA[op];arg=None
                 if name in ('block','loop','if'):
                     if p>=len(body):raise ValueError('missing block type')
-                    arg=body[p];p+=1
-                    if arg not in (0x40,0x7f,0x7e):raise NotImplementedError('only empty or single-integer block types supported')
+                    if body[p] in (0x40,0x7f,0x7e):arg=body[p];p+=1
+                    else:
+                        type_index,p=sleb(body,p,33)
+                        if type_index<0:raise NotImplementedError('only integer block signatures supported')
+                        if type_index>=len(types):raise ValueError('block type index out of range')
+                        params_,results_=types[type_index]
+                        arg=BlockType(tuple(params_),tuple(results_))
                 elif name in ('br','br_if','call'):arg,p=uleb(body,p)
+                elif name=='call_indirect':
+                    type_index,p=uleb(body,p);table_index,p=uleb(body,p)
+                    if type_index>=len(types):raise ValueError('indirect call type index out of range')
+                    if table_index!=0:raise NotImplementedError('multiple tables unsupported')
+                    params_,results_=types[type_index]
+                    arg=BlockType(tuple(params_),tuple(results_))
                 elif name=='br_table':
                     labels,p=vec(body,p,uleb);default,p=uleb(body,p);arg=labels+[default]
                 instructions.append((name,arg))

@@ -9,8 +9,8 @@ from dataclasses import dataclass
 import re
 import tempfile
 from pathlib import Path
-from .ir import Function, OPS, MEMOPS
-from .opcodes import EXTRA
+from .ir import Function, BlockType, block_signature, OPS, MEMOPS
+from .opcodes import EXTRA, BULK_MEMORY
 from .conversions import CONVERSIONS
 from .module import Module, load_binary
 from .validation import validate
@@ -21,6 +21,7 @@ OPCODES.update({'local.get':0x20,'local.set':0x21,'local.tee':0x22,
                 'global.get':0x23,'global.set':0x24,'i32.const':0x41,
                 'i64.const':0x42,'memory.size':0x3f,'memory.grow':0x40,
                 'return':0x0f,'else':0x05,'end':0x0b})
+OPCODES.update({name:0xfc for name in BULK_MEMORY})
 
 
 @dataclass(frozen=True)
@@ -128,7 +129,7 @@ def parse_text(text: str) -> Module:
     fields=root[1:]
     if fields and isinstance(fields[0],str) and fields[0].startswith('$'): fields=fields[1:]
     if any(not isinstance(x,list) or not x for x in fields): raise ValueError('invalid module field')
-    allowed={'func','type','memory','global','data','export'}
+    allowed={'func','type','memory','global','data','export','table','elem'}
     for x in fields:
         if x[0] not in allowed: raise NotImplementedError(f'unsupported module field: {x[0]}')
     function_fields=[x for x in fields if x[0]=='func']
@@ -141,6 +142,10 @@ def parse_text(text: str) -> Module:
                 d[f[1]]=i
         return d
     fnames=identifiers(function_fields); gnames=identifiers(global_fields)
+    dnames=identifiers([x for x in fields if x[0]=='data'])
+    table_fields=[x for x in fields if x[0]=='table'];table_names=identifiers(table_fields)
+    identifiers([x for x in fields if x[0]=='elem'])
+    if len(table_fields)>1:raise NotImplementedError('multiple tables unsupported')
     signatures=[]; tnames={}
     for x in fields:
         if x[0]!='type': continue
@@ -158,6 +163,17 @@ def parse_text(text: str) -> Module:
         signatures.append((params,results))
     module=Module([])
     module.initial_pages=0; module.maximum_pages=0
+    if table_fields:
+        vals=table_fields[0][1:]
+        if vals and isinstance(vals[0],str) and vals[0].startswith('$'):vals=vals[1:]
+        while vals and isinstance(vals[0],list) and vals[0] and vals[0][0]=='export':vals=vals[1:]
+        if not vals or vals[-1]!='funcref':raise NotImplementedError('only funcref tables supported')
+        limits=[integer(v) for v in vals[:-1]]
+        if not 1<=len(limits)<=2:raise ValueError('table requires minimum and optional maximum')
+        minimum=limits[0];maximum=limits[1] if len(limits)==2 else None
+        if not 0<=minimum<=256 or maximum is not None and not minimum<=maximum<=256:
+            raise ValueError('table limits must be within 0..256')
+        module.table=[None]*minimum;module.table_maximum=maximum
     def export(n,kind,idx):
         n=name_string(n)
         if n in module.exports: raise ValueError('duplicate export')
@@ -195,7 +211,7 @@ def parse_text(text: str) -> Module:
             else:
                 params,results=[list(x) for x in typeuse]
                 names={name:idx+len(params) for name,idx in names.items()}
-        parser=InstructionText(names,fnames,gnames)
+        parser=InstructionText(names,fnames,gnames,signatures,tnames,dnames,table_names)
         code=parser.sequence(body)
         module.functions.append(Function(params,results,local_types,code))
     memories=[x for x in fields if x[0]=='memory']
@@ -230,7 +246,7 @@ def parse_text(text: str) -> Module:
         module.global_types.append(typ); module.mutable.append(mutable)
         module.globals.append(integer_literal(init[1],int(typ[1:])))
     # Collect exports in module-field order, preserving default entry selection.
-    export_kinds={'func':0,'memory':2,'global':3}
+    export_kinds={'func':0,'table':1,'memory':2,'global':3}
     export_indices={kind:0 for kind in export_kinds}
     for x in fields:
         if x[0] in export_kinds:
@@ -245,24 +261,47 @@ def parse_text(text: str) -> Module:
             if kind=='func': export(x[1],0,index(target,fnames))
             elif kind=='global': export(x[1],3,index(target,gnames))
             elif kind=='memory': export(x[1],2,index(target,mnames))
+            elif kind=='table': export(x[1],1,index(target,table_names))
             else: raise NotImplementedError('unsupported export kind')
+        elif x[0]=='elem':
+            vals=x[1:]
+            if vals and isinstance(vals[0],str) and vals[0].startswith('$'):vals=vals[1:]
+            if vals and isinstance(vals[0],list) and vals[0] and vals[0][0]=='table':
+                if len(vals[0])!=2:raise ValueError('element table use requires one index')
+                if index(vals[0][1],table_names)!=0:raise NotImplementedError('multiple tables unsupported')
+                vals=vals[1:]
+            if not vals or not isinstance(vals[0],list) or not vals[0] or vals[0][0]!='i32.const':
+                raise NotImplementedError('only active constant-offset function-index element segments supported')
+            if len(vals[0])!=2:raise ValueError('element offset requires exactly one integer immediate')
+            offset=integer_literal(vals[0][1],32);entries=vals[1:]
+            if entries and entries[0]=='func':entries=entries[1:]
+            targets=[index(v,fnames) for v in entries]
+            if module.table is None:raise ValueError('element segment without table')
+            if not 0<=offset<=len(module.table)-len(targets):raise ValueError('element segment out of table bounds')
+            if any(target>=len(module.functions) for target in targets):raise ValueError('invalid element function index')
+            module.table[offset:offset+len(targets)]=targets
         elif x[0]=='data':
             vals=x[1:]
             if vals and isinstance(vals[0],str) and vals[0].startswith('$'): vals=vals[1:]
-            if not vals or not isinstance(vals[0],list) or not vals[0] or vals[0][0]!='i32.const':
-                raise NotImplementedError('only active memory-zero constant-offset data segments supported')
-            if len(vals[0])!=2 or not isinstance(vals[0][1],str):
-                raise ValueError('data offset requires exactly one integer immediate')
-            if not module.has_memory:raise ValueError('data segment without memory')
-            offset=integer_literal(vals[0][1],32)
-            if any(not isinstance(v,TextString) for v in vals[1:]): raise ValueError('invalid data payload')
-            module.segments.append((offset,b''.join(v.data for v in vals[1:])))
+            offset=None
+            if vals and isinstance(vals[0],list):
+                if not vals[0] or vals[0][0]!='i32.const':
+                    raise NotImplementedError('only memory-zero constant-offset active data segments supported')
+                if len(vals[0])!=2 or not isinstance(vals[0][1],str):
+                    raise ValueError('data offset requires exactly one integer immediate')
+                if not module.has_memory:raise ValueError('data segment without memory')
+                offset=integer_literal(vals[0][1],32);vals=vals[1:]
+            if any(not isinstance(v,TextString) for v in vals): raise ValueError('invalid data payload')
+            module.segments.append((offset,b''.join(v.data for v in vals)))
     return module
 
 
 class InstructionText:
-    def __init__(self,locals_,functions,globals_):
+    def __init__(self,locals_,functions,globals_,signatures=(),type_names=None,data_names=None,table_names=None):
         self.locals=locals_;self.functions=functions;self.globals=globals_; self.labels=[]
+        self.signatures=signatures;self.type_names=type_names or {}
+        self.data_names=data_names or {}
+        self.table_names=table_names or {}
 
     def label(self,token):
         if str(token).startswith('$'):
@@ -272,13 +311,31 @@ class InstructionText:
         return integer(token)
 
     def header(self,items,pos):
-        label=None; typ=0x40
+        label=None
         if pos<len(items) and isinstance(items[pos],str) and items[pos].startswith('$'):
             label=items[pos];pos+=1
-        if pos<len(items) and isinstance(items[pos],list) and items[pos] and items[pos][0]=='result':
-            group=items[pos];pos+=1
-            if len(group)!=2 or group[1] not in TYPES: raise NotImplementedError('single integer block results only')
-            typ=TYPES[group[1]]
+        params=[];results=[];typeuse=None;inline=False;phase=0
+        order={'type':0,'param':1,'result':2}
+        while pos<len(items) and isinstance(items[pos],list) and items[pos] and items[pos][0] in order:
+            group=items[pos];pos+=1;kind=group[0]
+            if order[kind]<phase:raise ValueError('out-of-order block signature')
+            phase=order[kind]
+            if kind=='type':
+                if len(group)!=2 or typeuse is not None:raise ValueError('block type use requires one index and may not repeat')
+                idx=index(group[1],self.type_names)
+                if idx>=len(self.signatures):raise ValueError('block type index out of range')
+                typeuse=self.signatures[idx]
+            else:
+                inline=True
+                if any(isinstance(x,str) and x.startswith('$') for x in group[1:]):
+                    raise NotImplementedError('named block parameters are unsupported')
+                if len(group)>1:declaration(group,kind,params if kind=='param' else results,{})
+        if typeuse is not None:
+            if inline and (params,results)!=typeuse:raise ValueError('inline block signature does not match type use')
+            params,results=typeuse
+        if typeuse is None and not params and len(results)<=1:
+            typ=TYPES[results[0]] if results else 0x40
+        else:typ=BlockType(tuple(params),tuple(results))
         return label,typ,pos
 
     def sequence(self,items):
@@ -314,15 +371,24 @@ class InstructionText:
     def immediate(self,op,items,pos):
         if op not in OPCODES:raise NotImplementedError(f'unsupported instruction {op}')
         arg=None
-        if op in ('local.get','local.set','local.tee','global.get','global.set','call','br','br_if','i32.const','i64.const'):
+        if op in ('local.get','local.set','local.tee','global.get','global.set','call','br','br_if','i32.const','i64.const','memory.init','data.drop'):
             if pos>=len(items) or isinstance(items[pos],list):raise ValueError('missing immediate for '+op)
             token=items[pos];pos+=1
             if op.startswith('local.'):arg=index(token,self.locals)
             elif op.startswith('global.'):arg=index(token,self.globals)
             elif op=='call':arg=index(token,self.functions)
             elif op in ('br','br_if'):arg=self.label(token)
+            elif op in ('memory.init','data.drop'):arg=index(token,self.data_names)
             else:
                 arg=integer_literal(token,int(op[1:3]))
+        elif op=='call_indirect':
+            if pos<len(items) and isinstance(items[pos],TextString):raise ValueError('table index must be unquoted')
+            if pos<len(items) and isinstance(items[pos],str) and (items[pos].startswith('$') or items[pos][:1] in '+-0123456789'):
+                if index(items[pos],self.table_names)!=0:raise NotImplementedError('multiple tables unsupported')
+                pos+=1
+            label,typ,pos=self.header(items,pos)
+            if label is not None:raise ValueError('unexpected indirect-call label')
+            arg=block_signature(typ)
         elif op=='br_table':
             arg=[]
             while pos<len(items) and isinstance(items[pos],str) and (items[pos].startswith('$') or re.fullmatch(r'[+\-]?[0-9_]+',items[pos])):
@@ -403,31 +469,58 @@ def binary(module: Module) -> bytes:
         signature=(tuple(f.params),tuple(f.results))
         if signature not in types:types.append(signature)
         indices.append(types.index(signature))
+    for f in module.functions:
+        for op,arg in f.code:
+            if op in ('block','loop','if','call_indirect') and isinstance(arg,BlockType):
+                signature=(arg.params,arg.results)
+                if signature not in types:types.append(signature)
     out=b'\0asm\x01\0\0\0'
     if types:out+=sec(1,vector([b'\x60'+vector([bytes([TYPES[t]]) for t in p])+vector([bytes([TYPES[t]]) for t in r]) for p,r in types]))
     if indices:out+=sec(3,vector([unsigned_leb(i) for i in indices]))
+    if module.table is not None:
+        maximum=module.table_maximum
+        out+=sec(4,vector([b'\x70'+bytes([int(maximum is not None)])+unsigned_leb(len(module.table))+
+                          (unsigned_leb(maximum) if maximum is not None else b'')]))
     has_memory=getattr(module,'has_memory',False) or module.maximum_pages or module.initial_pages
-    if module.segments and not has_memory:raise ValueError('data segment without memory')
+    if any(offset is not None for offset,_ in module.segments) and not has_memory:raise ValueError('data segment without memory')
     if has_memory:
         out+=sec(5,vector([b'\x01'+unsigned_leb(module.initial_pages)+unsigned_leb(module.maximum_pages)]))
     if module.globals:
         out+=sec(6,vector([bytes([TYPES[t],int(m)])+expr(t,v) for t,m,v in zip(module.global_types,module.mutable,module.globals)]))
     if module.exports:
         out+=sec(7,vector([unsigned_leb(len(n.encode('utf-8')))+n.encode('utf-8')+bytes([kind])+unsigned_leb(i) for n,(kind,i) in module.exports.items()]))
+    if module.table is not None:
+        elements=[];start=0;entries=[]
+        for slot,target in enumerate(module.table+[None]):
+            if target is None:
+                if entries:elements.append(b'\x00'+expr('i32',start)+vector([unsigned_leb(v) for v in entries]));entries=[]
+            else:
+                if not entries:start=slot
+                entries.append(target)
+        if elements:out+=sec(9,vector(elements))
+    if any(op in ('memory.init','data.drop') for f in module.functions for op,_ in f.code):
+        out+=sec(12,unsigned_leb(len(module.segments)))
     bodies=[]
     for f in module.functions:
         code=bytearray(vector([b'\x01'+bytes([TYPES[t]]) for t in f.locals]))
         for op,arg in f.code:
             code.append(OPCODES[op])
-            if op in ('block','loop','if'):code.append(0x40 if arg is None else arg)
+            if op in ('block','loop','if'):
+                if isinstance(arg,BlockType):code+=signed_leb(types.index((arg.params,arg.results)),33)
+                else:code.append(0x40 if arg is None else arg)
             elif op in ('local.get','local.set','local.tee','global.get','global.set','call','br','br_if'):code+=unsigned_leb(arg)
+            elif op=='call_indirect':code+=unsigned_leb(types.index((arg.params,arg.results)))+b'\x00'
             elif op.endswith('.const'):code+=signed_leb(arg,int(op[1:3]))
             elif op=='br_table':code+=vector([unsigned_leb(x) for x in arg[:-1]])+unsigned_leb(arg[-1])
             elif op in MEMOPS.values():code+=unsigned_leb(memory_bytes(op).bit_length()-1)+unsigned_leb(arg)
             elif op in ('memory.size','memory.grow'):code+=b'\x00'
+            elif op in BULK_MEMORY:
+                code+=unsigned_leb(BULK_MEMORY[op])
+                if op in ('memory.init','data.drop'):code+=unsigned_leb(arg)
+                code+=b'\x00'*(2 if op=='memory.copy' else 0 if op=='data.drop' else 1)
         code.append(0x0b);bodies.append(unsigned_leb(len(code))+code)
     if bodies:out+=sec(10,vector(bodies))
-    if module.segments:out+=sec(11,vector([b'\0'+expr('i32',off)+unsigned_leb(len(payload))+payload for off,payload in module.segments]))
+    if module.segments:out+=sec(11,vector([(b'\x01' if off is None else b'\0'+expr('i32',off))+unsigned_leb(len(payload))+payload for off,payload in module.segments]))
     return out
 
 

@@ -272,8 +272,8 @@ def test_independent_validator_rejects_ill_typed_wat(tmp_path,wat):
 
 def test_unsupported_features_fail_closed(tmp_path):
     for i,wat in enumerate([
-      '(module (memory 1) (func (export "run") (result i32) i32.const 1 memory.grow))',
-      '(module (table 1 funcref))',
+      '(module (import "env" "run" (func)))',
+      '(module (table 1 externref))',
       '(module (func (export "run") (result f32) f32.const 0))',
     ]):
         source=tmp_path/f'unsupported{i}.wat';source.write_text(wat)

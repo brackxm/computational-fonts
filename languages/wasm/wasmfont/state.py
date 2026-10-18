@@ -1,4 +1,4 @@
-"""Bounded Wasm linear memory and mutable integer globals (reference runtime)."""
+"""Bounded Wasm memory, mutable globals, and data-segment lifetimes (reference VM)."""
 from dataclasses import dataclass, field
 
 class MemoryTrap(Exception): pass
@@ -10,6 +10,8 @@ class MachineState:
     globals: list = field(default_factory=list)
     global_types: list = field(default_factory=list)
     mutable: list = field(default_factory=list)
+    data_segments: list[bytes] = field(default_factory=list)
+    table: list[int | None] = field(default_factory=list)
     memory: bytearray = field(init=False)
 
     def __post_init__(self):

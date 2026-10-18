@@ -121,8 +121,8 @@ def test_native_manifest_preserves_generic_integer_circuits(tmp_path, width):
             assert font.invoke(value) == value
 
 
-@pytest.mark.parametrize('tag,payload', [(2, b'\0'), (4, b'\0'), (8, b'\1'), (9, b'\0')],
-                         ids=['imports', 'tables', 'trapping-start', 'elements'])
+@pytest.mark.parametrize('tag,payload', [(2, b'\0'), (8, b'\1')],
+                         ids=['imports', 'trapping-start'])
 def test_direct_loader_rejects_unsupported_sections(tmp_path, tag, payload):
     data = insert_section(binary(parse_text(LEGACY_ADD)), tag, payload)
     validate(data)

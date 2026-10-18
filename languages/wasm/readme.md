@@ -21,7 +21,7 @@ Serve the repository root:
 python3 -m http.server 8000
 ```
 
-Open <http://localhost:8000/languages/wasm/playground.html>. Twenty-one bundled examples
+Open <http://localhost:8000/languages/wasm/playground.html>. Twenty-six bundled examples
 cover 32/64-bit expressions, wrapping addition, branches, loops, recursion,
 memory, division, multiplication, bit counting and compiled C. Change arguments
 to run them; decimal, hexadecimal and binary input retain all 64 bits. Results
@@ -35,6 +35,19 @@ arguments, independent signed dividers and wrapping addition in one shaping call
 into a full-width wrapping multiplier. Both examples accept four arguments.
 **Signed divisions → multiply → count bits** composes four runtime operations,
 returning the signed-division product and the popcount of its 64-bit result.
+**64-bit division → typed loop** produces a full-width quotient/remainder pair,
+then carries both values through a loop to compute a checksum.
+**Memory fill + overlapping copy** initializes a 16-byte window, fills its upper
+half with a runtime byte, then copies a runtime range. The two i64 results expose
+every byte; hexadecimal output shows the copy's overlap behavior.
+**Passive data → memory** copies a selected range from an embedded data segment.
+An optional early drop demonstrates how discarding the segment affects later
+initialization, while preserving bytes already written into memory.
+**Grow memory in the font** attempts two runtime growth steps, reports their
+results and the current page count, and returns a stored i64 value unchanged.
+**Choose a 64-bit function at runtime** selects addition, subtraction,
+multiplication or division through a function table, then counts the result's
+set bits. Extra indices demonstrate signature, null-entry and bounds traps.
 
 The page uses the bundled HarfBuzzJS engine in a Web Worker to shape the actual
 font once per invocation. It checks all scratch registers and status flags
@@ -236,11 +249,14 @@ produce `IncompleteShaping`, rather than a plausible zero or a host result.
 | Counting | `clz`, `ctz`, `popcnt`; results are binary registers, not host-counted unary glyphs |
 | Conversions | `i32.wrap_i64`, signed/unsigned `i64.extend_i32`, and integer sign-extension instructions |
 | Stack / locals | `local.get`, `local.set`, `local.tee`, `drop`, untyped integer `select`, `nop` |
-| Calls | Multiple internal functions, direct `call`, `return`, fresh locals per call, bounded recursion; no host imports |
-| Control flow | `block`, `loop`, `if` / `else`, `br`, `br_if`, `br_table`; empty or single-i32/i64 block results; loop branch parameters/type-index block signatures are not supported |
-| Memory | `i32`/`i64` loads/stores and narrow signed/unsigned variants, little-endian encoding, unaligned access, offsets, active data segments; dynamic addresses within the configured backed window |
+| Calls | Multiple internal functions, direct `call`, table-based `call_indirect`, `return`, fresh locals per call and bounded recursion; no host imports |
+| Function tables | One immutable `funcref` table, up to 256 slots, active function-index element segments, table exports, null entries and structural integer-signature checks |
+| Control flow | `block`, `loop`, `if` / `else`, `br`, `br_if`, `br_table`; integer parameters and multiple i32/i64 results, including type-index block signatures and loop backedge parameters |
+| Memory | `i32`/`i64` loads/stores and narrow signed/unsigned variants, little-endian encoding, unaligned access, offsets, active data segments; `memory.copy` and `memory.fill` with dynamic addresses and lengths within the configured backed window |
+| Data segments | Passive byte strings, `memory.init` with dynamic source/destination/length, and `data.drop`; segment lifetime follows branches, loops and internal calls |
+| Memory growth | `memory.size` and `memory.grow`; dynamic page counts, old-size/−1 results, and bounds that follow growth through branches, loops and calls |
 | Globals | Integer globals with constant initializers, `global.get`, mutable `global.set`; values persist within an invocation, including through calls |
-| Traps | `unreachable`, integer divide-by-zero, i32/i64 signed division overflow, and actual linear-memory bounds traps |
+| Traps | `unreachable`, integer divide-by-zero, i32/i64 signed division overflow, actual memory/data-segment bounds, and indirect-call table bounds/null/signature errors |
 
 Unsupported instructions/module forms are rejected. Some otherwise supported
 programs also exceed the configured circuit or font-layout capacity. A resource
@@ -251,13 +267,16 @@ rejection must not be interpreted as a successful compilation.
 The new text frontend accepts flat and folded integer expressions, nested block
 comments (including line comments adjacent to tokens), named
 functions/locals/globals/labels, grouped unnamed parameters,
-exports, simple function type uses, one memory, integer globals and active
-constant-offset data segments. Names and data-string escapes are resolved by
+exports, function and block type uses, one memory, integer globals, active
+constant-offset data segments, passive data segments, one function table and
+active function-index element segments. Names and data-string escapes are resolved by
 the frontend; integer literals are checked against their declared width,
 including global initializers and data offsets. The resulting binary is
 independently validated by V8.
 Active data segments require a declared memory and exactly one integer
 immediate in their constant offset expression.
+Passive data strings require no memory declaration. Data-segment names and
+numeric indices are supported by `memory.init` and `data.drop`.
 Numeric type indices must be unsigned 32-bit values and refer to a declared
 function type.
 Export declarations must have exactly the required operands, and each function
@@ -266,16 +285,185 @@ Inline and standalone exports preserve module-field order, including default
 entry-function selection. Quoted strings are accepted only as names or data;
 keywords, identifiers, types and numeric operands must be unquoted. Function
 headers require exports, an optional type use, parameters, results and locals
-in that order, followed by instructions.
+in that order, followed by instructions. Block signatures accept an optional
+type use followed by unnamed parameter and result declarations in that order;
+inline declarations must match an explicit type use.
 
 Both the frontend and direct `load_binary` entry point validate the original
-bytes before loading them. Imports,
-tables, start functions, element segments, bulk-memory/data-count sections and
-exception tags are explicitly rejected instead of being silently ignored.
-Extended memory operands with an explicit memory index are also rejected,
-including an explicit index of zero.
-Floating-point/SIMD/reference values and non-integer function signatures are
-not accepted. This is not an unrestricted implementation of the WAT grammar.
+bytes before loading them. Imports, start functions and exception tags are
+explicitly rejected instead of being silently ignored. Tables support active
+function-index elements with constant i32 offsets; passive/declarative elements
+and reference-expression elements are rejected. `table.*`, `elem.drop`, and
+reference-valued operand-stack instructions are not implemented.
+Data-count sections are supported in their specified position before code;
+V8 validates their counts and all referenced data indices. Extended load/store
+operands with an explicit memory index are rejected, including an explicit index
+of zero. Bulk-memory binaries accept memory index zero.
+Floating-point and SIMD values, reference values on the operand stack, and
+non-integer function signatures are not accepted. This is not an unrestricted
+implementation of the WAT grammar.
+
+### Function tables and indirect calls
+
+Declare a table with `(table $ops 6 funcref)` and initialize slots using an
+active segment such as `(elem (i32.const 0) $add $subtract)`. Slots start null;
+later segments overwrite earlier entries. Active initialization must fit the
+table, including empty segments. The compiler rejects invalid initialization
+before writing a font. Minimum and optional maximum table limits are 0–256.
+The table remains fixed throughout an invocation.
+
+`call_indirect $ops (type $binary)` takes its i32 slot index from the top of the
+stack, above the callee's arguments. The table name/index can be omitted for
+table zero. Named/numeric type uses and unnamed inline integer `(param ...)` / `(result
+...)` signatures are supported, including mixed widths and multiple results.
+An omitted signature means no parameters or results. Function signatures match
+structurally, so equivalent declared type indices are compatible.
+
+An out-of-range unsigned index reports `WasmTrap('table_out_of_bounds')`; a null
+slot reports `uninitialized_element`; a different signature reports
+`indirect_call_type_mismatch`. These checks precede call-depth accounting.
+Only the selected function's traps and side effects apply. Memory, globals,
+page counts and segment availability pass through the call. Recursive indirect
+calls use the existing call-depth bound. Repeated slots targeting the same
+function share one compiled callee per indirect-call instruction.
+
+The [64-bit dispatch example](examples/indirect64.wat) uses slots 0–3 for addition,
+subtraction, multiplication and unsigned division. It returns the selected result
+and its set-bit count. Slot 4 has a different signature, slot 5 is null, and slot
+6 or greater is out of bounds. Division by zero traps only when slot 3 is selected.
+
+```sh
+python build.py examples/indirect64.wat --export run -o indirect64.ttf
+python run.py indirect64.ttf 100 7 3
+# (14, 3): unsigned quotient and its set-bit count
+python run.py indirect64.ttf 100 7 2
+# (700, 6): product and its set-bit count
+```
+
+Dispatch and signature checks follow WebAssembly's
+[indirect-call semantics](https://www.w3.org/TR/wasm-core-1/).
+
+### Multi-value structured control flow
+
+`block`, `loop` and `if` accept integer signatures such as
+`(param i32 i64) (result i64 i64)`, or a named/numeric `(type ...)` use.
+A branch to a block or `if` carries its result values. A branch back to a loop
+carries its parameter values into the next iteration. Parameters and results
+can have different counts and widths. The stack below the control frame is
+preserved; branch temporaries are discarded. The reference interpreter and
+native compiler use the same resolved signatures.
+
+The [typed-loop example](examples/division_loop64.wat) computes unsigned
+quotient `q = a / b` and remainder `r = a % b` in a multi-value block. Its loop
+carries `(rounds remaining, checksum, remainder)` and updates the checksum by
+adding the remainder, then incrementing the remainder, each round. The two
+results are `q + n*r + n*(n-1)/2` and `r + n`, with i64 wrapping. Division and
+all loop arithmetic execute in the font. A zero divisor traps even for zero
+rounds. The default loop bound accepts `n = 0..7`; `n = 8` reports a bound.
+
+```sh
+python build.py examples/division_loop64.wat --export run -o division-loop.ttf
+python run.py division-loop.ttf 100 7 3
+# (23, 5): checksum and remainder plus rounds
+```
+
+The implementation follows WebAssembly's [structured control semantics](https://webassembly.github.io/spec/core/exec/instructions.html#control-instructions)
+and [text block signatures](https://webassembly.github.io/spec/core/text/instructions.html#control-instructions).
+Floating-point/reference signatures and named block-parameter bindings remain
+unsupported. Integer block types in binaries use signed LEB128 type indices.
+
+### Bulk memory
+
+`memory.copy` takes destination, source and byte count; overlapping ranges use
+the original source bytes, like `memmove`. `memory.fill` takes destination,
+fill value and byte count, repeating the low eight bits of the fill value.
+Both accept flat or folded WAT syntax and binary instructions for memory zero.
+The copy circuit aligns a snapshot with a barrel rotation, so its mux count
+grows with `window * log2(window)` instead of enumerating every address pair.
+These operations execute in the same shaping call as surrounding instructions.
+
+Both complete ranges are checked against the declared Wasm memory before any
+writes. Endpoint addition does not wrap at 32 bits. An empty range may start
+at the declared memory's end, but not past it. Empty ranges require no backed
+bytes, so a valid zero-length operation beyond the configured window succeeds.
+Nonempty ranges inside Wasm memory but outside the backed window report the
+memory execution bound. The gate, glyph and lookup limits still apply.
+
+The [bulk-memory example](examples/bulk_memory.wat) stores a seed in bytes 0–7,
+fills bytes 8–15, copies the chosen range, and returns both little-endian halves:
+
+```sh
+python build.py examples/bulk_memory.wat --export run -o bulk-memory.ttf
+python run.py bulk-memory.ttf 0x0807060504030201 2 0 8 0xaa
+# (433757350076154369, 12297829382472992775)
+# Hexadecimal: (0x0605040302010201, 0xaaaaaaaaaaaa0807)
+```
+
+Range checks and overlap behavior follow the WebAssembly
+[bulk-memory semantics](https://github.com/WebAssembly/spec/blob/main/proposals/bulk-memory-operations/Overview.md).
+
+### Passive data and initialization
+
+`(data $bytes "ABC")` declares a passive segment. `memory.init $bytes` copies a
+runtime range from it into memory, taking destination, source offset and length
+from the stack. The source range is checked against the segment, including
+when length is zero. Source bytes may lie beyond the backed memory window:
+only the destination consumes backed bytes. Large segments or dynamic lookups
+can still exceed circuit or font capacity. Constant addresses only materialize
+the bytes needed in the window.
+
+`data.drop $bytes` empties that segment for the rest of the invocation and may
+be repeated. Existing memory contents survive the drop. An empty segment permits
+only source offset zero with length zero; the destination must still be a valid
+empty memory range. Active segments are copied into memory during instantiation
+and are already dropped when the entry function starts. Dropping one again is
+valid. Segment availability is merged across control flow and passed through
+internal calls. Each shaping invocation starts with fresh passive segments.
+
+The [passive-data example](examples/passive_data.wat) embeds bytes 1–16 and
+returns the two little-endian halves of memory after initialization:
+
+```sh
+python build.py examples/passive_data.wat --export run -o passive-data.ttf
+python run.py passive-data.ttf 0 4 8 0
+# (867798387104613893, 0): bytes 5–12 copied into memory
+# Hexadecimal: (0x0c0b0a0908070605, 0x0000000000000000)
+python run.py passive-data.ttf 0 0 1 1
+# WasmTrap: memory_out_of_bounds (segment dropped before initialization)
+```
+
+### Memory growth
+
+`memory.grow` takes an unsigned i32 page delta. Successful growth returns the
+previous page count; failure returns `0xffffffff` (signed −1) and preserves the
+current size. `memory.size` reports the current count. A 33-bit sum checks the
+growth limit before retaining the new page count, so large deltas cannot wrap
+into a successful request. Page counts follow branches, loops and calls, and
+all loads, stores and bulk-memory operations use the updated size.
+
+Growth succeeds up to the loader's effective maximum. Explicit memory limits
+remain capped at 256 pages. When the maximum is omitted, the existing loader
+and text-frontend policy uses `max(16, minimum)` as the growth cap. Failure is
+an ordinary Wasm result; it does not set a trap or execution-bound status.
+This is a deterministic embedding policy within WebAssembly's permitted
+[memory-growth behavior](https://www.w3.org/TR/wasm-core/).
+
+Newly accessible bytes in the backed window are zeroed. Existing bytes and data
+segment availability survive growth. The backed window remains at the configured
+size: growing to more pages does not add font registers for those pages. An access
+inside the current Wasm memory but outside that window still reports the memory
+execution bound. Each shaping call starts again at the declared initial size.
+
+The [growth example](examples/memory_grow.wat) starts at one page with a maximum
+of three, stores a value, then attempts two growth steps:
+
+```sh
+python build.py examples/memory_grow.wat --export run -o memory-grow.ttf
+python run.py memory-grow.ttf 1 2 42
+# (1, 4294967295, 2, 42): first growth succeeds, second fails, data survives
+python run.py memory-grow.ttf 1 1 42
+# (1, 2, 3, 42): both growth steps succeed
+```
 
 ## Bounds and semantic guarantees
 
@@ -335,7 +523,7 @@ For example, the sum-loop example with bound eight succeeds for `n = 0..7`;
 `n = 8` requires a ninth body entry to take the exit test and reports a bound.
 
 **The memory window is not a smaller Wasm memory.** `memory.size` returns the
-declared number of 64-KiB pages. An address outside the declared memory produces
+current number of 64-KiB pages. An address outside the current memory produces
 `WasmTrap('memory_out_of_bounds')`. An address inside that memory but outside the
 backed window produces `ExecutionBoundExceeded('memory')`. Effective address
 addition with an instruction offset is checked without i32 wrapping. Memory
@@ -343,9 +531,9 @@ page declarations are currently capped at 256 pages by the module loader.
 
 Each shaping call starts a fresh module instance. Memory/globals persist across
 instructions and internal calls, but **not across separate shaping calls**.
-Native `memory.grow`, WASI, imported functions, shared memory, threads, atomics,
-and host I/O are not implemented. The older Python reference VM supports some
-additional features, but they are not used to simulate missing native features.
+WASI, imported functions, shared memory, threads, atomics, and host I/O are not
+implemented. Native growth and memory operations execute in the font; the
+reference interpreter is only used for independent comparisons.
 
 ## Validation
 
@@ -361,6 +549,27 @@ The current tests cover independent multi-instruction expressions, arbitrary
 conversion results, multi-result calls, branching/stack unwinding, `br_table`,
 loop and call bounds, mutable state, narrow loads/stores, memory offset overflow,
 conditional traps, malformed modules and font/manifest errors.
+Bulk-memory regressions check every valid source/destination/length combination
+in the default 16-byte window, overlapping copies, low-byte fills, 33-bit
+endpoint overflow, zero-length ranges, windows up to 256 bytes, and composition
+through internal calls and bounded loops. Each successful case compares the
+actual shaped font with V8 and the reference interpreter.
+Passive-data regressions also cover active segments being dropped at startup,
+conditional and repeated drops, source ranges beyond the backed window,
+call/return and loop lifetime merges, fresh invocations, data-count ordering,
+multi-byte indices, and malformed declarations/instructions. Constant-address
+and zero-window cases retain small circuits even with large data segments.
+Growth regressions cover unsigned deltas, limits and overflow, failed-growth
+recovery, zero-filled bytes, preserved memory/data segments, fresh invocations,
+page-count merges through calls and loops, and dynamic bounds for all integer
+loads/stores and bulk operations. Binary tests include padded zero memory indices.
+Indirect-call regressions cover dynamic targets, equivalent type aliases,
+multi-value arguments/results, active-element overlays, null/bounds/type traps,
+inactive calls, side effects, loop-carried results, recursion and call-depth
+precedence. A 256-slot table sharing one dynamic i64 divider checks that aliases
+do not duplicate the expensive circuit. Independent binaries cover unsigned type
+indices through 128, padded table operands and element encodings with an explicit
+table index of zero. Unsupported table/element forms fail closed.
 
 Reduced four-bit circuits are exhaustively checked across all 256 operand pairs
 for 13 operations. Addition, subtraction and multiplication also run all 256
@@ -373,10 +582,7 @@ the supplied C-produced binary is always tested.
 Run this suite independently from the other projects, whose test modules use
 their own imports and build entry points. From the repository root the command
 is `python -m pytest -q languages/wasm`.
-The macOS validation on 2026-10-18 completed with **769 passed Python tests,
-20 passed subtests and one optional C-rebuild test skipped** because the system
-Clang lacks a wasm32 target. All **25 browser-engine tests** passed, including
-V8 comparisons for all twenty-one bundled programs. Capacity regressions cover
+Browser-engine tests compare all twenty-six bundled programs with V8. Capacity regressions cover
 packed truth tables, interleaved paired outputs, two independent signed i64
 dividers, division/multiplication, two multipliers, chained division/remainder,
 and two quotients feeding a multiplier on both active and inactive branches.
@@ -413,6 +619,12 @@ type uses and valid multiple exports. Additional regressions verify export
 order across inline and standalone declarations, duplicate export rejection,
 quoted token rejection, function-declaration phases, Unicode export names,
 raw data bytes and implicit type-use parameters with named locals.
+Multi-value control regressions cover mixed-width block inputs/results,
+conditional and table branches, stack unwinding, loop backedge merges, calls,
+traps, iteration bounds and malformed signatures. Binary tests independently
+construct type indices 0, 63, 64, 127 and 128 to verify signed index encoding.
+The new division-to-loop example is checked against V8 in Python and the
+browser, including bounds, divide-by-zero, disabled shaping and recovery.
 The expensive-operation playground examples were checked for successful
 results, divide-by-zero or signed-overflow traps, disabled computation and recovery. Native shaping used
 HarfBuzz 14.2.1; the browser used the bundled HarfBuzz 14.6.0 engine.

@@ -259,6 +259,134 @@
     "language": "WAT"
   },
   {
+    "id": "division_loop64",
+    "title": "64-bit division \u2192 typed loop",
+    "description": "Divide a / b once, then carry the quotient and remainder through a loop: add the remainder to the checksum and increment it each round. Rounds 0\u20137 finish; 8 reaches the loop bound. A zero divisor traps.",
+    "parameters": [
+      "dividend",
+      "divisor",
+      "rounds"
+    ],
+    "arguments": [
+      "18446744073709551615",
+      "4294967297",
+      "3"
+    ],
+    "font": "division_loop64.ttf",
+    "manifest": "division_loop64.json",
+    "module": "division_loop64.wasm",
+    "source": "(module\n  (type $carry (func (param i32 i64 i64) (result i64 i64)))\n  (func (export \"run\") (param $a i64) (param $b i64) (param $rounds i32)\n    (result i64 i64) (local $n i32) (local $checksum i64) (local $remainder i64)\n    ;; A multi-value block produces the full-width quotient and remainder.\n    block (result i64 i64)\n      local.get $a local.get $b i64.div_u\n      local.get $a local.get $b i64.rem_u\n    end\n    local.set $remainder local.set $checksum\n    local.get $rounds local.get $checksum local.get $remainder\n    ;; Each backedge carries (rounds left, checksum, remainder) on the stack.\n    loop $again (type $carry)\n      local.set $remainder local.set $checksum local.tee $n i32.eqz\n      if (result i64 i64)\n        local.get $checksum local.get $remainder\n      else\n        local.get $n i32.const 1 i32.sub\n        local.get $checksum local.get $remainder i64.add\n        local.get $remainder i64.const 1 i64.add\n        br $again\n      end\n    end))\n",
+    "result_labels": [
+      "Checksum",
+      "Remainder + rounds"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "bulk_memory",
+    "title": "Memory fill + overlapping copy",
+    "description": "Store the seed in bytes 0\u20137, fill bytes 8\u201315 with the low byte of the fill value, then copy length bytes from source to destination. Overlaps preserve the original source bytes. Both ranges must fit the 16-byte window unless length is zero.",
+    "parameters": [
+      "seed",
+      "destination",
+      "source",
+      "length",
+      "fill byte"
+    ],
+    "arguments": [
+      "0x0807060504030201",
+      "2",
+      "0",
+      "8",
+      "0xaa"
+    ],
+    "font": "bulk_memory.ttf",
+    "manifest": "bulk_memory.json",
+    "module": "bulk_memory.wasm",
+    "source": "(module\n  (memory 1)\n  (func (export \"run\") (param $seed i64) (param $destination i32)\n    (param $source i32) (param $length i32) (param $byte i32) (result i64 i64)\n    ;; Initialize eight bytes from the seed, then fill the next eight bytes.\n    i32.const 0 local.get $seed i64.store\n    i32.const 8 local.get $byte i32.const 8 memory.fill\n    ;; Copy from a snapshot, including when source and destination overlap.\n    local.get $destination local.get $source local.get $length memory.copy\n    ;; Return the entire 16-byte window as two little-endian i64 values.\n    i32.const 0 i64.load\n    i32.const 8 i64.load))\n",
+    "result_labels": [
+      "Bytes 0\u20137 (little endian)",
+      "Bytes 8\u201315 (little endian)"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "passive_data",
+    "title": "Passive data \u2192 memory",
+    "description": "Copy bytes from an embedded segment containing 1\u201316 into the zeroed 16-byte memory window, then drop the segment. Set drop first to 1 to discard it before the copy; only length 0 at source 0 then succeeds.",
+    "parameters": [
+      "destination",
+      "segment offset",
+      "length",
+      "drop first"
+    ],
+    "arguments": [
+      "0",
+      "4",
+      "8",
+      "0"
+    ],
+    "font": "passive_data.ttf",
+    "manifest": "passive_data.json",
+    "module": "passive_data.wasm",
+    "source": "(module\n  (memory 1)\n  ;; Passive data remains separate from linear memory until memory.init runs.\n  (data $bytes \"\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\")\n  (func (export \"run\") (param $destination i32) (param $source i32)\n    (param $length i32) (param $drop_first i32) (result i64 i64)\n    local.get $drop_first\n    if data.drop $bytes end\n    local.get $destination local.get $source local.get $length memory.init $bytes\n    ;; Dropping the segment preserves bytes already copied into memory.\n    data.drop $bytes\n    i32.const 0 i64.load\n    i32.const 8 i64.load))\n",
+    "result_labels": [
+      "Bytes 0\u20137 (little endian)",
+      "Bytes 8\u201315 (little endian)"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "memory_grow",
+    "title": "Grow memory in the font",
+    "description": "Start with one page, store the value, then attempt two growth steps up to a maximum of three pages. Each step returns the previous page count or \u22121 on failure; failed growth preserves the memory size and stored value.",
+    "parameters": [
+      "first growth (pages)",
+      "second growth (pages)",
+      "stored value"
+    ],
+    "arguments": [
+      "1",
+      "2",
+      "0x89abcdef01234567"
+    ],
+    "font": "memory_grow.ttf",
+    "manifest": "memory_grow.json",
+    "module": "memory_grow.wasm",
+    "source": "(module\n  ;; Growth changes the logical page count; memory starts with one 64-KiB page.\n  (memory 1 3)\n  (func (export \"run\") (param $first i32) (param $second i32)\n    (param $value i64) (result i32 i32 i32 i64)\n    ;; Existing bytes survive successful and failed growth attempts.\n    i32.const 0 local.get $value i64.store\n    local.get $first memory.grow\n    local.get $second memory.grow\n    memory.size\n    i32.const 0 i64.load))\n",
+    "result_labels": [
+      "First growth result",
+      "Second growth result",
+      "Current pages",
+      "Preserved value"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "indirect64",
+    "title": "Choose a 64-bit function at runtime",
+    "description": "Select addition (0), subtraction (1), multiplication (2), or unsigned division (3), then count the result\u2019s set bits. Slot 4 has the wrong signature, slot 5 is null, and indices 6+ are out of bounds. Only the selected function can trap.",
+    "parameters": [
+      "a",
+      "b",
+      "operation index"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "3"
+    ],
+    "font": "indirect64.ttf",
+    "manifest": "indirect64.json",
+    "module": "indirect64.wasm",
+    "source": "(module\n  (type $binary (func (param i64 i64) (result i64)))\n  (table $operations 6 funcref)\n  ;; Slots 0\u20133 select arithmetic; slot 4 has the wrong type; slot 5 is null.\n  (elem (i32.const 0) $add $subtract $multiply $divide $wrong_type)\n  (func $add (type $binary) local.get 0 local.get 1 i64.add)\n  (func $subtract (type $binary) local.get 0 local.get 1 i64.sub)\n  (func $multiply (type $binary) local.get 0 local.get 1 i64.mul)\n  (func $divide (type $binary) local.get 0 local.get 1 i64.div_u)\n  (func $wrong_type (param i32) (result i32) local.get 0)\n  (func (export \"run\") (param $a i64) (param $b i64) (param $operation i32)\n    (result i64 i64) (local $result i64)\n    local.get $a local.get $b local.get $operation call_indirect $operations (type $binary)\n    ;; The selected function's result feeds more Wasm instructions in this font.\n    local.tee $result local.get $result i64.popcnt))\n",
+    "result_labels": [
+      "Selected result",
+      "Set bits"
+    ],
+    "language": "WAT"
+  },
+  {
     "id": "divide32",
     "title": "Unsigned division",
     "description": "Divide two i32 values. A zero divisor produces a Wasm trap.",

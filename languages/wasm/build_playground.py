@@ -22,6 +22,11 @@ EXAMPLES = (
     ('sum_loop', 'Bounded loop', 'Sum n down to 1. Inputs 0–7 finish; 8 reaches the loop bound.', ['n'], ['6']),
     ('recursive_sum', 'Recursive calls', 'Sum n down to 1 using internal calls. Inputs 0–7 fit the call bound.', ['n'], ['5']),
     ('memory_roundtrip', 'Memory round trip', 'Store and load a 32-bit value. Addresses 0–12 fit the backed window.', ['address', 'value'], ['3', '0x89abcdef']),
+    ('division_loop64', '64-bit division → typed loop', 'Divide a / b once, then carry the quotient and remainder through a loop: add the remainder to the checksum and increment it each round. Rounds 0–7 finish; 8 reaches the loop bound. A zero divisor traps.', ['dividend', 'divisor', 'rounds'], ['18446744073709551615', '4294967297', '3']),
+    ('bulk_memory', 'Memory fill + overlapping copy', 'Store the seed in bytes 0–7, fill bytes 8–15 with the low byte of the fill value, then copy length bytes from source to destination. Overlaps preserve the original source bytes. Both ranges must fit the 16-byte window unless length is zero.', ['seed', 'destination', 'source', 'length', 'fill byte'], ['0x0807060504030201', '2', '0', '8', '0xaa']),
+    ('passive_data', 'Passive data → memory', 'Copy bytes from an embedded segment containing 1–16 into the zeroed 16-byte memory window, then drop the segment. Set drop first to 1 to discard it before the copy; only length 0 at source 0 then succeeds.', ['destination', 'segment offset', 'length', 'drop first'], ['0', '4', '8', '0']),
+    ('memory_grow', 'Grow memory in the font', 'Start with one page, store the value, then attempt two growth steps up to a maximum of three pages. Each step returns the previous page count or −1 on failure; failed growth preserves the memory size and stored value.', ['first growth (pages)', 'second growth (pages)', 'stored value'], ['1', '2', '0x89abcdef01234567']),
+    ('indirect64', 'Choose a 64-bit function at runtime', 'Select addition (0), subtraction (1), multiplication (2), or unsigned division (3), then count the result’s set bits. Slot 4 has the wrong signature, slot 5 is null, and indices 6+ are out of bounds. Only the selected function can trap.', ['a', 'b', 'operation index'], ['100', '7', '3']),
     ('divide32', 'Unsigned division', 'Divide two i32 values. A zero divisor produces a Wasm trap.', ['dividend', 'divisor'], ['17', '3']),
     ('divide64_constant', '64-bit division by 10', 'Return the unsigned quotient and remainder of a full-width i64 value divided by ten.', ['value'], ['18446744073709551615']),
     ('divide64_signed', '64-bit signed division by −7', 'Return the signed quotient and remainder. Division truncates toward zero; remainder keeps the input sign.', ['value'], ['-1234567890123456789']),
@@ -50,6 +55,10 @@ def build(output):
                         'font': f'{name}.ttf', 'manifest': f'{name}.json', 'module': f'{name}.wasm',
                         'source': (ROOT / 'examples/mix.c' if is_c else source).read_text(),
                         'result_labels': (['Quotient', 'Remainder'] if name.startswith('divide64_') else
+                                          ['Checksum', 'Remainder + rounds'] if name == 'division_loop64' else
+                                          ['Bytes 0–7 (little endian)', 'Bytes 8–15 (little endian)'] if name in ('bulk_memory','passive_data') else
+                                          ['First growth result', 'Second growth result', 'Current pages', 'Preserved value'] if name == 'memory_grow' else
+                                          ['Selected result', 'Set bits'] if name == 'indirect64' else
                                           ['Product', 'Set bits'] if name == 'divmulcount64' else []),
                         'language': 'C' if is_c else 'WAT'})
         print(name, json.dumps(manifest['metrics']))

@@ -13,7 +13,7 @@ import json
 
 from fontcircuit.gsub.circuit import Circuit, Value, emit_font, ResourceLimit, DEFAULT_MAX_GATES, MAX_GATES
 from .frontend import load, memory_bytes
-from .ir import MEMOPS
+from .ir import MEMOPS, block_signature
 from .conversions import CONVERSIONS
 
 
@@ -67,10 +67,12 @@ class State:
     locals: list[Value]
     globals: list[Value]
     memory: list[Value]
+    data_live: list[Value]
+    pages: Value
 
     def copy(self, **changes):
         return replace(self,stack=self.stack.copy(),locals=self.locals.copy(),
-                       globals=self.globals.copy(),memory=self.memory.copy(),**changes)
+                       globals=self.globals.copy(),memory=self.memory.copy(),data_live=self.data_live.copy(),**changes)
 
 
 @dataclass(frozen=True)
@@ -101,7 +103,7 @@ class NativeCompiler:
         self.serial+=1;return Label(self.serial,height,tuple(widths))
 
     def flag(self,name,predicate):
-        self.flags[name]=self.c.OR(self.flags[name],predicate)
+        self.flags[name]=self.c.OR(self.flags.get(name,0),predicate)
 
     def guard(self,state,name,condition):
         self.flag(name,self.c.AND(state.predicate,condition))
@@ -127,10 +129,11 @@ class NativeCompiler:
         if not states:return None
         out=states[0].copy()
         for state in states[1:]:
-            for attr in ('stack','locals','globals','memory'):
+            for attr in ('stack','locals','globals','memory','data_live'):
                 a=getattr(out,attr);b=getattr(state,attr)
                 if len(a)!=len(b):raise ValueError('incompatible control-flow state shapes')
                 setattr(out,attr,[self.c.mux(state.predicate,y,x) for x,y in zip(a,b)])
+            out.pages=self.c.mux(state.predicate,state.pages,out.pages)
             out.predicate=self.c.OR(out.predicate,state.predicate)
         return out
 
@@ -162,7 +165,7 @@ class NativeCompiler:
             self.flag('limit.call',parent.predicate)
             return None
         state=State(parent.predicate,[],args+[self.c.const(0,int(t[1:])) for t in fn.locals],
-                    parent.globals.copy(),parent.memory.copy())
+                    parent.globals.copy(),parent.memory.copy(),parent.data_live.copy(),parent.pages)
         label=self.label(0,[int(t[1:]) for t in fn.results])
         flows=self.sequence(self.ast[index],state,[label],depth+1)
         returns=[]
@@ -176,22 +179,26 @@ class NativeCompiler:
         return result
 
     def structured(self,node,state,labels,depth):
-        types=() if node.arg in (None,0x40) else (32,) if node.arg==0x7f else (64,) if node.arg==0x7e else None
-        if types is None:raise NotImplementedError('type-index block signatures are unsupported')
+        signature=block_signature(node.arg)
+        parameters=tuple(int(t[1:]) for t in signature.params)
+        types=tuple(int(t[1:]) for t in signature.results)
+        condition=self.c.nonzero(self.pop(state,32)) if node.op=='if' else None
+        height=len(state.stack)-len(parameters)
+        if height<0 or tuple(v.width for v in state.stack[height:])!=parameters:
+            raise ValueError('block parameter stack mismatch')
         if node.op=='if':
-            condition=self.c.nonzero(self.pop(state,32))
-            label=self.label(len(state.stack),types)
+            label=self.label(height,types)
             yes=state.copy(predicate=self.c.AND(state.predicate,condition))
             no=state.copy(predicate=self.c.AND(state.predicate,self.c.NOT(condition)))
             flows=[]
             if yes.predicate!=0:flows+=self.sequence(node.body,yes,labels+[label],depth)
             if no.predicate!=0:flows+=self.sequence(node.alternative,no,labels+[label],depth)
         elif node.op=='block':
-            label=self.label(len(state.stack),types)
+            label=self.label(height,types)
             flows=self.sequence(node.body,state,labels+[label],depth)
         else:
-            # MVP loops take no branch arguments; their fallthrough may return one value.
-            label=self.label(len(state.stack),())
+            # Backedges carry the loop's parameters; exits carry its results.
+            label=self.label(height,parameters)
             end_label=Label(label.ident,label.height,types)
             current=state;exits=[]
             for _ in range(self.limits.loop_iterations):
@@ -264,9 +271,48 @@ class NativeCompiler:
             args=[self.pop(state,int(t[1:])) for t in reversed(self.module.functions[arg].params)][::-1]
             result=self.call(arg,args,state,depth)
             return [Flow(result)] if result is not None else []
+        if op=='call_indirect':
+            selector=self.pop(state,32)
+            args=[self.pop(state,int(t[1:])) for t in reversed(arg.params)][::-1]
+            table=self.module.table
+            if table is None:raise ValueError('indirect call requires a table')
+            self.guard(state,'trap.table_out_of_bounds',self.c.NOT(self.c.lt(selector,self.c.const(len(table),32))))
+            targets={};empty=0;mismatch=0
+            for slot,target in enumerate(table):
+                test=self.c.eq(selector,self.c.const(slot,32))
+                if target is None:empty=self.c.OR(empty,test);continue
+                fn=self.module.functions[target]
+                if (tuple(fn.params),tuple(fn.results))!=(arg.params,arg.results):
+                    mismatch=self.c.OR(mismatch,test);continue
+                targets[target]=self.c.OR(targets.get(target,0),test)
+            self.guard(state,'trap.uninitialized_element',empty)
+            self.guard(state,'trap.indirect_call_type_mismatch',mismatch)
+            results=[]
+            for target,test in targets.items():
+                selected=state.copy(predicate=self.c.AND(state.predicate,test))
+                if selected.predicate==0:continue
+                result=self.call(target,args,selected,depth)
+                if result is not None:results.append(result)
+            result=self.merge(results)
+            return [Flow(result)] if result is not None else []
         if op=='memory.size':
-            state.stack.append(self.c.const(self.module.initial_pages,32));return [Flow(state)]
-        if op=='memory.grow':raise NotImplementedError('native memory.grow is not supported; memory is fixed per shaping invocation')
+            state.stack.append(state.pages);return [Flow(state)]
+        if op=='memory.grow':
+            delta=self.pop(state,32);old=state.pages
+            if self.c.known(delta)==0:
+                state.stack.append(old);return [Flow(state)]
+            # A 33-bit sum prevents unsigned deltas from wrapping into success.
+            grown=self.c.add(Value(old.bits+(0,)),Value(delta.bits+(0,)))
+            failed=self.c.lt(self.c.const(self.module.maximum_pages,33),grown)
+            state.stack.append(self.c.mux(failed,self.c.const(0xffffffff,32),old))
+            # Module limits cap memory at 256 pages, so only nine bits can be live.
+            pages=self.c.mux(failed,Value(old.bits[:9]),Value(grown.bits[:9]))
+            state.pages=Value(pages.bits+(0,)*23)
+            return [Flow(state)]
+        if op=='data.drop':
+            if not 0<=arg<len(state.data_live):raise ValueError('invalid data segment index')
+            state.data_live[arg]=self.c.const(0,1);return [Flow(state)]
+        if op in ('memory.copy','memory.fill','memory.init'):return self.bulk_memory(op,state,arg)
         if op in MEMOPS.values():return self.memory(op,arg,state)
         if op in CONVERSIONS.values():
             source=64 if op=='i32.wrap_i64' else 32 if op.startswith('i64.extend_i32') else int(op[1:3])
@@ -340,18 +386,87 @@ class NativeCompiler:
         state.stack.append(value)
         return [Flow(state)]
 
+    def memory_size(self,state,width):
+        """Current size in bytes, with no Wasm-width wrapping of endpoints."""
+        return Value((0,)*16+state.pages.bits[:width-16])
+
+    def bulk_memory(self,op,state,segment=None):
+        size=self.pop(state,32);source=self.pop(state,32);destination=self.pop(state,32)
+        # The 33-bit sums preserve overflow, including for zero-length accesses.
+        def end(address):
+            return self.c.add(Value(address.bits+(0,)),Value(size.bits+(0,)))
+        destination_end=end(destination)
+        ends=[destination_end]+([end(source)] if op=='memory.copy' else [])
+        def exceeds(bound):
+            result=0
+            limit=self.c.const(bound,33) if isinstance(bound,int) else bound
+            for value in ends:result=self.c.OR(result,self.c.lt(limit,value))
+            return result
+        # Check both Wasm ranges before applying the implementation's window bound.
+        invalid=exceeds(self.memory_size(state,33))
+        if op=='memory.init':
+            if not 0<=segment<len(state.data_live):raise ValueError('invalid data segment index')
+            data=self.module.segments[segment][1]
+            available=self.c.mux(state.data_live[segment].bits[0],self.c.const(len(data),33),self.c.const(0,33))
+            invalid=self.c.OR(invalid,self.c.lt(available,end(source)))
+        self.guard(state,'trap.memory_out_of_bounds',invalid)
+        self.guard(state,'limit.memory',self.c.AND(self.c.nonzero(size),exceeds(len(state.memory))))
+        if state.predicate==0 or self.c.known(size)==0 or not state.memory:return [Flow(state)]
+        # A dropped segment can only admit a zero-byte initialization.
+        if op=='memory.init' and self.c.known(state.data_live[segment])==0:return [Flow(state)]
+        if op in ('memory.copy','memory.init'):
+            # Align a snapshot of the source bytes with the destination. A barrel
+            # rotation needs O(window * log(window)) byte muxes, rather than a
+            # separate dynamic load/store for every possible source/destination.
+            length=len(state.memory) if op=='memory.copy' else len(data)
+            count=1<<(length-1).bit_length() if length else 1
+            rotation_bits=count.bit_length()-1
+            delta=self.c.add(Value(source.bits[:rotation_bits]),
+                             Value(destination.bits[:rotation_bits]),subtract=True)
+            known=self.c.known(delta)
+            if op=='memory.init' and known is not None:
+                # Constant addresses only need the bytes visible in this window.
+                payload=[self.c.const(data[at] if at<length else 0,8)
+                         for i in range(len(state.memory)) for at in [(i+known)%count]]
+            else:
+                if op=='memory.copy':payload=state.memory
+                else:
+                    palette=[self.c.const(b,8) for b in range(256)]
+                    payload=[palette[b] for b in data]
+                payload=payload+[self.c.const(0,8)]*(count-length)
+                for bit in range(rotation_bits):
+                    step=1<<bit
+                    payload=[self.c.mux(delta.bits[bit],payload[(i+step)%count],value)
+                             for i,value in enumerate(payload)]
+                payload=[payload[i%count] for i in range(len(state.memory))]
+        else:payload=[Value(source.bits[:8])]*len(state.memory)
+        # On a valid nonempty access, both endpoints fit the backed window.
+        # Empty ranges have equal endpoints and select no bytes at any width.
+        index_bits=len(state.memory).bit_length()
+        start=Value(destination.bits[:index_bits]);stop=Value(destination_end.bits[:index_bits])
+        for i,old in enumerate(state.memory):
+            at=self.c.const(i,index_bits)
+            in_range=self.c.AND(self.c.NOT(self.c.lt(at,start)),self.c.lt(at,stop))
+            state.memory[i]=self.c.mux(in_range,payload[i],old)
+        return [Flow(state)]
+
     def memory(self,op,offset,state):
         width=int(op[1:3]);size=memory_bytes(op);store='.store' in op
         value=self.pop(state,width) if store else None
         address=self.pop(state,32)
-        total=self.module.initial_pages*65536
+        pages=self.c.known(state.pages)
         def exceeds(bound):
             maximum=bound-offset-size
             if maximum<0:return 1
             if maximum>=0xffffffff:return 0
             return self.c.lt(self.c.const(maximum,32),address)
         # Effective addresses use unbounded offset addition, never i32 wrapping.
-        self.guard(state,'trap.memory_out_of_bounds',exceeds(total))
+        if pages is not None:invalid=exceeds(pages*65536)
+        else:
+            # Address + offset + access size can require 34 bits in total.
+            end=self.c.add(Value(address.bits+(0,0)),self.c.const(offset+size,34))
+            invalid=self.c.lt(self.memory_size(state,34),end)
+        self.guard(state,'trap.memory_out_of_bounds',invalid)
         self.guard(state,'limit.memory',exceeds(len(state.memory)))
         known=self.c.known(address)
         if known is not None:
@@ -393,15 +508,22 @@ class NativeCompiler:
         if not 0<=index<len(self.module.functions):raise ValueError('invalid entry function')
         fn=self.module.functions[index]
         args=[self.c.argument(i,int(t[1:])) for i,t in enumerate(fn.params)]
-        byte_count=min(self.limits.memory_bytes,self.module.initial_pages*65536)
+        can_grow=any(op=='memory.grow' for f in self.module.functions for op,_ in f.code)
+        # The backed window fits in the first page. Reserve zero bytes for growth
+        # from zero pages; the current page count still guards every access.
+        backed_pages=self.module.maximum_pages if can_grow else self.module.initial_pages
+        byte_count=min(self.limits.memory_bytes,backed_pages*65536)
         data=bytearray(byte_count)
         for offset,payload in self.module.segments:
+            if offset is None:continue
             # Untouched data outside the backed window remains inaccessible and is
             # reported as a bound, so dropping its glyph representation is sound.
             n=max(0,min(len(payload),byte_count-offset))
             if n:data[offset:offset+n]=payload[:n]
         parent=State(1,[],[],[self.c.const(v,int(t[1:])) for v,t in zip(self.module.globals,self.module.global_types)],
-                     [self.c.const(v,8) for v in data])
+                     [self.c.const(v,8) for v in data],
+                     [self.c.const(int(offset is None),1) for offset,_ in self.module.segments],
+                     self.c.const(self.module.initial_pages,32))
         result=self.call(index,args,parent,0)
         values=result.stack if result is not None else [self.c.const(0,int(t[1:])) for t in fn.results]
         return values,fn,index,export

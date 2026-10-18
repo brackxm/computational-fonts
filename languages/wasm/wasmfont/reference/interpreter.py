@@ -2,7 +2,7 @@
 
 Execution is reference-side only; native GSUB compilation uses wasmfont/compiler.py.
 """
-from ..ir import Function
+from ..ir import Function, block_signature
 from ..conversions import CONVERSIONS, convert
 from ..state import MachineState, MemoryTrap
 
@@ -31,12 +31,13 @@ def run(functions, index, args, fuel=100000, state=None):
                 if start in alternatives:matching[alternatives[start]]=pos
         if frames:raise WasmTrap('unterminated block')
         # The implicit function label carries the declared return values.
-        pc=0; active=[(None,0)]
+        pc=0; active=[(None,0,len(fn.results),len(fn.results))]
+        def finish(frame):
+            if len(stack)!=frame[1]+frame[3]:raise WasmTrap('block stack mismatch')
         def branch(level):
             nonlocal pc,active
             if not 0<=level<len(active):raise WasmTrap('invalid branch depth')
-            start,height=active[-1-level]
-            arity=len(fn.results) if start is None else 0
+            start,height,arity,_=active[-1-level]
             if len(stack)<height+arity:raise WasmTrap('branch result stack underflow')
             results=stack[-arity:] if arity else []
             stack[height:]=results
@@ -51,36 +52,64 @@ def run(functions, index, args, fuel=100000, state=None):
             if budget[0]<0:raise WasmTrap('instruction fuel exhausted')
             op,arg=code[pc];pc+=1
             if op in ('block','loop','if'):
-                if arg not in (None,0,0x40):raise NotImplementedError('block results unsupported')
+                signature=block_signature(arg)
                 cond=stack.pop() if op=='if' else True
+                height=len(stack)-len(signature.params)
+                if height<0:raise WasmTrap('block parameter stack underflow')
+                arity=len(signature.params if op=='loop' else signature.results)
+                frame=(pc-1,height,arity,len(signature.results))
                 if op=='if' and not cond:
                     start=pc-1
                     if start in alternatives:
-                        active.append((start,len(stack)));pc=alternatives[start]+1
-                    else:pc=matching[start]+1
-                else:active.append((pc-1,len(stack)))
+                        active.append(frame);pc=alternatives[start]+1
+                    else:finish(frame);pc=matching[start]+1
+                else:active.append(frame)
             elif op=='else':
-                frame=active.pop();pc=matching[pc-1]+1
+                finish(active.pop());pc=matching[pc-1]+1
             elif op=='end':
-                frame=active.pop()
-                if len(stack)!=frame[1]:raise WasmTrap('block stack mismatch')
+                finish(active.pop())
             elif op=='br':branch(arg)
             elif op=='br_if':
                 if stack.pop():branch(arg)
             elif op=='br_table':
                 choice=stack.pop();branch(arg[choice] if choice<len(arg)-1 else arg[-1])
             elif op=='return':branch(len(active)-1)
-            elif op=='call':
-                callee=functions[arg];n=len(callee.params)
+            elif op in ('call','call_indirect'):
+                target=arg
+                if op=='call_indirect':
+                    slot=stack.pop()
+                    if not 0<=slot<len(state.table):raise WasmTrap('table_out_of_bounds')
+                    target=state.table[slot]
+                    if target is None:raise WasmTrap('uninitialized_element')
+                    callee=functions[target]
+                    if (tuple(callee.params),tuple(callee.results))!=(arg.params,arg.results):
+                        raise WasmTrap('indirect_call_type_mismatch')
+                callee=functions[target];n=len(callee.params)
                 argv=stack[-n:] if n else []
                 if n:del stack[-n:]
-                stack.extend(invoke(arg,argv,depth+1))
+                stack.extend(invoke(target,argv,depth+1))
             elif op=='global.get':stack.append(state.globals[arg])
             elif op=='global.set':
                 if not state.mutable[arg]:raise WasmTrap('immutable global')
                 state.globals[arg]=stack.pop()&((1<<int(state.global_types[arg][1:]))-1)
             elif op=='memory.size':stack.append(state.pages)
             elif op=='memory.grow':stack.append(state.grow(stack.pop())&0xffffffff)
+            elif op=='data.drop':state.data_segments[arg]=b''
+            elif op=='memory.init':
+                size=stack.pop();source=stack.pop();destination=stack.pop()
+                state.bounds(destination,size)
+                payload=state.data_segments[arg]
+                if source+size>len(payload):raise MemoryTrap('out of bounds data segment access')
+                state.memory[destination:destination+size]=payload[source:source+size]
+            elif op in ('memory.copy','memory.fill'):
+                size=stack.pop();source=stack.pop();destination=stack.pop()
+                state.bounds(destination,size)
+                if op=='memory.copy':
+                    state.bounds(source,size)
+                    # A snapshot gives memmove semantics for either overlap direction.
+                    payload=state.memory[source:source+size]
+                else:payload=bytes([source&255])*size
+                state.memory[destination:destination+size]=payload
             elif op.startswith(('i32.load','i64.load')):
                 width=int(op[1:3]);suffix=op.split('.',1)[1]
                 size=width//8 if suffix=='load' else None

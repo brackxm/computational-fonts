@@ -30,7 +30,59 @@ for (const entry of catalog) {
     const module = await WebAssembly.compile(await readFile(new URL(entry.module, assets)));
     const cases = [entry.arguments];
     if (entry.id === 'sum_loop' || entry.id === 'recursive_sum') cases.push(['0'], ['1'], ['7']);
+    else if (entry.id === 'division_loop64') {
+      cases.push(['100', '7', '0'], ['100', '7', '3'], ['-1', '7', '7'],
+        ['-1', '1', '7'], ['1', '0', '0'], ['1', '0', '7']);
+      assert.throws(() => font.invoke(['100', '7', '8']), {name: 'ExecutionBoundExceeded', message: 'loop'});
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+      assert.deepEqual(font.invoke(['100', '7', '3']).results.map(value => value.unsigned), ['23', '5']);
+    }
     else if (entry.id === 'memory_roundtrip') cases.push(['0', '-1'], ['12', '2147483648']);
+    else if (entry.id === 'indirect64') {
+      for (const index of ['0', '1', '2', '3', '4', '5', '6', '-1']) {
+        cases.push(['18446744073709551615', '7', index], ['100', '0', index]);
+      }
+      for (const [index, reason] of [['4', 'indirect_call_type_mismatch'],
+          ['5', 'uninitialized_element'], ['6', 'table_out_of_bounds']]) {
+        assert.throws(() => font.invoke(['1', '0', index]), {name: 'WasmTrap', message: reason});
+      }
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+      assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned), ['14', '3']);
+    }
+    else if (entry.id === 'memory_grow') {
+      cases.push(['0', '0', '0'], ['1', '1', '-1'], ['3', '1', '42'],
+        ['-1', '2', '0x8000000000000000'], ['2', '1', '7'], ['1', '-1', '13']);
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+      assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned),
+        ['1', '4294967295', '2', '9920249030613615975']);
+    }
+    else if (entry.id === 'passive_data') {
+      cases.push(['0', '0', '16', '0'], ['2', '1', '8', '0'], ['15', '15', '1', '0'],
+        ['65536', '16', '0', '0'], ['65536', '0', '0', '1'],
+        ['0', '0', '1', '1'], ['0', '1', '0', '1'], ['0', '16', '1', '0'],
+        ['65535', '0', '2', '0'], ['0', '4294967295', '1', '0']);
+      assert.throws(() => font.invoke(['16', '0', '1', '0']),
+        {name: 'ExecutionBoundExceeded', message: 'memory'});
+      assert.throws(() => font.invoke(['16', '16', '1', '0']),
+        {name: 'WasmTrap', message: 'memory_out_of_bounds'});
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+      assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.hex),
+        ['0x0c0b0a0908070605', '0x0000000000000000']);
+    }
+    else if (entry.id === 'bulk_memory') {
+      for (const [destination, source, length] of [['0', '2', '8'], ['0', '0', '16'],
+          ['16', '16', '0'], ['65536', '65536', '0'], ['65535', '0', '2'],
+          ['0', '65535', '2'], ['4294967295', '0', '1'], ['0', '0', '4294967295']]) {
+        cases.push(['0xfedcba9876543210', destination, source, length, '-1']);
+      }
+      assert.throws(() => font.invoke(['1', '16', '0', '1', '0']),
+        {name: 'ExecutionBoundExceeded', message: 'memory'});
+      assert.throws(() => font.invoke(['1', '0', '16', '1', '0']),
+        {name: 'ExecutionBoundExceeded', message: 'memory'});
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+      assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.hex),
+        ['0x0605040302010201', '0xaaaaaaaaaaaa0807']);
+    }
     else if (['three_divs64', 'four_divs64'].includes(entry.id)) {
       const four = entry.id === 'four_divs64';
       cases.push(Array.from({length: four ? 8 : 6}, (_, i) => i % 2 ? '1' : '-1'));

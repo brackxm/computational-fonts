@@ -210,8 +210,8 @@ def insert_section(data, tag, payload):
     return data[:pos] + bytes([tag]) + unsigned_leb(len(payload)) + payload + data[pos:]
 
 
-@pytest.mark.parametrize('tag,payload', [(2, b'\0'), (4, b'\0'), (8, b'\1'), (9, b'\0')],
-                         ids=['imports', 'tables', 'trapping-start', 'elements'])
+@pytest.mark.parametrize('tag,payload', [(2, b'\0'), (8, b'\1')],
+                         ids=['imports', 'trapping-start'])
 def test_legacy_compilation_rejects_unsupported_binary_sections(tmp_path, tag, payload):
     data = insert_section(binary(parse_text(LEGACY_ADD)), tag, payload)
     validate(data)
@@ -225,12 +225,12 @@ def test_legacy_compilation_rejects_unsupported_binary_sections(tmp_path, tag, p
     assert not font.exists()
 
 
-@pytest.mark.parametrize('field', ['(start 1)', '(table 0 funcref)', '(import "env" "unused" (func))'])
+@pytest.mark.parametrize('field', ['(start 1)', '(table 0 externref)', '(import "env" "unused" (func))'])
 def test_legacy_compilation_rejects_unsupported_wat_fields(tmp_path, field):
     source = tmp_path / 'unsupported.wat'
     source.write_text(LEGACY_ADD[:-1] + field + ')')
     font = tmp_path / 'unsupported.ttf'
-    with pytest.raises(NotImplementedError, match='module field'):
+    with pytest.raises(NotImplementedError, match='module field|funcref'):
         compile_module(source, font)
     assert not font.exists()
 
