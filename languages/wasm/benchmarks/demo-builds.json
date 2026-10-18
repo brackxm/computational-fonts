@@ -1,0 +1,79 @@
+{
+  "branch": {
+    "wires": 293,
+    "gates": 228,
+    "glyphs": 816,
+    "lookups": 165,
+    "font_bytes": 55172
+  },
+  "compose": {
+    "wires": 259,
+    "gates": 194,
+    "glyphs": 714,
+    "lookups": 131,
+    "font_bytes": 43564
+  },
+  "compose64": {
+    "wires": 515,
+    "gates": 386,
+    "glyphs": 1418,
+    "lookups": 259,
+    "font_bytes": 86924
+  },
+  "count": {
+    "wires": 932,
+    "gates": 867,
+    "glyphs": 2733,
+    "lookups": 469,
+    "font_bytes": 134164
+  },
+  "divide32": {
+    "wires": 4168,
+    "gates": 4103,
+    "glyphs": 12441,
+    "lookups": 3141,
+    "font_bytes": 1037040
+  },
+  "memory_roundtrip": {
+    "wires": 1489,
+    "gates": 1424,
+    "glyphs": 4404,
+    "lookups": 1423,
+    "font_bytes": 276936
+  },
+  "multiply64": {
+    "wires": 6249,
+    "gates": 6120,
+    "glyphs": 18620,
+    "lookups": 4166,
+    "font_bytes": 1370648
+  },
+  "recursive_sum": {
+    "wires": 1385,
+    "gates": 1352,
+    "glyphs": 4124,
+    "lookups": 955,
+    "font_bytes": 254828
+  },
+  "sum_loop": {
+    "wires": 1379,
+    "gates": 1346,
+    "glyphs": 4106,
+    "lookups": 949,
+    "font_bytes": 271244
+  },
+  "c-mix32": {
+    "wires": 446,
+    "gates": 381,
+    "glyphs": 1275,
+    "lookups": 259,
+    "font_bytes": 80900
+  },
+  "c-mix64": {
+    "wires": 1026,
+    "gates": 897,
+    "glyphs": 2951,
+    "lookups": 676,
+    "font_bytes": 219696
+  }
+}

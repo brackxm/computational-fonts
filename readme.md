@@ -4,7 +4,7 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 19 playgrounds in your browser, with no installation needed.
+explore all 20 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
@@ -15,6 +15,7 @@ explore all 19 playgrounds in your browser, with no installation needed.
 | [PBM image renderer](graphics/pbm/) | text image format | plain PBM (`P1`) bitmap | [ODT specimen](graphics/pbm/pbm.odt) |
 | [Mini BASIC](languages/mini-basic/) | programming language | numbered BASIC statements | [ODT specimen](languages/mini-basic/mini-basic.odt) |
 | [SKI evaluator](languages/ski/) | combinatory logic | `S`, `K`, `I`, lowercase atoms and application | [ODT specimen](languages/ski/ski.odt) |
+| [WebAssembly](languages/wasm/) | bounded integer compiler | `.wat` or `.wasm` compiled to GSUB glyph registers | [Browser playground](languages/wasm/playground.html) |
 | [JSON formatter](formatters/json/) | text formatter | JSON text | [ODT specimen](formatters/json/json.odt) |
 | [Markdown-style formatter](formatters/markdown/) | text formatter | flat emphasis, inline code, strikethrough and heading markers | [ODT specimen](formatters/markdown/markdown.odt) |
 | [Morse code](decoders/morse/) | code decoder | dots and hyphens; spaces between letters, `/` between words | [ODT specimen](decoders/morse/morse.odt) |
@@ -30,10 +31,15 @@ explore all 19 playgrounds in your browser, with no installation needed.
 | [Turtle graphics](graphics/turtle/) | drawing interpreter | movement, pen and color commands | [ODT specimen](graphics/turtle/turtle.odt) |
 | [Multi-format validator](validators/multi-format/) | dynamic validator | `format:value?` | [ODT specimen](validators/multi-format/validator.odt) |
 
-Each project folder includes a `build.py` font generator, a bundled `.ttf`,
+The display-font project folders include a `build.py` font generator, a bundled `.ttf`,
 a `playground.html` browser demo, an editable `.odt` specimen, and a `readme.md`
 with usage, build commands, tests and limitations. SKI also includes a machine
 font and CLI for inspecting results and the internal tree tape.
+
+WebAssembly uses invisible glyph registers with a command-line HarfBuzz harness
+and a [browser playground](languages/wasm/playground.html). The playground bundles
+compiled examples and their matching ABI manifests. See its
+[quick start and execution limits](languages/wasm/readme.md).
 
 ## Trying a font in a document
 
@@ -83,6 +89,9 @@ Test commands and coverage live in each project's README. The
 [shared decoder notes](decoders/shared/readme.md#tests) describe the decoder
 regression suite. Font tests require FontTools and HarfBuzz's `hb-shape` for
 shaping checks; browser controller tests use Node.js.
+The [WebAssembly suite](languages/wasm/readme.md#validation) additionally uses
+pytest and the system HarfBuzz shared library, with Node.js as an independent
+WebAssembly validator and test oracle.
 
 The [SKI regression gate](languages/ski/readme.md#tests) uses HarfBuzz's shared
 library directly and includes protocol, reproducibility, differential and

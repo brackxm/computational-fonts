@@ -1,0 +1,438 @@
+[
+  {
+    "id": "compose",
+    "title": "Independent expressions",
+    "description": "(a + b) XOR (a \u2212 b), with 32-bit wrapping.",
+    "parameters": [
+      "a",
+      "b"
+    ],
+    "arguments": [
+      "123",
+      "77"
+    ],
+    "font": "compose.ttf",
+    "manifest": "compose.json",
+    "module": "compose.wasm",
+    "source": "(module (func (export \"run\") (param $a i32) (param $b i32) (result i32) (i32.xor (i32.add (local.get $a) (local.get $b)) (i32.sub (local.get $a) (local.get $b)))))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "add",
+    "title": "Wrapping addition",
+    "description": "Add two i32 integers. Try 4294967295 + 1.",
+    "parameters": [
+      "a",
+      "b"
+    ],
+    "arguments": [
+      "4294967295",
+      "1"
+    ],
+    "font": "add.ttf",
+    "manifest": "add.json",
+    "module": "add.wasm",
+    "source": "(module\n  (func (export \"add\")\n    (param $a i32) (param $b i32) (result i32)\n    local.get $a\n    local.get $b\n    i32.add\n  )\n)\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "compose64",
+    "title": "64-bit expressions",
+    "description": "The same expression with full 64-bit integers.",
+    "parameters": [
+      "a",
+      "b"
+    ],
+    "arguments": [
+      "0x123456789abcdef0",
+      "0xfedcba9876543210"
+    ],
+    "font": "compose64.ttf",
+    "manifest": "compose64.json",
+    "module": "compose64.wasm",
+    "source": "(module (func (export \"run\") (param $a i64) (param $b i64) (result i64) (i64.xor (i64.add (local.get $a) (local.get $b)) (i64.sub (local.get $a) (local.get $b)))))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "expensive64",
+    "title": "Two 64-bit dividers + addition",
+    "description": "Compute (a / b) + (c / d) with independent signed i64 dividers and wrapping addition. Division truncates toward zero; either division can trap.",
+    "parameters": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "arguments": [
+      "-9223372036854775808",
+      "-7",
+      "9223372036854775807",
+      "3"
+    ],
+    "font": "expensive64.ttf",
+    "manifest": "expensive64.json",
+    "module": "expensive64.wasm",
+    "source": ";; Two independent full-width signed dividers compose with wrapping addition.\n;; All four operands are supplied at invocation time.\n(module\n  (func (export \"run\") (param $a i64) (param $b i64)\n                      (param $c i64) (param $d i64) (result i64)\n    local.get $a local.get $b i64.div_s\n    local.get $c local.get $d i64.div_s\n    i64.add))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "divmul64",
+    "title": "Two 64-bit divisions \u2192 multiplication",
+    "description": "Compute (a / b) \u00d7 (c / d) with unsigned i64 division and a wrapping product. Both runtime quotients feed the multiplier; either zero divisor traps.",
+    "parameters": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "arguments": [
+      "18446744073709551615",
+      "3",
+      "18446744073709551615",
+      "7"
+    ],
+    "font": "divmul64.ttf",
+    "manifest": "divmul64.json",
+    "module": "divmul64.wasm",
+    "source": ";; Three expensive runtime operations in one font: two divisions, then multiply.\n;; The product wraps modulo 2^64; either zero divisor traps.\n(module\n  (func (export \"run\") (param $a i64) (param $b i64)\n                      (param $c i64) (param $d i64) (result i64)\n    local.get $a local.get $b i64.div_u\n    local.get $c local.get $d i64.div_u\n    i64.mul))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "divmulcount64",
+    "title": "Signed divisions \u2192 multiply \u2192 count bits",
+    "description": "Return (a / b) \u00d7 (c / d) and its set-bit count. Four runtime operations compose with signed i64 division and wrapping multiplication. Either zero divisor or MIN / \u22121 traps.",
+    "parameters": [
+      "a",
+      "b",
+      "c",
+      "d"
+    ],
+    "arguments": [
+      "-9223372036854775808",
+      "-7",
+      "9223372036854775807",
+      "3"
+    ],
+    "font": "divmulcount64.ttf",
+    "manifest": "divmulcount64.json",
+    "module": "divmulcount64.wasm",
+    "source": ";; Four runtime operations: two signed divisions, multiplication, and popcount.\n;; Return the wrapping product and its number of set bits.\n(module\n  (func (export \"run\") (param $a i64) (param $b i64)\n                      (param $c i64) (param $d i64) (result i64 i64)\n    (local $product i64)\n    local.get $a local.get $b i64.div_s\n    local.get $c local.get $d i64.div_s\n    i64.mul local.tee $product\n    local.get $product i64.popcnt))\n",
+    "result_labels": [
+      "Product",
+      "Set bits"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "three_divs64",
+    "title": "Three 64-bit dividers + addition",
+    "description": "Compute (a / b) + (c / d) + (e / f) with three independent unsigned i64 dividers and wrapping addition. Any zero divisor traps.",
+    "parameters": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f"
+    ],
+    "arguments": [
+      "100",
+      "3",
+      "200",
+      "7",
+      "300",
+      "11"
+    ],
+    "font": "three_divs64.ttf",
+    "manifest": "three_divs64.json",
+    "module": "three_divs64.wasm",
+    "source": ";; Three independent dynamic full-width dividers, combined with wrapping adds.\n;; Any zero divisor traps.\n(module\n  (func (export \"run\") (param i64 i64 i64 i64 i64 i64) (result i64)\n    local.get 0 local.get 1 i64.div_u\n    local.get 2 local.get 3 i64.div_u i64.add\n    local.get 4 local.get 5 i64.div_u i64.add))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "four_divs64",
+    "title": "Four 64-bit dividers + addition",
+    "description": "Compute (a / b) + (c / d) + (e / f) + (g / h) with four independent unsigned i64 dividers and wrapping addition. Any zero divisor traps.",
+    "parameters": [
+      "a",
+      "b",
+      "c",
+      "d",
+      "e",
+      "f",
+      "g",
+      "h"
+    ],
+    "arguments": [
+      "100",
+      "3",
+      "200",
+      "7",
+      "300",
+      "11",
+      "400",
+      "13"
+    ],
+    "font": "four_divs64.ttf",
+    "manifest": "four_divs64.json",
+    "module": "four_divs64.wasm",
+    "source": ";; Four independent dynamic full-width unsigned dividers with wrapping sums.\n;; Any zero divisor traps.\n(module\n  (func (export \"run\") (param i64 i64 i64 i64 i64 i64 i64 i64) (result i64)\n    local.get 0 local.get 1 i64.div_u\n    local.get 2 local.get 3 i64.div_u i64.add\n    local.get 4 local.get 5 i64.div_u i64.add\n    local.get 6 local.get 7 i64.div_u i64.add))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "branch",
+    "title": "Conditional branch",
+    "description": "Return a \u2212 b when a < b (signed); otherwise a + b.",
+    "parameters": [
+      "a",
+      "b"
+    ],
+    "arguments": [
+      "123",
+      "456"
+    ],
+    "font": "branch.ttf",
+    "manifest": "branch.json",
+    "module": "branch.wasm",
+    "source": "(module (func (export \"run\") (param i32) (param i32) (result i32) (if (result i32) (i32.lt_s (local.get 0) (local.get 1)) (then (i32.sub (local.get 0) (local.get 1))) (else (i32.add (local.get 0) (local.get 1))))))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "sum_loop",
+    "title": "Bounded loop",
+    "description": "Sum n down to 1. Inputs 0\u20137 finish; 8 reaches the loop bound.",
+    "parameters": [
+      "n"
+    ],
+    "arguments": [
+      "6"
+    ],
+    "font": "sum_loop.ttf",
+    "manifest": "sum_loop.json",
+    "module": "sum_loop.wasm",
+    "source": "(module (func (export \"run\") (param $n i32) (result i32) (local $sum i32)\n block $done loop $again local.get $n i32.eqz br_if $done\n local.get $sum local.get $n i32.add local.set $sum\n local.get $n i32.const 1 i32.sub local.set $n br $again end end local.get $sum))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "recursive_sum",
+    "title": "Recursive calls",
+    "description": "Sum n down to 1 using internal calls. Inputs 0\u20137 fit the call bound.",
+    "parameters": [
+      "n"
+    ],
+    "arguments": [
+      "5"
+    ],
+    "font": "recursive_sum.ttf",
+    "manifest": "recursive_sum.json",
+    "module": "recursive_sum.wasm",
+    "source": "(module (func $f (export \"run\") (param $n i32) (result i32) (if (result i32) (i32.eqz (local.get $n)) (then (i32.const 0)) (else (i32.add (local.get $n) (call $f (i32.sub (local.get $n) (i32.const 1))))))))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "memory_roundtrip",
+    "title": "Memory round trip",
+    "description": "Store and load a 32-bit value. Addresses 0\u201312 fit the backed window.",
+    "parameters": [
+      "address",
+      "value"
+    ],
+    "arguments": [
+      "3",
+      "0x89abcdef"
+    ],
+    "font": "memory_roundtrip.ttf",
+    "manifest": "memory_roundtrip.json",
+    "module": "memory_roundtrip.wasm",
+    "source": "(module (memory 1) (func (export \"run\") (param $addr i32) (param $value i32) (result i32) local.get $addr local.get $value i32.store local.get $addr i32.load))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "divide32",
+    "title": "Unsigned division",
+    "description": "Divide two i32 values. A zero divisor produces a Wasm trap.",
+    "parameters": [
+      "dividend",
+      "divisor"
+    ],
+    "arguments": [
+      "17",
+      "3"
+    ],
+    "font": "divide32.ttf",
+    "manifest": "divide32.json",
+    "module": "divide32.wasm",
+    "source": "(module (func (export \"run\") (param i32 i32) (result i32) local.get 0 local.get 1 i32.div_u))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "divide64_constant",
+    "title": "64-bit division by 10",
+    "description": "Return the unsigned quotient and remainder of a full-width i64 value divided by ten.",
+    "parameters": [
+      "value"
+    ],
+    "arguments": [
+      "18446744073709551615"
+    ],
+    "font": "divide64_constant.ttf",
+    "manifest": "divide64_constant.json",
+    "module": "divide64_constant.wasm",
+    "source": "(module\n  (func (export \"run\") (param $value i64) (result i64 i64)\n    ;; Both operations reuse the same bounded-remainder divider circuit.\n    local.get $value\n    i64.const 10\n    i64.div_u\n    local.get $value\n    i64.const 10\n    i64.rem_u))\n",
+    "result_labels": [
+      "Quotient",
+      "Remainder"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "divide64_signed",
+    "title": "64-bit signed division by \u22127",
+    "description": "Return the signed quotient and remainder. Division truncates toward zero; remainder keeps the input sign.",
+    "parameters": [
+      "value"
+    ],
+    "arguments": [
+      "-1234567890123456789"
+    ],
+    "font": "divide64_signed.ttf",
+    "manifest": "divide64_signed.json",
+    "module": "divide64_signed.wasm",
+    "source": "(module\n  (func (export \"run\") (param $value i64) (result i64 i64)\n    ;; Division truncates toward zero; remainder keeps the dividend's sign.\n    local.get $value\n    i64.const -7\n    i64.div_s\n    local.get $value\n    i64.const -7\n    i64.rem_s))\n",
+    "result_labels": [
+      "Quotient",
+      "Remainder"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "divide64_dynamic",
+    "title": "Dynamic 64-bit division",
+    "description": "Return unsigned quotient and remainder for two full-width i64 arguments. A zero divisor traps.",
+    "parameters": [
+      "dividend",
+      "divisor"
+    ],
+    "arguments": [
+      "18446744073709551615",
+      "4294967297"
+    ],
+    "font": "divide64_dynamic.ttf",
+    "manifest": "divide64_dynamic.json",
+    "module": "divide64_dynamic.wasm",
+    "source": "(module\n  (func (export \"run\") (param $dividend i64) (param $divisor i64) (result i64 i64)\n    local.get $dividend\n    local.get $divisor\n    i64.div_u\n    local.get $dividend\n    local.get $divisor\n    i64.rem_u))\n",
+    "result_labels": [
+      "Quotient",
+      "Remainder"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "divide64_dynamic_signed",
+    "title": "Dynamic signed 64-bit division",
+    "description": "Return signed quotient and remainder. Zero divisors and MIN / \u22121 trap; division truncates toward zero.",
+    "parameters": [
+      "dividend",
+      "divisor"
+    ],
+    "arguments": [
+      "-9223372036854775808",
+      "-7"
+    ],
+    "font": "divide64_dynamic_signed.ttf",
+    "manifest": "divide64_dynamic_signed.json",
+    "module": "divide64_dynamic_signed.wasm",
+    "source": "(module\n  (func (export \"run\") (param $dividend i64) (param $divisor i64) (result i64 i64)\n    local.get $dividend\n    local.get $divisor\n    i64.div_s\n    local.get $dividend\n    local.get $divisor\n    i64.rem_s))\n",
+    "result_labels": [
+      "Quotient",
+      "Remainder"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "multiply64",
+    "title": "64-bit multiplication",
+    "description": "Multiply arbitrary i64 values with wrapping.",
+    "parameters": [
+      "a",
+      "b"
+    ],
+    "arguments": [
+      "0x123456789abcdef0",
+      "7"
+    ],
+    "font": "multiply64.ttf",
+    "manifest": "multiply64.json",
+    "module": "multiply64.wasm",
+    "source": "(module (func (export \"run\") (param i64 i64) (result i64) local.get 0 local.get 1 i64.mul))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "count",
+    "title": "Count set bits",
+    "description": "Count the set bits in an i64 integer, then add three.",
+    "parameters": [
+      "value"
+    ],
+    "arguments": [
+      "0xfedcba9876543210"
+    ],
+    "font": "count.ttf",
+    "manifest": "count.json",
+    "module": "count.wasm",
+    "source": "(module\n  (func (export \"run\") (param $x i64) (result i64)\n    local.get $x\n    i64.popcnt\n    i64.const 3\n    i64.add))\n",
+    "result_labels": [],
+    "language": "WAT"
+  },
+  {
+    "id": "c-mix32",
+    "title": "Compiled C \u00b7 i32",
+    "description": "An exported function from the bundled Clang-produced module.",
+    "parameters": [
+      "a",
+      "b"
+    ],
+    "arguments": [
+      "123",
+      "77"
+    ],
+    "font": "c-mix32.ttf",
+    "manifest": "c-mix32.json",
+    "module": "c-mix32.wasm",
+    "source": "/* Integer-only freestanding C. No runtime library or precomputed lookup tables. */\ntypedef unsigned int u32;\ntypedef unsigned long long u64;\n\n__attribute__((noinline))\nstatic u32 combine(u32 a, u32 b) {\n    return (a + b) ^ (a - b);\n}\n\nu32 run(u32 a, u32 b) {\n    u32 mixed = combine(a, b);\n    return (a & 1u) ? mixed + (b ^ 0x5a5a5a5au)\n                    : mixed - (a ^ 0xa5a5a5a5u);\n}\n\nu64 run64(u64 a, u64 b) {\n    u64 mixed = (a + b) ^ (a - b);\n    unsigned k = (unsigned)b & 63u;\n    u64 rotated = (mixed << k) | (mixed >> ((64u - k) & 63u));\n    return rotated + a;\n}\n",
+    "result_labels": [],
+    "language": "C"
+  },
+  {
+    "id": "c-mix64",
+    "title": "Compiled C \u00b7 i64",
+    "description": "The 64-bit export from the same compiled C module.",
+    "parameters": [
+      "a",
+      "b"
+    ],
+    "arguments": [
+      "123",
+      "77"
+    ],
+    "font": "c-mix64.ttf",
+    "manifest": "c-mix64.json",
+    "module": "c-mix64.wasm",
+    "source": "/* Integer-only freestanding C. No runtime library or precomputed lookup tables. */\ntypedef unsigned int u32;\ntypedef unsigned long long u64;\n\n__attribute__((noinline))\nstatic u32 combine(u32 a, u32 b) {\n    return (a + b) ^ (a - b);\n}\n\nu32 run(u32 a, u32 b) {\n    u32 mixed = combine(a, b);\n    return (a & 1u) ? mixed + (b ^ 0x5a5a5a5au)\n                    : mixed - (a ^ 0xa5a5a5a5u);\n}\n\nu64 run64(u64 a, u64 b) {\n    u64 mixed = (a + b) ^ (a - b);\n    unsigned k = (unsigned)b & 63u;\n    u64 rotated = (mixed << k) | (mixed >> ((64u - k) & 63u));\n    return rotated + a;\n}\n",
+    "result_labels": [],
+    "language": "C"
+  }
+]

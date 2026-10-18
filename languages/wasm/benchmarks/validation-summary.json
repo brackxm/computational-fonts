@@ -1,0 +1,31 @@
+{
+  "mode": "Three disjoint pytest batches; union covers every collected test. Combined invocations were interrupted by the execution environment, with no assertion failure reported. All batches completed.",
+  "tests_passed": 316,
+  "subtests_passed": 20,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "batches": [
+    {
+      "name": "legacy",
+      "command": "python -m pytest -q --ignore=test_native_registers.py",
+      "tests_passed": 194,
+      "subtests_passed": 20,
+      "seconds": 11.686
+    },
+    {
+      "name": "native",
+      "command": "python -m pytest -q test_native_registers.py -k \"not native_division_and_traps\"",
+      "tests_passed": 118,
+      "subtests_passed": 0,
+      "seconds": 24.222
+    },
+    {
+      "name": "division",
+      "command": "python -m pytest -q test_native_registers.py -k native_division_and_traps",
+      "tests_passed": 4,
+      "subtests_passed": 0,
+      "seconds": 17.863
+    }
+  ]
+}

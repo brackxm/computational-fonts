@@ -59,3 +59,12 @@ pinned Roboto Regular source described above. Its generated metadata retains
 Google's copyright, Roboto attribution and Apache-2.0 license and identifies
 Michael Brackx's SKI interpreter modifications. The separate invisible machine
 font `languages/ski/ski.ttf` contains original empty outlines and no Roboto.
+
+## HarfBuzz browser runtime
+
+The WebAssembly playground bundles unmodified runtime files from
+[harfbuzzjs 1.6.3](https://www.npmjs.com/package/harfbuzzjs/v/1.6.3), licensed
+under MIT, including its HarfBuzz 14.6.0 WebAssembly engine. HarfBuzz uses the
+Old MIT license. Both notices are retained in
+[`languages/wasm/vendor/harfbuzzjs`](languages/wasm/vendor/harfbuzzjs/), with
+upstream sources and checksums in its readme.

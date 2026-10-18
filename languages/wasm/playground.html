@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>WebAssembly · computational fonts</title>
+<style>
+:root{color-scheme:light;font-family:system-ui,sans-serif;background:#f5f4ee;color:#203a42}
+*{box-sizing:border-box}body{max-width:1100px;margin:0 auto;padding:40px 24px;line-height:1.6}
+.eyebrow{font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:#52747a}
+h1{font-family:Georgia,serif;font-size:clamp(36px,7vw,58px);font-weight:400;line-height:1.15;margin:14px 0}
+.intro{max-width:780px;color:#52656b}label,.label{display:block;font-size:13px;font-weight:650;margin:20px 0 9px}
+button,select,input{font:inherit;color:inherit}select,input[type=text]{border:1px solid #8ea3a6;background:#fffef9;border-radius:6px;padding:11px 12px;width:100%}
+select{max-width:500px}button{padding:9px 18px;border:1px solid #287b87;border-radius:5px;background:#226a77;color:white;cursor:pointer}
+button:hover{background:#194f59}button:disabled{opacity:.5;cursor:wait}input:focus-visible,select:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid #287b87;outline-offset:3px}
+.hint,#status{font-size:13px;color:#52656b}.parameters{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 20px;max-width:780px}
+.actions{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin:20px 0}.toggle{display:flex;gap:8px;align-items:center;margin:0;font-weight:400}
+.result{padding:22px;background:#fffef9;border:1px solid #d6ded6;border-radius:8px;margin:12px 0}.result h2{font-size:13px;color:#52747a;margin:0 0 6px;font-weight:650}
+.number{font-family:ui-monospace,monospace;font-size:clamp(25px,5vw,40px);overflow-wrap:anywhere;line-height:1.4;margin-bottom:16px}
+dl{display:grid;grid-template-columns:90px minmax(0,1fr);font-size:13px;margin:0;gap:8px}dt{color:#52656b}dd{margin:0;overflow-wrap:anywhere;font-family:ui-monospace,monospace}
+#status{min-height:24px}#status[data-state=error]{color:#94362d}#status[data-state=ready]{color:#226a55}
+details{font-size:13px;margin:20px 0}summary{cursor:pointer}code,pre{font-family:ui-monospace,monospace}pre{padding:16px;background:#e4e9e2;border-radius:6px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;max-height:360px;overflow:auto}
+.downloads{display:flex;gap:18px;flex-wrap:wrap;font-size:13px}.upload{max-width:100%;font-size:13px}
+footer{border-top:1px solid #c9d2ca;margin-top:28px;padding-top:18px;font-size:13px;display:flex;gap:20px;flex-wrap:wrap}a{color:#226a77;text-underline-offset:3px}[hidden]{display:none!important}
+@media(max-width:480px){body{padding:28px 16px}.parameters{display:block}dl{grid-template-columns:65px minmax(0,1fr)}.result{padding:16px}}
+</style>
+</head>
+<body>
+<div class="eyebrow">Computational fonts · WebAssembly</div>
+<h1>WebAssembly, shaped by a font.</h1>
+<p class="intro">Choose a compiled program and change its arguments. OpenType substitutions inside the font compute the result in one shaping call, including arithmetic, branches, bounded loops and memory.</p>
+<label for="example">Example program</label>
+<select id="example" disabled><option>Loading examples…</option></select>
+<p id="description" class="hint"></p>
+<form id="invocation">
+  <div id="parameters" class="parameters"></div>
+  <p id="argument-help" class="hint">Use decimal, hexadecimal (0x), or binary (0b), with an optional minus sign. Arguments wrap to their declared 32 or 64 bits.</p>
+  <div class="actions">
+    <button id="run" type="submit" disabled>Run font</button>
+    <label class="toggle"><input id="enabled" type="checkbox" checked> Enable font computation</label>
+  </div>
+</form>
+<p id="status" role="status" aria-live="polite" data-state="loading">Loading the shaping engine…</p>
+<div id="results" aria-label="Font-computed results" aria-live="polite"></div>
+<p class="hint">Results show the same bits as unsigned, signed and hexadecimal integers. A trap or execution bound has no valid result. Disable font computation to check that unfinished registers are rejected.</p>
+<details><summary id="source-label">Program source</summary><pre id="source"></pre>
+  <p class="hint">These examples are already compiled into fonts. To edit a program, compile its WAT or Wasm with <code>build.py</code> and load the resulting pair below.</p>
+</details>
+<details><summary>Load your own compiled program</summary>
+  <p>Build a font and its ABI manifest:</p>
+  <pre>python3 languages/wasm/build.py program.wat --export run -o program.ttf</pre>
+  <label for="files">Select the matching .ttf and .json files together</label>
+  <input id="files" class="upload" type="file" accept=".ttf,.json" multiple aria-describedby="local-files">
+  <p id="local-files" class="hint">Files stay in this browser. The page verifies that the font matches its manifest before running it. Every invocation starts with fresh memory and globals.</p>
+</details>
+<details><summary>Font and execution details</summary><p id="metrics" class="hint"></p>
+  <div id="downloads" class="downloads" hidden><a id="font-download" download>Download font</a><a id="manifest-download" download>Download manifest</a><a id="wasm-download" download>Download Wasm</a></div>
+  <p class="hint">The bundled HarfBuzz engine runs in a worker. JavaScript encodes arguments and reads the shaped glyph registers; it does not execute the example's Wasm module. Fonts use invisible machine glyphs, so ordinary text rendering does not display their results.</p>
+</details>
+<noscript>This playground requires JavaScript and WebAssembly. Serve the repository root with python3 -m http.server 8000.</noscript>
+<footer><a href="readme.md">Wasm support &amp; build notes</a><a href="../../readme.md">All fonts</a><a href="vendor/harfbuzzjs/readme.md">HarfBuzz credits</a></footer>
+<script>
+if (location.protocol === 'file:') {
+  const status = document.getElementById('status');
+  status.textContent = 'Serve the repository root with python3 -m http.server 8000, then open http://localhost:8000/languages/wasm/playground.html.';
+  status.dataset.state = 'error';
+}
+</script>
+<script type="module" src="playground/controls.mjs"></script>
+</body>
+</html>

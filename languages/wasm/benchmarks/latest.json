@@ -1,0 +1,241 @@
+{
+  "environment": {
+    "python": "3.13.5",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "fonttools": "4.63.0",
+    "harfbuzz": "10.2.0",
+    "node": "v22.16.0"
+  },
+  "method": "Fresh builds; cached font face; three warmups; same input per timing run. harfbuzz_ms times only hb_shape_full. end_to_end_ms includes input encoding, buffer I/O, glyph unpacking and trap checks. V8 runs outside timed sections.",
+  "repeats": 20,
+  "benchmarks": [
+    {
+      "name": "compose32",
+      "source": "compose.wat",
+      "export": "run",
+      "arguments": [
+        "123456789",
+        "987654321"
+      ],
+      "result": [
+        "2387038626"
+      ],
+      "wires": 259,
+      "gates": 194,
+      "glyphs": 714,
+      "lookups": 131,
+      "font_bytes": 43564,
+      "compile_ms": 42.893,
+      "harfbuzz_median_ms": 0.353,
+      "end_to_end_median_ms": 0.689,
+      "end_to_end_p95_ms": 1.063
+    },
+    {
+      "name": "compose64",
+      "source": "compose64.wat",
+      "export": "run",
+      "arguments": [
+        "1311768467463790320",
+        "18364758544493064720"
+      ],
+      "result": [
+        "163971205034524128"
+      ],
+      "wires": 515,
+      "gates": 386,
+      "glyphs": 1418,
+      "lookups": 259,
+      "font_bytes": 86924,
+      "compile_ms": 57.05,
+      "harfbuzz_median_ms": 1.014,
+      "end_to_end_median_ms": 1.624,
+      "end_to_end_p95_ms": 1.931
+    },
+    {
+      "name": "multiply64",
+      "source": "multiply64.wat",
+      "export": "run",
+      "arguments": [
+        "1311768467463790320",
+        "18364758544493064720"
+      ],
+      "result": [
+        "2552847189736476416"
+      ],
+      "wires": 6249,
+      "gates": 6120,
+      "glyphs": 18620,
+      "lookups": 4166,
+      "font_bytes": 1370648,
+      "compile_ms": 640.963,
+      "harfbuzz_median_ms": 143.129,
+      "end_to_end_median_ms": 151.825,
+      "end_to_end_p95_ms": 161.378
+    },
+    {
+      "name": "divide32",
+      "source": "divide32.wat",
+      "export": "run",
+      "arguments": [
+        "4275878552",
+        "74565"
+      ],
+      "result": [
+        "57344"
+      ],
+      "wires": 4168,
+      "gates": 4103,
+      "glyphs": 12441,
+      "lookups": 3141,
+      "font_bytes": 1037040,
+      "compile_ms": 365.797,
+      "harfbuzz_median_ms": 77.278,
+      "end_to_end_median_ms": 82.739,
+      "end_to_end_p95_ms": 94.0
+    },
+    {
+      "name": "branch",
+      "source": "branch.wat",
+      "export": "run",
+      "arguments": [
+        "123",
+        "456"
+      ],
+      "result": [
+        "4294966963"
+      ],
+      "wires": 293,
+      "gates": 228,
+      "glyphs": 816,
+      "lookups": 165,
+      "font_bytes": 55172,
+      "compile_ms": 40.813,
+      "harfbuzz_median_ms": 0.37,
+      "end_to_end_median_ms": 0.74,
+      "end_to_end_p95_ms": 1.077
+    },
+    {
+      "name": "loop",
+      "source": "sum_loop.wat",
+      "export": "run",
+      "arguments": [
+        "6"
+      ],
+      "result": [
+        "21"
+      ],
+      "wires": 1379,
+      "gates": 1346,
+      "glyphs": 4106,
+      "lookups": 949,
+      "font_bytes": 271244,
+      "compile_ms": 196.871,
+      "harfbuzz_median_ms": 5.265,
+      "end_to_end_median_ms": 7.149,
+      "end_to_end_p95_ms": 9.109
+    },
+    {
+      "name": "recursion",
+      "source": "recursive_sum.wat",
+      "export": "run",
+      "arguments": [
+        "5"
+      ],
+      "result": [
+        "15"
+      ],
+      "wires": 1385,
+      "gates": 1352,
+      "glyphs": 4124,
+      "lookups": 955,
+      "font_bytes": 254828,
+      "compile_ms": 132.833,
+      "harfbuzz_median_ms": 4.719,
+      "end_to_end_median_ms": 6.558,
+      "end_to_end_p95_ms": 8.026
+    },
+    {
+      "name": "memory",
+      "source": "memory_roundtrip.wat",
+      "export": "run",
+      "arguments": [
+        "3",
+        "2309737967"
+      ],
+      "result": [
+        "2309737967"
+      ],
+      "wires": 1489,
+      "gates": 1424,
+      "glyphs": 4404,
+      "lookups": 1423,
+      "font_bytes": 276936,
+      "compile_ms": 153.438,
+      "harfbuzz_median_ms": 8.728,
+      "end_to_end_median_ms": 10.577,
+      "end_to_end_p95_ms": 12.021
+    },
+    {
+      "name": "count",
+      "source": "count.wat",
+      "export": "run",
+      "arguments": [
+        "18364758544493064720"
+      ],
+      "result": [
+        "35"
+      ],
+      "wires": 932,
+      "gates": 867,
+      "glyphs": 2733,
+      "lookups": 469,
+      "font_bytes": 134164,
+      "compile_ms": 88.62,
+      "harfbuzz_median_ms": 1.562,
+      "end_to_end_median_ms": 2.721,
+      "end_to_end_p95_ms": 3.657
+    },
+    {
+      "name": "c-mix32",
+      "source": "mix.wasm",
+      "export": "run",
+      "arguments": [
+        "123456789",
+        "987654321"
+      ],
+      "result": [
+        "4006315149"
+      ],
+      "wires": 446,
+      "gates": 381,
+      "glyphs": 1275,
+      "lookups": 259,
+      "font_bytes": 80900,
+      "compile_ms": 56.449,
+      "harfbuzz_median_ms": 1.052,
+      "end_to_end_median_ms": 1.582,
+      "end_to_end_p95_ms": 1.901
+    },
+    {
+      "name": "c-mix64",
+      "source": "mix.wasm",
+      "export": "run64",
+      "arguments": [
+        "1311768467463790320",
+        "18364758544493064720"
+      ],
+      "result": [
+        "11323610711078002998"
+      ],
+      "wires": 1026,
+      "gates": 897,
+      "glyphs": 2951,
+      "lookups": 676,
+      "font_bytes": 219696,
+      "compile_ms": 97.704,
+      "harfbuzz_median_ms": 5.034,
+      "end_to_end_median_ms": 6.342,
+      "end_to_end_p95_ms": 9.455
+    }
+  ]
+}

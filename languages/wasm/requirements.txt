@@ -1,0 +1,3 @@
+# Native compiler and differential tests; system libharfbuzz and Node.js also required.
+fonttools==4.63.0
+pytest==9.0.2

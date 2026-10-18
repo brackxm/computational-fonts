@@ -1,0 +1,19 @@
+Wasm-to-OpenType local validation
+All 316 tests and 20 subtests passed.
+Executed in three disjoint batches; together these cover all collected tests.
+This is the complete supplied Wasm project suite, not the separate upstream repository test matrix.
+
+$ python -m pytest -q --ignore=test_native_registers.py
+........................................................................ [ 37%]
+.............................................................. [ 69%]
+............................................................   [100%]
+194 passed, 20 subtests passed in 11.69s
+
+$ python -m pytest -q test_native_registers.py -k "not native_division_and_traps"
+........................................................................ [ 61%]
+..............................................                           [100%]
+118 passed, 4 deselected in 24.22s
+
+$ python -m pytest -q test_native_registers.py -k native_division_and_traps
+....                                                                     [100%]
+4 passed, 118 deselected in 17.86s
