@@ -3,7 +3,7 @@
 Unmodified runtime files from the official `harfbuzzjs` npm package, pinned to
 **1.6.3**. Its WebAssembly engine reports HarfBuzz **14.6.0**.
 Only the runtime entry point, JavaScript loader and shaping binary are bundled;
-the optional subsetting binary is not needed by this playground.
+the optional subsetting binary is not needed by the playgrounds.
 
 - Package: https://www.npmjs.com/package/harfbuzzjs/v/1.6.3
 - Source and API documentation: https://github.com/harfbuzz/harfbuzzjs
@@ -17,7 +17,8 @@ HarfBuzz engine's Old MIT notice from the corresponding 14.6.0 tag.
 The browser loads these files from the same static server as the playground;
 there are no CDN requests. To update, download the official pinned package,
 copy these three files together, retain both licenses, update these checksums,
-and run `node --test languages/wasm/test_playground.mjs` plus browser checks.
+and run `node --test languages/wasm/tests/test_playground.mjs
+languages/verilog/tests/test_playground.mjs` plus browser checks.
 
 | File | SHA-256 |
 | --- | --- |

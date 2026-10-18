@@ -11,7 +11,7 @@ from pathlib import Path
 import hashlib
 import json
 
-from .gsub.circuit import Circuit, Value, emit_font, ResourceLimit, DEFAULT_MAX_GATES, MAX_GATES
+from fontcircuit.gsub.circuit import Circuit, Value, emit_font, ResourceLimit, DEFAULT_MAX_GATES, MAX_GATES
 from .frontend import load, memory_bytes
 from .ir import MEMOPS
 from .conversions import CONVERSIONS

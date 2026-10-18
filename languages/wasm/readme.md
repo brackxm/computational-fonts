@@ -61,7 +61,7 @@ node --test languages/wasm/tests/test_playground.mjs
 `playground/assets/` contains the generated fonts, ABI manifests, validated source
 binaries and catalog. Fonts can also be invoked with `run.py`.
 The browser engine's pinned version, licenses and checksums are documented in
-[vendor/harfbuzzjs/readme.md](vendor/harfbuzzjs/readme.md).
+[shared HarfBuzz runtime notes](../shared/vendor/harfbuzzjs/readme.md).
 
 ## Requirements and quick start
 
@@ -446,23 +446,29 @@ languages/wasm/
 │   ├── validation.py               # Shared V8 validation and section policy
 │   ├── ir.py, opcodes.py            # Integer instructions and function IR
 │   ├── conversions.py, state.py     # Integer conversions and module state
-│   ├── runtime.py, harfbuzz.py      # Font ABI and system HarfBuzz binding
+│   ├── runtime.py, harfbuzz.py      # Compatibility imports for shared runtime
 │   ├── oracle.py, oracle.js         # Independent V8 differential oracle
-│   ├── gsub/                       # Bit-register circuits and packed tables
+│   ├── gsub/                       # Compatibility imports for shared backend
 │   └── reference/                  # Primitive backends and reference VM
 ├── tests/                          # Python regressions and browser-engine tests
 ├── examples/                       # WAT, C and the supplied C-produced Wasm
-├── playground/                     # Browser controls, runtime and worker
+├── playground/                     # Browser controls
 │   └── assets/                     # Bundled fonts, manifests and modules
 ├── playground.html                 # Stable gallery entry point
-├── vendor/                         # Pinned HarfBuzzJS and licenses
 ├── benchmarks/                     # Historical reports
 └── history/                        # Original handoff provenance
 ```
 
+The Boolean-circuit backend, Python shaping runtime, browser runtime/worker and
+pinned HarfBuzzJS engine live in [`languages/shared`](../shared/). Both Wasm and
+Verilog use that implementation directly.
+
 Python callers import `compile_source` from `wasmfont.compiler` and `NativeFont`
-from `wasmfont.runtime`. Run these imports from `languages/wasm/`, as with the
-command-line examples above. Internal imports are relative to the package.
+from `fontcircuit.runtime`. Import `wasmfont` first when working from
+`languages/wasm/` so its package initialization exposes the repository-local
+shared package. Existing `wasmfont.runtime`, `wasmfont.harfbuzz` and
+`wasmfont.gsub` imports remain available as forwarding modules, including
+`python -m wasmfont.runtime`.
 
 The original primitive compiler, encoders, symbolic lowering and Python reference
 VM remain under `wasmfont.reference` for regression testing. The reference

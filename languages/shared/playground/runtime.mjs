@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // This harness only serializes inputs and decodes shaped registers. It never
-// interprets Wasm instructions or executes the source module in the browser.
+// interprets language instructions or evaluates source programs in the browser.
 export class FontExecutionError extends Error {
   constructor(kind, message) {
     super(message);
@@ -27,7 +27,8 @@ export function registerLayout(manifest) {
       !manifest.flags || typeof manifest.flags !== 'object' || Array.isArray(manifest.flags) ||
       !/^[a-f\d]{64}$/.test(manifest.font_sha256)) invalid();
   const types = [...manifest.parameter_types, ...manifest.result_types];
-  if (types.some(type => !['i32', 'i64'].includes(type)) ||
+  // The shared register ABI also serves Verilog's arbitrary 1–64-bit ports.
+  if (types.some(type => typeof type !== 'string' || !/^i([1-9]|[1-5][0-9]|6[0-4])$/.test(type)) ||
       manifest.results.length !== manifest.result_types.length ||
       manifest.tape.length > 32766) invalid();
   let glyph = 2, previous = -1;
@@ -126,7 +127,7 @@ export class RegisterFont {
       const width = Number(manifest.result_types[i].slice(1));
       return {type: manifest.result_types[i], unsigned: unsigned.toString(),
         signed: BigInt.asIntN(width, unsigned).toString(),
-        hex: '0x' + unsigned.toString(16).padStart(width / 4, '0'), binary};
+        hex: '0x' + unsigned.toString(16).padStart(Math.ceil(width / 4), '0'), binary};
     });
     return {results, milliseconds, registers: layout.length};
   }

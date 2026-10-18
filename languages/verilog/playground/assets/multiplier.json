@@ -1,0 +1,366 @@
+{
+  "abi": "wasm-gsub-registers-v1",
+  "parameter_types": [
+    "i4",
+    "i4"
+  ],
+  "result_types": [
+    "i8"
+  ],
+  "tape": [
+    {
+      "wire": 2,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 0,
+      "constant": 0
+    },
+    {
+      "wire": 3,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 1,
+      "constant": 0
+    },
+    {
+      "wire": 4,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 2,
+      "constant": 0
+    },
+    {
+      "wire": 5,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 3,
+      "constant": 0
+    },
+    {
+      "wire": 6,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 0,
+      "constant": 0
+    },
+    {
+      "wire": 7,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 1,
+      "constant": 0
+    },
+    {
+      "wire": 8,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 2,
+      "constant": 0
+    },
+    {
+      "wire": 9,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 3,
+      "constant": 0
+    },
+    {
+      "wire": 10,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 11,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 12,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 13,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 14,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 15,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 16,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 17,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 18,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 19,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 20,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 21,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 22,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 23,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 24,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 25,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 26,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 27,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 28,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 29,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 30,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 31,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 32,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 33,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 34,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 35,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 36,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 37,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 38,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 39,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 40,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 41,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 42,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 43,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 44,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 45,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    }
+  ],
+  "results": [
+    [
+      38,
+      39,
+      40,
+      41,
+      42,
+      43,
+      44,
+      45
+    ]
+  ],
+  "flags": {},
+  "metrics": {
+    "wires": 44,
+    "gates": 36,
+    "glyphs": 126,
+    "lookups": 26,
+    "font_bytes": 12508,
+    "gate_groups": 24,
+    "lookup_batch_size": 1,
+    "unpacked_gate_groups": 24,
+    "gate_subtables": 24,
+    "coalesced_gate_groups": 0
+  },
+  "font_sha256": "d0f634a3f3dd0547f20f20888db09f7b53a1bee9c83867d5feedd81da7f7bfae",
+  "language": "verilog",
+  "module": "multiplier",
+  "verilog_subset": "unsigned-combinational-v1",
+  "inputs": [
+    {
+      "name": "a",
+      "width": 4
+    },
+    {
+      "name": "b",
+      "width": 4
+    }
+  ],
+  "outputs": [
+    {
+      "name": "product",
+      "width": 8
+    }
+  ],
+  "source": "module multiplier(input [3:0] a, b, output [7:0] product);\n  assign product = a * b;\nendmodule\n"
+}

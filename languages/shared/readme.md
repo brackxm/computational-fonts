@@ -1,0 +1,46 @@
+# Shared font circuits and shaping runtimes
+
+WebAssembly and Verilog compile to the same Boolean circuits and OpenType
+glyph-register format. This folder contains their common implementation:
+
+```text
+languages/shared/
+├── fontcircuit/            # Repository-local Python package
+│   ├── gsub/circuit.py    # Boolean wires, operations and font emission
+│   ├── gsub/tables.py     # Packed GSUB/GDEF serialization
+│   ├── runtime.py         # Input encoding, shaping and output validation
+│   └── harfbuzz.py        # System HarfBuzz binding
+├── playground/
+│   ├── runtime.mjs        # Browser register encoding and validation
+│   └── worker.mjs         # HarfBuzz shaping worker used by both playgrounds
+├── vendor/harfbuzzjs/      # Pinned browser engine and upstream licenses
+└── tests/                 # Shared-package integration checks
+```
+
+The language packages expose `languages/shared` on Python's import path when
+loaded, so their existing repository-local build and run commands work from any
+working directory. Both frontends import `fontcircuit` directly. Standalone
+callers can set `PYTHONPATH=languages/shared` from the repository root:
+
+```sh
+PYTHONPATH=languages/shared python3 -m fontcircuit.runtime program.ttf 123 77
+```
+
+The `wasmfont.runtime`, `wasmfont.harfbuzz` and `wasmfont.gsub` modules forward
+existing imports to this package. They contain no separate backend or runtime.
+The `wasm-gsub-registers-v1` ABI identifier, generated font names and serialized
+font contents retain their existing meanings. Language frontends own source
+parsing, lowering, execution bounds and port/function metadata. The shared
+runtime serializes inputs and decodes shaped bits without interpreting source.
+
+Python builds require FontTools; native execution additionally requires the
+system HarfBuzz library. Each language documents its dependencies and tests.
+The browser worker loads the pinned [HarfBuzzJS runtime](vendor/harfbuzzjs/)
+from this folder, with no dependency on either language's folder.
+
+From the repository root:
+
+```sh
+python3 -m pytest languages/shared/tests -q
+node --test languages/wasm/tests/test_playground.mjs languages/verilog/tests/test_playground.mjs
+```

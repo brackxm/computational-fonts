@@ -62,9 +62,9 @@ font `languages/ski/ski.ttf` contains original empty outlines and no Roboto.
 
 ## HarfBuzz browser runtime
 
-The WebAssembly playground bundles unmodified runtime files from
+The WebAssembly and Verilog playgrounds share unmodified runtime files from
 [harfbuzzjs 1.6.3](https://www.npmjs.com/package/harfbuzzjs/v/1.6.3), licensed
 under MIT, including its HarfBuzz 14.6.0 WebAssembly engine. HarfBuzz uses the
 Old MIT license. Both notices are retained in
-[`languages/wasm/vendor/harfbuzzjs`](languages/wasm/vendor/harfbuzzjs/), with
+[`languages/shared/vendor/harfbuzzjs`](languages/shared/vendor/harfbuzzjs/), with
 upstream sources and checksums in its readme.

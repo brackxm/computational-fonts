@@ -1,0 +1,47 @@
+[
+  {
+    "id": "adder",
+    "title": "8-bit adder with carry",
+    "description": "Nine output bits preserve the carry: try 255 + 1.",
+    "arguments": [
+      "255",
+      "1"
+    ],
+    "font": "adder.ttf",
+    "manifest": "adder.json"
+  },
+  {
+    "id": "alu",
+    "title": "8-bit ALU",
+    "description": "op: 0 add, 1 subtract, 2 XOR, 3 shift left. Compare flags are separate outputs.",
+    "arguments": [
+      "13",
+      "3",
+      "0"
+    ],
+    "font": "alu.ttf",
+    "manifest": "alu.json"
+  },
+  {
+    "id": "multiplier",
+    "title": "4 \u00d7 4-bit multiplier",
+    "description": "Two runtime inputs produce the complete eight-bit product.",
+    "arguments": [
+      "13",
+      "11"
+    ],
+    "font": "multiplier.ttf",
+    "manifest": "multiplier.json"
+  },
+  {
+    "id": "bit_routes",
+    "title": "Bit routing and reductions",
+    "description": "Swap nibbles, mask a byte, and compute parity and an AND reduction.",
+    "arguments": [
+      "165",
+      "1"
+    ],
+    "font": "bit_routes.ttf",
+    "manifest": "bit_routes.json"
+  }
+]

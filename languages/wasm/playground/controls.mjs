@@ -1,6 +1,6 @@
 // Copyright 2026 Michael Brackx
 // SPDX-License-Identifier: Apache-2.0
-import {parseInteger, registerLayout} from './runtime.mjs';
+import {parseInteger, registerLayout} from '../../shared/playground/runtime.mjs';
 
 export function errorMessage(error) {
   if (error.name === 'WasmTrap') return `Wasm trap: ${error.message.replaceAll('_', ' ')}. No result is valid.`;
@@ -110,7 +110,7 @@ export function createPlayground(doc = document) {
         element(id).href = new URL(name, assets).href;
       }
     }
-    worker = new Worker(new URL('./worker.mjs', import.meta.url), {type: 'module'});
+    worker = new Worker(new URL('../../shared/playground/worker.mjs', import.meta.url), {type: 'module'});
     worker.onerror = () => {
       if (current !== generation) return;
       loaded = false;

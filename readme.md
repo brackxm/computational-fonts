@@ -4,7 +4,7 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 20 playgrounds in your browser, with no installation needed.
+explore all 21 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
@@ -16,6 +16,7 @@ explore all 20 playgrounds in your browser, with no installation needed.
 | [Mini BASIC](languages/mini-basic/) | programming language | numbered BASIC statements | [ODT specimen](languages/mini-basic/mini-basic.odt) |
 | [SKI evaluator](languages/ski/) | combinatory logic | `S`, `K`, `I`, lowercase atoms and application | [ODT specimen](languages/ski/ski.odt) |
 | [WebAssembly](languages/wasm/) | bounded integer compiler | `.wat` or `.wasm` compiled to GSUB glyph registers | [Browser playground](languages/wasm/playground.html) |
+| [Verilog](languages/verilog/) | bounded combinational compiler | unsigned `.v` modules compiled to GSUB gates | [Browser playground](languages/verilog/playground.html) |
 | [JSON formatter](formatters/json/) | text formatter | JSON text | [ODT specimen](formatters/json/json.odt) |
 | [Markdown-style formatter](formatters/markdown/) | text formatter | flat emphasis, inline code, strikethrough and heading markers | [ODT specimen](formatters/markdown/markdown.odt) |
 | [Morse code](decoders/morse/) | code decoder | dots and hyphens; spaces between letters, `/` between words | [ODT specimen](decoders/morse/morse.odt) |
@@ -40,6 +41,13 @@ WebAssembly uses invisible glyph registers with a command-line HarfBuzz harness
 and a [browser playground](languages/wasm/playground.html). The playground bundles
 compiled examples and their matching ABI manifests. See its
 [quick start and execution limits](languages/wasm/readme.md).
+
+Verilog compiles an unsigned, two-state combinational subset into the same
+glyph-register backend. Its [playground](languages/verilog/playground.html)
+includes an adder, ALU, multiplier and bit-routing circuit with editable input
+ports. See the [supported syntax and build commands](languages/verilog/readme.md).
+Both language compilers use the [shared circuit backend and shaping
+runtimes](languages/shared/).
 
 ## Trying a font in a document
 
@@ -92,6 +100,10 @@ shaping checks; browser controller tests use Node.js.
 The [WebAssembly suite](languages/wasm/readme.md#validation) additionally uses
 pytest and the system HarfBuzz shared library, with Node.js as an independent
 WebAssembly validator and test oracle.
+
+The [Verilog tests](languages/verilog/readme.md#tests) exercise both the system
+HarfBuzz runtime and the browser engine, including width propagation, exhaustive
+small multipliers, malformed source and disabled-shaping rejection.
 
 The [SKI regression gate](languages/ski/readme.md#tests) uses HarfBuzz's shared
 library directly and includes protocol, reproducibility, differential and

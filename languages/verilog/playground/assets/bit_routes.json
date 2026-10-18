@@ -1,0 +1,432 @@
+{
+  "abi": "wasm-gsub-registers-v1",
+  "parameter_types": [
+    "i8",
+    "i1"
+  ],
+  "result_types": [
+    "i8",
+    "i8",
+    "i1",
+    "i1"
+  ],
+  "tape": [
+    {
+      "wire": 2,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 0,
+      "constant": 0
+    },
+    {
+      "wire": 3,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 1,
+      "constant": 0
+    },
+    {
+      "wire": 4,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 2,
+      "constant": 0
+    },
+    {
+      "wire": 5,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 3,
+      "constant": 0
+    },
+    {
+      "wire": 6,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 4,
+      "constant": 0
+    },
+    {
+      "wire": 7,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 5,
+      "constant": 0
+    },
+    {
+      "wire": 8,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 6,
+      "constant": 0
+    },
+    {
+      "wire": 9,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 7,
+      "constant": 0
+    },
+    {
+      "wire": 10,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 0,
+      "constant": 0
+    },
+    {
+      "wire": 11,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 12,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 13,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 14,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 15,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 16,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 17,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 18,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 19,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 20,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 21,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 22,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 23,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 24,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 25,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 26,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 27,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 28,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 29,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 30,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 31,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 32,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 33,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 34,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 35,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 36,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 37,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 38,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 39,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 40,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 41,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 42,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 43,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 44,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 45,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 46,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 47,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 48,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 49,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 50,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    }
+  ],
+  "results": [
+    [
+      33,
+      34,
+      35,
+      36,
+      37,
+      38,
+      39,
+      40
+    ],
+    [
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48
+    ],
+    [
+      49
+    ],
+    [
+      50
+    ]
+  ],
+  "flags": {},
+  "metrics": {
+    "wires": 49,
+    "gates": 40,
+    "glyphs": 140,
+    "lookups": 41,
+    "font_bytes": 7728,
+    "gate_groups": 39,
+    "lookup_batch_size": 1,
+    "unpacked_gate_groups": 39,
+    "gate_subtables": 39,
+    "coalesced_gate_groups": 0
+  },
+  "font_sha256": "ae21d0777e64bf7b5160aee7507adf4a61beb51e36abcdcd37e9c85aac855bc7",
+  "language": "verilog",
+  "module": "bit_routes",
+  "verilog_subset": "unsigned-combinational-v1",
+  "inputs": [
+    {
+      "name": "data",
+      "width": 8
+    },
+    {
+      "name": "enable",
+      "width": 1
+    }
+  ],
+  "outputs": [
+    {
+      "name": "swapped",
+      "width": 8
+    },
+    {
+      "name": "masked",
+      "width": 8
+    },
+    {
+      "name": "parity",
+      "width": 1
+    },
+    {
+      "name": "all_set",
+      "width": 1
+    }
+  ],
+  "source": "module bit_routes(input [7:0] data, input enable,\n                  output [7:0] swapped, masked, output parity, all_set);\n  assign swapped = {data[3:0], data[7:4]};\n  assign masked = data & {8{enable}};\n  assign parity = ^data;\n  assign all_set = &data;\nendmodule\n"
+}

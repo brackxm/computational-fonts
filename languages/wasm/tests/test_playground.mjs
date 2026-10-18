@@ -3,8 +3,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
-import * as hb from '../vendor/harfbuzzjs/index.mjs';
-import {RegisterFont, parseInteger, registerLayout} from '../playground/runtime.mjs';
+import * as hb from '../../shared/vendor/harfbuzzjs/index.mjs';
+import {RegisterFont, parseInteger, registerLayout} from '../../shared/playground/runtime.mjs';
 
 const assets = new URL('../playground/assets/', import.meta.url);
 const catalog = JSON.parse(await readFile(new URL('catalog.json', assets)));
