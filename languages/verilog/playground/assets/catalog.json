@@ -43,5 +43,107 @@
     ],
     "font": "bit_routes.ttf",
     "manifest": "bit_routes.json"
+  },
+  {
+    "id": "signed_math",
+    "title": "Signed arithmetic and shifts",
+    "description": "Signed eight-bit inputs produce a full sum and product. Arithmetic right shift preserves the sign.",
+    "arguments": [
+      "-128",
+      "3",
+      "2"
+    ],
+    "font": "signed_math.ttf",
+    "manifest": "signed_math.json"
+  },
+  {
+    "id": "procedural_alu",
+    "title": "Combinational always block",
+    "description": "Blocking assignments and case choose add, subtract, XOR, or packed low nibbles. The ninth bit preserves carry/borrow.",
+    "arguments": [
+      "255",
+      "1",
+      "0"
+    ],
+    "font": "procedural_alu.ttf",
+    "manifest": "procedural_alu.json"
+  },
+  {
+    "id": "hierarchical_adder",
+    "title": "Two-cell hierarchical adder",
+    "description": "Two parameterized four-bit adder instances connect through a carry wire and output slices.",
+    "arguments": [
+      "255",
+      "1"
+    ],
+    "font": "hierarchical_adder.ttf",
+    "manifest": "hierarchical_adder.json"
+  },
+  {
+    "id": "dynamic_routes",
+    "title": "Dynamic selects and slice updates",
+    "description": "Read a bit, read a guarded three-bit window, and patch a slice. Indices above 7 produce a checked read error.",
+    "arguments": [
+      "165",
+      "3",
+      "3"
+    ],
+    "font": "dynamic_routes.ttf",
+    "manifest": "dynamic_routes.json"
+  },
+  {
+    "id": "population_count",
+    "title": "Population count with a for loop",
+    "description": "Eight blocking additions are unrolled at compilation. The output counts the set bits in the input byte.",
+    "arguments": [
+      "165"
+    ],
+    "font": "population_count.ttf",
+    "manifest": "population_count.json"
+  },
+  {
+    "id": "generated_xor",
+    "title": "Generated XOR lanes",
+    "description": "Eight generated scopes each instantiate a one-bit XOR cell. Change either byte to run all lanes in the font.",
+    "arguments": [
+      "165",
+      "15"
+    ],
+    "font": "generated_xor.ttf",
+    "manifest": "generated_xor.json"
+  },
+  {
+    "id": "array_lookup",
+    "title": "Function and small array",
+    "description": "index: 0 selects a, 1 b, 2 a XOR b, 3 NOT a. Indices 4\u20137 produce a checked array read error.",
+    "arguments": [
+      "165",
+      "15",
+      "2"
+    ],
+    "font": "array_lookup.ttf",
+    "manifest": "array_lookup.json"
+  },
+  {
+    "id": "division",
+    "title": "Signed and unsigned division",
+    "description": "Compare signed and unsigned quotient/remainder for the same input bits. A zero divisor produces a checked error.",
+    "arguments": [
+      "-23",
+      "5"
+    ],
+    "font": "division.ttf",
+    "manifest": "division.json"
+  },
+  {
+    "id": "parameter_adder",
+    "title": "Parameterized adder and mask",
+    "description": "WIDTH and MASK specialize the font at build time. This font uses WIDTH=8 and MASK=0xA5.",
+    "arguments": [
+      "255",
+      "1"
+    ],
+    "font": "parameter_adder.ttf",
+    "manifest": "parameter_adder.json"
   }
 ]

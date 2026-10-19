@@ -325,21 +325,24 @@
   "font_sha256": "0a8b4ae6490c12d59aae02eb2600da0e677db72992301848929bf9f4b1c981ad",
   "language": "verilog",
   "module": "adder",
-  "verilog_subset": "unsigned-combinational-v1",
+  "verilog_subset": "combinational-v2",
   "inputs": [
     {
       "name": "a",
-      "width": 8
+      "width": 8,
+      "signed": false
     },
     {
       "name": "b",
-      "width": 8
+      "width": 8,
+      "signed": false
     }
   ],
   "outputs": [
     {
       "name": "sum",
-      "width": 9
+      "width": 9,
+      "signed": false
     }
   ],
   "source": "// Assignment context preserves the carry in the nine-bit output.\nmodule adder(input [7:0] a, b, output [8:0] sum);\n  assign sum = a + b;\nendmodule\n"

@@ -243,21 +243,14 @@
       "constant": 0
     },
     {
+      "wire": 35,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
       "wire": 36,
-      "kind": "gate",
-      "argument": -1,
-      "bit": -1,
-      "constant": 0
-    },
-    {
-      "wire": 37,
-      "kind": "gate",
-      "argument": -1,
-      "bit": -1,
-      "constant": 0
-    },
-    {
-      "wire": 38,
       "kind": "gate",
       "argument": -1,
       "bit": -1,
@@ -279,13 +272,6 @@
     },
     {
       "wire": 41,
-      "kind": "gate",
-      "argument": -1,
-      "bit": -1,
-      "constant": 0
-    },
-    {
-      "wire": 42,
       "kind": "gate",
       "argument": -1,
       "bit": -1,
@@ -390,27 +376,6 @@
       "constant": 0
     },
     {
-      "wire": 57,
-      "kind": "gate",
-      "argument": -1,
-      "bit": -1,
-      "constant": 0
-    },
-    {
-      "wire": 58,
-      "kind": "gate",
-      "argument": -1,
-      "bit": -1,
-      "constant": 0
-    },
-    {
-      "wire": 59,
-      "kind": "gate",
-      "argument": -1,
-      "bit": -1,
-      "constant": 0
-    },
-    {
       "wire": 60,
       "kind": "gate",
       "argument": -1,
@@ -426,27 +391,6 @@
     },
     {
       "wire": 62,
-      "kind": "gate",
-      "argument": -1,
-      "bit": -1,
-      "constant": 0
-    },
-    {
-      "wire": 63,
-      "kind": "gate",
-      "argument": -1,
-      "bit": -1,
-      "constant": 0
-    },
-    {
-      "wire": 64,
-      "kind": "gate",
-      "argument": -1,
-      "bit": -1,
-      "constant": 0
-    },
-    {
-      "wire": 65,
       "kind": "gate",
       "argument": -1,
       "bit": -1,
@@ -873,6 +817,13 @@
       "constant": 0
     },
     {
+      "wire": 126,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
       "wire": 127,
       "kind": "gate",
       "argument": -1,
@@ -1242,24 +1193,73 @@
       "argument": -1,
       "bit": -1,
       "constant": 0
+    },
+    {
+      "wire": 180,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 181,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 182,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 183,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 184,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 185,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 186,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
     }
   ],
   "results": [
     [
-      170,
-      171,
-      172,
-      173,
-      174,
-      175,
-      176,
-      177
+      177,
+      178,
+      179,
+      180,
+      181,
+      182,
+      183,
+      184
     ],
     [
-      178
+      185
     ],
     [
-      179
+      186
     ]
   ],
   "flags": {},
@@ -1268,43 +1268,49 @@
     "gates": 158,
     "glyphs": 512,
     "lookups": 146,
-    "font_bytes": 34896,
+    "font_bytes": 34912,
     "gate_groups": 144,
     "lookup_batch_size": 1,
     "unpacked_gate_groups": 144,
     "gate_subtables": 144,
     "coalesced_gate_groups": 0
   },
-  "font_sha256": "5289c6492ec4b1f6ff6f875a104def2eefe8dbfd7b53fd43d7f193cc660ff4ff",
+  "font_sha256": "beca0e8b578a1c582219e6d6396303987a64c761416e7eb95791bd3dfe1352df",
   "language": "verilog",
   "module": "alu",
-  "verilog_subset": "unsigned-combinational-v1",
+  "verilog_subset": "combinational-v2",
   "inputs": [
     {
       "name": "a",
-      "width": 8
+      "width": 8,
+      "signed": false
     },
     {
       "name": "b",
-      "width": 8
+      "width": 8,
+      "signed": false
     },
     {
       "name": "op",
-      "width": 2
+      "width": 2,
+      "signed": false
     }
   ],
   "outputs": [
     {
       "name": "y",
-      "width": 8
+      "width": 8,
+      "signed": false
     },
     {
       "name": "equal",
-      "width": 1
+      "width": 1,
+      "signed": false
     },
     {
       "name": "less",
-      "width": 1
+      "width": 1,
+      "signed": false
     }
   ],
   "source": "module alu(input [7:0] a, b, input [1:0] op,\n           output [7:0] y, output equal, less);\n  wire [7:0] added, masked, shifted;\n  assign added = a + b;\n  assign masked = a ^ b;\n  assign shifted = a << b;\n  assign y = op == 2'd0 ? added :\n             op == 2'd1 ? a - b :\n             op == 2'd2 ? masked : shifted;\n  assign equal = a == b;\n  assign less = a < b;\nendmodule\n"

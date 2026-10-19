@@ -132,12 +132,12 @@ def test_valid_based_literals_still_shape_with_case_and_underscores(tmp_path):
 
 @pytest.mark.parametrize('body', [
     "assign y=1'bx;", "assign y=1'bz;", "assign y=1'b?;",
-    'assign y=a/1;', 'assign y=a%1;', 'assign y=a+1;',
-    "assign y=2'sd1;", 'assign y=$unsigned(a);',
+    'assign y=a**1;', 'assign y=a%$clog2(a);', 'assign y={a+1};',
+    "assign y=2'sdx;", 'assign y=$unsigned(a,b);',
     'always @* y=a;', 'initial y=0;', 'reg z;', 'logic z;',
     'assign y=a; assign y=a;', 'assign a=y; assign y=a;',
     'assign y=missing;', 'assign y=a[8];', 'assign y=a[0:1];',
-    'assign y=a[a];', 'assign y=a===a;', 'assign y=a>>>a;',
+    'assign y=a[a:0];', 'assign y=a===a;', 'assign y=a>>>>a;',
     'assign y=a**a;', 'assign y=8\'b2;', 'assign y={65{a}};',
     "assign y={64'h0,1'b0};", 'assign y=a; wire unused;',
     'wire loop; assign loop=loop; assign y=a;',
@@ -151,7 +151,7 @@ def test_rejects_invalid_or_unsupported_source_even_when_unused(body):
 
 @pytest.mark.parametrize('source', [
     'module m(a,y); input a; output y; assign y=a; endmodule',
-    'module m(input signed a, output y); assign y=a; endmodule',
+    'module m(input unsigned a, output y); assign y=a; endmodule',
     'module m(input [0:7] a, output y); assign y=a; endmodule',
     'module m(input [64:0] a, output y); assign y=a; endmodule',
     'module m(input a,a, output y); assign y=a; endmodule',

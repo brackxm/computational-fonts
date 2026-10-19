@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 # Copyright 2026 Michael Brackx
 # SPDX-License-Identifier: Apache-2.0
-"""Encode port values, shape the font once, and print named unsigned outputs."""
+"""Encode port values, shape the font once, and print named outputs with port signedness."""
 import argparse
 from pathlib import Path
 import re
 import verilogfont  # exposes the shared register runtime
-from fontcircuit.runtime import NativeFont, IncompleteShaping
+from fontcircuit.runtime import NativeFont, IncompleteShaping, WasmTrap
 
 
 def main():
@@ -18,7 +18,7 @@ def main():
     try:
         with NativeFont(args.font) as font:
             manifest = font.manifest
-            if manifest.get('language') != 'verilog' or manifest.get('verilog_subset') != 'unsigned-combinational-v1':
+            if manifest.get('language') != 'verilog' or manifest.get('verilog_subset') not in ('unsigned-combinational-v1', 'combinational-v2'):
                 raise ValueError('expected a Verilog font/manifest pair')
             for ports, types in ((manifest.get('inputs'), manifest['parameter_types']),
                                  (manifest.get('outputs'), manifest['result_types'])):
@@ -26,6 +26,8 @@ def main():
                     any(not isinstance(port, dict) or
                         not isinstance(port.get('name'), str) or
                         not re.fullmatch(r'[a-zA-Z_][a-zA-Z_0-9$]*', port['name']) or
+                        (type(port.get('signed')) is not bool if manifest['verilog_subset'] == 'combinational-v2'
+                         else port.get('signed', False) is not False) or
                         type(port.get('width')) is not int or
                         not 1 <= port['width'] <= 64 or types[i] != f"i{port['width']}"
                         for i, port in enumerate(ports))):
@@ -33,7 +35,15 @@ def main():
             result = font.invoke(*args.values)
             values = (result,) if len(manifest['outputs']) == 1 else result
             for port, value in zip(manifest['outputs'], values):
-                print(f"{port['name']}={value} (0x{value:0{(port['width']+3)//4}x}, {port['width']}'b{value:0{port['width']}b})")
+                number = value - (1 << port['width']) if port.get('signed', False) and value & (1 << (port['width']-1)) else value
+                print(f"{port['name']}={number} (0x{value:0{(port['width']+3)//4}x}, {port['width']}'b{value:0{port['width']}b})")
+    except WasmTrap as error:
+        message = {
+            'invalid_array_index': 'array index is outside its declared bounds (would produce X)',
+            'invalid_select': 'dynamic select is outside its vector bounds (would produce X)',
+            'integer_divide_by_zero': 'division or remainder by zero (would produce X)',
+        }.get(str(error),str(error))
+        parser.exit(2, f'Verilog run error: {message}\n')
     except (ValueError, OSError, IncompleteShaping) as error:
         parser.exit(2, f'Verilog run error: {error}\n')
 

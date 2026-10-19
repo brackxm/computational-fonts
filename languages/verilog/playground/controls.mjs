@@ -4,14 +4,40 @@ import {parseInteger, registerLayout} from '../../shared/playground/runtime.mjs'
 
 export function validateVerilog(manifest) {
   registerLayout(manifest);
-  if (manifest.language !== 'verilog' || manifest.verilog_subset !== 'unsigned-combinational-v1') {
+  if (manifest.language !== 'verilog' || !['unsigned-combinational-v1', 'combinational-v2'].includes(manifest.verilog_subset)) {
     throw new Error('Select a compiled Verilog font and its matching manifest.');
   }
   for (const [ports, types] of [[manifest.inputs, manifest.parameter_types], [manifest.outputs, manifest.result_types]]) {
     if (!Array.isArray(ports) || ports.length !== types.length || ports.some((port, i) =>
       !port || typeof port.name !== 'string' || !/^[a-zA-Z_][a-zA-Z_0-9$]*$/.test(port.name) ||
+      (manifest.verilog_subset === 'combinational-v2' ? typeof port.signed !== 'boolean' : (port.signed !== undefined && port.signed !== false)) ||
       !Number.isInteger(port.width) || types[i] !== `i${port.width}`)) throw new Error('Invalid Verilog port metadata.');
   }
+  if (manifest.parameters !== undefined) validateParameters(manifest.parameters);
+  if (manifest.hierarchy !== undefined) {
+    const paths = new Set();
+    if (!Array.isArray(manifest.hierarchy) || manifest.hierarchy.length > 127 || manifest.hierarchy.some(instance => {
+      if (!instance || typeof instance.path !== 'string' || !/^[a-zA-Z_][a-zA-Z_0-9$]*(\[-?\d+\])?(\.[a-zA-Z_][a-zA-Z_0-9$]*(\[-?\d+\])?)*$/.test(instance.path) ||
+          paths.has(instance.path) || typeof instance.module !== 'string' || !/^[a-zA-Z_][a-zA-Z_0-9$]*$/.test(instance.module)) return true;
+      paths.add(instance.path);
+      validateParameters(instance.parameters);
+      return false;
+    })) throw new Error('Invalid Verilog hierarchy metadata.');
+  }
+}
+
+function validateParameters(parameters) {
+  const names = new Set();
+  if (!Array.isArray(parameters) || parameters.length > 128 || parameters.some(parameter => {
+    if (!parameter || typeof parameter.name !== 'string' || !/^[a-zA-Z_][a-zA-Z_0-9$]*$/.test(parameter.name) ||
+        names.has(parameter.name) || !Number.isInteger(parameter.width) || parameter.width < 1 || parameter.width > 64 ||
+        typeof parameter.signed !== 'boolean' || typeof parameter.local !== 'boolean' ||
+        typeof parameter.value !== 'string' || !/^-?\d{1,20}$/.test(parameter.value)) return true;
+    names.add(parameter.name);
+    const value = BigInt(parameter.value), width = BigInt(parameter.width);
+    return parameter.signed ? value < -(1n << (width-1n)) || value >= (1n << (width-1n)) :
+      value < 0n || value >= (1n << width);
+  })) throw new Error('Invalid Verilog parameter metadata.');
 }
 
 export function createPlayground(doc = document) {
@@ -55,6 +81,7 @@ export function createPlayground(doc = document) {
     worker?.terminate(); worker = undefined; ready = false;
     fields = []; $('parameters').replaceChildren();
     $('source').textContent = ''; $('metrics').textContent = '';
+    $('elaboration').textContent = ''; $('elaboration').hidden = true;
     $('description').textContent = ''; $('downloads').hidden = true;
     state('loading', 'Loading the circuit font…');
     return generation;
@@ -69,13 +96,22 @@ export function createPlayground(doc = document) {
       field.id = `input-${i}`; field.type = 'text'; field.autocomplete = 'off'; field.spellcheck = false;
       field.value = example.arguments?.[i] ?? '0';
       field.setAttribute('aria-describedby', 'input-help');
-      label.htmlFor = field.id; label.textContent = `${port.name} · ${port.width} bit${port.width === 1 ? '' : 's'}`;
+      label.htmlFor = field.id; label.textContent = `${port.name} · ${port.width} bit${port.width === 1 ? '' : 's'} · ${port.signed ? 'signed' : 'unsigned'}`;
       field.addEventListener('input', edited); box.append(label, field); $('parameters').append(box); fields.push(field);
     }
     if (!fields.length) $('parameters').textContent = 'This circuit has no input ports.';
     $('description').textContent = example.description || `Module ${abi.module}. Change input ports to run the font.`;
     $('source').textContent = typeof abi.source === 'string' ? abi.source : 'Source not included.';
     $('metrics').textContent = `${abi.module} · ${abi.metrics?.gates ?? '?'} Boolean gates · ${abi.tape.length} registers · one shaping call`;
+    const details = [];
+    if (abi.parameters?.length) details.push('Compiled constants: ' + abi.parameters.map(parameter =>
+      `${parameter.name}=${parameter.value}${parameter.local ? ' (local)' : ''}`).join(', '));
+    if (abi.hierarchy?.length) details.push('Instances: ' + abi.hierarchy.map(instance =>
+      `${instance.path}: ${instance.module}${instance.parameters.length ? ' (' + instance.parameters.map(p => `${p.name}=${p.value}`).join(', ') + ')' : ''}`).join('; '));
+    if (details.length) {
+      $('elaboration').hidden = false;
+      $('elaboration').textContent = details.join(' · ');
+    }
     if (example.font) {
       $('downloads').hidden = false;
       $('font-download').href = new URL(example.font, assets).href;
@@ -94,14 +130,22 @@ export function createPlayground(doc = document) {
         ready = true; invoke(); return;
       }
       if (data.id !== request) return;
-      if (data.error) { state('error', data.error.message); return; }
+      if (data.error) {
+        const trapMessages = {
+          invalid_array_index: 'Array index is outside its declared bounds and would produce X. Change the index.',
+          invalid_select: 'Dynamic select is outside its vector bounds and would produce X. Change the index.',
+          integer_divide_by_zero: 'Division or remainder by zero would produce X. Change the divisor.',
+        };
+        const message = data.error.name === 'WasmTrap' ? trapMessages[data.error.message] ?? data.error.message : data.error.message;
+        state('error', message); return;
+      }
       $('results').replaceChildren();
       data.results.forEach((result, i) => {
         const card = doc.createElement('section'), title = doc.createElement('h2');
         const number = doc.createElement('div'), bits = doc.createElement('p');
         card.className = 'result'; number.className = 'number'; bits.className = 'bits';
-        title.textContent = `${manifest.outputs[i].name} · ${manifest.outputs[i].width} bits · unsigned`;
-        number.textContent = result.unsigned; bits.textContent = `${result.hex} · ${result.binary}`;
+        title.textContent = `${manifest.outputs[i].name} · ${manifest.outputs[i].width} bit${manifest.outputs[i].width === 1 ? '' : 's'} · ${manifest.outputs[i].signed ? 'signed' : 'unsigned'}`;
+        number.textContent = manifest.outputs[i].signed ? result.signed : result.unsigned; bits.textContent = `${result.hex} · ${result.binary}`;
         card.append(title, number, bits); $('results').append(card);
       });
       state('ready', `Computed · ${data.milliseconds.toFixed(2)} ms shaping · one shaping call.`);

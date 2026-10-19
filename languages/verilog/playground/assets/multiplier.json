@@ -345,21 +345,24 @@
   "font_sha256": "d0f634a3f3dd0547f20f20888db09f7b53a1bee9c83867d5feedd81da7f7bfae",
   "language": "verilog",
   "module": "multiplier",
-  "verilog_subset": "unsigned-combinational-v1",
+  "verilog_subset": "combinational-v2",
   "inputs": [
     {
       "name": "a",
-      "width": 4
+      "width": 4,
+      "signed": false
     },
     {
       "name": "b",
-      "width": 4
+      "width": 4,
+      "signed": false
     }
   ],
   "outputs": [
     {
       "name": "product",
-      "width": 8
+      "width": 8,
+      "signed": false
     }
   ],
   "source": "module multiplier(input [3:0] a, b, output [7:0] product);\n  assign product = a * b;\nendmodule\n"

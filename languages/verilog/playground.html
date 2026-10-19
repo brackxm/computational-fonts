@@ -29,7 +29,7 @@ button{padding:9px 18px;border:1px solid #287b87;border-radius:5px;background:#2
 </form>
 <p id="status" role="status" aria-live="polite" data-state="loading">Loading the shaping engine…</p>
 <div id="results" aria-label="Font-computed output ports" aria-live="polite"></div>
-<p class="hint">This is a bounded two-state combinational subset: unsigned signals and continuous assignments. Sequential logic, clocks and X/Z values are unsupported. Disable font computation to verify that unfinished outputs are rejected.</p>
+<p class="hint">This is a bounded two-state combinational subset: signed/unsigned signals, combinational blocks, module hierarchy, unrolled loops/generate, functions and small arrays. Reads outside a vector or array and division by zero are reported as errors. Sequential logic, clocks and X/Z values are unsupported. Disable font computation to verify that unfinished outputs are rejected.</p>
 <details open><summary>Verilog source</summary><pre id="source"></pre><p class="hint">The circuit is compiled ahead of time. To edit its source, build a new font locally and load it below.</p></details>
 <details><summary>Load your own compiled circuit</summary>
   <pre>python3 languages/verilog/build.py circuit.v -o circuit.ttf</pre>
@@ -37,7 +37,7 @@ button{padding:9px 18px;border:1px solid #287b87;border-radius:5px;background:#2
   <input id="files" class="upload" type="file" accept=".ttf,.json" multiple>
   <p class="hint">Files stay in this browser. The shaping engine verifies the font's SHA-256 hash and register layout before running it.</p>
 </details>
-<details><summary>Font details and downloads</summary><p id="metrics" class="hint"></p>
+<details><summary>Font details and downloads</summary><p id="metrics" class="hint"></p><p id="elaboration" class="hint" hidden></p>
   <div id="downloads" class="downloads" hidden><a id="font-download" download>Download font</a><a id="manifest-download" download>Download manifest</a></div>
   <p class="hint">The font uses invisible machine glyphs. JavaScript serializes inputs and reads shaped bits; it does not simulate the Verilog circuit. The HarfBuzz engine runs in a worker.</p>
 </details>

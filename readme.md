@@ -16,7 +16,7 @@ explore all 21 playgrounds in your browser, with no installation needed.
 | [Mini BASIC](languages/mini-basic/) | programming language | numbered BASIC statements | [ODT specimen](languages/mini-basic/mini-basic.odt) |
 | [SKI evaluator](languages/ski/) | combinatory logic | `S`, `K`, `I`, lowercase atoms and application | [ODT specimen](languages/ski/ski.odt) |
 | [WebAssembly](languages/wasm/) | bounded integer compiler | `.wat` or `.wasm` compiled to GSUB glyph registers | [Browser playground](languages/wasm/playground.html) |
-| [Verilog](languages/verilog/) | bounded combinational compiler | unsigned `.v` modules compiled to GSUB gates | [Browser playground](languages/verilog/playground.html) |
+| [Verilog](languages/verilog/) | bounded combinational compiler | signed/unsigned `.v` modules compiled to GSUB gates | [Browser playground](languages/verilog/playground.html) |
 | [JSON formatter](formatters/json/) | text formatter | JSON text | [ODT specimen](formatters/json/json.odt) |
 | [Markdown-style formatter](formatters/markdown/) | text formatter | flat emphasis, inline code, strikethrough and heading markers | [ODT specimen](formatters/markdown/markdown.odt) |
 | [Morse code](decoders/morse/) | code decoder | dots and hyphens; spaces between letters, `/` between words | [ODT specimen](decoders/morse/morse.odt) |
@@ -42,8 +42,10 @@ and a [browser playground](languages/wasm/playground.html). The playground bundl
 compiled examples and their matching ABI manifests. See its
 [quick start and execution limits](languages/wasm/readme.md).
 
-Verilog compiles an unsigned, two-state combinational subset into the same
-glyph-register backend. Its [playground](languages/verilog/playground.html)
+Verilog compiles a two-state combinational subset into the same
+glyph-register backend, with combinational blocks, module hierarchy and dynamic
+selects, integer division/remainder, unrolled loops/generate, functions and small
+arrays. Its [playground](languages/verilog/playground.html)
 includes an adder, ALU, multiplier and bit-routing circuit with editable input
 ports. See the [supported syntax and build commands](languages/verilog/readme.md).
 Both language compilers use the [shared circuit backend and shaping

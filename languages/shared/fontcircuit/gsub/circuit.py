@@ -242,7 +242,7 @@ class Circuit:
 
 
     def unsigned_divmod(self, a: Value, b: Value) -> tuple[Value,Value]:
-        """Integer division; divide-by-zero/overflow are guarded by the Wasm layer."""
+        """Integer division; the calling frontend supplies its error predicates."""
         if a.width != b.width: raise ValueError('division width mismatch')
         width=a.width
         # Exact wire identities, not runtime-value specialization. These

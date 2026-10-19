@@ -399,33 +399,39 @@
   "font_sha256": "ae21d0777e64bf7b5160aee7507adf4a61beb51e36abcdcd37e9c85aac855bc7",
   "language": "verilog",
   "module": "bit_routes",
-  "verilog_subset": "unsigned-combinational-v1",
+  "verilog_subset": "combinational-v2",
   "inputs": [
     {
       "name": "data",
-      "width": 8
+      "width": 8,
+      "signed": false
     },
     {
       "name": "enable",
-      "width": 1
+      "width": 1,
+      "signed": false
     }
   ],
   "outputs": [
     {
       "name": "swapped",
-      "width": 8
+      "width": 8,
+      "signed": false
     },
     {
       "name": "masked",
-      "width": 8
+      "width": 8,
+      "signed": false
     },
     {
       "name": "parity",
-      "width": 1
+      "width": 1,
+      "signed": false
     },
     {
       "name": "all_set",
-      "width": 1
+      "width": 1,
+      "signed": false
     }
   ],
   "source": "module bit_routes(input [7:0] data, input enable,\n                  output [7:0] swapped, masked, output parity, all_set);\n  assign swapped = {data[3:0], data[7:4]};\n  assign masked = data & {8{enable}};\n  assign parity = ^data;\n  assign all_set = &data;\nendmodule\n"
