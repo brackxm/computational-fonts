@@ -4,7 +4,7 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 24 playgrounds in your browser, with no installation needed.
+explore all 25 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
@@ -30,6 +30,7 @@ explore all 24 playgrounds in your browser, with no installation needed.
 | [Snake — dynamic board](games/snake-dynamic/) | game prototype | dimensions and movement history | [ODT specimen](games/snake-dynamic/snake-dynamic.odt) |
 | [Snake — fixed board](games/snake-fixed/) | game prototype | movement history; board size baked into font | [ODT specimen](games/snake-fixed/snake-fixed.odt) |
 | [Backgammon SGF replay](games/backgammon/) | replay prototype | bounded linear SGF; up to 128 turns | [Browser playground](games/backgammon/playground.html) |
+| [Notakto](games/notakto/) | perfect first-player opponent | three boards; human-only move history | [Browser playground](games/notakto/playground.html) |
 | [The Last Light — text adventure](games/text-adventure/) | escape-room game | semicolon-terminated commands | [ODT specimen](games/text-adventure/text-adventure.odt) |
 | [SMILES diagrams](graphics/smiles/) | molecular graph renderer | bounded SMILES with atoms, bonds, branches and rings | [ODT specimen](graphics/smiles/smiles.odt) |
 | [Turtle graphics](graphics/turtle/) | drawing interpreter | movement, pen and color commands | [ODT specimen](graphics/turtle/turtle.odt) |
