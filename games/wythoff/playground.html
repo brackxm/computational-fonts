@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Wythoff’s Nim · a perfect opponent in a font</title>
+<style>
+@font-face{font-family:WythoffPerfect;src:url('./wythoff-font.ttf?v=1') format('truetype');font-display:block}
+:root{font-family:system-ui,sans-serif;color:#243e43;background:#faf8f2}body{max-width:1100px;margin:36px auto;padding:0 20px}h1{margin-bottom:8px}p{line-height:1.6}a{color:#246269}button,input,select,textarea{font:inherit}button,input,select{padding:9px 12px;border:1px solid #9daba9;border-radius:6px;background:white;color:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #bd872a;outline-offset:3px}input[type=number]{width:4em}textarea{display:block;box-sizing:border-box;width:100%;padding:12px;margin:8px 0;font-family:ui-monospace,monospace;border:1px solid #9daba9;border-radius:8px;resize:vertical}.board{background:white;border:1px solid #dadfd8;border-radius:12px;padding:12px;margin:20px 0}.board svg{display:block;width:100%;height:auto}.replay{font-family:WythoffPerfect;font-size:1000px;font-feature-settings:"liga" 1,"kern" 0;font-variant-ligatures:common-ligatures;font-kerning:none;letter-spacing:0;word-spacing:0;white-space:pre;direction:ltr;unicode-bidi:isolate;fill:#243e43}#status{padding:12px 16px;background:#e9eee8;border-radius:6px;min-height:26px}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}label{display:inline-flex;gap:8px;align-items:center}fieldset{border:1px solid #bac7c1;border-radius:8px;margin:18px 0;padding:0 16px}legend{padding:0 6px}footer{margin-top:28px;padding-top:15px;border-top:1px solid #ccd3ca}.probe-holder{position:fixed;top:0;left:0;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none}.probe{display:inline-block;width:max-content;white-space:pre;font:1000px/1 WythoffPerfect;font-feature-settings:"liga" 1,"kern" 0;font-kerning:none;letter-spacing:0;word-spacing:0;direction:ltr;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<p><a href="../../index.html">← Computational fonts</a></p>
+<h1>Wythoff’s Nim</h1>
+<p>Take any positive number of tokens from one heap, or the <strong>same number from both</strong>. Whoever takes the last tokens wins. The font plays perfectly, using the exact golden-ratio strategy.</p>
+<div class="board"><svg viewBox="0 0 1806 1070" role="img" aria-labelledby="status"><text id="drawing" class="replay" x="0" y="1040"></text></svg></div>
+<p id="status" role="status" aria-live="polite">Loading Wythoff font…</p>
+<div class="controls" aria-label="Your move"><label for="heap">Take from <select id="heap"><option value="A">Heap A</option><option value="B">Heap B</option><option value="D">Both heaps equally</option></select></label><label for="amount">Amount <input id="amount" type="number" min="1" max="63" step="1" value="1"></label><button id="play">Take tokens</button><button id="undo" disabled>Undo</button></div>
+<details><summary>Choose a starting position</summary><fieldset><legend>New game</legend><div class="controls"><label for="startA">Heap A <input id="startA" type="number" min="0" max="63" step="1" value="31"></label><label for="startB">Heap B <input id="startB" type="number" min="0" max="63" step="1" value="47"></label><label for="first">First move <select id="first"><option value="b">Font</option><option value="h">You</option></select></label></div></fieldset><p>Each heap can start at 0–63, with at least one token overall. The default position is a forced win for the font. Try starting at 21 and 34 with the font first: that is a losing position, so you can beat perfect play by finding the right replies.</p></details>
+<button id="reset">New game with these settings</button>
+<p><label for="record"><strong>Your move history</strong></label></p>
+<textarea id="record" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">b31,47;</textarea>
+<p id="syntax">A header such as <code>b31,47;</code> makes the font move first; <code>h31,47;</code> makes you move first. Append only your moves: <code>A03;</code> takes three from A, <code>B02;</code> takes two from B, and <code>D04;</code> takes four from each. Always use two digits. Spaces and line breaks are allowed. A finished game ignores trailing input.</p>
+<p>The font checks every move, updates both heaps, chooses its replies, and draws the tokens. JavaScript supplies text and reads the font’s status.</p>
+<footer><a href="readme.md">Strategy, font protocol, and build instructions</a> · <a href="wythoff-font.ttf" download>Download font</a> · Original artwork · Apache 2.0</footer>
+<script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createWythoffPlayground();</script>
+</body>
+</html>
