@@ -1,5 +1,12 @@
 # Native GSUB benchmarks
 
+The current [dispatch-capacity report](dispatch_capacity.json) records a 256-slot
+table sharing one dynamic i64 divider: 5,680 → 4,322 gates and 2,078,972 →
+1,532,548 font bytes after replacing per-slot comparisons with a shared reference
+lookup. This measures compilation size, with no timing claim. Reproduce the
+optimized result with `tests/test_indirect_calls.py::test_duplicate_table_targets_share_one_expensive_callee`.
+The timing and validation reports below remain historical.
+
 Historical reports supplied with the ChatGPT ZIP. These describe the handoff's
 Linux environment and source snapshot, not the current checkout. To measure
 this checkout, run the reproduction commands below.

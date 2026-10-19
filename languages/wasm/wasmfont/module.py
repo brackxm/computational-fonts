@@ -1,4 +1,4 @@
-"""Bounded core Wasm module loader: memory, integer globals, data segments.
+"""Bounded core Wasm module loader: memory, globals, tables and segments.
 
 Uses the existing function decoder; unsupported module constructs fail closed.
 """
@@ -7,6 +7,13 @@ from pathlib import Path
 from .ir import parse_binary, uleb, sleb, section_order
 from .state import MachineState
 from .validation import validate_supported
+
+@dataclass
+class ElementSegment:
+    mode: str
+    offset: int
+    functions: list[int | None]
+    expressions: bool = False
 
 @dataclass
 class Module:
@@ -20,6 +27,8 @@ class Module:
     exports: dict = field(default_factory=dict)
     table: list[int | None] | None = None
     table_maximum: int | None = None
+    start: int | None = None
+    elements: list[ElementSegment] = field(default_factory=list)
 
     def invoke(self, export_name, args, *, state=None, fuel=100000):
         """Execute an exported function against a module instance (reference VM)."""
@@ -29,20 +38,31 @@ class Module:
         kind, index = self.exports[export_name]
         if kind != 0:
             raise TypeError(f'export {export_name} is not a function')
-        if state is None:
-            state = self.instantiate()
-        return run(self.functions, index, args, fuel=fuel, state=state)
+        start = self.start if state is None else None
+        if state is None:state = self._initial_state()
+        return run(self.functions, index, args, fuel=fuel, state=state, start=start)
 
-    def instantiate(self):
+    def _initial_state(self):
+        """Initialize declarations without executing Wasm (also used by loading)."""
         state = MachineState(pages=self.initial_pages, max_pages=self.maximum_pages,
                              globals=self.globals.copy(), global_types=self.global_types.copy(),
                              mutable=self.mutable.copy(),
                              data_segments=[payload if offset is None else b'' for offset,payload in self.segments],
-                             table=self.table.copy() if self.table is not None else [])
+                             table=self.table.copy() if self.table is not None else [],
+                             element_segments=[segment.functions.copy() if segment.mode=='passive' else [] for segment in self.elements],
+                             table_maximum=(self.table_maximum if self.table_maximum is not None else 256) if self.table is not None else 0)
         for offset, payload in self.segments:
             if offset is None:continue
             state.bounds(offset, len(payload))
             state.memory[offset:offset+len(payload)] = payload
+        return state
+
+    def instantiate(self, *, fuel=100000):
+        """Create a reference instance and execute its start function once."""
+        state=self._initial_state()
+        if self.start is not None:
+            from .reference.interpreter import run
+            run(self.functions,self.start,[],fuel=fuel,state=state)
         return state
 
 def load_binary(path):
@@ -80,11 +100,21 @@ def load_binary(path):
         value,p=sleb(b,p,32 if opcode==0x41 else 64)
         if p>=len(b) or b[p]!=0x0b:raise ValueError('initializer missing end')
         return value,p+1
+    def reference_expr(b,p):
+        opcode=b[p];p+=1
+        if opcode==0xd0:
+            heap,p=sleb(b,p,33)
+            if heap!=-16:raise NotImplementedError('only ref.null func initializers supported')
+            value=None
+        elif opcode==0xd2:value,p=uleb(b,p)
+        else:raise NotImplementedError('only ref.null/ref.func reference initializers supported')
+        if p>=len(b) or b[p]!=0x0b:raise ValueError('initializer missing end')
+        return value,p+1
     def global_entry(b,p):
         if p+2>len(b):raise ValueError('truncated global')
-        typ={0x7f:'i32',0x7e:'i64'}.get(b[p]);mut=b[p+1];p+=2
+        typ={0x7f:'i32',0x7e:'i64',0x70:'funcref'}.get(b[p]);mut=b[p+1];p+=2
         if typ is None or mut not in (0,1):raise NotImplementedError('unsupported global type')
-        value,p=init_expr(b,p)
+        value,p=(reference_expr if typ=='funcref' else init_expr)(b,p)
         return (typ,bool(mut),value),p
     def table_type(b,p):
         if b[p]!=0x70:raise NotImplementedError('only funcref tables supported')
@@ -97,18 +127,22 @@ def load_binary(path):
         return (minimum,maximum),p
     def element(b,p):
         flag,p=uleb(b,p)
-        if flag==2:
+        if flag>7:raise NotImplementedError('unsupported element segment mode')
+        mode='passive' if flag in (1,5) else 'declarative' if flag in (3,7) else 'active'
+        offset=0
+        if flag in (2,6):
             table_index,p=uleb(b,p)
             if table_index!=0:raise NotImplementedError('multiple tables unsupported')
-        elif flag!=0:raise NotImplementedError('only active function-index element segments supported')
-        offset,p=init_expr(b,p)
-        if flag==2:
-            if b[p]!=0:raise NotImplementedError('only function-index element segments supported')
+        if mode=='active':offset,p=init_expr(b,p)
+        expressions=bool(flag&4)
+        if flag in (1,2,3,5,6,7):
+            expected=0x70 if expressions else 0
+            if b[p]!=expected:raise NotImplementedError('only funcref element segments supported')
             p+=1
         count,p=uleb(b,p);entries=[]
         for _ in range(count):
-            index,p=uleb(b,p);entries.append(index)
-        return (offset,entries),p
+            value,p=(reference_expr if expressions else uleb)(b,p);entries.append(value)
+        return ElementSegment(mode,offset,entries,expressions),p
     def segment(b,p):
         flag,p=uleb(b,p)
         if flag==0:offset,p=init_expr(b,p)
@@ -136,10 +170,12 @@ def load_binary(path):
     if len(tables)>1:raise NotImplementedError('multiple tables unsupported')
     elements=vector(9,element)
     table=[None]*tables[0][0] if tables else None
-    for offset,entries in elements:
+    for element_ in elements:
+        offset,entries=element_.offset,element_.functions
+        if any(index is not None and index>=len(functions) for index in entries):raise ValueError('invalid element function index')
+        if element_.mode!='active':continue
         if table is None:raise ValueError('element segment without table')
         if not 0<=offset<=len(table)-len(entries):raise ValueError('element segment out of table bounds')
-        if any(index>=len(functions) for index in entries):raise ValueError('invalid element function index')
         table[offset:offset+len(entries)]=entries
     mapping={}
     for name,kind,index in exports:
@@ -152,5 +188,12 @@ def load_binary(path):
              [mut for _,mut,_ in globals_],segments,mapping)
     m.has_memory=bool(memories)
     m.table=table;m.table_maximum=tables[0][1] if tables else None
-    m.instantiate() # validate segment bounds immediately
+    m.elements=elements
+    if 8 in sections:
+        m.start,end=uleb(sections[8],0)
+        if end!=len(sections[8]):raise ValueError('trailing start section data')
+        if m.start>=len(functions):raise ValueError('invalid start function index')
+        fn=functions[m.start]
+        if fn.params or fn.results:raise ValueError('start function must have no parameters or results')
+    m._initial_state() # validate segment bounds without executing a start function
     return m

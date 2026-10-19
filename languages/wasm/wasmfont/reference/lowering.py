@@ -298,6 +298,7 @@ def lower_function(fn):
 
 def compile_module(source, font_path, function_index=0):
     module, _ = load(source)
+    if module.start is not None:raise NotImplementedError('start section unsupported by the legacy compiler')
     functions = module.functions
     if not 0 <= function_index < len(functions): raise ValueError('function index out of range')
     result = lower_function(functions[function_index]); result.build(font_path)

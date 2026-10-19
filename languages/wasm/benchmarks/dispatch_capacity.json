@@ -1,0 +1,32 @@
+{
+  "program": "256 table aliases of one full-width dynamic unsigned i64 divider",
+  "regression": "tests/test_indirect_calls.py::test_duplicate_table_targets_share_one_expensive_callee",
+  "before_dispatch": "full-width selector comparison per constant table slot",
+  "after_dispatch": "shared reference lookup followed by compatible-target comparisons",
+  "before": {
+    "wires": 5841,
+    "gates": 5680,
+    "glyphs": 17364,
+    "lookups": 2808,
+    "font_bytes": 2078972,
+    "gate_groups": 5612,
+    "lookup_batch_size": 2,
+    "unpacked_gate_groups": 0,
+    "gate_subtables": 5612,
+    "coalesced_gate_groups": 0
+  },
+  "after": {
+    "wires": 4483,
+    "gates": 4322,
+    "glyphs": 13290,
+    "lookups": 4256,
+    "font_bytes": 1532548,
+    "gate_groups": 4254,
+    "lookup_batch_size": 1,
+    "unpacked_gate_groups": 4254,
+    "gate_subtables": 4254,
+    "coalesced_gate_groups": 0
+  },
+  "gate_reduction_percent": 23.91,
+  "font_byte_reduction_percent": 26.28
+}

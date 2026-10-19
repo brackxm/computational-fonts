@@ -2,7 +2,7 @@
 Unsupported instructions fail closed; this is not a complete Wasm validator.
 """
 import re
-from .opcodes import EXTRA, BULK_MEMORY
+from .opcodes import EXTRA, BULK_MEMORY, BULK_TABLE
 from .conversions import CONVERSIONS, convert
 from dataclasses import dataclass
 from pathlib import Path
@@ -23,10 +23,10 @@ class BlockType:
 
 
 def block_signature(arg):
-    """Resolve both compact MVP block types and integer function signatures."""
+    """Resolve both compact block types and integer/funcref signatures."""
     if isinstance(arg,BlockType):return arg
     if arg in (None,0x40):return BlockType()
-    if arg in (0x7f,0x7e):return BlockType(results=('i32' if arg==0x7f else 'i64',))
+    if arg in (0x7f,0x7e,0x70):return BlockType(results=({0x7f:'i32',0x7e:'i64',0x70:'funcref'}[arg],))
     raise NotImplementedError('unsupported block signature')
 
 def uleb(b,p):
@@ -68,8 +68,8 @@ def parse_binary(path):
         if sid:last_section=section_order(sid)
         sections[sid]=b[p:p+n];p+=n
     def valtype(b,p):
-        if p>=len(b) or b[p] not in (0x7f,0x7e):raise NotImplementedError('only integer value types')
-        return ('i32' if b[p]==0x7f else 'i64'),p+1
+        if p>=len(b) or b[p] not in (0x7f,0x7e,0x70):raise NotImplementedError('only i32/i64/funcref value types')
+        return {0x7f:'i32',0x7e:'i64',0x70:'funcref'}[b[p]],p+1
     def functype(b,p):
         if b[p]!=0x60:raise ValueError('invalid function type')
         a,p=vec(b,p+1,valtype);r,p=vec(b,p,valtype);return (a,r),p
@@ -82,7 +82,10 @@ def parse_binary(path):
         if idx>=len(types):raise ValueError('invalid function type index')
         params,returns=types[idx];p=0;groups,p=uleb(body,p);locals_=[]
         for _ in range(groups):
-            n,p=uleb(body,p);t,p=valtype(body,p);locals_.extend([t]*n)
+            n,p=uleb(body,p)
+            if p<len(body) and body[p]==0x70:t='funcref';p+=1
+            else:t,p=valtype(body,p)
+            locals_.extend([t]*n)
             if len(locals_)>10000:raise ValueError('too many locals')
         instructions=[]
         while p<len(body):
@@ -110,13 +113,13 @@ def parse_binary(path):
                 instructions.append(('memory.size' if op==0x3f else 'memory.grow',None))
             elif op==0xfc:
                 subopcode,p=uleb(body,p)
-                name=next((name for name,code in BULK_MEMORY.items() if code==subopcode),None)
+                name=next((name for name,code in {**BULK_MEMORY,**BULK_TABLE}.items() if code==subopcode),None)
                 if name is None:raise NotImplementedError(f'unsupported Wasm opcode 0xfc {subopcode}')
                 arg=None
-                if name in ('memory.init','data.drop'):arg,p=uleb(body,p)
-                for _ in range(2 if name=='memory.copy' else 0 if name=='data.drop' else 1):
+                if name in ('memory.init','data.drop','table.init','elem.drop'):arg,p=uleb(body,p)
+                for _ in range(2 if name in ('memory.copy','table.copy') else 0 if name in ('data.drop','elem.drop') else 1):
                     memory_index,p=uleb(body,p)
-                    if memory_index!=0:raise NotImplementedError('multiple memories unsupported')
+                    if memory_index!=0:raise NotImplementedError('multiple tables unsupported' if name in BULK_TABLE else 'multiple memories unsupported')
                 instructions.append((name,arg))
             elif op in OPS:instructions.append((OPS[op],None))
             elif op in CONVERSIONS:instructions.append((CONVERSIONS[op],None))
@@ -124,14 +127,24 @@ def parse_binary(path):
                 name=EXTRA[op];arg=None
                 if name in ('block','loop','if'):
                     if p>=len(body):raise ValueError('missing block type')
-                    if body[p] in (0x40,0x7f,0x7e):arg=body[p];p+=1
+                    if body[p] in (0x40,0x7f,0x7e,0x70):arg=body[p];p+=1
                     else:
                         type_index,p=sleb(body,p,33)
                         if type_index<0:raise NotImplementedError('only integer block signatures supported')
                         if type_index>=len(types):raise ValueError('block type index out of range')
                         params_,results_=types[type_index]
                         arg=BlockType(tuple(params_),tuple(results_))
-                elif name in ('br','br_if','call'):arg,p=uleb(body,p)
+                elif name=='select_t':
+                    values,p=vec(body,p,valtype)
+                    if len(values)!=1:raise ValueError('typed select requires exactly one value type')
+                    arg=values[0]
+                elif name in ('br','br_if','call','ref.func'):arg,p=uleb(body,p)
+                elif name in ('table.get','table.set'):
+                    table,p=uleb(body,p)
+                    if table!=0:raise NotImplementedError('multiple tables unsupported')
+                elif name=='ref.null':
+                    heaptype,p=sleb(body,p,33)
+                    if heaptype!=-16:raise NotImplementedError('only nullable function references supported')
                 elif name=='call_indirect':
                     type_index,p=uleb(body,p);table_index,p=uleb(body,p)
                     if type_index>=len(types):raise ValueError('indirect call type index out of range')

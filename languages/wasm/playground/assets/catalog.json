@@ -363,6 +363,30 @@
     "language": "WAT"
   },
   {
+    "id": "start_memory",
+    "title": "Initialize before the export",
+    "description": "A start function grows memory, copies seed bytes 1\u201316, drops the seed segment, and increments an initialization counter before run changes one byte. Addresses 0\u201315 fit the backed window. Each run starts with a fresh initialized module.",
+    "parameters": [
+      "address",
+      "replacement byte"
+    ],
+    "arguments": [
+      "3",
+      "0xaa"
+    ],
+    "font": "start_memory.ttf",
+    "manifest": "start_memory.json",
+    "module": "start_memory.wasm",
+    "source": "(module\n  (memory 0 1)\n  (data $seed \"\\01\\02\\03\\04\\05\\06\\07\\08\\09\\0a\\0b\\0c\\0d\\0e\\0f\\10\")\n  (global $starts (mut i32) (i32.const 0))\n  ;; Instantiation initializes the memory before run receives its arguments.\n  (start $initialize)\n  (func $initialize\n    i32.const 1 memory.grow drop\n    i32.const 0 i32.const 0 i32.const 16 memory.init $seed\n    data.drop $seed\n    global.get $starts i32.const 1 i32.add global.set $starts)\n  (func (export \"run\") (param $address i32) (param $value i32)\n    (result i64 i64 i32 i32)\n    local.get $address local.get $value i32.store8\n    i32.const 0 i64.load i32.const 8 i64.load\n    memory.size global.get $starts))\n",
+    "result_labels": [
+      "Bytes 0\u20137 (little endian)",
+      "Bytes 8\u201315 (little endian)",
+      "Current pages",
+      "Initializer calls"
+    ],
+    "language": "WAT"
+  },
+  {
     "id": "indirect64",
     "title": "Choose a 64-bit function at runtime",
     "description": "Select addition (0), subtraction (1), multiplication (2), or unsigned division (3), then count the result\u2019s set bits. Slot 4 has the wrong signature, slot 5 is null, and indices 6+ are out of bounds. Only the selected function can trap.",
@@ -383,6 +407,79 @@
     "result_labels": [
       "Selected result",
       "Set bits"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "mutable_dispatch",
+    "title": "Change and grow a function table",
+    "description": "Copy addition and unsigned division from a passive segment, drop the segment, select a function reference, replace slot 0 and grow a new slot with it. Call the new slot and count the result\u2019s bits. Operation 0 adds; 1 divides; other indices trap.",
+    "parameters": [
+      "a",
+      "b",
+      "operation"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "1"
+    ],
+    "font": "mutable_dispatch.ttf",
+    "manifest": "mutable_dispatch.json",
+    "module": "mutable_dispatch.wasm",
+    "source": ";; Populate a passive function segment, mutate a slot and grow the table.\n(module\n  (type $binary (func (param i64 i64) (result i64)))\n  (table $ops 2 3 funcref)\n  (elem $functions func $add $divide)\n  (func $add (type $binary) local.get 0 local.get 1 i64.add)\n  (func $divide (type $binary) local.get 0 local.get 1 i64.div_u)\n  (func (export \"run\") (param $a i64) (param $b i64) (param $operation i32)\n    (result i64 i64 i32) (local $chosen funcref) (local $answer i64)\n    i32.const 0 i32.const 0 i32.const 2 table.init $ops $functions\n    elem.drop $functions\n    local.get $operation table.get $ops local.set $chosen\n    i32.const 0 local.get $chosen table.set $ops\n    local.get $chosen i32.const 1 table.grow $ops drop\n    local.get $a local.get $b i32.const 2 call_indirect $ops (type $binary)\n    local.tee $answer local.get $answer i64.popcnt table.size $ops))\n",
+    "result_labels": [
+      "Selected result",
+      "Set bits",
+      "Current slots"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "reference_flow",
+    "title": "Pass function references through helpers",
+    "description": "Choose a nullable table reference or fallback addition, pass it through a helper and typed block, store it in a mutable global, then dispatch and count bits. Slots 0 and 2 add or divide; slot 1 is null. Set use selected slot to 0 for fallback addition; the slot must still be in bounds.",
+    "parameters": [
+      "a",
+      "b",
+      "slot",
+      "use selected slot"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "2",
+      "1"
+    ],
+    "font": "reference_flow.ttf",
+    "manifest": "reference_flow.json",
+    "module": "reference_flow.wasm",
+    "source": ";; Nullable references move through a typed select, helper, block and global.\n(module\n  (type $binary (func (param i64 i64) (result i64)))\n  (table 3 funcref)\n  (elem (i32.const 0) funcref (ref.func $add) (ref.null func) (ref.func $divide))\n  (global $chosen (mut funcref) (ref.null func))\n  (func $add (type $binary) local.get 0 local.get 1 i64.add)\n  (func $divide (type $binary) local.get 0 local.get 1 i64.div_u)\n  (func $choose (param funcref funcref i32) (result funcref)\n    local.get 0 local.get 1 local.get 2 select (result funcref))\n  (func (export \"run\") (param $a i64) (param $b i64) (param $slot i32) (param $use_slot i32)\n    (result i64 i64) (local $answer i64)\n    local.get $slot table.get ref.func $add local.get $use_slot call $choose\n    block (param funcref) (result funcref) end global.set $chosen\n    i32.const 1 global.get $chosen table.set\n    local.get $a local.get $b i32.const 1 call_indirect (type $binary)\n    local.tee $answer local.get $answer i64.popcnt))\n",
+    "result_labels": [
+      "Selected result",
+      "Set bits"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "indexed_memory",
+    "title": "Indexed byte in a 64-byte window",
+    "description": "Store an i64 seed at bytes 32\u201339, then read a byte at a runtime offset and count the seed\u2019s set bits. Offsets 0\u201363 fit the backed window; higher valid Wasm addresses report a memory bound.",
+    "parameters": [
+      "byte offset",
+      "seed"
+    ],
+    "arguments": [
+      "34",
+      "0x0807060504030201"
+    ],
+    "font": "indexed_memory.ttf",
+    "manifest": "indexed_memory.json",
+    "module": "indexed_memory.wasm",
+    "source": ";; A runtime i64 store and byte lookup in a 64-byte window.\n(module\n  (memory 1)\n  (data (i32.const 0)\n    \"\\01\\12\\23\\34\\45\\56\\67\\78\\89\\9a\\ab\\bc\\cd\\de\\ef\\f0\"\n    \"\\10\\21\\32\\43\\54\\65\\76\\87\\98\\a9\\ba\\cb\\dc\\ed\\fe\\0f\"\n    \"\\20\\31\\42\\53\\64\\75\\86\\97\\a8\\b9\\ca\\db\\ec\\fd\\0e\\1f\"\n    \"\\30\\41\\52\\63\\74\\85\\96\\a7\\b8\\c9\\da\\eb\\fc\\0d\\1e\\2f\")\n  (func (export \"run\") (param $offset i32) (param $seed i64) (result i32 i64)\n    i32.const 32 local.get $seed i64.store\n    local.get $offset i32.load8_u\n    local.get $seed i64.popcnt))\n",
+    "result_labels": [
+      "Selected byte",
+      "Seed set bits"
     ],
     "language": "WAT"
   },
@@ -561,6 +658,92 @@
     "module": "c-mix64.wasm",
     "source": "/* Integer-only freestanding C. No runtime library or precomputed lookup tables. */\ntypedef unsigned int u32;\ntypedef unsigned long long u64;\n\n__attribute__((noinline))\nstatic u32 combine(u32 a, u32 b) {\n    return (a + b) ^ (a - b);\n}\n\nu32 run(u32 a, u32 b) {\n    u32 mixed = combine(a, b);\n    return (a & 1u) ? mixed + (b ^ 0x5a5a5a5au)\n                    : mixed - (a ^ 0xa5a5a5a5u);\n}\n\nu64 run64(u64 a, u64 b) {\n    u64 mixed = (a + b) ^ (a - b);\n    unsigned k = (unsigned)b & 63u;\n    u64 rotated = (mixed << k) | (mixed >> ((64u - k) & 63u));\n    return rotated + a;\n}\n",
     "result_labels": [],
+    "language": "C"
+  },
+  {
+    "id": "c-array",
+    "title": "Compiled C \u00b7 array loop",
+    "description": "Add bias to the first count elements of [3, 5, 7, 11], then return their sum with unsigned 32-bit wrapping. Counts 0\u20134 succeed; other counts trap. The compiled loop reads and writes a 16-byte window at address 65536. Each run starts with the original array.",
+    "parameters": [
+      "count",
+      "bias"
+    ],
+    "arguments": [
+      "4",
+      "10"
+    ],
+    "font": "c-array.ttf",
+    "manifest": "c-array.json",
+    "module": "c-array.wasm",
+    "source": "// Copyright 2026 Michael Brackx\n// SPDX-License-Identifier: Apache-2.0\n\n// Volatile keeps the array accesses in the compiled Wasm. The linker places\n// these sixteen bytes after its 64-KiB stack, at address 65536.\nstatic volatile unsigned values[4] = {3, 5, 7, 11};\n\nunsigned run(unsigned count, unsigned bias) {\n    if (count > 4) __builtin_trap();\n    unsigned sum = 0;\n    for (unsigned i = 0; i < count; ++i) {\n        values[i] += bias;\n        sum += values[i];\n    }\n    return sum;\n}\n",
+    "result_labels": [
+      "Sum of updated values"
+    ],
+    "language": "C"
+  },
+  {
+    "id": "c-sparse-array",
+    "title": "Compiled C \u00b7 stack and globals",
+    "description": "Read the first count globals from [3, 5, 7, 11], add bias into a local stack array and sum it in another function. Counts 0\u20134 succeed. Two 16-byte regions back the stack and globals across a 496-byte gap.",
+    "parameters": [
+      "count",
+      "bias"
+    ],
+    "arguments": [
+      "4",
+      "10"
+    ],
+    "font": "c-sparse-array.ttf",
+    "manifest": "c-sparse-array.json",
+    "module": "c-sparse-array.wasm",
+    "source": "// Copyright 2026 Michael Brackx\n// SPDX-License-Identifier: Apache-2.0\n\n// The 512-byte frame keeps scratch at 65024, apart from globals at 65536.\n// Only its first sixteen bytes are accessed. Passing it to a separate function\n// preserves the frame and real pointer-based loads in the compiled module.\nstatic volatile unsigned values[4] = {3, 5, 7, 11};\n__attribute__((noinline)) static unsigned sum(volatile unsigned *items, unsigned count) {\n    unsigned result = 0;\n    for (unsigned i = 0; i < count; ++i) result += items[i];\n    return result;\n}\nunsigned run(unsigned count, unsigned bias) {\n    if (count > 4) __builtin_trap();\n    volatile unsigned scratch[128];\n    for (unsigned i = 0; i < count; ++i) scratch[i] = values[i] + bias;\n    return sum(scratch, count);\n}\n",
+    "result_labels": [
+      "Sum of updated values"
+    ],
+    "language": "C"
+  },
+  {
+    "id": "c-callbacks",
+    "title": "Compiled C \u00b7 function pointers",
+    "description": "Load a volatile C function pointer and pass it to a non-inlined helper. Operation 0 adds, 1 XORs, and 2 divides full-width unsigned i64 inputs. Other operations trap. A zero divisor traps only for operation 2.",
+    "parameters": [
+      "a",
+      "b",
+      "operation"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "2"
+    ],
+    "font": "c-callbacks.ttf",
+    "manifest": "c-callbacks.json",
+    "module": "c-callbacks.wasm",
+    "source": "// Copyright 2026 Michael Brackx\n// SPDX-License-Identifier: Apache-2.0\n\n// Volatile function pointers keep runtime table dispatch in the Wasm binary.\n// The exported ABI uses integers; apply receives a real C function pointer.\ntypedef unsigned long long u64;\ntypedef u64 (*operation)(u64, u64);\nstatic u64 add(u64 a, u64 b) { return a + b; }\nstatic u64 mix(u64 a, u64 b) { return a ^ b; }\nstatic u64 divide(u64 a, u64 b) { return a / b; }\nstatic operation volatile operations[3] = {add, mix, divide};\n\n__attribute__((noinline)) static u64 apply(operation fn, u64 a, u64 b) {\n    return fn(a, b);\n}\nu64 run(u64 a, u64 b, unsigned selected) {\n    if (selected >= 3) __builtin_trap();\n    return apply(operations[selected], a, b);\n}\n",
+    "result_labels": [
+      "Selected result"
+    ],
+    "language": "C"
+  },
+  {
+    "id": "c-packet",
+    "title": "Compiled C \u00b7 packet checksum",
+    "description": "Copy 0\u20137 payload bytes from an embedded packet into a local stack buffer, add the adjustment to each byte, then compute a 32-bit rolling checksum in a helper. Counts above the packet header\u2019s limit trap; each invocation starts fresh.",
+    "parameters": [
+      "payload bytes",
+      "byte adjustment"
+    ],
+    "arguments": [
+      "7",
+      "10"
+    ],
+    "font": "c-packet.ttf",
+    "manifest": "c-packet.json",
+    "module": "c-packet.wasm",
+    "source": "// Copyright 2026 Michael Brackx\n// SPDX-License-Identifier: Apache-2.0\n\n// A tiny packet decoder: copy a payload into a local buffer, adjust its bytes,\n// then compute a rolling checksum in a separate function. Unsigned arithmetic\n// wraps at 32 bits. At most seven payload bytes keep both loops within bounds.\nstatic const volatile unsigned char packet[8] = {7, 0x10, 0x21, 0x32, 0x43, 0x54, 0x65, 0x76};\n\n__attribute__((noinline)) static unsigned checksum(volatile unsigned char *data, unsigned count) {\n    unsigned value = 2166136261u;\n    for (unsigned i = 0; i < count; ++i) value = (value ^ data[i]) * 16777619u;\n    return value;\n}\nunsigned run(unsigned count, unsigned adjustment) {\n    if (count > packet[0]) __builtin_trap();\n    volatile unsigned char payload[32];\n    for (unsigned i = 0; i < count; ++i) payload[i] = packet[i + 1] + adjustment;\n    return checksum(payload, count);\n}\n",
+    "result_labels": [
+      "Rolling checksum"
+    ],
     "language": "C"
   }
 ]

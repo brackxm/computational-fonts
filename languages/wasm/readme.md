@@ -21,7 +21,7 @@ Serve the repository root:
 python3 -m http.server 8000
 ```
 
-Open <http://localhost:8000/languages/wasm/playground.html>. Twenty-six bundled examples
+Open <http://localhost:8000/languages/wasm/playground.html>. Thirty-four bundled examples
 cover 32/64-bit expressions, wrapping addition, branches, loops, recursion,
 memory, division, multiplication, bit counting and compiled C. Change arguments
 to run them; decimal, hexadecimal and binary input retain all 64 bits. Results
@@ -45,9 +45,29 @@ An optional early drop demonstrates how discarding the segment affects later
 initialization, while preserving bytes already written into memory.
 **Grow memory in the font** attempts two runtime growth steps, reports their
 results and the current page count, and returns a stored i64 value unchanged.
+**Initialize before the export** uses a start function to grow and seed memory
+before `run` changes a selected byte. Results show both memory halves, the page
+count and the initializer counter.
 **Choose a 64-bit function at runtime** selects addition, subtraction,
 multiplication or division through a function table, then counts the result's
 set bits. Extra indices demonstrate signature, null-entry and bounds traps.
+**Compiled C · array loop** updates the first 0–4 entries of a four-element
+unsigned array and returns their sum. Its 16-byte backed window starts at address
+65536, matching the C linker's data placement after a 64-KiB stack.
+**Compiled C · stack and globals** passes a local array to another function,
+using two 16-byte regions separated by a 496-byte gap.
+**Indexed byte in a 64-byte window** combines a runtime i64 store, a byte lookup
+and bit counting. Offsets 0–63 succeed; other valid Wasm addresses reach the
+font's memory bound.
+**Pass function references through helpers** demonstrates typed selection,
+reference-valued calls and blocks, and a mutable reference global.
+**Compiled C · function pointers** passes a runtime callback through a helper
+to select full-width i64 addition, XOR or division.
+**Compiled C · packet checksum** copies up to seven payload bytes into a local
+stack buffer and computes a wrapping rolling checksum in a separate helper.
+**Change and grow a function table** installs a passive segment, drops it,
+selects a function reference, replaces a slot and grows another slot with that
+reference. It calls the new slot and counts the result's set bits.
 
 The page uses the bundled HarfBuzzJS engine in a Web Worker to shape the actual
 font once per invocation. It checks all scratch registers and status flags
@@ -144,10 +164,11 @@ python run.py examples/generated/memory_roundtrip.ttf 3 2309737967
 # 2309737967
 ```
 
-`python build_examples.py --recompile-c` additionally rebuilds the C source. It
+`python build_examples.py --recompile-c` additionally rebuilds all five C sources. It
 requires Clang with a wasm32 target and `wasm-ld`; Apple's system Clang does not
 provide this target. Without that option, the build uses the supplied,
-Clang-produced `examples/mix.wasm`.
+compiled binaries `examples/mix.wasm`, `examples/array.wasm`,
+`examples/sparse_array.wasm`, `examples/callbacks.wasm` and `examples/packet.wasm`.
 
 ## Execution architecture
 
@@ -248,14 +269,15 @@ produce `IncompleteShaping`, rather than a plausible zero or a host result.
 | Comparisons | `eqz`, `eq`, `ne`, and all signed/unsigned `lt`, `le`, `gt`, `ge`; i32 Boolean results can feed later operations |
 | Counting | `clz`, `ctz`, `popcnt`; results are binary registers, not host-counted unary glyphs |
 | Conversions | `i32.wrap_i64`, signed/unsigned `i64.extend_i32`, and integer sign-extension instructions |
-| Stack / locals | `local.get`, `local.set`, `local.tee`, `drop`, untyped integer `select`, `nop` |
+| Stack / locals | `local.get`, `local.set`, `local.tee`, `drop`, untyped integer `select`, typed `select (result i32/i64/funcref)`, `nop` |
 | Calls | Multiple internal functions, direct `call`, table-based `call_indirect`, `return`, fresh locals per call and bounded recursion; no host imports |
-| Function tables | One immutable `funcref` table, up to 256 slots, active function-index element segments, table exports, null entries and structural integer-signature checks |
-| Control flow | `block`, `loop`, `if` / `else`, `br`, `br_if`, `br_table`; integer parameters and multiple i32/i64 results, including type-index block signatures and loop backedge parameters |
-| Memory | `i32`/`i64` loads/stores and narrow signed/unsigned variants, little-endian encoding, unaligned access, offsets, active data segments; `memory.copy` and `memory.fill` with dynamic addresses and lengths within the configured backed window |
+| Initialization | Optional void start function, after active data/table initialization and before the selected export; its calls, loops, state changes, traps and resource bounds follow the normal compiler rules |
+| Function tables | One mutable `funcref` table, up to 256 slots; active/passive/declarative function-index and reference-expression segments; `table.get/set/size/grow/fill/copy/init`, `elem.drop`, `ref.null/func/is_null` and nullable funcref values, locals and globals; structural signature checks |
+| Control flow | `block`, `loop`, `if` / `else`, `br`, `br_if`, `br_table`; integer/funcref parameters and multiple results, including type-index block signatures and loop backedge parameters |
+| Memory | `i32`/`i64` loads/stores and narrow signed/unsigned variants, little-endian encoding, unaligned access, offsets, active data segments; `memory.copy` and `memory.fill` with dynamic addresses and lengths within configurable backed regions at absolute Wasm addresses |
 | Data segments | Passive byte strings, `memory.init` with dynamic source/destination/length, and `data.drop`; segment lifetime follows branches, loops and internal calls |
 | Memory growth | `memory.size` and `memory.grow`; dynamic page counts, old-size/−1 results, and bounds that follow growth through branches, loops and calls |
-| Globals | Integer globals with constant initializers, `global.get`, mutable `global.set`; values persist within an invocation, including through calls |
+| Globals | Integer and nullable funcref globals with constant initializers, `global.get`, mutable `global.set`; values persist within an invocation, including through calls |
 | Traps | `unreachable`, integer divide-by-zero, i32/i64 signed division overflow, actual memory/data-segment bounds, and indirect-call table bounds/null/signature errors |
 
 Unsupported instructions/module forms are rejected. Some otherwise supported
@@ -267,9 +289,10 @@ rejection must not be interpreted as a successful compilation.
 The new text frontend accepts flat and folded integer expressions, nested block
 comments (including line comments adjacent to tokens), named
 functions/locals/globals/labels, grouped unnamed parameters,
-exports, function and block type uses, one memory, integer globals, active
+exports, function and block type uses, one memory, integer/funcref globals, active
 constant-offset data segments, passive data segments, one function table and
-active function-index element segments. Names and data-string escapes are resolved by
+active/passive/declarative function-index or reference-expression elements, and a named/numeric start-function use.
+Names and data-string escapes are resolved by
 the frontend; integer literals are checked against their declared width,
 including global initializers and data offsets. The resulting binary is
 independently validated by V8.
@@ -290,18 +313,62 @@ type use followed by unnamed parameter and result declarations in that order;
 inline declarations must match an explicit type use.
 
 Both the frontend and direct `load_binary` entry point validate the original
-bytes before loading them. Imports, start functions and exception tags are
-explicitly rejected instead of being silently ignored. Tables support active
-function-index elements with constant i32 offsets; passive/declarative elements
-and reference-expression elements are rejected. `table.*`, `elem.drop`, and
-reference-valued operand-stack instructions are not implemented.
+bytes before loading them. Imports and exception tags are
+explicitly rejected instead of being silently ignored. Tables support function-index elements in active, passive and declarative modes.
+Active offsets must be constant i32 expressions. Nullable function references can
+occupy operand stacks, locals, globals, internal function parameters/results and
+block/loop signatures. `select (result funcref)` selects references; typed i32/i64
+selection also works. The selected font entry must still have only i32/i64 inputs
+and outputs; other exported functions can have reference signatures.
 Data-count sections are supported in their specified position before code;
 V8 validates their counts and all referenced data indices. Extended load/store
 operands with an explicit memory index are rejected, including an explicit index
 of zero. Bulk-memory binaries accept memory index zero.
-Floating-point and SIMD values, reference values on the operand stack, and
-non-integer function signatures are not accepted. This is not an unrestricted
-implementation of the WAT grammar.
+Floating-point, SIMD, externref and typed non-null references remain unsupported.
+This is not an unrestricted implementation of the WAT grammar.
+
+### Start functions
+
+`(start $initialize)` or `(start 0)` names the optional start function. It must
+take no parameters and return no results, and only one may be declared. Binary
+start sections are decoded in their specified position before element and code
+sections; invalid indices, signatures and encodings fail before font output.
+
+Active data and function-table entries are initialized first, and active data
+segments are already dropped when start executes. Start can call other functions,
+dispatch through the table, grow memory, update globals, and copy or drop passive
+data. Its resulting state is passed to the selected export. A start trap or
+exhausted loop, call or backed-memory bound prevents the export from running.
+The start call and export call each begin with an empty call stack and use the
+same configured depth/loop limits. Choosing the start function itself as an
+export executes it again as an ordinary explicit call.
+
+Loading validates declarations and active-segment bounds without running start.
+The native compiler lowers start followed by the export into the same circuit;
+constant initialization may be folded by the existing circuit optimizer. It
+never runs the reference interpreter to pre-execute start, and it does not need
+a second shaping pass. Infinite initialization produces an execution-bound
+status rather than hanging compilation. The legacy primitive lowerer rejects
+all start sections instead of ignoring initialization.
+
+For the reference API, `module.instantiate(fuel=...)` runs start once and returns
+the initialized state. `module.invoke(..., state=state)` reuses it without
+restarting. An invocation without a supplied state creates a fresh instance,
+sharing its fuel between start and the export. Each font invocation similarly
+begins with fresh initialized memory, globals and segment availability.
+
+The [initialization example](examples/start_memory.wat) grows from zero pages,
+copies bytes 1–16 from a passive segment and drops it before accepting arguments:
+
+```sh
+python build.py examples/start_memory.wat --export run -o start-memory.ttf
+python run.py start-memory.ttf 3 0xaa
+# (578437698537325057, 1157159078456920585, 1, 1)
+# Memory: 0x08070605aa030201, 0x100f0e0d0c0b0a09; one page, one start call
+```
+
+This ordering follows WebAssembly's
+[module instantiation semantics](https://webassembly.github.io/spec/core/exec/modules.html#instantiation).
 
 ### Function tables and indirect calls
 
@@ -310,11 +377,15 @@ active segment such as `(elem (i32.const 0) $add $subtract)`. Slots start null;
 later segments overwrite earlier entries. Active initialization must fit the
 table, including empty segments. The compiler rejects invalid initialization
 before writing a font. Minimum and optional maximum table limits are 0–256.
-The table remains fixed throughout an invocation.
+`table.get` and `table.set` read or replace runtime-selected references.
+`ref.func $name` produces a declared function reference; `ref.null func` produces
+null, distinct from function index zero. `ref.is_null` tests either kind. A
+`(local $chosen funcref)` starts null and can carry references through branches.
+References cannot be used as integer operands.
 
 `call_indirect $ops (type $binary)` takes its i32 slot index from the top of the
 stack, above the callee's arguments. The table name/index can be omitted for
-table zero. Named/numeric type uses and unnamed inline integer `(param ...)` / `(result
+table zero. Named/numeric type uses and unnamed inline integer/funcref `(param ...)` / `(result
 ...)` signatures are supported, including mixed widths and multiple results.
 An omitted signature means no parameters or results. Function signatures match
 structurally, so equivalent declared type indices are compatible.
@@ -340,12 +411,70 @@ python run.py indirect64.ttf 100 7 2
 # (700, 6): product and its set-bit count
 ```
 
-Dispatch and signature checks follow WebAssembly's
-[indirect-call semantics](https://www.w3.org/TR/wasm-core-1/).
+Passive segments such as `(elem $functions func $add $divide)` remain available
+until `elem.drop $functions`. `table.init $ops $functions` copies a selected
+range into the table; dropping a segment preserves entries already installed.
+Active and declarative segments are unavailable to `table.init` after startup.
+A declarative segment, `(elem declare func $add)`, can declare a `ref.func` target
+without installing it. `table.copy` preserves the source snapshot for overlaps;
+`table.fill` repeats a function reference. Both operations check unsigned bounds,
+including zero-length endpoints, and compose through starts, calls and loops.
+
+`table.size` reports the current number of slots. `table.grow` takes a function
+reference followed by an unsigned i32 delta, initializes new slots with that
+reference, and returns the previous size. Failure returns `0xffffffff` without
+changing the table. With no declared maximum, this bounded implementation allows
+allocation up to 256 slots; larger requests fail allocation. A declared maximum
+must also be at most 256. Table slots consume circuit resources, especially when
+runtime mutation makes many possible call targets reachable.
+
+```sh
+python build.py examples/mutable_dispatch.wat --export run -o mutable.ttf
+python run.py mutable.ttf 100 7 1
+# (14, 3, 3): quotient, set bits, current table size
+```
+
+Dispatch, mutation and segment lifetimes follow WebAssembly's
+[table instruction semantics](https://webassembly.github.io/spec/core/exec/instructions.html#table-instructions).
+
+### Function-reference values
+
+Reference-expression elements can contain explicit null entries:
+
+```wat
+(table 3 funcref)
+(elem (i32.const 0) funcref (ref.func $add) (ref.null func) (ref.func $divide))
+(elem $passive funcref (ref.func $add) (ref.null func))
+(elem declare funcref (ref.func $divide))
+(global $chosen (mut funcref) (ref.null func))
+(func $choose (param funcref funcref i32) (result funcref)
+  local.get 0 local.get 1 local.get 2 select (result funcref))
+```
+
+The binary loader accepts all eight element encodings, including explicit table
+zero and padded indices. Initializer expressions are limited to `ref.func` and
+`ref.null func`. References retain their type through calls, returns, branches,
+loop backedges and state merges; integer operations cannot consume them. Internal
+`call_indirect` signatures can include references and still match structurally.
+The reference VM represents null separately from function index zero.
+
+The [reference-flow example](examples/reference_flow.wat) selects a table entry
+or fallback addition, passes the reference through a helper and typed block,
+stores it in a mutable global, then installs and calls it. With slot 1 selected,
+the null entry traps; fallback addition works when selection is disabled. The
+table read still checks its bounds even when its value is discarded.
+
+```sh
+python build.py examples/reference_flow.wat --export run -o references.ttf
+python run.py references.ttf 100 7 2 1
+# (14, 3): division result and set bits
+python run.py references.ttf 100 7 1 0
+# (107, 5): fallback addition and set bits
+```
 
 ### Multi-value structured control flow
 
-`block`, `loop` and `if` accept integer signatures such as
+`block`, `loop` and `if` accept integer/funcref signatures such as
 `(param i32 i64) (result i64 i64)`, or a named/numeric `(type ...)` use.
 A branch to a block or `if` carries its result values. A branch back to a loop
 carries its parameter values into the next iteration. Parameters and results
@@ -476,6 +605,128 @@ python build.py program.wasm --export run -o program.ttf \
   --loop-bound 12 --call-depth 8 --memory-bytes 64 --max-gates 10000
 ```
 
+### Backed memory placement and compiled C arrays
+
+`--memory-base` selects the first backed byte's absolute Wasm address. The
+default is zero; `--memory-bytes` still controls the window size, up to 256
+bytes. Both bounds must fit the unsigned 32-bit address space. The compiler
+does not relocate the module's addresses: it maps the selected region to font
+registers. A manifest with no `memory_base` setting uses the default zero base.
+
+Loads and stores require their entire effective range to fit the window.
+`memory.copy` checks both source and destination; `memory.fill` and `memory.init`
+check the destination. Passive segment offsets remain relative to the segment.
+The compiler checks actual Wasm memory and segment bounds first, so invalid
+accesses trap rather than reporting a font resource bound. Valid empty bulk
+ranges can lie outside the backed window. Active data segments initialize their
+intersection with the window in segment order. The window can cross page
+boundaries; growth exposes zeroed bytes within it while preserving existing data.
+
+The bundled [`examples/array.c`](examples/array.c) uses a volatile array to
+retain actual loads and stores, and a bounded loop updates and sums its first
+`count` entries. The source uses unsigned arithmetic, so both the updates and
+sum wrap at 32 bits. Counts greater than four trap. Each shaping invocation
+starts with `[3, 5, 7, 11]` again.
+
+```sh
+python build.py examples/array.wasm --export run --memory-base 0x10000 \
+  --memory-bytes 16 -o array.ttf
+python run.py array.ttf 4 10
+# 66: (3+10) + (5+10) + (7+10) + (11+10)
+python run.py array.ttf 2 -1
+# 6: (3-1) + (5-1)
+```
+
+The linker places the array after its 65536-byte stack. Rebuild it with Clang
+and the [WebAssembly linker](https://lld.llvm.org/WebAssembly.html):
+
+```sh
+clang --target=wasm32 -O2 -fno-unroll-loops -nostdlib -ffreestanding \
+  -Wl,--no-entry -Wl,--export=run -Wl,--strip-all \
+  -Wl,--stack-first -Wl,-z,stack-size=65536 examples/array.c -o examples/array.wasm
+```
+
+The bundled array binary was built with `zig cc` from Zig 0.17.0 using
+`-target wasm32-freestanding` and the same optimization/stack options, omitting
+`--stack-first` because that linker already places its stack first. Rebuilding
+the font from the supplied binary requires neither C toolchain.
+
+### Multiple backed regions and indexed access
+
+Repeat `--memory-region BASE:BYTES` to select up to sixteen disjoint regions
+instead of the single `--memory-base` / `--memory-bytes` window. Decimal and
+hexadecimal values are accepted. The combined size must be at most 256 bytes;
+regions are sorted, adjacent ones merge, and overlaps are rejected. Python callers
+use `Limits(memory_regions=((65024, 16), (65536, 16)))`. Explicit regions replace
+the single-window setting and appear in the ABI manifest.
+
+Loads and stores must fit entirely in a region. A nonempty bulk range may cross
+adjacent merged regions but cannot cross an unbacked gap. `memory.copy` can copy
+between different regions, preserving its original source for overlaps. Actual
+Wasm/data bounds are checked before backed-region bounds; valid zero-length
+ranges require no backed bytes. Initialization and memory growth follow the same
+rules as the single window.
+
+The [`sparse_array.c`](examples/sparse_array.c) example allocates a 512-byte frame,
+uses only its first sixteen bytes at address 65024, and reads sixteen bytes of
+globals at address 65536. Its non-inlined helper sums the local array.
+Only 32 bytes consume font registers despite the 496-byte gap:
+
+```sh
+python build.py examples/sparse_array.wasm --export run \
+  --memory-region 65024:16 --memory-region 0x10000:16 -o sparse.ttf
+python run.py sparse.ttf 4 10
+# 66
+```
+
+Rebuild this C binary with the same compiler/linker options as `array.c`, changing
+both source and output names to `sparse_array`. The supplied binary uses Zig 0.17.0.
+`build_examples.py --recompile-c` rebuilds all C fixtures using Clang/LLD.
+
+Dynamic reads in windows larger than sixteen bytes use a shared multiplexer tree;
+stores share address decoding. Indexed eight-bit selection among 32, 64 and 128
+independent bytes constructs 248, 504 and 1,016 gates, compared with 688, 1,333 and
+2,619 for repeated full-address comparisons. Sparse regions use the same compact
+arrays, so the gaps do not add selection cells. Address/bounds checks remain
+separate from those selection counts. Smaller legacy windows retain their
+existing layout.
+
+```sh
+python build.py examples/indexed_memory.wat --export run --memory-bytes 64 -o indexed.ttf
+python run.py indexed.ttf 34 0x0807060504030201
+# (3, 13): selected byte and seed set bits
+```
+
+### Compiled C callbacks and packet processing
+
+[`callbacks.c`](examples/callbacks.c) loads a volatile function pointer from
+three initialized globals and passes it to a non-inlined helper. Its Wasm binary
+contains actual `call` and `call_indirect` instructions. Operations 0, 1 and 2
+perform unsigned i64 addition, XOR and division. Other operations trap; division
+by zero traps only for operation 2. The twelve pointer bytes start at 65536.
+
+[`packet.c`](examples/packet.c) checks a runtime count against an embedded packet
+header, copies and adjusts up to seven payload bytes into a local array, then
+computes a wrapping 32-bit rolling checksum in a non-inlined helper. The checksum
+uses XOR and multiplication, and both loops remain in the compiled Wasm. Two
+eight-byte regions back its stack buffer at 65504 and packet data at 65536.
+
+```sh
+python build.py examples/callbacks.wasm --export run --memory-region 65536:12 -o callbacks.ttf
+python run.py callbacks.ttf 100 7 2
+# 14
+python build.py examples/packet.wasm --export run \
+  --memory-region 65504:8 --memory-region 65536:8 -o packet.ttf
+python run.py packet.ttf 7 10
+# 1610677118
+```
+
+Both supplied binaries were compiled with Zig 0.17.0 using the same options as
+the array fixtures. To rebuild with Clang/LLD, use `build_examples.py --recompile-c`.
+Changing the compiler/linker layout may require updating the backed regions.
+
+### Circuit and execution budgets
+
 CLI limits are 1–64 loop iterations, 1–32 call frames, 0–256 backed memory bytes,
 and 1–32,000 constructed gates. Serialization chooses the smallest batch size
 from 1–64 gate groups that fits the lookup headers and extension offsets.
@@ -484,6 +735,25 @@ It rejects layouts that cannot fit. Every source/constant/result/trap cell also
 counts toward the OpenType glyph limit of fewer than 65,535 glyphs. Constructed
 gates can be pruned before emission, so the construction budget is not a promise
 that every circuit of that size fits. Capacity remains program-dependent.
+
+Capacity failures raise `CompilationCapacity`, a `ResourceLimit` subclass, with
+`resource` set to `gates`, `glyphs`, `lookup_offsets` or `instructions`. Its
+`details` include constructed gates, the gate budget, backed bytes/regions, the
+lowered instruction count and its fixed 100,000-instruction budget. Instruction
+exhaustion reports that count and suggests reducing loop/call bounds or simplifying
+the program; `--max-gates` does not change the lowering instruction limit. The
+message preserves the original failure and suggests which bounds to reduce. Raising `--max-gates` can help a construction-budget failure; it cannot
+raise OpenType glyph or lookup-offset limits.
+
+Indirect dispatch selects one encoded reference through the shared lookup tree,
+then compares it with compatible targets. Duplicate slots share the same callee
+and no longer need full-width comparisons for each slot. A 256-slot table whose
+entries all reference one dynamic i64 divider drops from 5,680 to 4,322 gates and
+from 2,078,972 to 1,532,548 font bytes (24% fewer gates and 26% smaller font).
+It now fits a 4,500-gate construction budget. Null, signature and unsigned bounds
+checks still precede call-depth accounting. This is a measured program-specific
+reduction; other compositions retain their own capacity limits. Full before/after
+metrics are recorded in [dispatch_capacity.json](benchmarks/dispatch_capacity.json).
 
 The previous default was 12,000 gates with approximately 5,400 unbatched gate
 groups. Packing and smaller arithmetic circuits now support these full-width
@@ -570,6 +840,36 @@ precedence. A 256-slot table sharing one dynamic i64 divider checks that aliases
 do not duplicate the expensive circuit. Independent binaries cover unsigned type
 indices through 128, padded table operands and element encodings with an explicit
 table index of zero. Unsupported table/element forms fail closed.
+Memory-placement regressions compare nonzero, unaligned and page-crossing
+windows with V8 and the reference interpreter. They cover every integer
+load/store width, effective offsets, overlapping copies, fills, initialization,
+active segment intersections, dropped segments, growth, zero-length operations,
+and trap/resource-bound precedence. The supplied C array binary runs through
+both Python/system HarfBuzz and browser HarfBuzzJS.
+Start-function regressions cover initialization ordering, globals, memory growth,
+passive-segment drops, indirect calls, startup traps and execution bounds,
+separate call stacks, shared reference fuel, repeated reference instances and
+fresh shaping invocations. Independent binary encodings include padded unsigned
+start indices through 128. Loading/compilation tests forbid reference-VM execution;
+legacy tests require explicit rejection of both harmless and trapping starts.
+
+Sparse-memory regressions cover separate regions, gaps, adjacent merging,
+active overlays, cross-region bulk transfers, growth/start initialization,
+unsigned offsets, CLI configuration and actual memory traps before resource
+bounds. Selection benchmarks check every index against circuit evaluation;
+a 64-byte dynamic lookup checks a reduced construction budget. Capacity errors
+are checked for gate, glyph and lookup-offset classification.
+Mutable-table regressions cover references and locals, dynamic get/set,
+non-power-of-two bulk alignment, overlapping copies, fill/init bounds, passive
+and declarative segment lifetimes, repeated drops, growth success/failure/nulls,
+state through starts/calls/loops, fresh invocations and indirect trap precedence.
+Independent binary fixtures cover all eight element encodings and padded table,
+reference and typed-select operands. Function-reference tests also cover mixed
+reference/integer signatures, direct and indirect calls, typed blocks and loop
+backedges, globals initialized before start, null entries and fresh invocations.
+C fixtures verify actual callback dispatch and packet loops against V8, the
+reference VM and HarfBuzz. Both new memory examples and mutable dispatch also run in browser
+HarfBuzzJS against fresh V8 instances.
 
 Reduced four-bit circuits are exhaustively checked across all 256 operand pairs
 for 13 operations. Addition, subtraction and multiplication also run all 256
@@ -582,7 +882,7 @@ the supplied C-produced binary is always tested.
 Run this suite independently from the other projects, whose test modules use
 their own imports and build entry points. From the repository root the command
 is `python -m pytest -q languages/wasm`.
-Browser-engine tests compare all twenty-six bundled programs with V8. Capacity regressions cover
+Browser-engine tests compare all thirty-four bundled programs with V8. Capacity regressions cover
 packed truth tables, interleaved paired outputs, two independent signed i64
 dividers, division/multiplication, two multipliers, chained division/remainder,
 and two quotients feeding a multiplier on both active and inactive branches.
@@ -657,6 +957,8 @@ languages/wasm/
 │   ├── frontend.py, module.py       # WAT encoding and binary module loading
 │   ├── validation.py               # Shared V8 validation and section policy
 │   ├── ir.py, opcodes.py            # Integer instructions and function IR
+│   ├── memory.py, tables.py         # Backed regions and mutable table circuits
+│   ├── selection.py, capacity.py    # Shared selection circuits and diagnostics
 │   ├── conversions.py, state.py     # Integer conversions and module state
 │   ├── runtime.py, harfbuzz.py      # Compatibility imports for shared runtime
 │   ├── oracle.py, oracle.js         # Independent V8 differential oracle
@@ -700,10 +1002,11 @@ the original integration notes and source manifest.
 
 ## Further compatibility investigation
 
-Tables and `call_indirect` would require bounded table storage, runtime index
-and null checks, signature checks, and predicated calls to all possible internal
-targets. The register/control-flow machinery provides building blocks, but this
-is not implemented or validated yet. Table sections currently fail closed.
+Further reference support would include externref, typed/non-null references,
+reference-call instructions from newer proposals, and multiple tables. Those forms
+currently fail closed. Nullable funcref values, element expressions, typed select,
+internal reference signatures and mutable tables are implemented within the
+bounds above. Font entry parameters/results remain integers.
 
 Floating-point support would need actual IEEE-754 bit circuits, including
 rounding, NaN behavior and conversion traps. Integer bit operations alone are

@@ -17,5 +17,5 @@ def validate_supported(data: bytes) -> None:
     pos=8
     while pos<len(data):
         sid=data[pos];size,start=uleb(data,pos+1);pos=start+size
-        if sid in (2,8,13):
-            raise NotImplementedError(f'unsupported module section {sid} (imports/start/tags)')
+        if sid in (2,13):
+            raise NotImplementedError(f'unsupported module section {sid} (imports/tags)')

@@ -10,14 +10,14 @@ class WasmTrap(Exception): pass
 
 COMPARE={'eq','ne','lt_s','lt_u','gt_s','gt_u','le_s','le_u','ge_s','ge_u'}
 
-def run(functions, index, args, fuel=100000, state=None):
+def run(functions, index, args, fuel=100000, state=None, start=None):
     state = state if state is not None else MachineState()
     budget=[fuel]
     def invoke(idx, argv, depth):
         if depth>128: raise WasmTrap('call depth exceeded')
         fn=functions[idx]
         if len(argv)!=len(fn.params): raise WasmTrap('argument count mismatch')
-        values=[v&((1<<int(t[1:]))-1) for t,v in zip(fn.params,argv)]+[0]*len(fn.locals)
+        values=[v if t=='funcref' else v&((1<<int(t[1:]))-1) for t,v in zip(fn.params,argv)]+[None if t=='funcref' else 0 for t in fn.locals]
         stack=[]; code=fn.code; matching={}; alternatives={}; frames=[]
         for pos,(op,arg) in enumerate(code):
             if op in ('block','loop','if'): frames.append(pos)
@@ -91,9 +91,34 @@ def run(functions, index, args, fuel=100000, state=None):
             elif op=='global.get':stack.append(state.globals[arg])
             elif op=='global.set':
                 if not state.mutable[arg]:raise WasmTrap('immutable global')
-                state.globals[arg]=stack.pop()&((1<<int(state.global_types[arg][1:]))-1)
+                value=stack.pop();typ=state.global_types[arg]
+                state.globals[arg]=value if typ=='funcref' else value&((1<<int(typ[1:]))-1)
             elif op=='memory.size':stack.append(state.pages)
             elif op=='memory.grow':stack.append(state.grow(stack.pop())&0xffffffff)
+            elif op=='ref.null':stack.append(None)
+            elif op=='ref.func':stack.append(arg)
+            elif op=='ref.is_null':stack.append(int(stack.pop() is None))
+            elif op=='elem.drop':state.element_segments[arg]=[]
+            elif op=='table.size':stack.append(len(state.table))
+            elif op=='table.grow':
+                delta=stack.pop();initial=stack.pop();old=len(state.table)
+                if old+delta>state.table_maximum:stack.append(0xffffffff)
+                else:state.table.extend([initial]*delta);stack.append(old)
+            elif op in ('table.get','table.set'):
+                value=stack.pop() if op=='table.set' else None
+                slot=stack.pop()
+                if not 0<=slot<len(state.table):raise WasmTrap('table_out_of_bounds')
+                if op=='table.get':stack.append(state.table[slot])
+                else:state.table[slot]=value
+            elif op in ('table.init','table.copy','table.fill'):
+                size=stack.pop();source=stack.pop();destination=stack.pop()
+                if destination+size>len(state.table):raise WasmTrap('table_out_of_bounds')
+                if op=='table.fill':payload=[source]*size
+                else:
+                    entries=state.table if op=='table.copy' else state.element_segments[arg]
+                    if source+size>len(entries):raise WasmTrap('table_out_of_bounds')
+                    payload=entries[source:source+size]
+                state.table[destination:destination+size]=payload
             elif op=='data.drop':state.data_segments[arg]=b''
             elif op=='memory.init':
                 size=stack.pop();source=stack.pop();destination=stack.pop()
@@ -133,7 +158,7 @@ def run(functions, index, args, fuel=100000, state=None):
                 value=stack.pop();address=stack.pop()+(arg or 0)
                 state.store(address,size,value)
             elif op=='drop':stack.pop()
-            elif op=='select':
+            elif op in ('select','select_t'):
                 c=stack.pop();b=stack.pop();a=stack.pop();stack.append(a if c else b)
             elif op=='nop':pass
             elif op=='unreachable':raise WasmTrap('unreachable executed')
@@ -182,4 +207,7 @@ def run(functions, index, args, fuel=100000, state=None):
             else:raise NotImplementedError(op)
         if len(stack)!=len(fn.results):raise WasmTrap('result stack mismatch')
         return stack
+    # A fresh module's initializer and export share fuel, but have independent
+    # call stacks. Reused instances omit start and retain their existing state.
+    if start is not None:invoke(start,[],0)
     return invoke(index,args,0)

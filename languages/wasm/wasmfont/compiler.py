@@ -15,6 +15,10 @@ from fontcircuit.gsub.circuit import Circuit, Value, emit_font, ResourceLimit, D
 from .frontend import load, memory_bytes
 from .ir import MEMOPS, block_signature
 from .conversions import CONVERSIONS
+from .memory import MemoryLowering
+from .capacity import CompilationCapacity,MAX_LOWERED_INSTRUCTIONS
+from .tables import TableLowering,Reference
+from .opcodes import BULK_TABLE
 
 
 @dataclass(frozen=True)
@@ -23,12 +27,31 @@ class Limits:
     call_depth: int = 8
     memory_bytes: int = 16
     max_gates: int = DEFAULT_MAX_GATES
+    memory_base: int = 0
+    memory_regions: tuple[tuple[int,int],...] = ()
 
     def __post_init__(self):
         if not 1<=self.loop_iterations<=64:raise ValueError('loop_iterations must be 1..64')
         if not 1<=self.call_depth<=32:raise ValueError('call_depth must be 1..32')
         if not 0<=self.memory_bytes<=256:raise ValueError('memory_bytes must be 0..256')
         if not 1<=self.max_gates<=MAX_GATES:raise ValueError(f'max_gates must be 1..{MAX_GATES}')
+        if not 0<=self.memory_base<=0xffffffff or self.memory_base+self.memory_bytes>1<<32:
+            raise ValueError('backed memory window must fit the unsigned 32-bit address space')
+        if not isinstance(self.memory_regions,(list,tuple)):raise ValueError('memory regions require base/size pairs')
+        if any(not isinstance(region,(list,tuple)) or len(region)!=2 or any(type(v) is not int for v in region)
+               for region in self.memory_regions):raise ValueError('memory regions require integer base/size pairs')
+        regions=sorted(tuple(region) for region in self.memory_regions)
+        if len(regions)>16:raise ValueError('at most 16 backed memory regions are supported')
+        merged=[]
+        for region in regions:
+            base,size=region
+            if not 0<=base<=0xffffffff or not 1<=size<=256 or base+size>1<<32:
+                raise ValueError('memory regions must fit the unsigned 32-bit address space')
+            if merged and base<merged[-1][0]+merged[-1][1]:raise ValueError('backed memory regions overlap')
+            if merged and base==merged[-1][0]+merged[-1][1]:merged[-1]=(merged[-1][0],merged[-1][1]+size)
+            else:merged.append((base,size))
+        if sum(size for _,size in merged)>256:raise ValueError('backed memory regions exceed the 256-byte total budget')
+        object.__setattr__(self,'memory_regions',tuple(merged))
 
 
 @dataclass(frozen=True)
@@ -69,17 +92,21 @@ class State:
     memory: list[Value]
     data_live: list[Value]
     pages: Value
+    table: list[Value]
+    table_size: Value
+    elem_live: list[Value]
 
     def copy(self, **changes):
         return replace(self,stack=self.stack.copy(),locals=self.locals.copy(),
-                       globals=self.globals.copy(),memory=self.memory.copy(),data_live=self.data_live.copy(),**changes)
+                       globals=self.globals.copy(),memory=self.memory.copy(),data_live=self.data_live.copy(),
+                       table=self.table.copy(),elem_live=self.elem_live.copy(),**changes)
 
 
 @dataclass(frozen=True)
 class Label:
     ident: int
     height: int
-    widths: tuple[int,...]
+    widths: tuple[int | str,...]
 
 
 @dataclass
@@ -88,7 +115,7 @@ class Flow:
     target: int | None = None
 
 
-class NativeCompiler:
+class NativeCompiler(MemoryLowering,TableLowering):
     def __init__(self,module,limits: Limits | None=None):
         self.module=module;self.limits=limits or Limits()
         self.c=Circuit(self.limits.max_gates)
@@ -112,7 +139,7 @@ class NativeCompiler:
     def pop(self,state,width=None):
         if not state.stack:raise ValueError('operand stack underflow')
         v=state.stack.pop()
-        if width is not None and v.width!=width:raise ValueError('operand type mismatch')
+        if width is not None and (isinstance(v,Reference) or v.width!=width):raise ValueError('operand type mismatch')
         return v
 
     def normalize(self,state,label,fallthrough=False):
@@ -120,7 +147,7 @@ class NativeCompiler:
         if len(state.stack)<label.height+n:raise ValueError('branch result stack underflow')
         if fallthrough and len(state.stack)!=label.height+n:raise ValueError('block result stack mismatch')
         results=state.stack[-n:] if n else []
-        if tuple(v.width for v in results)!=label.widths:raise ValueError('branch result type mismatch')
+        if tuple(self.value_type(v) for v in results)!=label.widths:raise ValueError('branch result type mismatch')
         state.stack=state.stack[:label.height]+results
         return state
 
@@ -129,11 +156,12 @@ class NativeCompiler:
         if not states:return None
         out=states[0].copy()
         for state in states[1:]:
-            for attr in ('stack','locals','globals','memory','data_live'):
+            for attr in ('stack','locals','globals','memory','data_live','table','elem_live'):
                 a=getattr(out,attr);b=getattr(state,attr)
                 if len(a)!=len(b):raise ValueError('incompatible control-flow state shapes')
-                setattr(out,attr,[self.c.mux(state.predicate,y,x) for x,y in zip(a,b)])
+                setattr(out,attr,[self.mux_value(state.predicate,y,x) for x,y in zip(a,b)])
             out.pages=self.c.mux(state.predicate,state.pages,out.pages)
+            out.table_size=self.c.mux(state.predicate,state.table_size,out.table_size)
             out.predicate=self.c.OR(out.predicate,state.predicate)
         return out
 
@@ -160,13 +188,14 @@ class NativeCompiler:
     def call(self,index,args,parent,depth):
         if not 0<=index<len(self.module.functions):raise ValueError('invalid function index')
         fn=self.module.functions[index]
-        if [v.width for v in args]!=[int(t[1:]) for t in fn.params]:raise ValueError('call argument type mismatch')
+        if [self.value_type(v) for v in args]!=[self.type_width(t) for t in fn.params]:raise ValueError('call argument type mismatch')
         if depth>=self.limits.call_depth:
             self.flag('limit.call',parent.predicate)
             return None
-        state=State(parent.predicate,[],args+[self.c.const(0,int(t[1:])) for t in fn.locals],
-                    parent.globals.copy(),parent.memory.copy(),parent.data_live.copy(),parent.pages)
-        label=self.label(0,[int(t[1:]) for t in fn.results])
+        state=State(parent.predicate,[],args+[self.reference(None) if t=='funcref' else self.c.const(0,int(t[1:])) for t in fn.locals],
+                    parent.globals.copy(),parent.memory.copy(),parent.data_live.copy(),parent.pages,
+                    parent.table.copy(),parent.table_size,parent.elem_live.copy())
+        label=self.label(0,[self.type_width(t) for t in fn.results])
         flows=self.sequence(self.ast[index],state,[label],depth+1)
         returns=[]
         for flow in flows:
@@ -180,11 +209,11 @@ class NativeCompiler:
 
     def structured(self,node,state,labels,depth):
         signature=block_signature(node.arg)
-        parameters=tuple(int(t[1:]) for t in signature.params)
-        types=tuple(int(t[1:]) for t in signature.results)
+        parameters=tuple(self.type_width(t) for t in signature.params)
+        types=tuple(self.type_width(t) for t in signature.results)
         condition=self.c.nonzero(self.pop(state,32)) if node.op=='if' else None
         height=len(state.stack)-len(parameters)
-        if height<0 or tuple(v.width for v in state.stack[height:])!=parameters:
+        if height<0 or tuple(self.value_type(v) for v in state.stack[height:])!=parameters:
             raise ValueError('block parameter stack mismatch')
         if node.op=='if':
             label=self.label(height,types)
@@ -221,7 +250,7 @@ class NativeCompiler:
 
     def instruction(self,node,state,labels,depth):
         self.lowered_instructions+=1
-        if self.lowered_instructions>100000:raise ResourceLimit('too many lowered instructions')
+        if self.lowered_instructions>MAX_LOWERED_INSTRUCTIONS:raise ResourceLimit('too many lowered instructions')
         op,arg=node.op,node.arg
         if op in ('block','loop','if'):return self.structured(node,state,labels,depth)
         if op in ('br','br_if','br_table','return'):
@@ -249,14 +278,19 @@ class NativeCompiler:
         if op=='unreachable':self.flag('trap.unreachable',state.predicate);return []
         if op=='nop':return [Flow(state)]
         if op=='drop':self.pop(state);return [Flow(state)]
-        if op=='select':
-            condition=self.c.nonzero(self.pop(state,32));no=self.pop(state);yes=self.pop(state,no.width)
-            state.stack.append(self.c.mux(condition,yes,no));return [Flow(state)]
+        if op in ('select','select_t'):
+            condition=self.c.nonzero(self.pop(state,32))
+            no=self.pop_typed(state,arg) if op=='select_t' else self.pop(state)
+            yes=self.pop_typed(state,arg) if op=='select_t' else self.pop(state,no.width)
+            state.stack.append(self.mux_value(condition,yes,no));return [Flow(state)]
         if op.startswith('local.'):
             if not 0<=arg<len(state.locals):raise ValueError('invalid local index')
             if op=='local.get':state.stack.append(state.locals[arg])
             else:
-                value=self.pop(state,state.locals[arg].width);state.locals[arg]=value
+                value=self.pop(state)
+                if value.width!=state.locals[arg].width or isinstance(value,Reference)!=isinstance(state.locals[arg],Reference):
+                    raise ValueError('local type mismatch')
+                state.locals[arg]=value
                 if op=='local.tee':state.stack.append(value)
             return [Flow(state)]
         if op.startswith('global.'):
@@ -264,29 +298,18 @@ class NativeCompiler:
             if op=='global.get':state.stack.append(state.globals[arg])
             else:
                 if not self.module.mutable[arg]:raise ValueError('global is immutable')
-                state.globals[arg]=self.pop(state,state.globals[arg].width)
+                state.globals[arg]=self.pop_typed(state,self.module.global_types[arg])
             return [Flow(state)]
         if op=='call':
             if not 0<=arg<len(self.module.functions):raise ValueError('invalid call index')
-            args=[self.pop(state,int(t[1:])) for t in reversed(self.module.functions[arg].params)][::-1]
+            args=[self.pop_typed(state,t) for t in reversed(self.module.functions[arg].params)][::-1]
             result=self.call(arg,args,state,depth)
             return [Flow(result)] if result is not None else []
         if op=='call_indirect':
             selector=self.pop(state,32)
-            args=[self.pop(state,int(t[1:])) for t in reversed(arg.params)][::-1]
-            table=self.module.table
-            if table is None:raise ValueError('indirect call requires a table')
-            self.guard(state,'trap.table_out_of_bounds',self.c.NOT(self.c.lt(selector,self.c.const(len(table),32))))
-            targets={};empty=0;mismatch=0
-            for slot,target in enumerate(table):
-                test=self.c.eq(selector,self.c.const(slot,32))
-                if target is None:empty=self.c.OR(empty,test);continue
-                fn=self.module.functions[target]
-                if (tuple(fn.params),tuple(fn.results))!=(arg.params,arg.results):
-                    mismatch=self.c.OR(mismatch,test);continue
-                targets[target]=self.c.OR(targets.get(target,0),test)
-            self.guard(state,'trap.uninitialized_element',empty)
-            self.guard(state,'trap.indirect_call_type_mismatch',mismatch)
+            args=[self.pop_typed(state,t) for t in reversed(arg.params)][::-1]
+            if self.module.table is None:raise ValueError('indirect call requires a table')
+            targets=self.indirect_targets(state,selector,arg)
             results=[]
             for target,test in targets.items():
                 selected=state.copy(predicate=self.c.AND(state.predicate,test))
@@ -295,6 +318,8 @@ class NativeCompiler:
                 if result is not None:results.append(result)
             result=self.merge(results)
             return [Flow(result)] if result is not None else []
+        if op in BULK_TABLE or op in ('table.get','table.set','ref.null','ref.func','ref.is_null'):
+            return [Flow(self.table_instruction(op,arg,state))]
         if op=='memory.size':
             state.stack.append(state.pages);return [Flow(state)]
         if op=='memory.grow':
@@ -390,6 +415,10 @@ class NativeCompiler:
         """Current size in bytes, with no Wasm-width wrapping of endpoints."""
         return Value((0,)*16+state.pages.bits[:width-16])
 
+    def relative_address(self,address):
+        base=self.limits.memory_base
+        return self.c.add(address,self.c.const(base,address.width),subtract=True) if base else address
+
     def bulk_memory(self,op,state,segment=None):
         size=self.pop(state,32);source=self.pop(state,32);destination=self.pop(state,32)
         # The 33-bit sums preserve overflow, including for zero-length accesses.
@@ -410,10 +439,24 @@ class NativeCompiler:
             available=self.c.mux(state.data_live[segment].bits[0],self.c.const(len(data),33),self.c.const(0,33))
             invalid=self.c.OR(invalid,self.c.lt(available,end(source)))
         self.guard(state,'trap.memory_out_of_bounds',invalid)
-        self.guard(state,'limit.memory',self.c.AND(self.c.nonzero(size),exceeds(len(state.memory))))
-        if state.predicate==0 or self.c.known(size)==0 or not state.memory:return [Flow(state)]
-        # A dropped segment can only admit a zero-byte initialization.
+        # After range checks, a dropped segment admits only an empty copy.
+        # Skip its payload before either memory layout can materialize it.
         if op=='memory.init' and self.c.known(state.data_live[segment])==0:return [Flow(state)]
+        if self.limits.memory_regions:
+            result=self.sparse_bulk(state,op,destination,source,size,destination_end,
+                                    data if op=='memory.init' else None)
+            return [Flow(result)]
+        base=self.limits.memory_base
+        nonempty=self.c.nonzero(size)
+        outside=exceeds(base+len(state.memory))
+        if base:
+            for address in [destination]+([source] if op=='memory.copy' else []):
+                outside=self.c.OR(outside,self.c.lt(address,self.c.const(base,32)))
+        self.guard(state,'limit.memory',self.c.AND(nonempty,outside))
+        if state.predicate==0 or self.c.known(size)==0 or not state.memory:return [Flow(state)]
+        destination=self.relative_address(destination)
+        destination_end=self.relative_address(destination_end)
+        if op=='memory.copy':source=self.relative_address(source)
         if op in ('memory.copy','memory.init'):
             # Align a snapshot of the source bytes with the destination. A barrel
             # rotation needs O(window * log(window)) byte muxes, rather than a
@@ -467,10 +510,16 @@ class NativeCompiler:
             end=self.c.add(Value(address.bits+(0,0)),self.c.const(offset+size,34))
             invalid=self.c.lt(self.memory_size(state,34),end)
         self.guard(state,'trap.memory_out_of_bounds',invalid)
-        self.guard(state,'limit.memory',exceeds(len(state.memory)))
+        if self.limits.memory_regions:
+            return [Flow(self.indexed_memory(state,address,offset,value,width,size,store,
+                                             check_window=True,signed=op.endswith('_s')))]
+        base=self.limits.memory_base
+        outside=exceeds(base+len(state.memory))
+        if base>offset:outside=self.c.OR(outside,self.c.lt(address,self.c.const(base-offset,32)))
+        self.guard(state,'limit.memory',outside)
         known=self.c.known(address)
         if known is not None:
-            at=known+offset
+            at=known+offset-base
             if not 0<=at<=len(state.memory)-size:
                 if not store:state.stack.append(self.c.const(0,width))
                 return [Flow(state)]
@@ -481,7 +530,11 @@ class NativeCompiler:
                 fill=bits[-1] if op.endswith('_s') else 0
                 state.stack.append(Value(bits+(fill,)*(width-len(bits))))
             return [Flow(state)]
-        tests={at:self.c.eq(address,self.c.const(at-offset,32)) for at in range(max(offset,0),len(state.memory)-size+1)}
+        if len(state.memory)>16:
+            return [Flow(self.indexed_memory(state,address,offset,value,width,size,store,
+                                             check_window=False,signed=op.endswith('_s')))]
+        tests={at:self.c.eq(address,self.c.const(base+at-offset,32))
+               for at in range(max(offset-base,0),len(state.memory)-size+1)}
         if store:
             for at,test in tests.items():
                 for i in range(size):
@@ -507,24 +560,21 @@ class NativeCompiler:
             if kind!=0:raise ValueError('selected export is not a function')
         if not 0<=index<len(self.module.functions):raise ValueError('invalid entry function')
         fn=self.module.functions[index]
+        if any(t=='funcref' for t in fn.params+fn.results):raise NotImplementedError('font entry parameters/results must be i32/i64')
         args=[self.c.argument(i,int(t[1:])) for i,t in enumerate(fn.params)]
         can_grow=any(op=='memory.grow' for f in self.module.functions for op,_ in f.code)
-        # The backed window fits in the first page. Reserve zero bytes for growth
-        # from zero pages; the current page count still guards every access.
+        # Reserve bytes through possible growth; current page counts still guard
+        # every access, including a window crossing a page boundary.
         backed_pages=self.module.maximum_pages if can_grow else self.module.initial_pages
-        byte_count=min(self.limits.memory_bytes,backed_pages*65536)
-        data=bytearray(byte_count)
-        for offset,payload in self.module.segments:
-            if offset is None:continue
-            # Untouched data outside the backed window remains inaccessible and is
-            # reported as a bound, so dropping its glyph representation is sound.
-            n=max(0,min(len(payload),byte_count-offset))
-            if n:data[offset:offset+n]=payload[:n]
-        parent=State(1,[],[],[self.c.const(v,int(t[1:])) for v,t in zip(self.module.globals,self.module.global_types)],
+        data=self.configure_memory(backed_pages)
+        table,table_size,elem_live=self.configure_table()
+        parent=State(1,[],[],[self.initial_value(t,v) for v,t in zip(self.module.globals,self.module.global_types)],
                      [self.c.const(v,8) for v in data],
                      [self.c.const(int(offset is None),1) for offset,_ in self.module.segments],
-                     self.c.const(self.module.initial_pages,32))
-        result=self.call(index,args,parent,0)
+                     self.c.const(self.module.initial_pages,32),table,table_size,elem_live)
+        if self.module.start is not None:
+            parent=self.call(self.module.start,[],parent,0)
+        result=self.call(index,args,parent,0) if parent is not None else None
         values=result.stack if result is not None else [self.c.const(0,int(t[1:])) for t in fn.results]
         return values,fn,index,export
 
@@ -532,12 +582,19 @@ class NativeCompiler:
 def compile_source(source,output,*,export=None,limits=None):
     module,data=load(source)
     compiler=NativeCompiler(module,limits)
-    values,fn,index,export=compiler.lower(export)
-    manifest=emit_font(compiler.c,values,compiler.flags,fn.params,fn.results,output,extra={
-        'source_sha256':hashlib.sha256(data).hexdigest(),'export':export,'function_index':index,
-        'limits':vars(compiler.limits),'lowered_instructions':compiler.lowered_instructions,
-        'execution':'single HarfBuzz shaping invocation; fresh module state',
-    })
+    try:values,fn,index,export=compiler.lower(export)
+    except ResourceLimit as exc:raise CompilationCapacity(exc,compiler) from exc
+    settings=vars(compiler.limits).copy()
+    # Preserve existing manifests for the default zero-based window.
+    if not settings['memory_base']:del settings['memory_base']
+    if not settings['memory_regions']:del settings['memory_regions']
+    try:
+        manifest=emit_font(compiler.c,values,compiler.flags,fn.params,fn.results,output,extra={
+            'source_sha256':hashlib.sha256(data).hexdigest(),'export':export,'function_index':index,
+            'limits':settings,'lowered_instructions':compiler.lowered_instructions,
+            'execution':'single HarfBuzz shaping invocation; fresh module state',
+        })
+    except ResourceLimit as exc:raise CompilationCapacity(exc,compiler) from exc
     return manifest
 
 
@@ -546,11 +603,16 @@ def main():
     parser.add_argument('source',type=Path);parser.add_argument('-o','--output',type=Path,default=Path(__file__).resolve().parents[1] / 'wasm-native.ttf')
     parser.add_argument('--export');parser.add_argument('--loop-bound',type=int,default=8)
     parser.add_argument('--call-depth',type=int,default=8);parser.add_argument('--memory-bytes',type=int,default=16)
+    parser.add_argument('--memory-base',type=lambda value:int(value,0),default=0,
+                        help='first backed Wasm byte address (decimal or 0x-prefixed)')
+    parser.add_argument('--memory-region',action='append',default=[],metavar='BASE:BYTES',
+                        help='back a region; repeat for up to 16 regions totaling at most 256 bytes (replaces the single window)')
     parser.add_argument('--max-gates',type=int,default=Limits().max_gates)
     args=parser.parse_args()
     try:
+        regions=tuple(tuple(int(v,0) for v in region.split(':')) for region in args.memory_region)
         manifest=compile_source(args.source,args.output,export=args.export,
-                                limits=Limits(args.loop_bound,args.call_depth,args.memory_bytes,args.max_gates))
+                                limits=Limits(args.loop_bound,args.call_depth,args.memory_bytes,args.max_gates,args.memory_base,regions))
     except (ValueError,NotImplementedError,RuntimeError) as exc:parser.exit(2,str(exc)+'\n')
     print(json.dumps(manifest['metrics'],indent=2))
 

@@ -230,7 +230,7 @@ def test_legacy_compilation_rejects_unsupported_wat_fields(tmp_path, field):
     source = tmp_path / 'unsupported.wat'
     source.write_text(LEGACY_ADD[:-1] + field + ')')
     font = tmp_path / 'unsupported.ttf'
-    with pytest.raises(NotImplementedError, match='module field|funcref'):
+    with pytest.raises(NotImplementedError, match='module field|funcref|start section'):
         compile_module(source, font)
     assert not font.exists()
 

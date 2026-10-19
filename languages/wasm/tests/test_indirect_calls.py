@@ -158,9 +158,10 @@ def test_duplicate_table_targets_share_one_expensive_callee(tmp_path):
       (func (export "run") (param i64 i64 i32) (result i64)
         local.get 0 local.get 1 local.get 2 call_indirect (type $div)))'''
     cases=[(0xffffffffffffffff,7,slot) for slot in (0,1,127,255,256,0xffffffff)]+[(1,0,0)]
-    manifest,_,_=compare(tmp_path,wat,cases,limits=Limits(max_gates=6500))
+    manifest,_,_=compare(tmp_path,wat,cases,limits=Limits(max_gates=4500))
     assert manifest['lowered_instructions']<=10
-    assert manifest['metrics']['gates']<6000
+    assert manifest['metrics']['gates']<4400
+    assert manifest['metrics']['font_bytes']<1_600_000
 
 
 def independent_binary(*,index=0,padded=False,explicit_element=False,element_offset=0,table_count=1):
@@ -256,12 +257,8 @@ def test_missing_table_and_ill_typed_calls_rejected(tmp_path,body):
     assert not path.with_suffix('.ttf').exists()
 
 
-@pytest.mark.parametrize('case',['passive-elements','reference-elements','multiple-tables'])
-def test_unsupported_binary_table_forms_are_rejected(tmp_path,case):
-    data=independent_binary(table_count=2 if case=='multiple-tables' else 1)
-    if case!='multiple-tables':
-        payload=b'\x01\x01\x00\x01\x00' if case=='passive-elements' else b'\x01\x04\x41\x00\x0b\x01\xd2\x00\x0b'
-        data=encode_sections([(sid,payload if sid==9 else p) for sid,p in sections(data)])
+def test_multiple_binary_tables_are_rejected(tmp_path):
+    data=independent_binary(table_count=2)
     path=tmp_path/'unsupported.wasm';path.write_bytes(data)
     with pytest.raises(NotImplementedError):load_binary(path)
 

@@ -12,6 +12,8 @@ class MachineState:
     mutable: list = field(default_factory=list)
     data_segments: list[bytes] = field(default_factory=list)
     table: list[int | None] = field(default_factory=list)
+    element_segments: list[list[int | None]] = field(default_factory=list)
+    table_maximum: int = 256
     memory: bytearray = field(init=False)
 
     def __post_init__(self):
@@ -20,8 +22,10 @@ class MachineState:
         if not (len(self.globals)==len(self.global_types)==len(self.mutable)):
             raise ValueError('global metadata mismatch')
         for i,t in enumerate(self.global_types):
-            if t not in ('i32','i64'):raise ValueError('unsupported global type')
-            self.globals[i] &= (1<<int(t[1:]))-1
+            if t=='funcref':
+                if self.globals[i] is not None and (type(self.globals[i]) is not int or self.globals[i]<0):raise ValueError('invalid function reference')
+            elif t in ('i32','i64'):self.globals[i] &= (1<<int(t[1:]))-1
+            else:raise ValueError('unsupported global type')
 
     def bounds(self,address,size):
         if address < 0 or address+size>len(self.memory):raise MemoryTrap('out of bounds memory access')
