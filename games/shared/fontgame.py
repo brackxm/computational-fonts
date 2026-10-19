@@ -80,6 +80,26 @@ class GameFont:
         self.lookups.append(f'lookup {name} useExtension {{\n{flag}\n'+'\n'.join(rules)+f'\n}} {name};')
         self.coverages[name] = coverage
 
+    def forward_program(self,initial,states,lasts,stopped,transitions,finish):
+        """Read a finite-state cursor program in one forward GSUB pass.
+
+        Each transition replaces the current input character with its new
+        cursor and optional last-move mark. It leaves the previous cursor as
+        context for this lookup; cleanup deletes all but the latest values.
+        No clock or turn limit is added. Callers supply complete transitions.
+        """
+        if not states or not lasts or not stopped:
+            raise ValueError('Forward programs require cursor, last-move, and stopped states')
+        raw=list(self.raw.values())
+        freeze=f'sub {group(stopped)} {group(raw)}\' by NULL;'
+        self.lookup('SPACE',[f'sub {self.raw[" "]} by NULL;'],[self.raw[' ']])
+        self.lookup('INIT',['sub begin by '+' '.join(initial)+';'],['begin'])
+        self.lookup('TRANSITION',[freeze,*transitions],raw,states)
+        self.lookup('FINISH',finish,['end'],states)
+        self.lookup('LAST_CLEAN',[f'sub {group(lasts)}\' {group(lasts)} by NULL;'],lasts,lasts)
+        self.lookup('STATE_CLEAN',[f'sub {group(states)}\' {group(states)} by NULL;'],states,states)
+        return ['SPACE','INIT','TRANSITION','FINISH','LAST_CLEAN','STATE_CLEAN']
+
     def save(self,output,before,stages,after,passes):
         fb = FontBuilder(1000,isTTF=True)
         fb.setupGlyphOrder(self.order)

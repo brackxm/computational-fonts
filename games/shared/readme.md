@@ -6,7 +6,9 @@ The exact-opponent games can use these independent helpers:
 
 - `fontgame.py`: glyph and COLRv0 construction, ASCII/PUA cmap, register mark
   filtering, named GSUB stages, and repeated clock wrappers. Every stage is
-  scheduled explicitly; imports do not build or write a font.
+  scheduled explicitly; imports do not build or write a font. Its optional
+  forward cursor pipeline reads finite-state programs in one pass, then deletes
+  old cursors and last-move marks, so loopy games need no fixed shaping clock.
 - `game-controls.js`: one-run text transport, edit history, loading/shaping
   checks, status measurement, candidate submission, and stale-result clearing.
   The host supplies no board state or opponent strategy.

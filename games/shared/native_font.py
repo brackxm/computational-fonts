@@ -24,10 +24,14 @@ class NativeFont:
         with TTFont(path) as font:self.order=font.getGlyphOrder()
 
     def shape(self,source):
+        return self.shape_text(transport(source))
+
+    def shape_text(self,text):
+        """Shape trusted protocol text, also usable with test-only cmap aliases."""
         buffer=hb.buffer_create()
         try:
             hb.set_content(buffer,1)
-            for i,c in enumerate(transport(source)):hb.add(buffer,ord(c),i)
+            for i,c in enumerate(text):hb.add(buffer,ord(c),i)
             hb.guess(buffer);hb.shape(self.font,buffer,None,0)
             infos=ctypes.cast(hb.getinfo(buffer,None),ctypes.POINTER(hb.GlyphInfo))
             return [self.order[infos[i].codepoint] for i in range(hb.length(buffer))]
