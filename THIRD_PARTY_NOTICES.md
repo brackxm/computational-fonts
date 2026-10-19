@@ -68,3 +68,12 @@ under MIT, including its HarfBuzz 14.6.0 WebAssembly engine. HarfBuzz uses the
 Old MIT license. Both notices are retained in
 [`languages/shared/vendor/harfbuzzjs`](languages/shared/vendor/harfbuzzjs/), with
 upstream sources and checksums in its readme.
+
+## SMILES diagram font
+
+The visible input and element labels in `graphics/smiles/smiles-font.ttf` use
+decomposed outlines from the pinned Roboto Regular source above. Its metadata
+retains Google's attribution and Apache-2.0 notices and identifies Michael
+Brackx's original molecular graph interpreter and diagram modifications.
+The smiles2svg repository was a visual reference only; no upstream code or
+assets are incorporated and no smiles2svg or RDKit dependency is required.

@@ -12,6 +12,9 @@ the original input. Messages and validation requests are kept short to avoid
 line wrapping that could split their shaping runs. Snake specimens contain
 editable move histories and instructions for a complete winning route on the
 dynamic board.
+The [SMILES specimen](../graphics/smiles/smiles.odt) draws disconnected ammonium and chloride ions
+and an aromatic benzene ring with a continuous hexagon outline from editable brace-delimited molecular graph strings. Its font
+handles atoms, bonds, branches and ring closures without a host renderer.
 The Turtle specimen draws a square in four colors and explains how to edit
 the path, lift the pen, and change the color.
 The [PPM specimen](../graphics/ppm/ppm.odt) draws color bars from an editable

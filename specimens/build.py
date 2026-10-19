@@ -313,6 +313,23 @@ SPECS = (
         size=145, line_height=140,
     ),
     Specimen(
+        "graphics/smiles", "smiles-font.ttf", "SMILES / molecular diagrams",
+        "The font draws atoms, bonds, branches and ring closures from editable SMILES text.",
+        (
+            Example("Ammonium chloride", "{[NH4+].[Cl-]}", "Two disconnected ions with hydrogen and charge annotations."),
+            Example("Aromatic benzene", "{c1ccccc1}", "A continuous hexagon outline with clean corners and an aromatic circle."),
+        ),
+        "Try {CC(=O)[O-]} for acetate or {CCO.C1CC1} for two separate molecules. "
+        "Replace a blue block with {Cc1ccccc1} to attach a carbon side chain. "
+        "Use parentheses for branches, = for double bonds and # for triple bonds. "
+        "Keep the braces around each complete expression.",
+        "Up to 10 atoms across all fragments, two branch levels and ring digits 1-3. "
+        "Atoms: B C N O P S F Cl Br I H; aromatic b c n o p s. "
+        "Skeletal notation: carbon vertices and polygon rings. Ring arrangements must match a supported scaffold. No valence checking "
+        "or stereochemistry. Brackets support H0-H4 and charges from -3 to +3. Use dots between complete fragments.",
+        size=105, line_height="100%", compact=True, unbroken_run=True,
+    ),
+    Specimen(
         "graphics/turtle", "turtle-font.ttf", "Turtle / a drawing in the font",
         "The font executes movement, turn, and pen commands to draw a path in color.",
         (
