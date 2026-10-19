@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Arabizi playground browser regressions</title>
+<style>
+body{font:16px/1.5 system-ui;margin:24px;color:#203a42;background:#f5f4ee}
+iframe{height:1000px;border:1px solid #999;display:block;margin-top:24px}
+.pass{color:#246040}.fail{color:#a02020}
+</style>
+<h1>Arabizi playground browser regressions</h1>
+<p id="summary" role="status">Running…</p>
+<ol id="results"></ol>
+<iframe id="fixture" src="playground.html" title="Live playground test fixture"></iframe>
+<script>
+// Copyright 2026 Michael Brackx
+// SPDX-License-Identifier: Apache-2.0
+const fixture=document.querySelector('#fixture');
+const checks=[];
+const test=(name,run)=>checks.push({name,run});
+function assert(condition,message){if(!condition)throw Error(message);}
+function source(doc,text){const input=doc.querySelector('#source');input.value=text;input.dispatchEvent(new fixture.contentWindow.Event('input',{bubbles:true}));}
+const left=element=>element.getBoundingClientRect().left;
+const right=element=>element.getBoundingClientRect().right;
+function beforeRTL(first,second){assert(left(first)>=right(second)-1,'Expected first item to be to the right of the second');}
+function beforeRTLOrNextLine(first,second){
+  if(second.getBoundingClientRect().top>first.getBoundingClientRect().top+1)return;
+  beforeRTL(first,second);
+}
+for(const width of [400,1100]){
+  test(`${width}px: trailing question mark is to the left of its word`,doc=>{
+    fixture.style.width=width+'px';source(doc,'keefak?');
+    beforeRTL(doc.querySelector('.word'),doc.querySelector('.punct'));
+  });
+  for(const text of ['salam,7abibi','salam, 7abibi']){
+    test(`${width}px: ${text} keeps RTL word and comma order`,doc=>{
+      fixture.style.width=width+'px';source(doc,text);
+      const words=doc.querySelectorAll('.word'),comma=doc.querySelector('.punct');
+      assert(words.length===2,'Expected two independent font runs');
+      beforeRTL(words[0],comma);beforeRTLOrNextLine(comma,words[1]);
+      assert(doc.querySelector('.line').textContent===text,'Source text changed');
+    });
+  }
+}
+test('digit/apostrophe and letter digraphs stay in a single shaping run',doc=>{
+  for(const word of ["3'", "7'", "6'", "9'", "3'by",'shukran','kh','gh','th','dh','SH']){
+    source(doc,word+'?');
+    const words=doc.querySelectorAll('.word');
+    assert(words.length===1 && words[0].textContent===word,'Split an Arabizi word: '+word);
+    beforeRTL(words[0],doc.querySelector('.punct'));
+  }
+});
+test('brackets surround the RTL word and source characters are preserved',doc=>{
+  source(doc,'(salam)');const parts=doc.querySelector('.chunk').children;
+  assert(parts.length===3,'Expected opening bracket, word and closing bracket');
+  beforeRTL(parts[0],parts[1]);beforeRTL(parts[1],parts[2]);
+  assert(parts[0].dir==='rtl' && parts[2].dir==='rtl','Bracket runs must support bidi mirroring');
+  assert(doc.querySelector('.line').textContent==='(salam)','Brackets changed');
+});
+test('wrapping keeps attached punctuation beside its word',doc=>{
+  fixture.style.width='400px';source(doc,'salam 7abibi keefak?');
+  const chunk=doc.querySelector('.punct').parentElement;
+  const word=chunk.querySelector('.word'),punct=chunk.querySelector('.punct');
+  assert(Math.abs(word.getBoundingClientRect().top-punct.getBoundingClientRect().top)<1,'Punctuation wrapped away from its word');
+  beforeRTL(word,punct);
+});
+test('source-only mode keeps original LTR text, whitespace and line breaks',doc=>{
+  const text="keefak?  salam,7abibi\n3'by\t(kh)!";
+  source(doc,text);const raw=doc.querySelector('#raw');raw.click();
+  const lines=Array.from(doc.querySelectorAll('.line'));
+  assert(lines.map(line=>line.textContent).join('\n')===text,'Source-only text changed');
+  assert(lines.every(line=>getComputedStyle(line).direction==='ltr'),'Source-only direction changed');
+  assert(!doc.querySelector('.chunk'),'Source-only text should not be RTL segmented');
+  raw.click();
+});
+(async()=>{
+  if(!fixture.contentDocument?.URL.endsWith('/playground.html') || fixture.contentDocument.readyState!=='complete')await new Promise(resolve=>fixture.addEventListener('load',resolve,{once:true}));
+  const doc=fixture.contentDocument;
+  try{
+    const fonts=await doc.fonts.load('64px Arabizi','salam 7abibi');
+    assert(fonts.length>0,'Could not load font');
+  }catch(error){document.querySelector('#summary').textContent='FAIL: '+error.message;return;}
+  let failed=0;
+  for(const {name,run} of checks){
+    const item=document.createElement('li');
+    try{run(doc);item.className='pass';item.textContent='PASS: '+name;}
+    catch(error){failed++;item.className='fail';item.textContent='FAIL: '+name+' — '+error.message;}
+    document.querySelector('#results').append(item);
+  }
+  document.querySelector('#summary').textContent=`${checks.length-failed}/${checks.length} passed${failed?' — '+failed+' failed':''}`;
+})();
+</script>
+</html>

@@ -1,7 +1,8 @@
 # Third-party notices
 
-The project is distributed under Apache License 2.0. Original notices for
-imported decoder code and the bundled Roboto sources are retained below.
+The project code is distributed under Apache License 2.0; the Arabizi font
+and its Noto source are distributed under SIL OFL 1.1 as noted below.
+Original notices for imported decoder code and the bundled Roboto sources are retained below.
 Fonts generated with a custom `--base` remain subject to that base’s terms.
 
 ## Imported decoder code
@@ -77,3 +78,21 @@ retains Google's attribution and Apache-2.0 notices and identifies Michael
 Brackx's original molecular graph interpreter and diagram modifications.
 The smiles2svg repository was a visual reference only; no upstream code or
 assets are incorporated and no smiles2svg or RDKit dependency is required.
+
+## Arabizi Annotated / Noto Naskh Arabic
+
+The unmodified variable font in [decoders/arabizi/fonts](decoders/arabizi/fonts/)
+is Noto Naskh Arabic from the official Google Fonts repository. Its original
+[SIL Open Font License 1.1](decoders/arabizi/fonts/OFL.txt), copyright, source
+revision and checksums are retained beside it.
+
+```text
+Copyright 2022 The Noto Project Authors (https://github.com/notofonts/arabic)
+```
+
+`decoders/arabizi/arabizi-font.ttf` is a modified derivative named **Arabizi
+Annotated**, distributed under **SIL OFL 1.1**. It uses Noto Arabic and Latin
+outlines, with Michael Brackx’s Arabizi annotations, joining substitutions and
+positioning rules. Embedded metadata preserves upstream copyright, identifies
+Michael Brackx’s 2026 modifications, and specifies OFL 1.1. The build code and
+tests remain Apache-2.0.

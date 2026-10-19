@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="An experimental OpenType font that renders Arabizi as joined Arabic, with the original shorthand above it.">
+<title>Arabizi Annotated — computational fonts</title>
+<style>
+@font-face{font-family:Arabizi;src:url('./arabizi-font.ttf?v=1.001') format('truetype');font-display:block}
+:root{font-family:system-ui,-apple-system,sans-serif;color:#203a42;background:#f5f4ee;color-scheme:light;--muted:#52656b;--line:#c9d2ca;--accent:#226a77}
+*{box-sizing:border-box}body{max-width:1120px;margin:auto;padding:0 28px;line-height:1.6}a{color:var(--accent);text-underline-offset:4px}header{display:flex;justify-content:space-between;border-bottom:1px solid var(--line);padding:24px 0;font-size:13px}header a{text-decoration:none}.brand{font-weight:700;color:inherit}.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--muted);margin:0 0 16px}.hero{padding:52px 0 32px}h1{font:400 clamp(42px,7vw,76px)/1.1 Georgia,serif;letter-spacing:-.04em;margin:0 0 22px}.hero>p:last-child{max-width:660px;font-size:17px;color:var(--muted);margin-bottom:0}.workspace{display:grid;grid-template-columns:330px 1fr;border:1px solid var(--line);border-radius:12px;background:#fffef9;overflow:hidden}.editor{padding:26px;border-right:1px solid var(--line);background:#edf0e8}.label{font-size:12px;font-weight:700;display:block;margin:0 0 12px}textarea{width:100%;min-height:160px;resize:vertical;padding:15px;border:1px solid #9aadaa;border-radius:6px;font:18px/1.7 ui-monospace,monospace;color:#203a42;background:#fffef9}button,.download{font:inherit;font-size:12px;border:1px solid #8ea3a6;background:transparent;border-radius:5px;padding:7px 11px;color:inherit;cursor:pointer;text-decoration:none}button:hover,.download:hover{background:#dee8dd}:focus-visible{outline:3px solid #287b87;outline-offset:3px}.examples{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 22px}.hint{font-size:12px;color:var(--muted)}.preview-pane{min-width:0;padding:26px}.toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}.toolbar .label{margin:0}.badge{font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.stage{min-height:260px;overflow-x:auto;padding:30px 0 20px}.line{display:flex;direction:rtl;flex-wrap:wrap;justify-content:flex-start;align-items:baseline;min-height:1.9em;font:64px/2.1 Arabizi;font-feature-settings:"rlig" 1,"kern" 1}.word{direction:ltr;unicode-bidi:isolate;white-space:pre;display:inline-block;flex:none}.line.raw{direction:ltr;font-family:ui-monospace,monospace!important;font-size:23px!important;line-height:2.1}.controls{border-top:1px solid var(--line);padding-top:18px;display:flex;gap:24px;align-items:center;justify-content:space-between;font-size:12px;flex-wrap:wrap}.size{display:flex;align-items:center;gap:10px}input[type=range]{width:100px;accent-color:var(--accent)}input[type=checkbox]{accent-color:var(--accent)}.status{font-size:12px;color:var(--muted);min-height:20px;margin-bottom:0}.status.error{color:#993b2f}.notes{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin:32px 0}.notes h2{font:400 25px Georgia,serif;margin:0 0 12px}.notes p{font-size:13px;color:var(--muted)}details{border-top:1px solid var(--line);padding:20px 0;font-size:13px}summary{cursor:pointer;font-weight:650}table{border-collapse:collapse;width:100%;margin:18px 0}th,td{text-align:left;border-bottom:1px solid #dce2d9;padding:8px}td[lang=ar]{font-size:23px}.mapping{display:grid;grid-template-columns:1fr 1fr;gap:28px}code{font-family:ui-monospace,monospace;background:#e7ece2;padding:1px 4px;border-radius:3px}footer{border-top:1px solid var(--line);padding:24px 0;display:flex;gap:22px;font-size:12px;flex-wrap:wrap}.download{background:#203a42;color:#fffef9;border-color:#203a42}.download:hover{background:#31555f}@media(max-width:760px){.workspace{grid-template-columns:1fr}.editor{border-right:0;border-bottom:1px solid var(--line)}textarea{min-height:100px}.stage{min-height:200px}.notes{grid-template-columns:1fr;gap:12px}.hero{padding-top:35px}body{padding:0 18px}.mapping{grid-template-columns:1fr}}
+</style>
+<style>
+.chunk{display:inline-flex;direction:rtl;align-items:baseline;flex:none}
+.punct{direction:rtl;unicode-bidi:isolate;white-space:pre;flex:none}
+.space{direction:ltr;white-space:pre;flex:none}
+.line.raw{display:block;white-space:pre-wrap}
+</style>
+</head>
+<body>
+<header><a class="brand" href="../../index.html">Computational fonts</a><a href="arabizi-font.ttf" download class="download">Download .ttf ↓</a></header>
+<main>
+<section class="hero"><p class="eyebrow">Arabizi Annotated · OpenType experiment</p><h1>Two scripts.<br>One conversation.</h1><p>Type Arabic the way you text it. The font draws joined Arabic below, with your original Arabizi shorthand above. The letters change. Your source stays yours.</p></section>
+<section class="workspace" aria-label="Arabizi font playground">
+<div class="editor"><label class="label" for="source">YOUR ARABIZI</label><textarea id="source" dir="ltr" spellcheck="false" autocapitalize="off" aria-describedby="input-hint">salam 7abibi
+keefak?</textarea><p id="input-hint" class="hint">Try <code>3</code> for ع, <code>7</code> for ح, or <code>sh</code> for ش. Up to 32 tokens per word.</p><div class="examples" aria-label="Examples"><button type="button" data-source="salam 7abibi&#10;keefak?">Hello</button><button type="button" data-source="mar7aba&#10;shukran">Everyday</button><button type="button" data-source="3 7 5 6 8 9&#10;sh kh gh th dh">Sounds</button><button type="button" data-source="3rby ktb&#10;7byby">Letter by letter</button></div><button type="button" id="copy">Copy original text</button><p class="hint">No JavaScript transliterator. The font handles the substitutions and positioning.</p></div>
+<div class="preview-pane"><div class="toolbar"><span class="label">THE FONT, IN ACTION</span><span class="badge">Original above · Arabic below</span></div><div class="stage" id="preview" aria-label="Arabizi source rendered with Arabic beneath it" aria-busy="true"></div><div class="controls"><label class="size" for="size">Size <input id="size" type="range" min="28" max="96" value="64"><output id="size-value" for="size">64 px</output></label><label><input id="raw" type="checkbox"> Source only</label></div><p id="status" class="status" role="status">Loading the font…</p></div>
+</section>
+<section class="notes"><div><h2>The original is part of the font.</h2><p>Both rows are glyph outlines. Copying or searching the result still uses your original Arabizi. The downloadable font works in applications with required ligatures and kerning enabled.</p></div><div><h2>A spelling convention, not a translator.</h2><p>Arabizi varies across dialects. This font maps sounds to letters and includes 12 common word spellings, such as <code>7abibi</code> → <span lang="ar" dir="rtl">حبيبي</span>. Other words use literal letter mappings; short vowels are not inferred.</p></div></section>
+<details><summary>See the alphabet &amp; rendering limits</summary><div class="mapping"><table><thead><tr><th>Shorthand</th><th>Arabic</th></tr></thead><tbody><tr><td>2 / '</td><td lang="ar">ء</td></tr><tr><td>3 / 3'</td><td lang="ar">ع / غ</td></tr><tr><td>5 / kh / 7'</td><td lang="ar">خ</td></tr><tr><td>6 / T</td><td lang="ar">ط</td></tr><tr><td>7 / H</td><td lang="ar">ح</td></tr><tr><td>8 / q</td><td lang="ar">ق</td></tr><tr><td>9 / S</td><td lang="ar">ص</td></tr><tr><td>9' / D · 6' / Z</td><td lang="ar">ض · ظ</td></tr></tbody></table><table><thead><tr><th>Shorthand</th><th>Arabic</th></tr></thead><tbody><tr><td>sh / ch · gh</td><td lang="ar">ش · غ</td></tr><tr><td>th · dh</td><td lang="ar">ث · ذ</td></tr><tr><td>a / aa</td><td lang="ar">ا</td></tr><tr><td>e / i / y / ee / ii</td><td lang="ar">ي</td></tr><tr><td>o / u / w / oo / uu</td><td lang="ar">و</td></tr><tr><td>g / j · h</td><td lang="ar">ج · ه</td></tr><tr><td>p · v</td><td lang="ar">پ · ڤ</td></tr></tbody></table></div><p>Other consonants map to their usual Arabic equivalents; <code>c → ك</code> and <code>x → خ</code>. Capitals are preserved above; S, D, T, Z and H select the emphatic / dotted alternatives shown here. Whole-word shortcuts are lowercase and match complete words only. See the <a href="readme.md">full mapping and word list</a>.</p><p>The general alphabet uses fixed-width Arabic cells. More than 32 tokens in a word falls back to the original Latin. Punctuation and unsupported characters remain visible and break words. This preview lays out words right-to-left with separate LTR font runs. Ordinary LTR documents retain LTR word order. The font does not convert stored text to Unicode Arabic; accessibility APIs expose the source. Direct Arabic input is outside this font’s character coverage.</p></details>
+</main>
+<footer><a href="arabizi-font.ttf" download>Download font</a><a href="readme.md">Usage &amp; build notes</a><a href="fonts/OFL.txt">Font license · SIL OFL 1.1</a><a href="../../index.html">All experiments</a></footer>
+<script>
+const source=document.querySelector('#source'),preview=document.querySelector('#preview'),status=document.querySelector('#status'),size=document.querySelector('#size'),raw=document.querySelector('#raw');
+let ready=false;
+function render(){
+  preview.replaceChildren();
+  for(const text of source.value.split('\n')){
+    const line=document.createElement('div');line.className='line'+(raw.checked?' raw':'');line.style.fontSize=size.value+'px';
+    if(raw.checked){line.textContent=text;}
+    else for(const chunk of text.split(/(\s+)/).filter(Boolean)){
+      const group=document.createElement('span');
+      if(/^\s+$/.test(chunk)){
+        group.className='space';group.textContent=chunk;
+      }else{
+        // A non-space chunk stays together when wrapping, but punctuation and
+        // words follow RTL order inside it. Apostrophes are Arabizi tokens.
+        group.className='chunk';group.dir='rtl';
+        for(const run of chunk.match(/[A-Za-z2356789']+|[^A-Za-z2356789']+/g)){
+          const span=document.createElement('span');
+          const word=/^[A-Za-z2356789']+$/.test(run);
+          span.className=word?'word':'punct';span.dir=word?'ltr':'rtl';
+          span.textContent=run;group.append(span);
+        }
+      }
+      line.append(group);
+    }
+    preview.append(line);
+  }
+  document.querySelector('#size-value').value=size.value+' px';
+  if(ready){status.classList.remove('error');status.textContent=raw.checked?'Original source. Uncheck to see the font.':'Font ready. Both rows are drawn by OpenType.';}
+}
+source.addEventListener('input',render);size.addEventListener('input',render);raw.addEventListener('change',render);
+document.querySelectorAll('[data-source]').forEach(button=>button.addEventListener('click',()=>{source.value=button.dataset.source;render();}));
+document.querySelector('#copy').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(source.value);status.textContent='Original Arabizi copied.';}catch{source.focus();source.select();status.textContent='Text selected. Press Ctrl+C or ⌘C to copy.';}});
+render();
+(async()=>{try{const fonts=await document.fonts.load('64px Arabizi','salam 7abibi');if(!fonts.length)throw Error('Font unavailable');ready=true;preview.setAttribute('aria-busy','false');render();}catch{status.classList.add('error');status.textContent='Font could not load. Serve the repository with python3 -m http.server 8000 and reload.';preview.setAttribute('aria-busy','false');}})();
+</script>
+</body>
+</html>

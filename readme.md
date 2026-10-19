@@ -4,7 +4,7 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 23 playgrounds in your browser, with no installation needed.
+explore all 24 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
@@ -19,6 +19,7 @@ explore all 23 playgrounds in your browser, with no installation needed.
 | [Verilog](languages/verilog/) | bounded combinational compiler | signed/unsigned `.v` modules compiled to GSUB gates | [Browser playground](languages/verilog/playground.html) |
 | [JSON formatter](formatters/json/) | text formatter | JSON text | [ODT specimen](formatters/json/json.odt) |
 | [Markdown-style formatter](formatters/markdown/) | text formatter | flat emphasis, inline code, strikethrough and heading markers | [ODT specimen](formatters/markdown/markdown.odt) |
+| [Arabizi Annotated](decoders/arabizi/) | transliteration font | Arabizi letters and digits; original shorthand above Arabic | [Browser playground](decoders/arabizi/playground.html) |
 | [Morse code](decoders/morse/) | code decoder | dots and hyphens; spaces between letters, `/` between words | [ODT specimen](decoders/morse/morse.odt) |
 | [Playfair](decoders/playfair-static/) | static decoder | key baked into font | [ODT specimen](decoders/playfair-static/playfair-static.odt) |
 | [Vigenère](decoders/vigenere-static/) | static decoder | key baked into font | [ODT specimen](decoders/vigenere-static/vigenere-static.odt) |
@@ -130,5 +131,6 @@ through ChatGPT and Codex.
 
 Licensed under the Apache License 2.0. See [`LICENSE`](LICENSE).
 Bundled Roboto sources and fonts derived from them are also Apache-2.0.
+Arabizi Annotated and its bundled Noto Naskh Arabic source are SIL OFL 1.1.
 Upstream font attribution and imported-code notices are retained in
 [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
