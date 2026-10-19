@@ -4,7 +4,7 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 21 playgrounds in your browser, with no installation needed.
+explore all 22 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
@@ -28,14 +28,23 @@ explore all 21 playgrounds in your browser, with no installation needed.
 | [Lorenz SZ40/SZ42](decoders/lorenz-static/) | static decoder | machine/wheel settings baked into font | [ODT specimen](decoders/lorenz-static/lorenz-static.odt) |
 | [Snake — dynamic board](games/snake-dynamic/) | game prototype | dimensions and movement history | [ODT specimen](games/snake-dynamic/snake-dynamic.odt) |
 | [Snake — fixed board](games/snake-fixed/) | game prototype | movement history; board size baked into font | [ODT specimen](games/snake-fixed/snake-fixed.odt) |
+| [Backgammon SGF replay](games/backgammon/) | replay prototype | bounded linear SGF; up to 128 turns | [Browser playground](games/backgammon/playground.html) |
 | [The Last Light — text adventure](games/text-adventure/) | escape-room game | semicolon-terminated commands | [ODT specimen](games/text-adventure/text-adventure.odt) |
 | [Turtle graphics](graphics/turtle/) | drawing interpreter | movement, pen and color commands | [ODT specimen](graphics/turtle/turtle.odt) |
 | [Multi-format validator](validators/multi-format/) | dynamic validator | `format:value?` | [ODT specimen](validators/multi-format/validator.odt) |
 
-The display-font project folders include a `build.py` font generator, a bundled `.ttf`,
+Most display-font project folders include a `build.py` font generator, a bundled `.ttf`,
 a `playground.html` browser demo, an editable `.odt` specimen, and a `readme.md`
 with usage, build commands, tests and limitations. SKI also includes a machine
 font and CLI for inspecting results and the internal tree tape.
+
+Backgammon reads a documented linear SGF subset from the standard starting
+position. Its font updates all 24 points, separate bars and off counters, hits,
+entry, bearing off, and latest dice during shaping. Try its
+[playground](games/backgammon/playground.html) after serving this repository.
+Replay completion does not establish legality. The prototype supports 128 turns;
+variations, setup positions, cube actions and full metadata are unsupported.
+See the [subset, status signals and tests](games/backgammon/readme.md).
 
 WebAssembly uses invisible glyph registers with a command-line HarfBuzz harness
 and a [browser playground](languages/wasm/playground.html). The playground bundles
