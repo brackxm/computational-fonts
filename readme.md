@@ -4,7 +4,7 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 31 playgrounds in your browser, with no installation needed.
+explore all 32 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
@@ -29,6 +29,7 @@ explore all 31 playgrounds in your browser, with no installation needed.
 | [Lorenz SZ40/SZ42](decoders/lorenz-static/) | static decoder | machine/wheel settings baked into font | [ODT specimen](decoders/lorenz-static/lorenz-static.odt) |
 | [Snake — dynamic board](games/snake-dynamic/) | game prototype | dimensions and movement history | [ODT specimen](games/snake-dynamic/snake-dynamic.odt) |
 | [Snake — fixed board](games/snake-fixed/) | game prototype | movement history; board size baked into font | [ODT specimen](games/snake-fixed/snake-fixed.odt) |
+| [Connect Four](games/connect-four/) | first-player winning opponent | `b` plus human column digits; complete game in one shaping run | [Browser playground](games/connect-four/playground.html) |
 | [Backgammon SGF replay](games/backgammon/) | replay prototype | bounded linear SGF; up to 128 turns | [Browser playground](games/backgammon/playground.html) |
 | [Notakto](games/notakto/) | perfect first-player opponent | three boards; human-only move history | [Browser playground](games/notakto/playground.html) |
 | [Wythoff’s Nim](games/wythoff/) | perfect opponent | two configurable heaps of 0–63 tokens; either player first | [Browser playground](games/wythoff/playground.html) |
@@ -46,6 +47,13 @@ Most display-font project folders include a `build.py` font generator, a bundled
 a `playground.html` browser demo, an editable `.odt` specimen, and a `readme.md`
 with usage, build commands, tests and limitations. SKI also includes a machine
 font and CLI for inspecting results and the internal tree tape.
+
+Connect Four reconstructs human-only histories such as `b135`, automatically
+plays Red first, and follows the complete pinned WeakC4 winning strategy. Its
+[playground](games/connect-four/playground.html) includes column controls, editable
+history, undo and reset. All game logic runs in OpenType shaping. The strategy
+and derived fonts are **GPL-3.0**, an exception to the repository default; see
+[provenance, verification and limits](games/connect-four/readme.md).
 
 Backgammon reads a documented linear SGF subset from the standard starting
 position. Its font updates all 24 points, separate bars and off counters, hits,
@@ -136,7 +144,9 @@ through ChatGPT and Codex.
 
 ## License
 
-Licensed under the Apache License 2.0. See [`LICENSE`](LICENSE).
+Licensed under the Apache License 2.0, except for the GPL-3.0 Connect Four
+strategy, implementation files and derived fonts identified in its
+[license notes](games/connect-four/PROVENANCE.md). See [`LICENSE`](LICENSE).
 Bundled Roboto sources and fonts derived from them are also Apache-2.0.
 Arabizi Annotated and its bundled Noto Naskh Arabic source are SIL OFL 1.1.
 Upstream font attribution and imported-code notices are retained in

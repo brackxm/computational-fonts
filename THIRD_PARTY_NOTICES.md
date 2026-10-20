@@ -96,3 +96,13 @@ outlines, with Michael Brackx’s Arabizi annotations, joining substitutions and
 positioning rules. Embedded metadata preserves upstream copyright, identifies
 Michael Brackx’s 2026 modifications, and specifies OFL 1.1. The build code and
 tests remain Apache-2.0.
+
+## WeakC4 / Connect Four
+
+`games/connect-four/upstream/` contains GPL-3.0 strategy data and source from
+[2swap/WeakC4](https://github.com/2swap/WeakC4), revision
+`51dc8383472c63aa6e6796a9ef306662eb8bd4bf`. Its original license and attribution
+are retained. The generated Connect Four TTF/WOFF2 fonts contain derived GPL
+strategy material and are distributed as GPL-3.0-only, with corresponding
+source. They are an exception to the repository's Apache-2.0 default. See the
+[file-by-file provenance and license notes](games/connect-four/PROVENANCE.md).

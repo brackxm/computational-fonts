@@ -1,0 +1,79 @@
+{
+  "verified_on": "2026-10-20",
+  "strategy_revision": "51dc8383472c63aa6e6796a9ef306662eb8bd4bf",
+  "font": {
+    "glyphs": 1855,
+    "lookups": 1567,
+    "driver_records": 312,
+    "shared_stages": 5,
+    "turns": 21,
+    "ttf_bytes": 440064,
+    "woff2_bytes": 44404
+  },
+  "upstream_validation": {
+    "checks_passed": 9,
+    "seconds": 36.2,
+    "scope": "Exhaustive pinned strategy validation; not a GSUB port proof."
+  },
+  "serialization": {
+    "bytes": 10290,
+    "entries": 654,
+    "diagrams": 384,
+    "round_trip": "passed"
+  },
+  "longest_reference": {
+    "maximum_plies": 41,
+    "human_history": "b65342431477741666255",
+    "reachable_oriented_leaf_entries": 1229,
+    "opening_states": 251,
+    "memoized_positions": 10163908,
+    "seconds": 67.203
+  },
+  "differential": {
+    "fresh_and_bundled": "passed",
+    "legal_oriented_opening_edges_per_font": 1822,
+    "full_oriented_opening_edges_per_font": 26,
+    "oriented_diagram_entries_per_font": 1044,
+    "complete_random_and_deterministic_games": 600,
+    "adversarial_histories": 64,
+    "adversarial_unique_prefixes": 1044,
+    "policy_cases": {
+      "immediate_win": 600,
+      "block": 16,
+      "unique_priority": 748,
+      "tied_level_skipped": 259
+    },
+    "all_games": "Red wins",
+    "test_methods": 8,
+    "suite_seconds": 73.137
+  },
+  "shaping": {
+    "harfbuzz": "14.2.1",
+    "history_shapes": 8498,
+    "median_ms": 1.5081,
+    "max_ms": 12.9804,
+    "longest_history_median_ms": 9.8182
+  },
+  "controller": "Node tests against real hb-shape signals passed",
+  "browser": "Actual playground checked: 41-ply win, full-column rejection, undo, reset, color and monochrome.",
+  "limitations": "Finite GSUB differential testing, not an exhaustive implementation proof; one uninterrupted LTR shaping run required.",
+  "artifacts_sha256": {
+    "connect-four-font.ttf": "0a424ba60aa6165703a9a7c996ba3a8b5796dfb0cd2219eac7f81b5dfebbcb82",
+    "connect-four-font.woff2": "b2fa65f4cd8d1d63d9919f78eda03d19b4ce0427b58d80446c411d9111e49049"
+  },
+  "artwork_update": {
+    "yellow": "Filled color disks with ring outlines for monochrome fallback",
+    "checks": "Fresh/bundled metadata and WOFF2 checks, controller tests, actual browser visual check passed; GSUB/GDEF/cmap/hmtx unchanged."
+  },
+  "refactor_review": {
+    "refactor": "Named register offsets, explicit guarded stages, shared GSUB construction, common gravity-update generator; original GSUB bytes preserved.",
+    "fixed": [
+      "Reference and longest-game board updates no longer disappear under Python -O.",
+      "Absent and synchronously failing Font Loading APIs use the normal failure feedback.",
+      "Undo removes entire Unicode codepoints instead of leaving unmatched surrogate halves.",
+      "Native handles clean up on setup failure; close is idempotent and shaping after close raises a clear error."
+    ],
+    "validation": "8 Python tests, 14,282 differential comparisons, Node controller tests, real browser Unicode undo and normal game checks.",
+    "remaining_actionable_findings": 0
+  }
+}
