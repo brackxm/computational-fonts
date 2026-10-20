@@ -1,22 +1,22 @@
 # Copyright 2026 Michael Brackx
 # SPDX-License-Identifier: Apache-2.0
-"""Compile a finite, acyclic, exactly solved game into a forward-reading font.
+"""Compile a finite, exactly solved game into a forward-reading font.
 
 Rules expose INITIAL=(board, player), moves(node), winner(node), and TOKENS.
-Players are 0 and 1; winner is None during play, or the winning player.
+Players are 0 and 1; winner is None during play, the winning player, or 2 (draw).
 All solving happens at build time. The resulting font contains transitions,
 not Python, and accepts only the human's moves after h (human first) or b.
 """
 from collections import defaultdict, deque
-from functools import cache
+import heapq
 
 from fontgame import GameFont, group
 from game_text import NAME_RECORDS, centered_lettering
 
 STATUS = {'ready': 1, 'computer_won': 2, 'human_won': 3,
-          'invalid': 4, 'malformed': 5, 'internal': 6}
+          'invalid': 4, 'malformed': 5, 'internal': 6, 'draw': 7}
 LABELS = ('Your turn', 'Font wins', 'You win', 'Invalid move',
-          'Check your input', 'Game error')
+          'Check your input', 'Game error', 'Draw')
 
 
 class Policy:
@@ -31,23 +31,50 @@ class Policy:
             self.graph[node] = {} if rules.winner(node) is not None else rules.moves(node)
             pending.extend(child for child in self.graph[node].values() if child not in self.graph)
         self.nodes = tuple(sorted(self.graph))
+        self.outcomes, self.distances = self._solve()
 
-    @cache
+    def _solve(self):
+        """Retrograde attractors; unresolved cycles are draws. Distance orders wins."""
+        parents = defaultdict(list)
+        remaining = {node: len(children) for node, children in self.graph.items()}
+        for node, options in self.graph.items():
+            for child in options.values():
+                parents[child].append(node)
+        outcomes, distances, longest, pending = {}, {}, defaultdict(int), []
+        for node in self.nodes:
+            winner = self.rules.winner(node)
+            if winner is not None:
+                outcomes[node], distances[node] = winner, 0
+                if winner != 2:
+                    heapq.heappush(pending, (0, node))
+        while pending:
+            distance, child = heapq.heappop(pending)
+            for parent in parents[child]:
+                if parent in outcomes:
+                    continue
+                winner = outcomes[child]
+                if winner == parent[1]:
+                    outcomes[parent], distances[parent] = winner, distance+1
+                    heapq.heappush(pending, (distance+1, parent))
+                else:
+                    remaining[parent] -= 1
+                    longest[parent] = max(longest[parent], distance)
+                    if remaining[parent] == 0:
+                        outcomes[parent], distances[parent] = winner, longest[parent]+1
+                        heapq.heappush(pending, (longest[parent]+1, parent))
+        for node in self.nodes:
+            if node not in outcomes:
+                outcomes[node], distances[node] = 2, None
+        return outcomes, distances
+
     def solve(self, node):
-        winner = self.rules.winner(node)
-        if winner is not None:
-            return winner, 0
-        outcomes = [self.solve(child) for child in self.graph[node].values()]
-        player = node[1]
-        wins = [distance for winner, distance in outcomes if winner == player]
-        if wins:
-            return player, 1 + min(wins)
-        return 1 - player, 1 + max(distance for _, distance in outcomes)
+        return self.outcomes[node], self.distances[node]
 
     def choose(self, node):
         winner, distance = self.solve(node)
         return min(token for token, child in self.graph[node].items()
-                   if self.solve(child) == (winner, distance - 1))
+                   if self.solve(child)[0] == winner and
+                   (winner == 2 or self.solve(child)[1] == distance - 1))
 
     def settle(self, node, human):
         """Play the font's turn(s), returning board, last token, and status."""
@@ -56,7 +83,8 @@ class Policy:
             last = self.choose(node)
             node = self.graph[node][last]
         winner = self.rules.winner(node)
-        status = 'ready' if winner is None else 'human_won' if winner == human else 'computer_won'
+        status = ('ready' if winner is None else 'draw' if winner == 2
+                  else 'human_won' if winner == human else 'computer_won')
         return node, last, status
 
     def replay(self, source):
@@ -107,6 +135,8 @@ def build_game(rules, title, output, frame, paint, highlight):
     lasts = {token: highlight(f, token) for token in rules.TOKENS}
     last_none = f.add('r_last_none')
     for (status, code), label in zip(STATUS.items(), LABELS):
+        if status == 'draw' and 2 not in policy.outcomes.values():
+            continue
         f.add('status_'+status, lambda p, s, label=label: centered_lettering(p, label, s+900, 30, 11),
               advance=code, color=1 if code < 4 else 2)
     tokens = {token: f.add(f'move_{i}') for i, token in enumerate(rules.TOKENS)}

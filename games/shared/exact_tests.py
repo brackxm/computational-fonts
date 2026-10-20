@@ -122,3 +122,33 @@ class ExactFontTests(unittest.TestCase):
             self.assertGreaterEqual(board.xMin, 0)
             self.assertLessEqual(board.xMax, 1800)
             self.assertLessEqual(board.yMax, 1250)
+
+    def test_long_policy_cycles(self):
+        for mode in 'hb':
+            root, _, status = self.policy.replay(mode)
+            if status != 'ready':
+                continue
+            paths, done = {root: mode}, set()
+            stack = [(root, mode, iter(self.policy.graph[root].items()))]
+            while stack:
+                node, source, options = stack[-1]
+                edge = next(options, None)
+                if edge is None:
+                    stack.pop()
+                    paths.pop(node)
+                    done.add(node)
+                    continue
+                token, child = edge
+                child, _, status = self.policy.settle(child, node[1])
+                if status != 'ready':
+                    continue
+                candidate = source+token
+                if child in paths:
+                    prefix = paths[child]
+                    cycle = candidate[len(prefix):]
+                    self.check_source(prefix+cycle*512)
+                    self.check_source(prefix+cycle*512+'?')
+                    return
+                if child not in done:
+                    paths[child] = candidate
+                    stack.append((child, candidate, iter(self.policy.graph[child].items())))
