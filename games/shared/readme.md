@@ -11,7 +11,9 @@ The exact-opponent games can use these independent helpers:
   old cursors and last-move marks, so loopy games need no fixed shaping clock.
   Optional preprocessors tokenize longer instructions before cursor execution.
   Drawing helpers cover original pixel lettering, circles, and components;
-  individual games can extend their font palette.
+  individual games can extend their font palette. A clock schedule may reuse
+  the same named lookup at multiple points; each call receives its own wrapper
+  while sharing the underlying substitution tables.
 - `game-controls.js`: one-run text transport, edit history, loading/shaping
   checks, status measurement, candidate submission, and stale-result clearing.
   The host supplies no board state or opponent strategy.

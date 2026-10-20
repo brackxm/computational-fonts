@@ -150,9 +150,10 @@ class GameFont:
         definitions=['languagesystem DFLT dflt;','languagesystem latn dflt;',
                      '@registers = '+group(registers)+';',
                      'table GDEF { GlyphClassDef , , @registers, ; } GDEF;',*self.definitions]
-        names=[*before,*stages,*after]
-        if len(set(names)) != len(names) or set(names) != set(self.coverages):
-            raise ValueError('Every stage must be scheduled exactly once before clock expansion')
+        schedule=[*before,*stages,*after]
+        names=list(dict.fromkeys(schedule))
+        if len(set(before)) != len(before) or set(names) != set(self.coverages):
+            raise ValueError('Schedule every lookup; direct prelude lookups must be unique')
         feature='feature liga { '+' '.join('lookup '+name+';' for name in names)+' } liga;'
         font=fb.font
         addOpenTypeFeaturesFromString(font,'\n'.join(definitions+self.lookups+[feature]))

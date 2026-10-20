@@ -115,7 +115,7 @@ class WythoffTests(unittest.TestCase):
                 if len(candidate)>len(best):best=candidate
             return best
         candidates=[(longest((a,b)),a,b) for a in range(64) for b in range(64) if a or b]
-        suffix,a,b=max(candidates)
+        suffix,a,b=max(candidates,key=lambda item:(len(item[0]),item[1:]))
         source=f'h{a:02},{b:02};'+suffix
         self.check_source(source)
         self.assertIn(self.shape(source)[2],('human_won','computer_won'))

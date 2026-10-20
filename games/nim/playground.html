@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Nim · a perfect opponent in a font</title>
+<style>
+@font-face{font-family:NimPerfect;src:url('./nim-font.ttf?v=1.0.1') format('truetype');font-display:block}
+:root{font-family:system-ui,sans-serif;color:#243e43;background:#faf8f2}body{max-width:1100px;margin:30px auto;padding:0 20px}h1{margin-bottom:8px}p{line-height:1.6}a{color:#246269}button,input,select,textarea{font:inherit}button,input,select{padding:9px 12px;border:1px solid #9daba9;border-radius:6px;background:white;color:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #bd872a;outline-offset:3px}input[type=number]{width:4em}textarea{display:block;box-sizing:border-box;width:100%;padding:12px;margin:8px 0;font-family:ui-monospace,monospace;border:1px solid #9daba9;border-radius:8px;resize:vertical}.board{background:white;border:1px solid #dadfd8;border-radius:12px;padding:12px;margin:20px 0}.board svg{display:block;width:100%;height:auto;max-height:450px}.replay{font-family:NimPerfect;font-size:1000px;font-feature-settings:"liga" 1,"kern" 0;font-variant-ligatures:common-ligatures;font-kerning:none;letter-spacing:0;word-spacing:0;white-space:pre;direction:ltr;unicode-bidi:isolate;fill:#243e43}#status{padding:12px 16px;background:#e9eee8;border-radius:6px;min-height:26px}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}label{display:inline-flex;gap:8px;align-items:center}fieldset{border:1px solid #bac7c1;border-radius:8px;padding:0 16px;margin-top:12px}legend{padding:0 6px}footer{margin-top:28px;padding-top:15px;border-top:1px solid #ccd3ca}.probe-holder{position:fixed;top:0;left:0;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none}.probe{display:inline-block;width:max-content;white-space:pre;font:1000px/1 NimPerfect;font-feature-settings:"liga" 1,"kern" 0;font-kerning:none;letter-spacing:0;word-spacing:0;direction:ltr;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<p><a href="../../index.html">← Computational fonts</a></p>
+<h1>Nim</h1>
+<p>Take any positive number of tokens from <strong>one heap</strong>. In normal play, taking the last token wins; in <strong>misère</strong> play, it loses. The font plays both versions perfectly and computes the displayed XOR itself.</p>
+<details><summary>New game settings</summary><fieldset><legend>Three heaps, 0–31 tokens each</legend><div class="controls"><label for="startA">A <input id="startA" type="number" min="0" max="31" step="1" value="3"></label><label for="startB">B <input id="startB" type="number" min="0" max="31" step="1" value="5"></label><label for="startC">C <input id="startC" type="number" min="0" max="31" step="1" value="7"></label></div><div class="controls"><label for="rule">Rule <select id="rule"><option value="N">Normal · last token wins</option><option value="M">Misère · last token loses</option></select></label><label for="first">First move <select id="first"><option value="b">Font</option><option value="h">You</option></select></label></div></fieldset><p>At least one starting token is required. The default is a forced font win. Try 1, 1, 1 in misère mode with the font first: you can beat its perfect play from that losing start.</p></details>
+<div class="controls" aria-label="Your take"><label for="heap">Heap <select id="heap"><option>A</option><option>B</option><option>C</option></select></label><label for="amount">Take <input id="amount" type="number" min="1" max="31" step="1" value="1"></label><button id="play">Take tokens</button><button id="undo" disabled>Undo</button><button id="reset">New game</button></div>
+<p id="status" role="status" aria-live="polite">Loading Nim font…</p>
+<div class="board"><svg viewBox="0 0 1806 1180" role="img" aria-labelledby="status"><text id="drawing" class="replay" x="0" y="1150"></text></svg></div>
+<p>The binary columns show each heap’s size. The gold XOR row is calculated inside the font from the current heaps. A zero XOR is a losing normal-play position. Misère play needs a different rule when only one large heap, or just single tokens, remains.</p>
+<p><label for="record"><strong>Your move history</strong></label></p>
+<textarea id="record" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">bN03,05,07;</textarea>
+<p id="syntax">A header such as <code>bN03,05,07;</code> selects font-first normal play; <code>hM01,03,05;</code> selects human-first misère. Append only your takes: <code>A02;</code>, <code>B01;</code>, or <code>C04;</code>. Always use two digits. Spaces and line breaks are allowed; a finished game ignores trailing input. JavaScript passes text and reads the font’s status.</p>
+<footer><a href="readme.md">Exact strategy, font protocol, and verification</a> · <a href="nim-font.ttf" download>Download font</a> · Original artwork · Apache 2.0</footer>
+<script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createNimPlayground();</script>
+</body>
+</html>
