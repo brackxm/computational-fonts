@@ -70,6 +70,9 @@ class Policy:
     def solve(self, node):
         return self.outcomes[node], self.distances[node]
 
+    def draw_status(self, node, human):
+        return 'invalid' if self.solve(node)[0] == 1-human else 'draw'
+
     def choose(self, node):
         winner, distance = self.solve(node)
         return min(token for token, child in self.graph[node].items()
@@ -96,6 +99,8 @@ class Policy:
         node, last, status = self.settle(node, human)
         text = text[1:]
         while text and status == 'ready':
+            if getattr(self.rules, 'DRAW_OFFER', False) and text.startswith('='):
+                return node, last, self.draw_status(node, human)
             token, separator, text = text.partition(';')
             token += separator
             if token not in self.rules.TOKENS:
@@ -119,9 +124,17 @@ def build_game(rules, title, output, frame, paint, highlight):
     for human in (0, 1):
         text = 'You play first' if human == 0 else 'Font plays first'
         f.add(f'role_{human}', lambda p, s, text=text: centered_lettering(p, text, s+900, 165, 9, weight='regular'))
+    if getattr(rules, 'HINTS', False):
+        for key, text in (('win', 'You can force a win'), ('loss', 'Font can force a win'), ('draw', 'Draw with perfect play')):
+            f.add('hint_'+key, lambda p, s, text=text: centered_lettering(p, text, s+900, 230, 8, weight='regular'))
 
     def state(name, node, human):
-        return f.layered(name, [*paints[node[0]], (f'role_{human}', 0)])
+        layers = [*paints[node[0]], (f'role_{human}', 0)]
+        if getattr(rules, 'HINTS', False):
+            winner = policy.solve(node)[0]
+            hint = 'draw' if winner == 2 else 'win' if winner == human else 'loss'
+            layers.append(('hint_'+hint, 0))
+        return f.layered(name, layers)
 
     header = state('r_header', rules.INITIAL, 0)
     active, stopped = {}, {}
@@ -135,7 +148,7 @@ def build_game(rules, title, output, frame, paint, highlight):
     lasts = {token: highlight(f, token) for token in rules.TOKENS}
     last_none = f.add('r_last_none')
     for (status, code), label in zip(STATUS.items(), LABELS):
-        if status == 'draw' and 2 not in policy.outcomes.values():
+        if status == 'draw' and 2 not in policy.outcomes.values() and not getattr(rules, 'DRAW_OFFER', False):
             continue
         f.add('status_'+status, lambda p, s, label=label: centered_lettering(p, label, s+900, 30, 11),
               advance=code, color=1 if code < 4 else 2)
@@ -164,6 +177,9 @@ def build_game(rules, title, output, frame, paint, highlight):
         node = pending.popleft()
         human = node[1]
         name, options = active[node], policy.graph[node]
+        if getattr(rules, 'DRAW_OFFER', False):
+            status = policy.draw_status(node, human)
+            transitions.append(f'sub {name} {raw["="]}\' by {stop(node, human, status)};')
         bad = [token for key, token in tokens.items() if key not in options]
         if bad:
             transitions.append(f'sub {name} {group(bad)}\' by {stop(node, human, "invalid")};')

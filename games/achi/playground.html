@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Achi · a perfect opponent in a font</title>
+<style>
+@font-face{font-family:AchiPerfect;src:url('./achi-font.ttf?v=1.1.0') format('truetype');font-display:block}
+:root{--game-font:AchiPerfect}
+</style>
+<link rel="stylesheet" href="../shared/exact-game.css">
+</head>
+<body>
+<p><a href="../../index.html">← Computational fonts</a></p>
+<h1>Achi</h1>
+<p>Berkeley’s three-counter Achi variant: place three counters each, then slide one along a board line to an adjacent empty point. <strong>Make three in a straight row to win, during either phase.</strong></p>
+<div class="controls"><label for="setup">Your side <select id="setup"><option value="h">You first · solid teal</option><option value="b">Font first · you are red rings</option></select></label><button id="reset">New game</button><button id="undo" disabled>Undo</button><button data-move="=">Offer draw</button></div>
+<div class="controls" aria-label="Your move"><label for="action">Action <select id="action"><option value="place">Place</option><option value="slide">Slide</option></select></label><label for="from">From (slide only) <select id="from"><option>A1</option><option>B1</option><option>C1</option><option>A2</option><option>B2</option><option>C2</option><option>A3</option><option>B3</option><option>C3</option></select></label><label for="to">To <select id="to"><option>A1</option><option>B1</option><option>C1</option><option>A2</option><option>B2</option><option>C2</option><option>A3</option><option>B3</option><option>C3</option></select></label><button id="play">Play counter</button></div>
+<p id="status" role="status" aria-live="polite">Loading Achi font…</p>
+<div class="board"><svg viewBox="0 0 1806 1280" role="img" aria-labelledby="status"><text id="drawing" class="replay" x="0" y="1250"></text></svg></div>
+<p>Rows run upwards. The font labels the current phase and solved outlook. Gold rings mark its last destination. Sliding follows the drawn lines with no jumping. Cycles can continue indefinitely; use Offer draw to finish by agreement. The font accepts when it has no forced win. This is the three-counter variant; four-counter Achi is a different game.</p>
+<p><label for="record"><strong>Your move history</strong></label></p>
+<textarea id="record" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">h</textarea>
+<p id="syntax"><code>h</code> means you start; <code>b</code> means the font starts. Append only your moves: <code>A1;</code> places at A1; <code>A1A2;</code> slides from A1 to A2. Every move ends with a semicolon. Append <code>=</code> to offer a draw. Spaces and line breaks are allowed. The font handles all rules, replies, draw decisions and artwork.</p>
+<footer><a href="readme.md">Complete solution, notation, protocol, and tests</a> · <a href="achi-font.ttf" download>Download font</a> · Original game artwork · Roboto typography · Apache 2.0</footer>
+<script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createAchiPlayground();</script>
+</body>
+</html>

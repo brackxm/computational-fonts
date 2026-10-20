@@ -48,9 +48,13 @@ class ExactFontTests(unittest.TestCase):
                 continue
             outcomes = [self.policy.solve(child) for child in options.values()]
             wins = [d for w, d in outcomes if w == node[1]]
-            self.assertEqual((winner, distance), (node[1], 1+min(wins)) if wins
-                             else (1-node[1], 1+max(d for _, d in outcomes)))
-            self.assertEqual(self.policy.solve(options[self.policy.choose(node)]), (winner, distance-1))
+            expected = ((node[1], 1+min(wins)) if wins else (2, None) if any(w == 2 for w, _ in outcomes)
+                        else (1-node[1], 1+max(d for _, d in outcomes)))
+            self.assertEqual((winner, distance), expected)
+            chosen = self.policy.solve(options[self.policy.choose(node)])
+            self.assertEqual(chosen[0], winner)
+            if winner != 2:
+                self.assertEqual(chosen[1], distance-1)
 
     def test_every_compiled_action(self):
         with TTFont(self.font) as font, tempfile.TemporaryDirectory() as temp:
@@ -75,7 +79,10 @@ class ExactFontTests(unittest.TestCase):
                             self.assertEqual(run(name, token), expected, (name, token))
                         for text in ('?', 'h', 'b', self.rules.TOKENS[0][:-1], '🙂', '\ue000', '\0'):
                             self.assertEqual(run(name, text), (node, None, 'malformed'), (name, text))
-                    elif name.startswith(('r_invalid_', 'r_malformed_', 'r_computer_won_', 'r_human_won_')):
+                        if getattr(self.rules, 'DRAW_OFFER', False):
+                            status = 'invalid' if self.policy.solve(node)[0] == 1-node[1] else 'draw'
+                            self.assertEqual(run(name, '='), (node, None, status))
+                    elif name.startswith(('r_invalid_', 'r_malformed_', 'r_computer_won_', 'r_human_won_', 'r_draw_')):
                         status = name[2:].rsplit('_', 2)[0]
                         node = self.policy.nodes[int(name.rsplit('_', 1)[1])]
                         self.assertEqual(run(name, 'h?🙂'+self.rules.TOKENS[0]*4), (node, None, status))

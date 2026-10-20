@@ -4,7 +4,7 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 36 playgrounds in your browser, with no installation needed.
+explore all 37 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
@@ -41,6 +41,7 @@ explore all 36 playgrounds in your browser, with no installation needed.
 | [Dodgem](games/dodgem/) | perfect opponent on either side | standard 3×3 car race; human-only moves | [Browser playground](games/dodgem/playground.html) |
 | [Domineering](games/domineering/) | perfect opponent on either side | solved 4×4 board; vertical versus horizontal dominoes | [Browser playground](games/domineering/playground.html) |
 | [Kayles](games/kayles/) | perfect opponent on either side | twelve pins; remove one or two original neighbors | [Browser playground](games/kayles/playground.html) |
+| [Achi](games/achi/) | perfect win/loss/draw opponent | Berkeley three-counter variant; placement and sliding | [Browser playground](games/achi/playground.html) |
 | [Tic-tac-toe](games/tic-tac-toe/) | perfect opponent on either side | standard 3×3 board; complete policy in 150 KB | [Browser playground](games/tic-tac-toe/playground.html) |
 | [The Last Light — text adventure](games/text-adventure/) | escape-room game | semicolon-terminated commands | [ODT specimen](games/text-adventure/text-adventure.odt) |
 | [SMILES diagrams](graphics/smiles/) | molecular graph renderer | bounded SMILES with atoms, bonds, branches and rings | [ODT specimen](graphics/smiles/smiles.odt) |
