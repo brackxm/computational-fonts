@@ -102,6 +102,13 @@ class GameFont:
         self.lookups.append(f'lookup {name} useExtension {{\n{flag}\n'+'\n'.join(rules)+f'\n}} {name};')
         self.coverages[name] = coverage
 
+    def layered(self,name,layers):
+        """Combine colored layers with the same positioned monochrome fallback."""
+        layers=list(layers)
+        result=self.add(name,components(part for part,color in layers))
+        self.layers[result]=layers
+        return result
+
     def forward_program(self,initial,states,lasts,stopped,transitions,finish,*,inputs=None,preprocess=()):
         """Read a finite-state cursor program in one forward GSUB pass.
 

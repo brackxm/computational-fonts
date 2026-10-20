@@ -10,7 +10,8 @@ The exact-opponent games can use these independent helpers:
   forward cursor pipeline reads finite-state programs in one pass, then deletes
   old cursors and last-move marks, so loopy games need no fixed shaping clock.
   Optional preprocessors tokenize longer instructions before cursor execution.
-  Drawing helpers cover original pixel lettering, circles, and components;
+  Drawing helpers cover original pixel lettering, circles, and components.
+  `layered()` shares positioned parts between COLRv0 and monochrome output;
   individual games can extend their font palette. A clock schedule may reuse
   the same named lookup at multiple points; each call receives its own wrapper
   while sharing the underlying substitution tables.
