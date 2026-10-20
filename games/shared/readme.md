@@ -21,6 +21,7 @@ The exact-opponent games can use these independent helpers:
 - `native_font.py`: persistent HarfBuzz binding for testing real font outputs.
 - `game_text.py`: smooth, proportionally spaced labels from the bundled Roboto
   Regular/Bold outlines, with ink centering and retained quadratic curves.
+- `exact-game.css`: shared presentation styling for finite-policy playgrounds.
 - `exactgame.py`: build-time exact finite-game policies and their forward-cursor
   font compiler. Games provide their own rules, move tokens, and artwork.
 - `exact_tests.py` and `exact-controls-tests.cjs`: exhaustive compiled-policy

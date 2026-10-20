@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Domineering · a perfect opponent in a font</title>
+<style>
+@font-face{font-family:DomineeringPerfect;src:url('./domineering-font.ttf?v=1.1.0') format('truetype');font-display:block}
+:root{--game-font:DomineeringPerfect}
+</style>
+<link rel="stylesheet" href="../shared/exact-game.css">
+</head>
+<body>
+<p><a href="../../index.html">← Computational fonts</a></p>
+<h1>Domineering</h1>
+<p>Cover two empty squares with a domino. The first player places only vertical dominoes; the second places only horizontal dominoes. <strong>The player with no legal placement loses.</strong></p>
+<div class="controls"><label for="setup">Your side <select id="setup"><option value="h">You first · Vertical</option><option value="b">Font first · you are Horizontal</option></select></label><button id="reset">New game</button><button id="undo" disabled>Undo</button></div>
+<div class="controls" aria-label="Your move"><label for="column">Column <select id="column"><option>A</option><option>B</option><option>C</option><option>D</option></select></label><label for="row">Row <select id="row"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label><label for="direction">Orientation <select id="direction"><option value="V">Vertical</option><option value="H">Horizontal</option></select></label><button id="play">Place domino</button></div>
+<p id="status" role="status" aria-live="polite">Loading Domineering font…</p>
+<div class="board"><svg viewBox="0 0 1806 1280" role="img" aria-labelledby="status"><text id="drawing" class="replay" x="0" y="1250"></text></svg></div>
+<p>Rows run upwards. A vertical domino extends up from its coordinate; a horizontal domino extends right. Teal dominoes are Vertical, red dominoes Horizontal. The gold outline marks the latest font placement. Vertical can force a win on this 4×4 board.</p>
+<p><label for="record"><strong>Your move history</strong></label></p>
+<textarea id="record" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">h</textarea>
+<p id="syntax"><code>h</code> means you play Vertical first; <code>b</code> means you play Horizontal second. Append only your placements ending in a semicolon: <code>hA2V;</code>. Spaces and line breaks are allowed. The font checks every placement, plays perfect replies, and draws the dominoes.</p>
+<footer><a href="readme.md">Complete solution, notation, protocol, and tests</a> · <a href="domineering-font.ttf" download>Download font</a> · Original game artwork · Roboto typography · Apache 2.0</footer>
+<script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createDomineeringPlayground();</script>
+</body>
+</html>
