@@ -34,6 +34,27 @@ def lettering(pen,text,x,y,size=7):
         x += 4*size
 
 
+def centered_lettering(pen,text,center_x,y,size=9):
+    lettering(pen,text,center_x-2*size*len(text),y,size)
+
+
+def circle(pen,x,y,r,reverse=False):
+    sign=-1 if reverse else 1
+    pen.moveTo((x+r,y))
+    for control,end in (((x+r,y+sign*r),(x,y+sign*r)),((x-r,y+sign*r),(x-r,y)),
+                        ((x-r,y-sign*r),(x,y-sign*r)),((x+r,y-sign*r),(x+r,y))):
+        pen.qCurveTo(control,end)
+    pen.closePath()
+
+
+def components(names):
+    """Group positioned glyphs without applying the overlay translation twice."""
+    names=tuple(names)
+    def draw(pen,shift):
+        for name in names:pen.addComponent(name,(1,0,0,1,0,0))
+    return draw
+
+
 def group(names):
     return '['+' '.join(names)+']'
 
@@ -51,6 +72,7 @@ def clock_wrapper(font,index,names):
 class GameFont:
     def __init__(self,family,width=1800,height=1000):
         self.family,self.width,self.height = family,width,height
+        self.palette=('30484c','246b72','ae4a3c','bd872a')
         self.glyphs,self.metrics,self.layers,self.order = {},{},{},[]
         self.definitions,self.lookups,self.coverages = [],[],{}
         for name in ('.notdef','hidden','begin','end'):
@@ -80,25 +102,28 @@ class GameFont:
         self.lookups.append(f'lookup {name} useExtension {{\n{flag}\n'+'\n'.join(rules)+f'\n}} {name};')
         self.coverages[name] = coverage
 
-    def forward_program(self,initial,states,lasts,stopped,transitions,finish):
+    def forward_program(self,initial,states,lasts,stopped,transitions,finish,*,inputs=None,preprocess=()):
         """Read a finite-state cursor program in one forward GSUB pass.
 
-        Each transition replaces the current input character with its new
+        Each transition replaces the current input token with its new
         cursor and optional last-move mark. It leaves the previous cursor as
         context for this lookup; cleanup deletes all but the latest values.
-        No clock or turn limit is added. Callers supply complete transitions.
+        No clock or turn limit is added. Optional preprocessors tokenize source
+        after whitespace removal. Callers supply complete transitions/inputs.
         """
         if not states or not lasts or not stopped:
             raise ValueError('Forward programs require cursor, last-move, and stopped states')
-        raw=list(self.raw.values())
+        raw=list(self.raw.values()) if inputs is None else list(inputs)
+        preprocess=tuple(preprocess)
         freeze=f'sub {group(stopped)} {group(raw)}\' by NULL;'
         self.lookup('SPACE',[f'sub {self.raw[" "]} by NULL;'],[self.raw[' ']])
+        for name,rules,coverage in preprocess:self.lookup(name,rules,coverage)
         self.lookup('INIT',['sub begin by '+' '.join(initial)+';'],['begin'])
         self.lookup('TRANSITION',[freeze,*transitions],raw,states)
         self.lookup('FINISH',finish,['end'],states)
         self.lookup('LAST_CLEAN',[f'sub {group(lasts)}\' {group(lasts)} by NULL;'],lasts,lasts)
         self.lookup('STATE_CLEAN',[f'sub {group(states)}\' {group(states)} by NULL;'],states,states)
-        return ['SPACE','INIT','TRANSITION','FINISH','LAST_CLEAN','STATE_CLEAN']
+        return ['SPACE',*[name for name,_,_ in preprocess],'INIT','TRANSITION','FINISH','LAST_CLEAN','STATE_CLEAN']
 
     def save(self,output,before,stages,after,passes):
         fb = FontBuilder(1000,isTTF=True)
@@ -120,8 +145,7 @@ class GameFont:
             'licenseInfoURL':'https://www.apache.org/licenses/LICENSE-2.0'})
         fb.setupOS2(sTypoAscender=self.height,sTypoDescender=-30,usWinAscent=self.height,usWinDescent=30,fsType=0)
         fb.setupPost(); fb.setupMaxp(); fb.setupCOLR(self.layers,version=0)
-        palette=('30484c','246b72','ae4a3c','bd872a')
-        fb.setupCPAL([[tuple(int(c[i:i+2],16)/255 for i in (0,2,4))+(1.,) for c in palette]])
+        fb.setupCPAL([[tuple(int(c[i:i+2],16)/255 for i in (0,2,4))+(1.,) for c in self.palette]])
         registers=[name for name in self.order if name.startswith('r_')]
         definitions=['languagesystem DFLT dflt;','languagesystem latn dflt;',
                      '@registers = '+group(registers)+';',
