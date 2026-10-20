@@ -24,6 +24,7 @@ async function checkController(config){
   e.setup.value='b';e.reset.onclick();assert.equal(e.record.value,'b');
   assert.equal(e.status.dataset.signal,'1');
   for(const [id,value] of Object.entries(config.resetValues||{}))assert.equal(e[id].value,value);
+  if(config.afterResetMove){e.play.onclick();assert.equal(e.record.value,config.afterResetMove);}
   e.record.value='h';e.record.listeners.input();
   assert.equal(e.status.dataset.signal,'0');assert.equal(e.drawing.textContent,'');
   assert.equal(e.play.disabled,true);

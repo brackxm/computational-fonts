@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dots and Boxes · a perfect opponent in a font</title>
+<style>
+@font-face{font-family:DotsAndBoxesPerfect;src:url('./dots-and-boxes-font.ttf?v=1.1.0') format('truetype');font-display:block}
+:root{--game-font:DotsAndBoxesPerfect}
+</style>
+<link rel="stylesheet" href="../shared/exact-game.css">
+</head>
+<body>
+<p><a href="../../index.html">← Computational fonts</a></p>
+<h1>Dots and Boxes</h1>
+<p>Draw an edge between neighboring dots. Completing a box claims it for you and earns another move. <strong>When all twelve edges are drawn, the player with more of the four boxes wins.</strong></p>
+<div class="controls"><label for="setup">Your side <select id="setup"><option value="h">You first · solid teal</option><option value="b">Font first · you are red rings</option></select></label><button id="reset">New game</button><button id="undo" disabled>Undo</button></div>
+<div class="controls" aria-label="Your move"><label for="column">Column <select id="column"><option>A</option><option>B</option><option>C</option></select></label><label for="row">Row <select id="row"><option>1</option><option>2</option><option>3</option></select></label><label for="direction">Direction <select id="direction"><option value="H">Horizontal · right</option><option value="V">Vertical · up</option></select></label><button id="play">Draw edge</button></div>
+<p id="status" role="status" aria-live="polite">Loading Dots and Boxes font…</p>
+<div class="board"><svg viewBox="0 0 1806 1280" role="img" aria-labelledby="status"><text id="drawing" class="replay" x="0" y="1250"></text></svg></div>
+<p>Rows run upwards. First and Second show the box scores. A solid teal disk marks a first-player box; a red ring marks a second-player box. Gold marks the font’s latest edge. If you complete a box, submit your next edge yourself; the font automatically plays all of its own bonus moves. Perfect first play wins 3–1 on this board.</p>
+<p><label for="record"><strong>Your move history</strong></label></p>
+<textarea id="record" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">h</textarea>
+<p id="syntax"><code>h</code> means you start; <code>b</code> means the font starts. Append only your edges: <code>A1H;</code> draws right from A1; <code>B2V;</code> draws up from B2. Each edge ends with a semicolon. Spaces and line breaks are allowed. The font handles legality, scoring, bonus turns, perfect replies and artwork.</p>
+<footer><a href="readme.md">Complete solution, notation, protocol, and tests</a> · <a href="dots-and-boxes-font.ttf" download>Download font</a> · Original game artwork · Roboto typography · Apache 2.0</footer>
+<script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createDotsAndBoxesPlayground();</script>
+</body>
+</html>

@@ -4,6 +4,7 @@
 
 Rules expose INITIAL=(board, player), moves(node), winner(node), and TOKENS.
 Players are 0 and 1; winner is None during play, the winning player, or 2 (draw).
+An optional choose(node) supplies a score-optimal policy for scoring games.
 All solving happens at build time. The resulting font contains transitions,
 not Python, and accepts only the human's moves after h (human first) or b.
 """
@@ -74,6 +75,8 @@ class Policy:
         return 'invalid' if self.solve(node)[0] == 1-human else 'draw'
 
     def choose(self, node):
+        if hasattr(self.rules, 'choose'):
+            return self.rules.choose(node)
         winner, distance = self.solve(node)
         return min(token for token, child in self.graph[node].items()
                    if self.solve(child)[0] == winner and
