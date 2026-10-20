@@ -51,7 +51,16 @@ computational glyphs and OpenType substitution rules. Their embedded metadata
 preserves Google’s copyright, trademark, and license records and identifies
 these modifications and Michael Brackx’s copyright.
 
-Fonts built from original geometric outlines do not incorporate Roboto.
+Fonts built solely from original geometric outlines do not incorporate Roboto.
+
+## Game font typography
+
+Game fonts built with `games/shared/game_text.py` use decomposed outlines from
+the pinned Roboto Regular and Bold sources above for their titles, coordinates
+and status labels. The generated fonts retain Google's copyright, trademark,
+and Apache-2.0 attribution and identify Michael Brackx's modifications. Board
+artwork remains original. Text is baked into the font at build time; no
+installed typeface or runtime font download is required.
 
 ## SKI evaluator
 

@@ -70,8 +70,9 @@ def clock_wrapper(font,index,names):
 
 
 class GameFont:
-    def __init__(self,family,width=1800,height=1000):
+    def __init__(self,family,width=1800,height=1000,*,name_records=None):
         self.family,self.width,self.height = family,width,height
+        self.name_records = dict(name_records or {})
         self.palette=('30484c','246b72','ae4a3c','bd872a')
         self.glyphs,self.metrics,self.layers,self.order = {},{},{},[]
         self.definitions,self.lookups,self.coverages = [],[],{}
@@ -145,11 +146,13 @@ class GameFont:
         fb.setupGlyf(self.glyphs); fb.setupHorizontalMetrics(self.metrics)
         fb.setupHorizontalHeader(ascent=self.height,descent=-30)
         psname = ''.join(c for c in self.family if c.isalnum())+'-Regular'
-        fb.setupNameTable({'familyName':self.family,'styleName':'Regular',
+        names={'familyName':self.family,'styleName':'Regular',
             'fullName':self.family+' Regular','psName':psname,'uniqueFontIdentifier':psname+'-1.0',
             'version':'Version 1.0','copyright':'Copyright 2026 Michael Brackx',
             'licenseDescription':'Licensed under the Apache License, Version 2.0',
-            'licenseInfoURL':'https://www.apache.org/licenses/LICENSE-2.0'})
+            'licenseInfoURL':'https://www.apache.org/licenses/LICENSE-2.0'}
+        names.update(self.name_records)
+        fb.setupNameTable(names)
         fb.setupOS2(sTypoAscender=self.height,sTypoDescender=-30,usWinAscent=self.height,usWinDescent=30,fsType=0)
         fb.setupPost(); fb.setupMaxp(); fb.setupCOLR(self.layers,version=0)
         fb.setupCPAL([[tuple(int(c[i:i+2],16)/255 for i in (0,2,4))+(1.,) for c in self.palette]])

@@ -19,6 +19,12 @@ The exact-opponent games can use these independent helpers:
   checks, status measurement, candidate submission, and stale-result clearing.
   The host supplies no board state or opponent strategy.
 - `native_font.py`: persistent HarfBuzz binding for testing real font outputs.
+- `game_text.py`: smooth, proportionally spaced labels from the bundled Roboto
+  Regular/Bold outlines, with ink centering and retained quadratic curves.
+- `exactgame.py`: build-time exact finite-game policies and their forward-cursor
+  font compiler. Games provide their own rules, move tokens, and artwork.
+- `exact_tests.py` and `exact-controls-tests.cjs`: exhaustive compiled-policy
+  checks and real-font controller checks for games using that compiler.
 - `controller-harness.cjs`: browser-controller test doubles whose measurements
   come from the actual font through `hb-shape`.
 
