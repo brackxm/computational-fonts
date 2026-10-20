@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kayles · a perfect opponent in a font</title>
+<style>
+@font-face{font-family:KaylesPerfect;src:url('./kayles-font.ttf?v=1.1.0') format('truetype');font-display:block}
+:root{--game-font:KaylesPerfect}
+</style>
+<link rel="stylesheet" href="../shared/exact-game.css">
+</head>
+<body>
+<p><a href="../../index.html">← Computational fonts</a></p>
+<h1>Kayles</h1>
+<p>Knock down one pin or two neighboring pins. <strong>Taking the last pin wins.</strong> Pins stay in their original numbered positions; gaps never close.</p>
+<div class="controls"><label for="setup">Who starts? <select id="setup"><option value="h">You first</option><option value="b">Font first</option></select></label><button id="reset">New game</button><button id="undo" disabled>Undo</button></div>
+<div class="controls" aria-label="Your move"><label for="pin">First pin <select id="pin"><option>01</option><option>02</option><option>03</option><option>04</option><option>05</option><option>06</option><option>07</option><option>08</option><option>09</option><option>10</option><option>11</option><option>12</option></select></label><label for="kind">Remove <select id="kind"><option value="S">One pin</option><option value="D">This pin and the next</option></select></label><button id="play">Knock down</button></div>
+<p id="status" role="status" aria-live="polite">Loading Kayles font…</p>
+<div class="board"><svg viewBox="0 0 1806 1280" role="img" aria-labelledby="status"><text id="drawing" class="replay" x="0" y="1250"></text></svg></div>
+<p>The gold box marks the font’s most recent removal. Every original pin number stays visible after its pin falls. The first player can force a win, but must keep making winning replies.</p>
+<p><label for="record"><strong>Your move history</strong></label></p>
+<textarea id="record" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">h</textarea>
+<p id="syntax"><code>h</code> means you start; <code>b</code> means the font starts. Append only your removals: <code>01S;</code> removes pin 01; <code>06D;</code> removes pins 06 and 07. Use two-digit pin numbers and end each move with a semicolon. Spaces and line breaks are allowed. All rules and replies run inside the font.</p>
+<footer><a href="readme.md">Complete solution, notation, protocol, and tests</a> · <a href="kayles-font.ttf" download>Download font</a> · Original game artwork · Roboto typography · Apache 2.0</footer>
+<script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createKaylesPlayground();</script>
+</body>
+</html>
