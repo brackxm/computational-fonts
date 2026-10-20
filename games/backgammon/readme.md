@@ -23,8 +23,8 @@ Black as solid checkers, four separate bar/off counters, and the latest dice
 with their player. Each occupied point shows its exact count (1–15), with up
 to five checker outlines. Point numbers use White's orientation; uppercase
 labels A–X refer to the input's lowercase coordinates. COLR/CPAL v0 supplies
-color; monochrome outlines remain available. No external artwork or base font
-is used. This project does not currently include an ODT specimen.
+color; monochrome outlines remain available. This project does not currently
+include an ODT specimen.
 
 ## Supported SGF subset
 
@@ -197,6 +197,11 @@ SGF interpretation and position updates inside OpenType shaping. No claim of
 being the first implementation is made; prior-art research is not exhaustive.
 Their artwork and fonts are not bundled or reused.
 
-Original board, checkers, pips and lettering; Copyright 2026 Michael Brackx.
+Original board, checkers and pips; Copyright 2026 Michael Brackx.
 Apache License 2.0; see the root [LICENSE](../../LICENSE). Font metadata permits
 editable embedding (`fsType=0`).
+
+Coordinates, counts, and diagnostics use smooth, proportional Roboto 2 outlines
+baked into the font by [`game_text.py`](../shared/game_text.py). Roboto is
+Copyright 2015 Google Inc., Apache 2.0; the font metadata retains its attribution.
+See the root [third-party notices](../../THIRD_PARTY_NOTICES.md).

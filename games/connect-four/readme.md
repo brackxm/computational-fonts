@@ -45,7 +45,7 @@ Without COLR/CPAL color, Yellow falls back to a hollow ring so the players
 remain distinguishable. An arrow identifies
 Red's last column. The font draws the board, column labels and status words.
 The browser provides an accessible textual status and responsive sizing.
-There is no external base font, image artwork, or ODT specimen.
+The font embeds its lettering and geometric artwork; there is no ODT specimen.
 
 ## Rejections and terminal positions
 
@@ -222,12 +222,13 @@ one uninterrupted run; inserting formatting/script breaks can split its state.
 The generated [font measurements](connect-four-font.json) and recorded
 [verification report](verification.json) give exact sizes and timings. The font
 has **1,855 glyphs**, **1,567 physical GSUB lookups**, five shared stage programs
-and 312 shared instruction records. It is approximately **430 KiB TTF** or
-**43.4 KiB WOFF2**. These are measured sizes, not minimum-size claims.
+and 312 shared instruction records. It is approximately **424.4 KiB TTF** or
+**44.9 KiB WOFF2**. These are measured sizes, not minimum-size claims.
 
 On this development machine, shaping across tested human histories, including
-intermediate prefixes, takes **1.51 ms median**; the 41-ply witness takes
-**9.82 ms median** with a persistent HarfBuzz font. Timing includes Python result extraction and varies by machine,
+intermediate prefixes, takes **2.73 ms median**; the 41-ply witness takes
+**13.24 ms median** with a persistent HarfBuzz font during the multi-suite test
+run. Timing includes Python result extraction and varies by machine,
 engine, cache and history. It excludes font loading and process startup.
 
 ## License
@@ -237,3 +238,8 @@ exception to the repository's Apache-2.0 default. Strategy-bearing Python and
 font artifacts are GPL-3.0-only. Presentation/controller code and the generic
 shaping harness are Apache-2.0. See [PROVENANCE.md](PROVENANCE.md) for the exact
 file scope and the preserved [upstream license](upstream/LICENSE).
+
+Column numbers, player labels, and diagnostics use smooth, proportional
+Roboto 2 outlines baked into the font by [`game_text.py`](../shared/game_text.py).
+Roboto is Copyright 2015 Google Inc., Apache 2.0. The generated fonts retain
+this attribution and their GPL-3.0-only license; see [PROVENANCE.md](PROVENANCE.md).

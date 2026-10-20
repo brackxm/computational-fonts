@@ -57,20 +57,25 @@ class BackgammonFontTests(unittest.TestCase):
         cls.fonts = [PROJECT / "backgammon-font.ttf", cls.fresh]
 
     def test_safe_import_and_default_output(self):
-        # Build from an unrelated working directory with only the copied builder.
-        script = self.directory / "build.py"
-        shutil.copyfile(PROJECT / "build.py", script)
-        subprocess.run([sys.executable, "-c", "import build"], cwd=self.directory, check=True)
-        self.assertFalse(script.with_name("backgammon-font.ttf").exists())
-        subprocess.run([sys.executable, str(script)], cwd=self.directory, check=True,
-                       capture_output=True, timeout=180)
-        self.assertTrue(script.with_name("backgammon-font.ttf").is_file())
+        # Import from an unrelated working directory without producing output.
+        subprocess.run([sys.executable, "-c", f"import sys; sys.path.insert(0, {str(PROJECT)!r}); import build"],
+                       cwd=self.directory, check=True)
+        self.assertFalse((self.directory / "backgammon-font.ttf").exists())
+        import importlib.util
+        spec = importlib.util.spec_from_file_location('backgammon_builder', PROJECT / 'build.py')
+        builder = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(builder)
+        from unittest.mock import patch
+        with patch.object(builder, 'build_font') as build, patch.object(sys, 'argv', [str(PROJECT / 'build.py')]):
+            builder.main()
+        build.assert_called_once_with(PROJECT / 'backgammon-font.ttf')
 
     def test_metadata_artwork_color_and_reproducibility(self):
         for path in self.fonts:
             with self.subTest(font=path), TTFont(path) as font:
                 self.assertEqual(font["name"].getDebugName(1), "Backgammon SGF Replay")
-                self.assertEqual(font["name"].getDebugName(0), "Copyright 2026 Michael Brackx")
+                self.assertIn("Copyright 2026 Michael Brackx", font["name"].getDebugName(0))
+                self.assertIn("Copyright 2015 Google Inc.", font["name"].getDebugName(0))
                 self.assertIn("Apache License, Version 2.0", font["name"].getDebugName(13))
                 self.assertEqual(font["OS/2"].fsType, 0)
                 self.assertEqual(font["COLR"].version, 0)

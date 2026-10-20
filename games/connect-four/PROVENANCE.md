@@ -34,13 +34,19 @@ Strategy: 2swap and the WeakC4 contributors; retain upstream attribution.
 | `upstream/` source and strategy data | GPL-3.0; see its unmodified `LICENSE` |
 | `build.py`, `gsub.py`, `strategy.py`, `reference.py`, `verify_longest.py`, `test_font.py` | GPL-3.0-only |
 | Generated TTF, WOFF2, ABI and strategy-containing artifacts | GPL-3.0-only |
+| Roboto 2 source outlines and `../shared/game_text.py` | Apache-2.0 |
 | `controls.js`, `start.js`, `test_controls.cjs`, `shaping.py`, playground HTML/CSS | Apache-2.0 |
 
 The generated fonts **contain derived GPL strategy material** and are explicitly
 identified as GPL in their name-table license metadata. They are not distributed
 under the repository's default Apache-2.0 license. The full corresponding
 sources needed to rebuild them are supplied in this folder, alongside the
-upstream license. Original geometric outlines use no imported font or artwork.
+upstream license. Board and checker artwork is original. Labels and diagnostics
+use decomposed Roboto 2 Regular/Bold outlines from the pinned
+[`decoders/shared/fonts/roboto-2`](../../decoders/shared/fonts/roboto-2/) sources,
+Copyright 2015 Google Inc. Their Apache-2.0 license is retained alongside source
+font provenance; generated fonts retain the Roboto attribution and identify
+the modifications. No installed typeface or runtime font download is needed.
 
 The repository's other Apache-2.0 projects retain their existing licenses.
 The root license and third-party notices identify this project's exception.

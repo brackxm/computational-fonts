@@ -30,7 +30,7 @@ def _face(weight):
         raise ValueError('Unknown text weight: '+weight)
     with TTFont(SOURCE/f'Roboto-{weight.title()}.ttf') as font:
         glyphs, cmap, result = font.getGlyphSet(), font.getBestCmap(), {}
-        for code in range(32, 127):
+        for code in (*range(32, 127), 0xe8, 0x14d, 0x16b):
             name = cmap[code]
             recording = DecomposingRecordingPen(glyphs)
             glyphs[name].draw(recording)
@@ -40,8 +40,7 @@ def _face(weight):
         return font['OS/2'].sCapHeight, result
 
 
-def centered_lettering(pen, text, center_x, y, size=9, *, weight='bold'):
-    """Center actual ink, retaining proportional spacing and quadratic curves."""
+def _layout(text, size, weight):
     cap_height, glyphs = _face(weight)
     scale, cursor, run, bounds = 5*size/cap_height, 0, [], []
     for char in text:
@@ -52,8 +51,27 @@ def centered_lettering(pen, text, center_x, y, size=9, *, weight='bold'):
         if box is not None:
             bounds.extend((cursor+box[0], cursor+box[2]))
         cursor += advance
-    if not bounds:
-        return
-    origin = center_x-(min(bounds)+max(bounds))*scale/2
+    return scale, run, bounds, cursor*scale
+
+
+def _draw(pen, run, scale, x, y):
     for offset, recording in run:
-        replayRecording(recording, TransformPen(pen, (scale, 0, 0, scale, origin+offset*scale, y)))
+        replayRecording(recording, TransformPen(pen, (scale, 0, 0, scale, x+offset*scale, y)))
+
+
+def text_width(text, size=9, *, weight='bold'):
+    """Measure advance for wrapping text before baking it into scene glyphs."""
+    return _layout(text, size, weight)[3]
+
+
+def lettering(pen, text, x, y, size=9, *, weight='bold'):
+    """Left-align text on its baseline with proportional advances."""
+    scale, run, _, _ = _layout(text, size, weight)
+    _draw(pen, run, scale, x, y)
+
+
+def centered_lettering(pen, text, center_x, y, size=9, *, weight='bold'):
+    """Center actual ink, retaining proportional spacing and quadratic curves."""
+    scale, run, bounds, _ = _layout(text, size, weight)
+    if bounds:
+        _draw(pen, run, scale, center_x-(min(bounds)+max(bounds))*scale/2, y)

@@ -57,10 +57,13 @@ Fonts built solely from original geometric outlines do not incorporate Roboto.
 
 Game fonts built with `games/shared/game_text.py` use decomposed outlines from
 the pinned Roboto Regular and Bold sources above for their titles, coordinates
-and status labels. The generated fonts retain Google's copyright, trademark,
-and Apache-2.0 attribution and identify Michael Brackx's modifications. Board
+and status labels, and the text adventure's prose. The generated fonts retain
+Google's copyright, trademark, and Apache-2.0 attribution and identify Michael
+Brackx's modifications. Board
 artwork remains original. Text is baked into the font at build time; no
-installed typeface or runtime font download is required.
+installed typeface or runtime font download is required. Connect Four retains
+its GPL-3.0-only distribution license because it also includes derived strategy
+material; see its [provenance](games/connect-four/PROVENANCE.md).
 
 ## SKI evaluator
 

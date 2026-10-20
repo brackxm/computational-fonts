@@ -30,11 +30,9 @@ class FontTests(unittest.TestCase):
         cls.temporary = tempfile.TemporaryDirectory(prefix="font-adventure-tests-")
         cls.addClassCleanup(cls.temporary.cleanup)
         cls.directory = Path(cls.temporary.name)
-        for name in ("build.py", "story.py"):
-            shutil.copyfile(DIRECTORY / name, cls.directory / name)
         cls.generated = cls.directory / "text-adventure-font.ttf"
-        subprocess.run([sys.executable, str(cls.directory / "build.py")], cwd=cls.directory,
-                       check=True, capture_output=True, timeout=120)
+        subprocess.run([sys.executable, str(DIRECTORY / "build.py"), "--output", str(cls.generated)],
+                       cwd=cls.directory, check=True, capture_output=True, timeout=120)
         cls.fonts = [DIRECTORY / "text-adventure-font.ttf", cls.generated]
 
     def shape_many(self, font, inputs):
@@ -54,7 +52,7 @@ class FontTests(unittest.TestCase):
         generated_bytes = self.generated.read_bytes()
         self.generated.unlink()
         try:
-            subprocess.run([sys.executable, "-c", "import build"], cwd=self.directory,
+            subprocess.run([sys.executable, "-c", f"import sys; sys.path.insert(0, {str(DIRECTORY)!r}); import build"], cwd=self.directory,
                            check=True, capture_output=True, timeout=15)
             self.assertFalse(self.generated.exists())
         finally:
@@ -66,7 +64,8 @@ class FontTests(unittest.TestCase):
             with self.subTest(font=path), TTFont(path) as font:
                 self.assertEqual(set(font.getBestCmap()), set(range(32, 127)))
                 self.assertIn("Apache License, Version 2.0", font["name"].getDebugName(13))
-                self.assertEqual(font["name"].getDebugName(0), "Copyright 2026 Michael Brackx")
+                self.assertIn("Copyright 2026 Michael Brackx", font["name"].getDebugName(0))
+                self.assertIn("Copyright 2015 Google Inc.", font["name"].getDebugName(0))
                 self.assertEqual(font["OS/2"].fsType, 0, "Allow editable font embedding in the ODT")
                 for name in font.getGlyphOrder():
                     glyph = font["glyf"][name]

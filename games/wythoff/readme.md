@@ -61,7 +61,7 @@ losing outcome, so the deterministic fallback takes one token from A.
 
 There is no runtime search or external engine. The strategy is generated from
 the rules and the formula; no external table or artwork is embedded. The
-bundled TTF contains **1,239 glyphs, 2,696 GSUB lookups, and 577,468 bytes**.
+bundled TTF contains **1,239 glyphs, 2,696 GSUB lookups, and 431,668 bytes**.
 Heap art uses independent registers for 64 counts on each side, rather than a
 whole-board glyph for every combination. Sixty-five shaping passes cover all
 legal histories, since each move removes at least one of at most 126 tokens.
@@ -122,5 +122,10 @@ the bundled artifact apart from timestamp fields.
 
 `../shared/fontgame.py`, `game-controls.js`, and the test drivers supply reusable
 font construction, text transport, and native shaping. They contain no rules
-or strategy for this game. All code, strategy data, lettering, and artwork are
+or strategy for this game. All code, strategy data and artwork are
 original, licensed under Apache 2.0.
+
+Titles, coordinates, and status labels use smooth, proportional Roboto 2
+outlines baked into the font by [`game_text.py`](../shared/game_text.py).
+Roboto is Copyright 2015 Google Inc., Apache 2.0; the font metadata retains
+its attribution. See the root [third-party notices](../../THIRD_PARTY_NOTICES.md).

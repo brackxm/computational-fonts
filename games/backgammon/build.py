@@ -6,6 +6,10 @@
 import argparse
 import math
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'shared'))
+from game_text import NAME_RECORDS, lettering, centered_lettering
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -26,37 +30,11 @@ REGISTERS = [*POINTS, "barW", "barB", "offW", "offB", "die1", "die2", "turn"]
 PALETTE = ("243e43", "f1dfba", "c68658", "34686a", "fff9ea", "273c47", "317557", "b84331")
 STATUS = {"complete": 1, "malformed": 2, "unsupported": 3, "limit": 4, "state_error": 5}
 
-# Original 3 by 5 lettering, used only for board labels and diagnostics.
-PIXELS = dict(zip("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-",
-    ("111101101101111", "010110010010111", "111001111100111", "111001111001111",
-     "101101111001001", "111100111001111", "111100111101111", "111001010010010",
-     "111101111101111", "111101111001111", "010101111101101", "110101110101110",
-     "111100100100111", "110101101101110", "111100110100111", "111100110100100",
-     "111100101101111", "101101111101101", "111010010010111", "001001001101111",
-     "101101110101101", "100100100100111", "101111111101101", "101111111111101",
-     "111101101101111", "111101111100100", "111101101111001", "110101110101101",
-     "111100111001111", "111010010010010", "101101101101111", "101101101101010",
-     "101101111111101", "101101010101101", "101101010010010", "111001010100111",
-     "000000111000000")))
-PIXELS.update(W="1000110001101011010101010", M="1000111011101011000110001",
-              N="1000111001101011001110001")
-
-
 def rect(pen, x, y, w, h):
     pen.moveTo((x, y))
     for point in ((x+w, y), (x+w, y+h), (x, y+h)):
         pen.lineTo(point)
     pen.closePath()
-
-
-def lettering(pen, text, x, y, scale=5):
-    for char in text:
-        pattern = PIXELS.get(char, "0" * 15)
-        columns = len(pattern)//5
-        for i, pixel in enumerate(pattern):
-            if pixel == "1":
-                rect(pen, x + (i % columns) * scale, y + (4 - i // columns) * scale, scale, scale)
-        x += (columns+1) * scale
 
 
 def circle(pen, x, y, radius, reverse=False):
@@ -117,11 +95,11 @@ def build_font(output):
             rect(p, *args)
         for i in range(24):
             cx = point_x(i)
-            lettering(p, str(i+1), cx-18, 230 if i < 12 else 1060, 5)
-            lettering(p, POINTS[i].upper(), cx-8, 200 if i < 12 else 1028, 4)
+            centered_lettering(p, str(i+1), cx, 222 if i < 12 else 1062, 6)
+            centered_lettering(p, POINTS[i].upper(), cx, 192 if i < 12 else 1028, 4)
         for label, cx in (("W BAR", 80), ("B BAR", 350), ("W OFF", 620), ("B OFF", 890), ("DICE", 1260)):
             lettering(p, label, cx, 150, 6)
-        lettering(p, "SGF BACKGAMMON", 60, 45, 5)
+        lettering(p, "SGF Backgammon", 60, 45, 8)
 
     add("board_frame", board, overlay=False)
     add("wood", lambda p, x: rect(p, x+28, 268, 1724, 742), overlay=False)
@@ -170,7 +148,7 @@ def build_font(output):
                         circle(p, x+point_x(i), cy, 30)
                         if player == "W":
                             circle(p, x+point_x(i), cy, 24, reverse=True)
-                    lettering(p, str(count), x+point_x(i)-17, 608 if i < 12 else 645, 5)
+                    centered_lettering(p, str(count), x+point_x(i), 608 if i < 12 else 645, 6)
                 name = add(f"r_{point}_{player}{count}", checkers, color=0 if player == "W" else 5)
                 # White checkers have an ivory fill in color, a ring in monochrome.
                 if player == "W":
@@ -206,9 +184,9 @@ def build_font(output):
                 names.append(add(f"r_{slot}_{player}{n}", die, color=0))
         register_glyphs[slot] = names
     register_glyphs["turn"] = [add(f"r_turn_{n}",
-        lambda p, x, n=n: lettering(p, f"TURN {n}", x+420, 45, 5), color=0) for n in range(MAX_TURNS+1)]
+        lambda p, x, n=n: lettering(p, f"Turn {n}", x+420, 45, 5), color=0) for n in range(MAX_TURNS+1)]
     for status, code in STATUS.items():
-        label = {"complete": "REPLAYED", "state_error": "STATE ERROR"}.get(status, status.upper())
+        label = {"complete": "Replayed", "state_error": "State error"}.get(status, status.capitalize())
         add("status_"+status, lambda p, x, label=label: lettering(p, label, x+740, 45, 6),
             advance=code, color=6 if code == 1 else 7)
 
@@ -380,7 +358,7 @@ def build_font(output):
         "uniqueFontIdentifier": "BackgammonSGFReplay-1.1", "version": "Version 1.1",
         16: "Backgammon SGF Replay", 17: "Regular", "copyright": "Copyright 2026 Michael Brackx",
         "licenseDescription": "Licensed under the Apache License, Version 2.0",
-        "licenseInfoURL": "https://www.apache.org/licenses/LICENSE-2.0"})
+        "licenseInfoURL": "https://www.apache.org/licenses/LICENSE-2.0", **NAME_RECORDS})
     builder.setupOS2(sTypoAscender=HEIGHT, sTypoDescender=-30, usWinAscent=HEIGHT, usWinDescent=30, fsType=0)
     builder.setupPost()
     builder.setupMaxp()

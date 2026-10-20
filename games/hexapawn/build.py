@@ -7,7 +7,8 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'shared'))
-from fontgame import GameFont,group,lettering,rect,centered_lettering,circle,components
+from fontgame import GameFont,group,rect,circle,components
+from game_text import NAME_RECORDS, lettering, centered_lettering
 import model
 
 WIDTH,HEIGHT,CELL=1800,1250,240
@@ -24,9 +25,9 @@ def cell_xy(index):return 540+(index%3)*CELL,300+(index//3)*CELL
 
 
 def build_font(output):
-    f=GameFont('Hexapawn Perfect Opponent',WIDTH,HEIGHT);f.palette+=('e4eee9',);raw=f.raw
+    f=GameFont('Hexapawn Perfect Opponent',WIDTH,HEIGHT,name_records=NAME_RECORDS);f.palette+=('e4eee9',);raw=f.raw
     def frame(p,s):
-        centered_lettering(p,'HEXAPAWN',s+900,1130,13)
+        centered_lettering(p,'Hexapawn',s+900,1130,20)
         for i in range(4):
             rect(p,s+540+i*CELL,300,3,3*CELL);rect(p,s+540,300+i*CELL,3*CELL,3)
         for i in range(3):
@@ -60,9 +61,9 @@ def build_font(output):
             names=[sprites[side,i] for i,c in enumerate(board) if c==side];pieces+=names
             name=f.add(f'paint_{side}_{ids[board]}',components(names));layers.append((name,color))
         name=f.add(f'position_{ids[board]}',components(pieces));paints[board]=name,layers
-    for human,text in (('w','YOU WHITE   FONT BLACK'),('b','YOU BLACK   FONT WHITE')):
+    for human,text in (('w','You: White    Font: Black'),('b','You: Black    Font: White')):
         f.add('role_'+human,lambda p,s,text=text:centered_lettering(p,text,s+900,175,8))
-    for value,text in ((1,'YOU CAN FORCE A WIN'),(-1,'FONT CAN FORCE A WIN')):
+    for value,text in ((1,'You can force a win'),(-1,'Font can force a win')):
         f.add('hint_'+str(value).replace('-','m'),lambda p,s,text=text:centered_lettering(p,text,s+900,120,8))
     def state(name,board,human,hint=None):
         base,layers=paints[board];parts=[base,'role_'+human];layers=layers+[('role_'+human,0)]
@@ -86,11 +87,11 @@ def build_font(output):
             x,y=cell_xy(target)
             for dx,dy,w,h in ((6,6,CELL-12,5),(6,CELL-11,CELL-12,5),(6,6,5,CELL-12),(CELL-11,6,5,CELL-12)):
                 rect(p,s+x+dx,y+dy,w,h)
-            centered_lettering(p,'FONT '+key,s+900,65,9)
+            centered_lettering(p,'Font: '+key,s+900,65,9)
         name=f.add('r_last_'+key,highlight,color=3);lasts.append(name);last_names[key]=name
-    labels=('YOUR TURN','FONT WINS','YOU WIN','INVALID MOVE','MALFORMED','INTERNAL ERROR')
+    labels=('Your turn','Font wins','You win','Invalid move','Check your input','Game error')
     for (status,code),label in zip(STATUS.items(),labels):
-        f.add('status_'+status,lambda p,s,label=label:centered_lettering(p,label,s+900,10,9),advance=code,color=1 if code<4 else 2)
+        f.add('status_'+status,lambda p,s,label=label:centered_lettering(p,label,s+900,10,10),advance=code,color=1 if code<4 else 2)
     squares=[model.square(i) for i in range(9)]
     tokens={a+b:f.add('move_'+a+b) for a in squares for b in squares}
     inputs=[*raw.values(),*tokens.values()]

@@ -6,13 +6,14 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'shared'))
-from fontgame import GameFont, group, lettering
+from fontgame import GameFont,group
+from game_text import NAME_RECORDS, lettering, centered_lettering
 from model import MAX_HEAP, cold
 
 WIDTH, HEIGHT = 1800,1040
 PASSES = MAX_HEAP+2
 STATUS = {'ready':1,'computer_won':2,'human_won':3,'invalid':4,'malformed':5,'internal':6}
-LABELS = ('YOUR TURN','FONT WINS','YOU WIN','INVALID MOVE','MALFORMED','INTERNAL ERROR')
+LABELS = ('Your turn','Font wins','You win','Invalid move','Check your input','Game error')
 
 
 def coin(p,x,y,r=22):
@@ -25,12 +26,12 @@ def coin(p,x,y,r=22):
 
 
 def build_font(output):
-    f=GameFont('Wythoff Perfect Opponent',WIDTH,HEIGHT)
+    f=GameFont('Wythoff Perfect Opponent',WIDTH,HEIGHT,name_records=NAME_RECORDS)
     raw=f.raw
     def frame(p,s):
-        lettering(p,'WYTHOFF NIM',s+120,940,14)
+        centered_lettering(p,"Wythoff's Nim",s+900,940,17)
         for i,heap in enumerate('AB'):
-            lettering(p,'HEAP '+heap,s+120+i*850,830,12)
+            lettering(p,'Heap '+heap,s+120+i*850,830,12)
     f.add('board',frame,advance=WIDTH,color=0,overlay=False)
     heaps={}
     for i,heap in enumerate('AB'):
@@ -47,16 +48,16 @@ def build_font(output):
     differences=[f.add(f'r_diff_{n}') for n in range(2*MAX_HEAP+1)]
     actions={}
     for kind in 'AB':
-        for n in range(MAX_HEAP+1):actions[kind,n]=f'FONT LEFT {n:02} IN {kind}'
-    for a,b in cold_pairs:actions['D',a,b]=f'FONT LEFT {a:02} AND {b:02}'
-    actions['take_A',1]='FONT TOOK 01 FROM A'
+        for n in range(MAX_HEAP+1):actions[kind,n]=f'Font left {n:02} in {kind}'
+    for a,b in cold_pairs:actions['D',a,b]=f'Font left {a:02} and {b:02}'
+    actions['take_A',1]='Font took 01 from A'
     ai={action:f.add('ai_'+'_'.join(map(str,action))) for action in actions}
     last=[f.add('r_last_none')]
     for action,label in actions.items():
         last.append(f.add('r_last_'+'_'.join(map(str,action)),
-            lambda p,s,label=label:lettering(p,label,s+120,130,10),color=3))
+            lambda p,s,label=label:centered_lettering(p,label,s+900,130,10),color=3))
     for (status,code),label in zip(STATUS.items(),LABELS):
-        f.add('status_'+status,lambda p,s,label=label:lettering(p,label,s+120,50,10),advance=code,color=1 if code<4 else 2)
+        f.add('status_'+status,lambda p,s,label=label:centered_lettering(p,label,s+900,50,11),advance=code,color=1 if code<4 else 2)
     numbers=[f.add(f'number_{n}') for n in range(MAX_HEAP+1)]
     states=['p_start','p_ai','p_human']
     for kind in 'bh':

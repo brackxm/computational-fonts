@@ -109,8 +109,9 @@ undo, reset, copyable history, restore and the command limit.
   Distinct lookup indices provide clock passes without copying the large
   rule tables. Previous feedback is hidden when a new command is applied.
 - World and feedback glyphs draw the latest scene. Room panels, inventory
-  panels, lines and original 5×7 letter outlines are shared as TrueType
-  components. Input letters and obsolete replies are invisible.
+  panels and lines are shared as TrueType components. Proportional Roboto 2
+  outlines give the scene sentence-case prose and bold headings. Line wrapping
+  uses measured text widths. Input letters and obsolete replies are invisible.
 - Up to **128 commands**, each at most **24 printable ASCII characters**,
   in one uninterrupted shaping run. The playground enforces these limits.
   Further commands in raw font input remain unevaluated. Overlong/malformed
@@ -137,5 +138,8 @@ start;east;take key;west;north;unlock door;east;take crystal;west;north;take lam
 ## License
 
 Apache License 2.0; see the root [LICENSE](../../LICENSE).
-The story, game rules, lettering and font are original work. No existing
-game, game engine or external font outlines are incorporated.
+The story and game rules are original work. Scene lettering uses Roboto 2
+Regular and Bold outlines, baked into the font by
+[`game_text.py`](../shared/game_text.py). Roboto is Copyright 2015 Google Inc.,
+Apache 2.0; the font metadata retains its attribution. See the root
+[third-party notices](../../THIRD_PARTY_NOTICES.md).

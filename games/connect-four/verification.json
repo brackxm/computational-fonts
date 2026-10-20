@@ -7,8 +7,8 @@
     "driver_records": 312,
     "shared_stages": 5,
     "turns": 21,
-    "ttf_bytes": 440064,
-    "woff2_bytes": 44404
+    "ttf_bytes": 434620,
+    "woff2_bytes": 46020
   },
   "upstream_validation": {
     "checks_passed": 9,
@@ -45,21 +45,21 @@
     },
     "all_games": "Red wins",
     "test_methods": 8,
-    "suite_seconds": 73.137
+    "suite_seconds": 159.756
   },
   "shaping": {
     "harfbuzz": "14.2.1",
     "history_shapes": 8498,
-    "median_ms": 1.5081,
-    "max_ms": 12.9804,
-    "longest_history_median_ms": 9.8182
+    "median_ms": 2.7253,
+    "max_ms": 176.7761,
+    "longest_history_median_ms": 13.2373
   },
   "controller": "Node tests against real hb-shape signals passed",
   "browser": "Actual playground checked: 41-ply win, full-column rejection, undo, reset, color and monochrome.",
   "limitations": "Finite GSUB differential testing, not an exhaustive implementation proof; one uninterrupted LTR shaping run required.",
   "artifacts_sha256": {
-    "connect-four-font.ttf": "0a424ba60aa6165703a9a7c996ba3a8b5796dfb0cd2219eac7f81b5dfebbcb82",
-    "connect-four-font.woff2": "b2fa65f4cd8d1d63d9919f78eda03d19b4ce0427b58d80446c411d9111e49049"
+    "connect-four-font.ttf": "87133978b90c0a3add7da24dbece4354704c613b69fff2565f8f5932902dd534",
+    "connect-four-font.woff2": "cd5871b7a54f1c918fc3e14dfc01d4b99bf70623f9ec702f1a1d839e7668f6be"
   },
   "artwork_update": {
     "yellow": "Filled color disks with ring outlines for monochrome fallback",
@@ -75,5 +75,11 @@
     ],
     "validation": "8 Python tests, 14,282 differential comparisons, Node controller tests, real browser Unicode undo and normal game checks.",
     "remaining_actionable_findings": 0
+  },
+  "typography_update": {
+    "text": "Proportional Roboto 2 outlines, centered coordinates and diagnostics, sentence-case labels.",
+    "preserved": "Glyph order, GSUB, GDEF, cmap, COLR, CPAL and all advance widths match the published game; ink sidebearings follow the new outlines.",
+    "validation": "8 Python tests for fresh and bundled fonts, Node controller suite, shared typography tests and browser layout check passed.",
+    "license": "Roboto attribution retained; generated fonts remain GPL-3.0-only."
   }
 }

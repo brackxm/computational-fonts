@@ -4,8 +4,11 @@
 
 import argparse
 from pathlib import Path
+import sys
 import string
-import textwrap
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'shared'))
+from game_text import NAME_RECORDS, lettering, text_width
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -16,56 +19,24 @@ from story import (ALIASES, COMMANDS, INITIAL, MAX_COMMAND_LENGTH, MAX_COMMANDS,
                    MESSAGES, TITLE, inventory, reachable_states, room_view,
                    state_name, transition)
 
-# Original 5x7 geometric lettering. Scene glyphs share these outlines through
-# TrueType components; no external font or third-party game content is used.
-PIXELS = {
-    "A": "01110/10001/10001/11111/10001/10001/10001",
-    "B": "11110/10001/10001/11110/10001/10001/11110",
-    "C": "01111/10000/10000/10000/10000/10000/01111",
-    "D": "11110/10001/10001/10001/10001/10001/11110",
-    "E": "11111/10000/10000/11110/10000/10000/11111",
-    "F": "11111/10000/10000/11110/10000/10000/10000",
-    "G": "01111/10000/10000/10111/10001/10001/01111",
-    "H": "10001/10001/10001/11111/10001/10001/10001",
-    "I": "11111/00100/00100/00100/00100/00100/11111",
-    "J": "00111/00010/00010/00010/10010/10010/01100",
-    "K": "10001/10010/10100/11000/10100/10010/10001",
-    "L": "10000/10000/10000/10000/10000/10000/11111",
-    "M": "10001/11011/10101/10101/10001/10001/10001",
-    "N": "10001/11001/10101/10011/10001/10001/10001",
-    "O": "01110/10001/10001/10001/10001/10001/01110",
-    "P": "11110/10001/10001/11110/10000/10000/10000",
-    "Q": "01110/10001/10001/10001/10101/10010/01101",
-    "R": "11110/10001/10001/11110/10100/10010/10001",
-    "S": "01111/10000/10000/01110/00001/00001/11110",
-    "T": "11111/00100/00100/00100/00100/00100/00100",
-    "U": "10001/10001/10001/10001/10001/10001/01110",
-    "V": "10001/10001/10001/10001/10001/01010/00100",
-    "W": "10001/10001/10001/10101/10101/10101/01010",
-    "X": "10001/10001/01010/00100/01010/10001/10001",
-    "Y": "10001/10001/01010/00100/00100/00100/00100",
-    "Z": "11111/00001/00010/00100/01000/10000/11111",
-    "0": "01110/10001/10011/10101/11001/10001/01110",
-    "1": "00100/01100/00100/00100/00100/00100/01110",
-    "2": "01110/10001/00001/00010/00100/01000/11111",
-    "3": "11110/00001/00001/01110/00001/00001/11110",
-    "4": "00010/00110/01010/10010/11111/00010/00010",
-    "5": "11111/10000/10000/11110/00001/00001/11110",
-    "6": "01110/10000/10000/11110/10001/10001/01110",
-    "7": "11111/00001/00010/00100/01000/01000/01000",
-    "8": "01110/10001/10001/01110/10001/10001/01110",
-    "9": "01110/10001/10001/01111/00001/00001/01110",
-    ".": "00000/00000/00000/00000/00000/00110/00110",
-    ",": "00000/00000/00000/00000/00110/00110/00100",
-    ":": "00000/00110/00110/00000/00110/00110/00000",
-    "!": "00100/00100/00100/00100/00100/00000/00100",
-    "/": "00001/00001/00010/00100/01000/10000/10000",
-    "-": "00000/00000/00000/11111/00000/00000/00000",
-    "(": "00010/00100/01000/01000/01000/00100/00010",
-    ")": "01000/00100/00010/00010/00010/00100/01000",
-}
-CELL, COLS, ROWS = 20, 48, 20
-WIDTH, HEIGHT = COLS * 6 * CELL, ROWS * 10 * CELL
+ROWS, LINE_HEIGHT, TEXT_SIZE = 20, 200, 28
+WIDTH, HEIGHT = 5760, ROWS * LINE_HEIGHT
+
+
+def wrap_lines(text):
+    """Wrap proportional scene text to the available panel width."""
+    lines = []
+    line = ''
+    for word in text.split():
+        candidate = line+' '+word if line else word
+        if line and text_width(candidate, TEXT_SIZE, weight='regular') > WIDTH-80:
+            lines.append(line)
+            line = word
+        else:
+            line = candidate
+    if line:
+        lines.append(line)
+    return lines
 
 
 def empty():
@@ -99,53 +70,36 @@ def build_font(output):
     chars = [chr(code) for code in range(32, 127)]
     for char in chars:
         add(input_name(char))
-    for char, rows in PIXELS.items():
-        pen = TTGlyphPen(None)
-        for y, row in enumerate(rows.split("/")):
-            for x, pixel in enumerate(row):
-                if pixel == "1":
-                    left, bottom = x * CELL, (6 - y) * CELL
-                    pen.moveTo((left, bottom))
-                    pen.lineTo((left + CELL, bottom))
-                    pen.lineTo((left + CELL, bottom + CELL))
-                    pen.lineTo((left, bottom + CELL))
-                    pen.closePath()
-        add(f"pixel_{ord(char):02x}", pen.glyph())
-
     text_cache = {}
 
-    def text_glyph(text):
-        text = text.upper()
-        if len(text) > COLS:
-            raise ValueError(f"Scene line is too long: {text}")
-        if text not in text_cache:
+    def text_glyph(text, weight='regular', size=TEXT_SIZE):
+        key = text, weight, size
+        if text_width(text, size, weight=weight) > WIDTH-80:
+            raise ValueError(f"Scene line is too wide: {text}")
+        if key not in text_cache:
             name = f"line_{len(text_cache)}"
             pen = TTGlyphPen(glyphs)
-            for column, char in enumerate(text):
-                if char != " ":
-                    if char not in PIXELS:
-                        raise ValueError(f"No scene outline for {char!r}")
-                    pen.addComponent(f"pixel_{ord(char):02x}",
-                                     (1, 0, 0, 1, column * 6 * CELL, 0))
+            lettering(pen, text, 40, 50, size, weight=weight)
             add(name, pen.glyph())
-            text_cache[text] = name
-        return text_cache[text]
+            text_cache[key] = name
+        return text_cache[key]
 
     def panel(lines):
         pen = TTGlyphPen(glyphs)
         for row, text in lines:
             if not 0 <= row < ROWS:
                 raise ValueError("Scene exceeds panel height")
-            pen.addComponent(text_glyph(text), (1, 0, 0, 1, 0, HEIGHT - (row + 1) * 10 * CELL))
+            weight = 'bold' if row in (0, 2) else 'regular'
+            pen.addComponent(text_glyph(text, weight), (1, 0, 0, 1, 0, HEIGHT - (row + 1) * LINE_HEIGHT))
         return pen.glyph()
 
     def wrapped(text, start):
-        return list(enumerate(textwrap.wrap(text.upper(), COLS), start))
+        return list(enumerate(wrap_lines(text), start))
 
     for message, text in MESSAGES.items():
         lines = []
         for paragraph in text.splitlines():
-            lines.extend(textwrap.wrap(paragraph.upper(), COLS))
+            lines.extend(wrap_lines(paragraph))
         if len(lines) > 4:
             raise ValueError(f"Feedback exceeds four lines: {message}")
         add(f"message_{message}", panel(list(enumerate(lines, 14))))
@@ -158,15 +112,15 @@ def build_font(output):
         if view not in scene_cache:
             scene = f"scene_{len(scene_cache)}"
             title, description, exits = view
-            add(scene, panel([(0, TITLE), (2, title)] + wrapped(description, 4)
-                             + [(8, "EXITS: " + exits), (19, "TYPE HELP FOR COMMANDS.")]))
+            add(scene, panel([(0, TITLE.title()), (2, title.title())] + wrapped(description, 4)
+                             + [(8, "Exits: " + exits.title()), (19, "Type HELP for commands.")]))
             scene_cache[view] = scene
         hud_key = state[1:]
         if hud_key not in hud_cache:
             hud = f"hud_{len(hud_cache)}"
-            carried = ", ".join(inventory(state)) or "EMPTY"
-            status = f"LAMP: {'LIT' if state[3] else 'OFF'} / POWER: {'ON' if state[4] else 'OFF'}"
-            add(hud, panel(wrapped("INVENTORY: " + carried, 10) + [(12, status)]))
+            carried = ", ".join(inventory(state)) or "empty"
+            status = f"Lamp: {'lit' if state[3] else 'off'} / Power: {'on' if state[4] else 'off'}"
+            add(hud, panel(wrapped("Inventory: " + carried, 10) + [(12, status)]))
             hud_cache[hud_key] = hud
         pen = TTGlyphPen(glyphs)
         pen.addComponent(scene_cache[view], (1, 0, 0, 1, 0, 0))
@@ -210,7 +164,7 @@ def build_font(output):
                        "fullName": "The Last Light Adventure", "psName": "TheLastLightAdventure-Regular",
                        "version": "Version 1.0", "copyright": "Copyright 2026 Michael Brackx",
                        "licenseDescription": "Licensed under the Apache License, Version 2.0",
-                       "licenseInfoURL": "https://www.apache.org/licenses/LICENSE-2.0"})
+                       "licenseInfoURL": "https://www.apache.org/licenses/LICENSE-2.0", **NAME_RECORDS})
     fb.setupOS2(sTypoAscender=HEIGHT, sTypoDescender=0, usWinAscent=HEIGHT, usWinDescent=0,
                 fsType=0)
     fb.setupPost()

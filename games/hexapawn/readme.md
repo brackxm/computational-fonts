@@ -60,7 +60,7 @@ No heuristic evaluation, learning, runtime search, external engine, or imported
 strategy data is used. An independent bitboard solver verifies the complete
 graph, every legal move, every value, and every remoteness.
 
-The bundled TTF contains **968 glyphs, 95 GSUB lookups, and 132,872 bytes**.
+The bundled TTF contains **968 glyphs, 95 GSUB lookups, and 115,132 bytes**.
 Seven direct feature stages remove spaces, tokenize four-character moves,
 initialize the cursor, run the exact transition policy, finalize the explicit
 end sentinel, and delete old move/board cursors. The forward cursor architecture
@@ -127,6 +127,10 @@ and Mū tōrere after that refactor preserves every non-timestamp font table.
 The shared forward pipeline also supports the move-token preprocessor used
 here. See [`../shared/`](../shared/).
 
-All code, generated policy, pixel lettering, pawn silhouettes, and geometric
-artwork are original and licensed under Apache 2.0. No external art or strategy
-table is embedded.
+All code, generated policy, pawn silhouettes, and geometric
+artwork are original and licensed under Apache 2.0. No external strategy table is embedded.
+
+Titles, coordinates, and status labels use smooth, proportional Roboto 2
+outlines baked into the font by [`game_text.py`](../shared/game_text.py).
+Roboto is Copyright 2015 Google Inc., Apache 2.0; the font metadata retains
+its attribution. See the root [third-party notices](../../THIRD_PARTY_NOTICES.md).

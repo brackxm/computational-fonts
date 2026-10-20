@@ -7,7 +7,8 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'shared'))
-from fontgame import GameFont,group,rect,lettering,centered_lettering,circle,components
+from fontgame import GameFont,group,rect,circle,components
+from game_text import NAME_RECORDS, lettering, centered_lettering
 import model
 
 WIDTH,HEIGHT,CELL=1800,1250,240
@@ -26,9 +27,9 @@ def positions():
 
 
 def build_font(output):
-    f=GameFont('Tic Tac Toe Perfect Opponent',WIDTH,HEIGHT);raw=f.raw
+    f=GameFont('Tic Tac Toe Perfect Opponent',WIDTH,HEIGHT,name_records=NAME_RECORDS);raw=f.raw
     def frame(p,s):
-        centered_lettering(p,'TIC TAC TOE',s+900,1130,13)
+        centered_lettering(p,'Tic-tac-toe',s+900,1130,20)
         for i in (1,2):
             rect(p,s+540+i*CELL-3,300,6,3*CELL)
             rect(p,s+540,300+i*CELL-3,3*CELL,6)
@@ -60,9 +61,9 @@ def build_font(output):
                 painted[side,points]=f.add(f'paint_{side}_{mask}',components(sprites[side,i] for i in points))
             layers.append((painted[side,points],color))
         paints[board]=layers
-    for human,text in (('x','YOU X   FONT O'),('o','YOU O   FONT X')):
+    for human,text in (('x','You: X    Font: O'),('o','You: O    Font: X')):
         f.add('role_'+human,lambda p,s,text=text:centered_lettering(p,text,s+900,205,9))
-    for value,text in ((0,'DRAW WITH PERFECT PLAY'),(-1,'FONT CAN FORCE A WIN')):
+    for value,text in ((0,'Draw with perfect play'),(-1,'Font can force a win')):
         f.add('hint_'+str(value).replace('-','m'),lambda p,s,text=text:centered_lettering(p,text,s+900,140,8))
     def state(name,board,human,hint=None):
         layers=paints[board]+[('role_'+human,0)]
@@ -83,11 +84,11 @@ def build_font(output):
             x,y=cell_xy(int(key)-1)
             for dx,dy,w,h in ((6,6,CELL-12,5),(6,CELL-11,CELL-12,5),(6,6,5,CELL-12),(CELL-11,6,5,CELL-12)):
                 rect(p,s+x+dx,y+dy,w,h)
-            centered_lettering(p,'FONT PLAYED '+key,s+900,75,9)
+            centered_lettering(p,'Font played '+key,s+900,75,9)
         name=f.add('r_last_'+key,highlight,color=3);lasts.append(name);last_names[key]=name
-    for status,label in (('ready','YOUR TURN'),('computer_won','FONT WINS'),('human_won','YOU WIN'),
-                         ('invalid','OCCUPIED SQUARE'),('malformed','MALFORMED'),('internal','INTERNAL ERROR'),('draw','DRAW')):
-        f.add('status_'+status,lambda p,s,label=label:centered_lettering(p,label,s+900,10,9),
+    for status,label in (('ready','Your turn'),('computer_won','Font wins'),('human_won','You win'),
+                         ('invalid','Occupied square'),('malformed','Check your input'),('internal','Game error'),('draw','Draw')):
+        f.add('status_'+status,lambda p,s,label=label:centered_lettering(p,label,s+900,10,10),
               advance=STATUS[status],color=1 if status in ('ready','draw','computer_won','human_won') else 2)
     def cursor(board,last,status,human):
         names=[active[board,human] if status=='ready' else stop(board,human,status)]

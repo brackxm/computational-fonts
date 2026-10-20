@@ -6,7 +6,8 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'shared'))
-from fontgame import GameFont,group,lettering,rect
+from fontgame import GameFont,group,rect
+from game_text import NAME_RECORDS, lettering, centered_lettering
 from model import COLS,ROWS,SIZE,MOVES,MIRROR,OPENING,SIDES
 
 WIDTH,HEIGHT,CELL = 1800,1200,150
@@ -21,9 +22,9 @@ def cell_xy(cell):
 
 
 def build_font(output):
-    f=GameFont('Cram Perfect Opponent',WIDTH,HEIGHT);raw=f.raw
+    f=GameFont('Cram Perfect Opponent',WIDTH,HEIGHT,name_records=NAME_RECORDS);raw=f.raw
     def frame(p,s):
-        lettering(p,'CRAM 6 BY 5',s+450,1100,13)
+        centered_lettering(p,'Cram / 6 by 5',s+900,1100,18)
         for col in range(COLS):lettering(p,chr(65+col),s+510+col*CELL,1030,9)
         for row in range(ROWS):lettering(p,str(row+1),s+385,915-row*CELL,9)
         for col in range(COLS+1):rect(p,s+450+col*CELL,250,2,ROWS*CELL)
@@ -47,11 +48,11 @@ def build_font(output):
             if key[-1]=='V':y-=CELL
             for dx,dy,rw,rh in ((3,3,w-6,4),(3,h-7,w-6,4),(3,3,4,h-6),(w-7,3,4,h-6)):
                 rect(p,s+x+dx,y+dy,rw,rh)
-            lettering(p,'FONT '+key,s+450,140,10)
+            centered_lettering(p,'Font: '+key,s+900,140,10)
         lasts.append(f.add('r_last_'+key,highlight,color=3))
-    labels=('YOUR TURN','FONT WINS','YOU WIN','INVALID MOVE','MALFORMED','INTERNAL ERROR')
+    labels=('Your turn','Font wins','You win','Invalid move','Check your input','Game error')
     for (status,code),label in zip(STATUS.items(),labels):
-        f.add('status_'+status,lambda p,s,label=label:lettering(p,label,s+450,60,10),advance=code,color=1 if code<4 else 2)
+        f.add('status_'+status,lambda p,s,label=label:centered_lettering(p,label,s+900,60,11),advance=code,color=1 if code<4 else 2)
     states=['p_start','p_human','p_evaluate']
     for name in states:f.add(name)
     events={player:{key:f.add(player+'_'+key) for key in MOVES} for player in ('human','ai')}

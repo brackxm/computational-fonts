@@ -4,6 +4,10 @@
 import argparse
 from collections import defaultdict
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'shared'))
+from game_text import NAME_RECORDS, lettering, centered_lettering
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -19,30 +23,10 @@ LEGAL_MASKS = tuple(tuple(m for m in range(512) if not dead(m) and not m >> cell
                     for cell in range(9))
 STATUS = {'ready': 1, 'computer_won': 2, 'human_won': 3,
           'invalid': 4, 'malformed': 5, 'internal': 6}
-LABELS = {'ready': 'YOUR TURN', 'computer_won': 'FONT WINS', 'human_won': 'YOU WIN',
-          'invalid': 'INVALID MOVE', 'malformed': 'MALFORMED', 'internal': 'INTERNAL ERROR'}
-PIXELS = dict(zip('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ', (
-    '111101101101111','010110010010111','111001111100111','111001111001111',
-    '101101111001001','111100111001111','111100111101111','111001010010010',
-    '111101111101111','111101111001111','010101111101101','110101110101110',
-    '111100100100111','110101101101110','111100110100111','111100110100100',
-    '111100101101111','101101111101101','111010010010111','001001001101111',
-    '101101110101101','100100100100111','101111111101101','101111111111101',
-    '111101101101111','111101110100100','111101101111001','110101110101101',
-    '111100111001111','111010010010010','101101101101111','101101101101010',
-    '101101111111101','101101010101101','101101010010010','111001010100111')))
-
-
+LABELS = {'ready': 'Your turn', 'computer_won': 'Font wins', 'human_won': 'You win',
+          'invalid': 'Invalid move', 'malformed': 'Check your input', 'internal': 'Game error'}
 def rect(p, x, y, w, h):
     p.moveTo((x,y)); p.lineTo((x+w,y)); p.lineTo((x+w,y+h)); p.lineTo((x,y+h)); p.closePath()
-
-
-def lettering(p, text, x, y, size=7):
-    for char in text:
-        for i, pixel in enumerate(PIXELS.get(char, '0'*15)):
-            if pixel == '1':
-                rect(p,x+(i%3)*size,y+(4-i//3)*size,size,size)
-        x += 4*size
 
 
 def cell_xy(board, cell):
@@ -77,15 +61,15 @@ def build_font(output):
     add('.notdef'); add('hidden'); add('begin'); add('end')
     raw = {chr(c):add(f'input_{c}') for c in range(32,128)}
     def frame(p, shift):
-        lettering(p,'NOTAKTO',shift+120,750,13)
+        centered_lettering(p,'Notakto',shift+900,750,18)
         for board in range(3):
-            lettering(p,chr(65+board),shift+160+board*540,650,13)
+            centered_lettering(p,chr(65+board),shift+310+board*540,650,12)
             for line in range(4):
                 rect(p,shift+100+board*540+140*line,210,3,420)
                 rect(p,shift+100+board*540,210+140*line,420,3)
             for cell in range(9):
                 x,y=cell_xy(board,cell)
-                lettering(p,str(cell+1),shift+x-45,y+40,4)
+                lettering(p,str(cell+1),shift+x-45,y+50,5)
     add('board',frame,advance=WIDTH,color=0,overlay=False)
     board_names=[]
     for board in range(3):
@@ -102,7 +86,7 @@ def build_font(output):
                             p.lineTo((shift+x-32,y+sign*(-32)+6))
                             p.closePath()
                 if dead(mask):
-                    lettering(p,'CLOSED',shift+120+board*540,150,8)
+                    centered_lettering(p,'Closed',shift+310+board*540,150,9)
             names.append(add(f'r_board{board}_{mask}',marks,color=2 if dead(mask) else 1))
         board_names.append(names)
     class_names=[[add(f'r_class{board}_{i}') for i in range(len(representatives))] for board in range(3)]
@@ -116,7 +100,7 @@ def build_font(output):
                     a,b,w,h=args; rect(p,shift+a,b,w,h)
             last_names.append(add(f'r_last_{board}_{cell}',highlight,color=3))
     for status,code in STATUS.items():
-        add('status_'+status,lambda p,s,status=status:lettering(p,LABELS[status],s+120,60,10),
+        add('status_'+status,lambda p,s,status=status:centered_lettering(p,LABELS[status],s+900,60,11),
             advance=code,color=1 if code<4 else 2)
     for name in ('p_start','p_human','p_ai'):
         add(name)
@@ -235,7 +219,7 @@ def build_font(output):
         'uniqueFontIdentifier':'NotaktoPerfectOpponent-1.0','version':'Version 1.0',
         'copyright':'Copyright 2026 Michael Brackx',
         'licenseDescription':'Licensed under the Apache License, Version 2.0',
-        'licenseInfoURL':'https://www.apache.org/licenses/LICENSE-2.0'})
+        'licenseInfoURL':'https://www.apache.org/licenses/LICENSE-2.0', **NAME_RECORDS})
     fb.setupOS2(sTypoAscender=HEIGHT,sTypoDescender=-30,usWinAscent=HEIGHT,usWinDescent=30,fsType=0)
     fb.setupPost(); fb.setupMaxp(); fb.setupCOLR(layers,version=0)
     palette=('30484c','246b72','ae4a3c','bd872a')

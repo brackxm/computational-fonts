@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Hexapawn · a perfect opponent in a font</title>
 <style>
-@font-face{font-family:HexapawnPerfect;src:url('./hexapawn-font.ttf?v=1.0.0') format('truetype');font-display:block}
+@font-face{font-family:HexapawnPerfect;src:url('./hexapawn-font.ttf?v=typography-20261020') format('truetype');font-display:block}
 :root{font-family:system-ui,sans-serif;color:#243e43;background:#faf8f2}body{max-width:1100px;margin:30px auto;padding:0 20px}h1{margin-bottom:8px}p{line-height:1.6}a{color:#246269}button,select,textarea{font:inherit}button,select{padding:9px 12px;border:1px solid #9daba9;border-radius:6px;background:white;color:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}button:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #bd872a;outline-offset:3px}textarea{display:block;box-sizing:border-box;width:100%;padding:12px;margin:8px 0;font-family:ui-monospace,monospace;border:1px solid #9daba9;border-radius:8px;resize:vertical}.board{background:white;border:1px solid #dadfd8;border-radius:12px;padding:12px;margin:20px 0}.board svg{display:block;width:100%;height:auto;max-height:450px}.replay{font-family:HexapawnPerfect;font-size:1000px;font-feature-settings:"liga" 1,"kern" 0;font-variant-ligatures:common-ligatures;font-kerning:none;letter-spacing:0;word-spacing:0;white-space:pre;direction:ltr;unicode-bidi:isolate;fill:#243e43}#status{padding:12px 16px;background:#e9eee8;border-radius:6px;min-height:26px}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}label{display:inline-flex;gap:8px;align-items:center}footer{margin-top:28px;padding-top:15px;border-top:1px solid #ccd3ca}.probe-holder{position:fixed;top:0;left:0;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none}.probe{display:inline-block;width:max-content;white-space:pre;font:1000px/1 HexapawnPerfect;font-feature-settings:"liga" 1,"kern" 0;font-kerning:none;letter-spacing:0;word-spacing:0;direction:ltr;unicode-bidi:isolate}
 </style>
 </head>
@@ -22,7 +22,7 @@
 <p><label for="record"><strong>Your move history</strong></label></p>
 <textarea id="record" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">h</textarea>
 <p id="syntax"><code>h</code> makes you White and <code>b</code> makes the font White. Append only your moves, such as <code>hB1B2C1B2</code>, using uppercase coordinates. Spaces and line breaks are allowed. A finished game ignores trailing input. All legality, winning replies, and board drawing happen inside the font.</p>
-<footer><a href="readme.md">Complete solution, notation, protocol, and tests</a> · <a href="hexapawn-font.ttf" download>Download font</a> · Original artwork · Apache 2.0</footer>
+<footer><a href="readme.md">Complete solution, notation, protocol, and tests</a> · <a href="hexapawn-font.ttf?v=typography-20261020" download>Download font</a> · Original game artwork · Roboto typography · Apache 2.0</footer>
 <script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createHexapawnPlayground();</script>
 </body>
 </html>

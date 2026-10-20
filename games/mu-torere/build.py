@@ -8,7 +8,8 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'shared'))
-from fontgame import GameFont,group,lettering,centered_lettering,circle,components
+from fontgame import GameFont,group,circle,components
+from game_text import NAME_RECORDS, lettering, centered_lettering
 import model
 
 WIDTH,HEIGHT=1800,1300
@@ -17,9 +18,9 @@ POINTS=tuple((round(900+380*sin(i*pi/4)),round(700+380*cos(i*pi/4))) for i in ra
 
 
 def build_font(output):
-    f=GameFont('Mu Torere Perfect Opponent',WIDTH,HEIGHT);raw=f.raw
+    f=GameFont('Mu Torere Perfect Opponent',WIDTH,HEIGHT,name_records=NAME_RECORDS);raw=f.raw
     def frame(p,s):
-        centered_lettering(p,'MU TORERE',s+900,1210,13)
+        centered_lettering(p,'Mū tōrere',s+900,1210,15)
         edges=[(i,(i+1)%8) for i in range(8)]+[(i,8) for i in range(8)]
         for a,b in edges:
             ax,ay=POINTS[a];bx,by=POINTS[b]
@@ -32,7 +33,7 @@ def build_font(output):
             if i<8:
                 lx,ly=900+475*sin(i*pi/4),700+475*cos(i*pi/4)
             else:lx,ly=985,740
-            lettering(p,str(i+1),s+round(lx)-11,round(ly)-17,7)
+            centered_lettering(p,str(i+1),s+round(lx),round(ly)-20,8)
     f.add('board',frame,advance=WIDTH,color=0,overlay=False)
     sprites={}
     for player in 'ha':
@@ -50,7 +51,7 @@ def build_font(output):
             name=f'paint_{player}_{index}';f.add(name,components(pieces));layers.append((name,color))
         base=f'position_{index}';f.add(base,components(all_sprites))
         paints[position]=(base,layers)
-    hints={0:'PERFECT PLAY DRAWS',-1:'FONT CAN FORCE A WIN',1:'YOU CAN FORCE A WIN'}
+    hints={0:'Perfect play draws',-1:'Font can force a win',1:'You can force a win'}
     for value,text in hints.items():
         f.add('hint_'+str(value).replace('-','m'),lambda p,s,text=text:centered_lettering(p,text,s+900,145,9))
     active={}
@@ -76,10 +77,10 @@ def build_font(output):
     for source,target in edges:
         def mark(p,s,source=source,target=target):
             x,y=POINTS[target];circle(p,s+x,y,64);circle(p,s+x,y,60,True)
-            centered_lettering(p,f'FONT {source+1} TO {target+1}',s+900,80,10)
+            centered_lettering(p,f'Font: {source+1} to {target+1}',s+900,80,10)
         name=f.add(f'r_last_{source}_{target}',mark,color=3)
         lasts.append(name);last_names[source,target]=name
-    labels=('YOUR TURN','FONT WINS','YOU WIN','INVALID MOVE','MALFORMED','INTERNAL ERROR','DRAW AGREED')
+    labels=('Your turn','Font wins','You win','Invalid move','Check your input','Game error','Draw agreed')
     for (status,code),label in zip(STATUS.items(),labels):
         f.add('status_'+status,lambda p,s,label=label:centered_lettering(p,label,s+900,15,10),advance=code,color=1 if code in (1,2,3,7) else 2)
 

@@ -7,7 +7,8 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]/'shared'))
-from fontgame import GameFont,group,lettering,rect,centered_lettering
+from fontgame import GameFont,group,rect
+from game_text import NAME_RECORDS, lettering, centered_lettering
 from model import MAX_HEAP
 
 WIDTH,HEIGHT=1800,1150
@@ -20,18 +21,18 @@ def binary(p,s,n,y):
 
 
 def build_font(output):
-    f=GameFont('Nim Perfect Opponent',WIDTH,HEIGHT);raw=f.raw
+    f=GameFont('Nim Perfect Opponent',WIDTH,HEIGHT,name_records=NAME_RECORDS);raw=f.raw
     def frame(p,s):
-        for text,x in (('HEAP',110),('SIZE',270),('TOKENS',430),('BINARY',1310)):
+        for text,x in (('Heap',110),('Size',270),('Tokens',430),('Binary',1310)):
             lettering(p,text,s+x,920,8)
         for bit in range(5):lettering(p,str(1<<(4-bit)),s+1250+bit*80,880,7)
         for i,heap in enumerate('ABC'):lettering(p,heap,s+110,800-i*220,14)
-        lettering(p,'XOR',s+110,230,12)
+        lettering(p,'XOR',s+110,230,8)
     f.add('board',frame,advance=WIDTH,color=0,overlay=False)
     modes={}
-    for mode,title,rule in (('N','NORMAL NIM','LAST TOKEN WINS'),('M','MISERE NIM','LAST TOKEN LOSES')):
+    for mode,title,rule in (('N','Normal Nim','Last token wins'),('M','Misère Nim','Last token loses')):
         def label(p,s,title=title,rule=rule):
-            centered_lettering(p,title,s+900,1030,14);centered_lettering(p,rule,s+900,970,8)
+            centered_lettering(p,title,s+900,1030,20);centered_lettering(p,rule,s+900,965,9)
         modes[mode]=f.add('r_mode_'+mode,label,color=0)
     heaps={}
     for i,heap in enumerate('ABC'):
@@ -48,13 +49,13 @@ def build_font(output):
     for n in range(MAX_HEAP+1):
         def draw(p,s,n=n):lettering(p,f'{n:02}',s+270,230,12);binary(p,s,n,235)
         work.append(f.add(f'r_work_{n}',draw,color=3))
-    actions={('target',heap,n):f'FONT LEFT {n:02} IN {heap}' for heap in 'ABC' for n in range(MAX_HEAP+1)}
-    actions.update({('take',heap,1):f'FONT TOOK 01 FROM {heap}' for heap in 'ABC'})
+    actions={('target',heap,n):f'Font left {n:02} in {heap}' for heap in 'ABC' for n in range(MAX_HEAP+1)}
+    actions.update({('take',heap,1):f'Font took 01 from {heap}' for heap in 'ABC'})
     ai={action:f.add('ai_'+'_'.join(map(str,action))) for action in actions}
     lasts=[f.add('r_last_none')]
     for action,label in actions.items():
         lasts.append(f.add('r_last_'+'_'.join(map(str,action)),lambda p,s,label=label:centered_lettering(p,label,s+900,140,10),color=3))
-    labels=('YOUR TURN','FONT WINS','YOU WIN','INVALID MOVE','MALFORMED','INTERNAL ERROR')
+    labels=('Your turn','Font wins','You win','Invalid move','Check your input','Game error')
     for (status,code),label in zip(STATUS.items(),labels):
         f.add('status_'+status,lambda p,s,label=label:centered_lettering(p,label,s+900,60,10),advance=code,color=1 if code<4 else 2)
     numbers=[f.add(f'number_{n}') for n in range(MAX_HEAP+1)]

@@ -11,6 +11,10 @@ import argparse
 import json
 import math
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'shared'))
+from game_text import NAME_RECORDS, lettering, centered_lettering
 
 from fontTools.fontBuilder import FontBuilder
 from fontTools.pens.ttGlyphPen import TTGlyphPen
@@ -23,20 +27,6 @@ TURNS = 21
 STATUS = {'ready': 1, 'win': 2, 'full': 3, 'malformed': 4,
           'trailing': 5, 'internal': 6, 'yellow': 7, 'draw': 8, 'limit': 9}
 PALETTE = ('233f48', 'd54738', 'edbc40', 'e1e8df', 'fffaf0', '207d79')
-# Original pixel lettering; independent of any base font.
-PIXELS = dict(zip('0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-', (
- '111101101101111','010110010010111','111001111100111','111001111001111',
- '101101111001001','111100111001111','111100111101111','111001010010010',
- '111101111101111','111101111001111','010101111101101','110101110101110',
- '111100100100111','110101101101110','111100110100111','111100110100100',
- '111100101101111','101101111101101','111010010010111','001001001101111',
- '101101110101101','100100100100111','101111111101101','101111111111101',
- '111101101101111','111101111100100','111101101111001','110101110101101',
- '111100111001111','111010010010010','101101101101111','101101101101010',
- '101101111111101','101101010101101','101101010010010','111001010100111',
- '000000111000000')))
-
-
 def rect(p, x, y, w, h):
     p.moveTo((x, y)); p.lineTo((x+w, y)); p.lineTo((x+w, y+h)); p.lineTo((x, y+h)); p.closePath()
 
@@ -47,13 +37,6 @@ def circle(p, x, y, r, reverse=False):
     p.moveTo(pts[0])
     for pt in pts[1:]: p.lineTo(pt)
     p.closePath()
-
-
-def label(p, text, x, y, s=4):
-    for c in text:
-        for i, v in enumerate(PIXELS.get(c, '0'*15)):
-            if v == '1': rect(p, x+i%3*s, y+(4-i//3)*s, s, s)
-        x += 4*s
 
 
 def mode_name(mode):
@@ -72,16 +55,16 @@ def build_font(output):
         if color is not None: layers[name] = [(name, color)]
         return name
     def text(name, words, advance=0, color=0):
-        return add(name, lambda p: label(p, words, -WIDTH+65, 55), advance, color)
-    add('.notdef', lambda p: label(p, 'BAD INPUT', 30, 55), 17, 1)
+        return add(name, lambda p: centered_lettering(p, words, -WIDTH+500, 55, 8), advance, color)
+    add('.notdef', lambda p: lettering(p, 'Bad input', 30, 55, 8), 17, 1)
     add('hidden')
     raw = {chr(i): add(f'raw{i}') for i in range(32, 128)}
     def frame(p):
         rect(p, 40, 220, 920, 660)
         for x in range(7):
             for y in range(6): circle(p, 110+130*x, 285+105*y, 43, True)
-        for x in range(7): label(p, str(x+1), 103+130*x, 905, 5)
-        label(p, 'RED - YELLOW', 65, 155, 4)
+        for x in range(7): centered_lettering(p, str(x+1), 110+130*x, 905, 8)
+        centered_lettering(p, 'Red vs Yellow', 500, 155, 7, weight='regular')
     add('board', frame, WIDTH, 0)
     cells = []
     for x in range(7):
@@ -116,9 +99,9 @@ def build_font(output):
     events = [add(f'event{x+1}') for x in range(7)]
     parsers = [add('p_'+s) for s in STATUS] + events
     for s, code in STATUS.items():
-        words = {'ready':'YOUR TURN', 'win':'RED WINS', 'full':'COLUMN FULL', 'malformed':'BAD INPUT',
-                 'trailing':'RED WINS - TRAILING INPUT', 'internal':'STRATEGY ERROR',
-                 'yellow':'YELLOW WINS', 'draw':'DRAW', 'limit':'INPUT LIMIT'}[s]
+        words = {'ready':'Your turn', 'win':'Red wins', 'full':'Column full', 'malformed':'Bad input',
+                 'trailing':'Red wins - trailing input', 'internal':'Strategy error',
+                 'yellow':'Yellow wins', 'draw':'Draw', 'limit':'Input limit'}[s]
         text('status_'+s, words, code, 5 if s == 'ready' else 1)
     # Fixed slots used by the single shared turn program.
     tape = RegisterTape(board=[['board']], cells=cells, mode=[mode_g], annotations=ann,
@@ -252,7 +235,8 @@ def build_font(output):
         'uniqueFontIdentifier':'ConnectFourPerfect-1.0','fullName':'Connect Four Perfect Regular',
         'psName':'ConnectFourPerfect-Regular','version':'Version 1.0',
         16:'Connect Four Perfect',17:'Regular',
-        'copyright':'Copyright 2026 Michael Brackx. Strategy by 2swap and WeakC4 contributors.',
+        'copyright':NAME_RECORDS['copyright']+'. Strategy by 2swap and WeakC4 contributors.',
+        'trademark':NAME_RECORDS['trademark'],'description':NAME_RECORDS['description'],
         'licenseDescription':'GPL-3.0-only. Derived from WeakC4 revision 51dc8383472c63aa6e6796a9ef306662eb8bd4bf. See upstream/LICENSE and PROVENANCE.md.',
         'licenseInfoURL':'https://www.gnu.org/licenses/gpl-3.0.html'})
     fb.setupOS2(sTypoAscender=HEIGHT,sTypoDescender=-20,usWinAscent=HEIGHT,usWinDescent=20,fsType=0)

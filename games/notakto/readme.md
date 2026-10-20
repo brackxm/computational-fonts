@@ -48,7 +48,7 @@ arbitrary number of boards. Each AI choice depends on one exact board mask and
 the other two boards' classes. It chooses the first legal move leaving a losing
 position, in board/square order. From the standard opening it always has one.
 
-The bundled TTF has **1,752 glyphs, 495 GSUB lookups, and 964,500 bytes**.
+The bundled TTF has **1,752 glyphs, 495 GSUB lookups, and 747,416 bytes**.
 It stores three individual board registers rather than a glyph for each whole
 game position. Fifteen shaping passes cover the conservative 27-ply bound,
 including the opening move and explicit end-of-input validation. There is no
@@ -110,6 +110,10 @@ shape 300 complete seeded games, check input errors and terminal freezing, and
 exercise the browser controller against the real font.
 Manual browser verification covers the rendered boards, controls, and layout.
 
-All generator code, strategy data, lettering, and board artwork are original
-and licensed under Apache 2.0. No external artwork or published strategy table
-is embedded.
+All generator code, strategy data and board artwork are original
+and licensed under Apache 2.0. No published strategy table is embedded.
+
+Titles, coordinates, and status labels use smooth, proportional Roboto 2
+outlines baked into the font by [`game_text.py`](../shared/game_text.py).
+Roboto is Copyright 2015 Google Inc., Apache 2.0; the font metadata retains
+its attribution. See the root [third-party notices](../../THIRD_PARTY_NOTICES.md).
