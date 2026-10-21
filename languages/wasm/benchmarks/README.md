@@ -7,6 +7,14 @@ lookup. This measures compilation size, with no timing claim. Reproduce the
 optimized result with `tests/test_indirect_calls.py::test_duplicate_table_targets_share_one_expensive_callee`.
 The timing and validation reports below remain historical.
 
+The [wide-memory capacity report](wide_memory_capacity.json) records shared wide
+reads. An i64 read from a 128-byte runtime buffer drops from 4,261 to 2,185 gates
+and from 1,153,092 to 600,176 font bytes, fitting a 2,500-gate budget. Two
+unaligned reads composed with dynamic i64 division drop from 8,937 to 7,243 gates
+and from 3,247,904 to 2,703,188 bytes, fitting an 8,000-gate budget. Reproduce both
+results with `tests/test_wide_memory_reads.py`. These are circuit and file sizes;
+the report makes no timing measurement.
+
 Historical reports supplied with the ChatGPT ZIP. These describe the handoff's
 Linux environment and source snapshot, not the current checkout. To measure
 this checkout, run the reproduction commands below.

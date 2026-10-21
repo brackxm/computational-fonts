@@ -7,6 +7,10 @@ for width,base in ((32,0x6d),(64,0x7f)):
  for offset,name in enumerate(('div_s','div_u','rem_s','rem_u')):EXTRA[base+offset]=f'i{width}.{name}'
 EXTRA.update({0x77:'i32.rotl',0x78:'i32.rotr',0x89:'i64.rotl',0x8a:'i64.rotr'})
 EXTRA.update({0x25:'table.get',0x26:'table.set',0xd0:'ref.null',0xd1:'ref.is_null',0xd2:'ref.func'})
+EXTRA.update({0x12:'return_call',0x13:'return_call_indirect'})
+EXTRA.update({0x14:'call_ref',0x15:'return_call_ref'})
+EXTRA.update({0xd4:'ref.as_non_null',0xd5:'br_on_null',0xd6:'br_on_non_null'})
+TAIL_CALLS={'return_call','return_call_indirect','return_call_ref'}
 
 # Integer bulk-memory instructions under the 0xfc prefix.
 BULK_MEMORY={'memory.init':0x08,'data.drop':0x09,'memory.copy':0x0a,'memory.fill':0x0b}

@@ -41,6 +41,19 @@ for (const entry of catalog) {
       assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
     }
     else if (entry.id === 'sum_loop' || entry.id === 'recursive_sum') cases.push(['0'], ['1'], ['7']);
+    else if (entry.id === 'tail_calls' || entry.id === 'tail_reference64') {
+      for (const rounds of ['0', '1', '3', '7']) {
+        for (const [a, b] of [['100', '7'], ['-1', '7'], ['1', '0'], ['0', '1']]) {
+          cases.push([a, b, rounds]);
+        }
+      }
+      assert.equal(manifest.limits.call_depth, 1);
+      assert.equal(manifest.limits.tail_calls, 8);
+      assert.throws(() => font.invoke(['100', '7', '8']), {name: 'ExecutionBoundExceeded', message: 'tail_call'});
+      assert.throws(() => font.invoke(['100', '0', '8']), {name: 'WasmTrap', message: 'integer_divide_by_zero'});
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+      assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned), ['23', '5']);
+    }
     else if (entry.id === 'division_loop64') {
       cases.push(['100', '7', '0'], ['100', '7', '3'], ['-1', '7', '7'],
         ['-1', '1', '7'], ['1', '0', '0'], ['1', '0', '7']);
@@ -49,6 +62,15 @@ for (const entry of catalog) {
       assert.deepEqual(font.invoke(['100', '7', '3']).results.map(value => value.unsigned), ['23', '5']);
     }
     else if (entry.id === 'memory_roundtrip') cases.push(['0', '-1'], ['12', '2147483648']);
+    else if (entry.id === 'constant_layout') {
+      for (const operation of ['0', '1', '2', '-1']) {
+        for (const value of ['0', '100', '-1', '9223372036854775808']) cases.push([value, operation]);
+      }
+      assert.throws(() => font.invoke(['100', '2']), {name: 'WasmTrap', message: 'table_out_of_bounds'});
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+      assert.deepEqual(font.invoke(['0', '0']).results.map(value => value.unsigned), ['578437695752307201']);
+      assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned), ['82633956536043900']);
+    }
     else if (entry.id === 'indirect64') {
       for (const index of ['0', '1', '2', '3', '4', '5', '6', '-1']) {
         cases.push(['18446744073709551615', '7', index], ['100', '0', index]);
@@ -68,7 +90,11 @@ for (const entry of catalog) {
       assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.hex),
         ['0x08070605aa030201', '0x100f0e0d0c0b0a09', '0x00000001', '0x00000001']);
     }
-    else if (entry.id === 'c-callbacks') {
+    else if (entry.id === 'c-callbacks' || entry.id === 'c-tail-callbacks') {
+      if (entry.id === 'c-tail-callbacks') {
+        assert.equal(manifest.limits.call_depth, 1);
+        assert.equal(manifest.limits.tail_calls, 8);
+      }
       for (const operation of ['0', '1', '2', '3', '-1']) {
         for (const [a, b] of [['100', '7'], ['-1', '1'], ['1', '0'], ['0', '0'], ['9223372036854775808', '-1']]) {
           cases.push([a, b, operation]);
@@ -101,6 +127,53 @@ for (const entry of catalog) {
       assert.deepEqual(font.invoke(['100', '7', '1', '0']).results.map(value => value.unsigned), ['107', '5']);
       assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
     }
+    else if (entry.id === 'nullable_callbacks') {
+      for (const slot of ['0', '1', '2', '3', '-1']) {
+        for (const strict of ['0', '1']) {
+          for (const [a, b] of [['100', '7'], ['1', '0'], ['-1', '1']]) cases.push([a, b, slot, strict]);
+        }
+      }
+      assert.throws(() => font.invoke(['1', '0', '1', '1']), {name: 'WasmTrap', message: 'null_reference'});
+      assert.throws(() => font.invoke(['1', '0', '2', '0']), {name: 'WasmTrap', message: 'integer_divide_by_zero'});
+      assert.throws(() => font.invoke(['1', '0', '3', '0']), {name: 'WasmTrap', message: 'table_out_of_bounds'});
+      assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned), ['107']);
+      assert.deepEqual(font.invoke(['100', '7', '2', '1']).results.map(value => value.unsigned), ['14']);
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+    }
+    else if (entry.id === 'typed_callbacks' || entry.id === 'typed_dispatch') {
+      for (const operation of ['0', '1', '2', '3', '-1']) {
+        for (const [a, b] of [['100', '7'], ['-1', '1'], ['1', '0'], ['0', '0'], ['9223372036854775808', '-1']]) {
+          cases.push([a, b, operation]);
+        }
+      }
+      assert.throws(() => font.invoke(['1', '0', '2']), {name: 'WasmTrap', message: 'integer_divide_by_zero'});
+      if (entry.id === 'typed_callbacks') {
+        assert.throws(() => font.invoke(['1', '0', '3']), {name: 'WasmTrap', message: 'null_reference'});
+        assert.throws(() => font.invoke(['1', '0', '-1']), {name: 'WasmTrap', message: 'unreachable'});
+        assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned), ['14']);
+      }
+      else {
+        assert.equal(manifest.limits.call_depth, 1);
+        assert.throws(() => font.invoke(['1', '0', '3']), {name: 'WasmTrap', message: 'table_out_of_bounds'});
+        assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned), ['14', '2']);
+      }
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+    }
+    else if (entry.id === 'indexed_words') {
+      for (const [a, b] of [['0', '0'], ['-1', '0'], ['0x0807060504030201', '0x1122334455667788']]) {
+        for (const [first, second] of [['0', '8'], ['1', '9'], ['3', '29'], ['7', '31'], ['48', '56']]) {
+          for (const divisor of ['0', '1', '7', '-1']) cases.push([a, b, first, second, divisor]);
+        }
+      }
+      cases.push(['1', '2', '65529', '0', '7'], ['1', '2', '0', '-1', '7']);
+      assert.equal(manifest.limits.memory_bytes, 64);
+      assert.equal(manifest.limits.max_gates, 8000);
+      assert.ok(manifest.metrics.gates < 8000);
+      assert.throws(() => font.invoke(['1', '2', '57', '0', '7']), {name: 'ExecutionBoundExceeded', message: 'memory'});
+      assert.throws(() => font.invoke(['1', '2', '0', '57', '7']), {name: 'ExecutionBoundExceeded', message: 'memory'});
+      assert.throws(() => font.invoke(['1', '2', '3', '29', '0']), {name: 'WasmTrap', message: 'integer_divide_by_zero'});
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+    }
     else if (entry.id === 'indexed_memory') {
       for (let offset = 0; offset < 64; offset++) {
         for (const seed of ['0', '-1', '0x0807060504030201']) cases.push([String(offset), seed]);
@@ -110,6 +183,19 @@ for (const entry of catalog) {
       assert.throws(() => font.invoke(['65535', '0']), {name: 'ExecutionBoundExceeded', message: 'memory'});
       assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
       assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned), ['3', '13']);
+    }
+    else if (entry.id === 'multiple_tables') {
+      for (const operation of ['0', '1', '2', '3', '-1']) {
+        for (const [a, b] of [['100', '7'], ['-1', '1'], ['1', '0'], ['0', '-1']]) {
+          cases.push([a, b, operation]);
+        }
+      }
+      assert.throws(() => font.invoke(['1', '0', '2']), {name: 'WasmTrap', message: 'integer_divide_by_zero'});
+      assert.throws(() => font.invoke(['1', '0', '3']), {name: 'WasmTrap', message: 'table_out_of_bounds'});
+      assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
+      assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned), ['14', '3', '2']);
+      assert.deepEqual(font.invoke(['100', '7', '0']).results.map(value => value.unsigned), ['107', '3', '2']);
+      assert.deepEqual(font.invoke(entry.arguments).results.map(value => value.unsigned), ['14', '3', '2']);
     }
     else if (entry.id === 'mutable_dispatch') {
       for (const operation of ['0', '1', '2', '-1']) {

@@ -1,6 +1,6 @@
 """Sparse backed-memory layouts and compact dynamic memory access circuits."""
 from fontcircuit.gsub.circuit import Value
-from .selection import aligned,lookup,selectors
+from .selection import aligned,lookup,lookup_window,selectors
 
 
 class MemoryLowering:
@@ -58,11 +58,17 @@ class MemoryLowering:
                 for byte in range(min(size,len(state.memory)-at)):
                     state.memory[at+byte]=self.c.mux(test,Value(value.bits[byte*8:byte*8+8]),state.memory[at+byte])
         else:
-            bits=[];index_width=max(1,(len(state.memory)-1).bit_length())
-            short=Value(index.bits[:index_width])
-            for byte in range(size):
-                at=self.c.add(short,self.c.const(byte,index_width)) if byte else short
-                bits.extend(lookup(self.c,state.memory,at).bits)
+            if size>1 and len(state.memory)>=32 and any(self.c.known(byte) is None for byte in state.memory):
+                # Runtime-valued wide reads share the expensive high-address
+                # selection. Keep the compact constant-data path unchanged.
+                payload=lookup_window(self.c,state.memory,index,size)
+                bits=[bit for byte in payload for bit in byte.bits]
+            else:
+                bits=[];index_width=max(1,(len(state.memory)-1).bit_length())
+                short=Value(index.bits[:index_width])
+                for byte in range(size):
+                    at=self.c.add(short,self.c.const(byte,index_width)) if byte else short
+                    bits.extend(lookup(self.c,state.memory,at).bits)
             fill=bits[-1] if signed else 0
             state.stack.append(Value(tuple(bits)+(fill,)*(width-len(bits))))
         return state

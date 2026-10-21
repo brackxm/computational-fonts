@@ -21,7 +21,7 @@ Serve the repository root:
 python3 -m http.server 8000
 ```
 
-Open <http://localhost:8000/languages/wasm/playground.html>. Thirty-four bundled examples
+Open <http://localhost:8000/languages/wasm/playground.html>. Forty-three bundled examples
 cover 32/64-bit expressions, wrapping addition, branches, loops, recursion,
 memory, division, multiplication, bit counting and compiled C. Change arguments
 to run them; decimal, hexadecimal and binary input retain all 64 bits. Results
@@ -61,6 +61,16 @@ and bit counting. Offsets 0–63 succeed; other valid Wasm addresses reach the
 font's memory bound.
 **Pass function references through helpers** demonstrates typed selection,
 reference-valued calls and blocks, and a mutable reference global.
+**Computed module initialization** uses wrapping constant expressions, immutable
+globals, a seeded table and active elements to prepare callbacks and data.
+**Optional callback or strict null check** chooses fallback addition for an
+empty callback, or reports a null-reference trap in strict mode.
+**Call typed callbacks without a table** passes a nullable typed reference through
+a helper and calls addition, XOR or unsigned division directly with `call_ref`.
+**64-bit division → reference tail calls** carries a checksum and remainder through
+`return_call_ref` using one ordinary call frame.
+**Grow and call a non-null typed table** grows a dispatch table from a typed
+callback library, then tail-calls the selected reference directly.
 **Compiled C · function pointers** passes a runtime callback through a helper
 to select full-width i64 addition, XOR or division.
 **Compiled C · packet checksum** copies up to seven payload bytes into a local
@@ -269,15 +279,15 @@ produce `IncompleteShaping`, rather than a plausible zero or a host result.
 | Comparisons | `eqz`, `eq`, `ne`, and all signed/unsigned `lt`, `le`, `gt`, `ge`; i32 Boolean results can feed later operations |
 | Counting | `clz`, `ctz`, `popcnt`; results are binary registers, not host-counted unary glyphs |
 | Conversions | `i32.wrap_i64`, signed/unsigned `i64.extend_i32`, and integer sign-extension instructions |
-| Stack / locals | `local.get`, `local.set`, `local.tee`, `drop`, untyped integer `select`, typed `select (result i32/i64/funcref)`, `nop` |
-| Calls | Multiple internal functions, direct `call`, table-based `call_indirect`, `return`, fresh locals per call and bounded recursion; no host imports |
+| Stack / locals | `local.get`, `local.set`, `local.tee`, `drop`, untyped integer `select`, typed integer/reference selection, `nop`; non-null locals require definite initialization |
+| Calls | Multiple internal functions, `call`, `call_indirect`, `call_ref`, all three corresponding `return_call*` forms, `return`, fresh locals per call and bounded ordinary/tail recursion; no host imports |
 | Initialization | Optional void start function, after active data/table initialization and before the selected export; its calls, loops, state changes, traps and resource bounds follow the normal compiler rules |
-| Function tables | One mutable `funcref` table, up to 256 slots; active/passive/declarative function-index and reference-expression segments; `table.get/set/size/grow/fill/copy/init`, `elem.drop`, `ref.null/func/is_null` and nullable funcref values, locals and globals; structural signature checks |
-| Control flow | `block`, `loop`, `if` / `else`, `br`, `br_if`, `br_table`; integer/funcref parameters and multiple results, including type-index block signatures and loop backedge parameters |
+| Function tables | Up to 16 mutable function-reference tables, each up to 256 slots; nullable/non-null generic or indexed types, matching active/passive/declarative segments, `table.get/set/size/grow/fill/copy/init`, `elem.drop`; structural signature checks |
+| Control flow | `block`, `loop`, `if` / `else`, `br`, `br_if`, `br_table`; integer/reference parameters and multiple results, including type-index block signatures and loop backedge parameters |
 | Memory | `i32`/`i64` loads/stores and narrow signed/unsigned variants, little-endian encoding, unaligned access, offsets, active data segments; `memory.copy` and `memory.fill` with dynamic addresses and lengths within configurable backed regions at absolute Wasm addresses |
 | Data segments | Passive byte strings, `memory.init` with dynamic source/destination/length, and `data.drop`; segment lifetime follows branches, loops and internal calls |
 | Memory growth | `memory.size` and `memory.grow`; dynamic page counts, old-size/−1 results, and bounds that follow growth through branches, loops and calls |
-| Globals | Integer and nullable funcref globals with constant initializers, `global.get`, mutable `global.set`; values persist within an invocation, including through calls |
+| Globals | Integer and nullable/non-null function-reference globals with constant expressions, `global.get`, mutable `global.set`; values persist within an invocation, including through calls |
 | Traps | `unreachable`, integer divide-by-zero, i32/i64 signed division overflow, actual memory/data-segment bounds, and indirect-call table bounds/null/signature errors |
 
 Unsupported instructions/module forms are rejected. Some otherwise supported
@@ -290,14 +300,33 @@ The new text frontend accepts flat and folded integer expressions, nested block
 comments (including line comments adjacent to tokens), named
 functions/locals/globals/labels, grouped unnamed parameters,
 exports, function and block type uses, one memory, integer/funcref globals, active
-constant-offset data segments, passive data segments, one function table and
+constant-offset data segments, passive data segments, multiple function tables and
 active/passive/declarative function-index or reference-expression elements, and a named/numeric start-function use.
 Names and data-string escapes are resolved by
 the frontend; integer literals are checked against their declared width,
 including global initializers and data offsets. The resulting binary is
 independently validated by V8.
-Active data segments require a declared memory and exactly one integer
-immediate in their constant offset expression.
+Active data segments require a declared memory and an i32 constant expression
+for their offset. Integer constant expressions support wrapping i32/i64
+`add`, `sub` and `mul`, plus reads from previously defined immutable globals.
+Element and data offsets can read any declared immutable global. Offset syntax
+accepts a folded expression or an `(offset ...)` instruction sequence.
+Nullable function-reference globals and reference-expression elements can also
+read immutable globals of the matching type. Mutable globals, forward global
+references in global initializers, mismatched operand types and runtime-only
+instructions are rejected. Initializer instructions are retained in the emitted
+binary for independent validation; declaration evaluation never calls the Wasm
+reference interpreter.
+
+The [computed-layout example](examples/constant_layout.wat) uses these expressions
+to place an embedded seed and initialize a callback table. A table declaration
+can supply `ref.func` or `ref.null func` as its initializer, in folded or flat
+syntax: `(table 4 8 funcref (ref.func $callback))` seeds all four initial slots.
+Active element segments then override those slots in declaration order.
+Slots subsequently added by `table.grow` use that instruction's operand.
+Table initializers cannot read module-defined globals; imports remain unsupported.
+The example's runtime input chooses addition, or XOR followed by unsigned
+division by seven.
 Passive data strings require no memory declaration. Data-segment names and
 numeric indices are supported by `memory.init` and `data.drop`.
 Numeric type indices must be unsigned 32-bit values and refer to a declared
@@ -318,13 +347,22 @@ explicitly rejected instead of being silently ignored. Tables support function-i
 Active offsets must be constant i32 expressions. Nullable function references can
 occupy operand stacks, locals, globals, internal function parameters/results and
 block/loop signatures. `select (result funcref)` selects references; typed i32/i64
-selection also works. The selected font entry must still have only i32/i64 inputs
+selection also works. `ref.as_non_null` preserves a reference or reports a
+`null_reference` trap. `br_on_null` consumes the reference on its taken branch
+and retains it on fallthrough; `br_on_non_null` passes the reference to its
+target and discards null on fallthrough. Both support named or numeric targets,
+multi-value branches, function returns and bounded loop backedges.
+The [nullable-callback example](examples/nullable_callbacks.wat) selects a fallback
+function with `br_on_non_null`, or asserts a non-null callback in strict mode.
+The selected font entry must still have only i32/i64 inputs
 and outputs; other exported functions can have reference signatures.
 Data-count sections are supported in their specified position before code;
 V8 validates their counts and all referenced data indices. Extended load/store
 operands with an explicit memory index are rejected, including an explicit index
 of zero. Bulk-memory binaries accept memory index zero.
-Floating-point, SIMD, externref and typed non-null references remain unsupported.
+Floating-point, SIMD, externref, GC types and recursive function type definitions
+remain unsupported. Indexed function-reference signatures must form an acyclic
+type graph. Ordinary and tail recursion between functions remain supported.
 This is not an unrestricted implementation of the WAT grammar.
 
 ### Start functions
@@ -428,6 +466,33 @@ allocation up to 256 slots; larger requests fail allocation. A declared maximum
 must also be at most 256. Table slots consume circuit resources, especially when
 runtime mutation makes many possible call targets reachable.
 
+Modules can declare up to sixteen function tables. Each has its own entries,
+current size and maximum. Table instructions take a named or numeric table index;
+omitting it selects table zero. Active elements use `(elem (table $ops)
+(i32.const 0) $add $divide)` to select a destination table. Binary element modes
+2 and 6 preserve that table index for function-index and reference-expression
+initializers respectively.
+
+`table.copy $destination $source` copies between tables as well as within one
+table. Its destination and source ranges are checked against their respective
+current sizes, including zero-length endpoints. `table.init $destination $segment`
+can initialize any table from a passive segment. Segment availability belongs to
+the module: dropping a segment makes it unavailable to every table without
+changing installed entries. All tables retain mutations through starts, calls,
+branches and loops; each fresh font invocation resets them together.
+
+The [multiple-table example](examples/multiple_tables.wat) copies addition, XOR
+or unsigned division from a library into a separate dispatch table. It grows only
+the dispatch table and calls its new slot. The library stays at three slots.
+
+```sh
+python build.py examples/multiple_tables.wat --export run -o tables.ttf
+python run.py tables.ttf 100 7 2
+# (14, 3, 2): quotient, library slots, dispatch slots
+python run.py tables.ttf 100 7 0
+# (107, 3, 2): sum, independent table sizes
+```
+
 ```sh
 python build.py examples/mutable_dispatch.wat --export run -o mutable.ttf
 python run.py mutable.ttf 100 7 1
@@ -437,7 +502,64 @@ python run.py mutable.ttf 100 7 1
 Dispatch, mutation and segment lifetimes follow WebAssembly's
 [table instruction semantics](https://webassembly.github.io/spec/core/exec/instructions.html#table-instructions).
 
+### Tail calls
+
+`return_call $function` and `return_call_indirect $table (type $signature)`
+replace the current function frame. They pass only the callee arguments,
+discard the old operand stack and locals, and return the callee's results to
+the original caller. Callee locals start at zero or null. Memory, globals,
+tables, page counts and segment lifetimes carry through the transition.
+Indirect tail calls use the same table bounds, null and structural signature
+checks as ordinary indirect calls, including nonzero table indices.
+
+Tail transitions do not consume `--call-depth`. The separate `--tail-calls`
+budget defaults to eight transitions per ordinary call frame and accepts 0–64;
+zero disallows tail transitions. Every ordinary child call gets its own tail
+budget. A transition beyond the budget reports
+`ExecutionBoundExceeded('tail_call')`. Invalid indirect targets trap before
+that transition bound is applied. Loop bounds remain independent, and start
+and export invocations have separate call frames and tail budgets.
+
+The compiler lowers tail transitions with a worklist rather than recursive
+Python calls. The reference VM likewise replaces frames iteratively, sharing
+its instruction fuel across ordinary and tail calls. Neither uses a host Wasm
+executor for font execution. The behavior follows the specification's
+[tail-call semantics](https://webassembly.github.io/spec/core/exec/instructions.html#exec-return-call).
+`return_call_ref $type` applies the same frame replacement and budgets to a
+typed function reference. A null reference traps before the transition bound.
+
+The [tail-recursive example](examples/tail_calls.wat) divides two i64 inputs,
+then carries the quotient and remainder through a recursive helper in table
+one. Its entry tail-calls that helper, and each round performs another indirect
+tail call, so rounds 0–7 fit the default budget using just one ordinary frame.
+
+```sh
+python build.py examples/tail_calls.wat --export run --call-depth 1 -o tails.ttf
+python run.py tails.ttf 100 7 3
+# (23, 5): checksum, remainder plus rounds
+python build.py examples/tail_calls.wat --export run --call-depth 1 --tail-calls 16 -o tails.ttf
+```
+
 ### Function-reference values
+
+Explicit `(ref func)`, `(ref null func)`, `(ref $type)` and `(ref null $type)`
+declarations work in internal signatures, locals, globals, block/loop signatures,
+typed selection, tables and reference-expression elements. Named and numeric heap
+types are checked against the declared type-index space. Binary value types use
+the nullable/non-null prefixes and signed heap-type indices; `call_ref` and
+`return_call_ref` use unsigned type indices. Structurally equal type aliases
+match, including aliases nested inside higher-order function signatures.
+Non-null locals have no observable default: V8 validates definite initialization
+before circuit lowering. A non-null table requires an explicit initializer,
+including a table with zero initial slots.
+
+`call_ref $type` pops a typed function reference above its arguments and calls it
+directly. Nullable references report `null_reference`; non-null references can
+be called without a preceding assertion. Calls share state and consume the
+ordinary call-depth budget. `return_call_ref $type` uses the tail-call budget.
+The [table-free callback example](examples/typed_callbacks.wat),
+[reference-tail example](examples/tail_reference64.wat), and
+[typed-table example](examples/typed_dispatch.wat) exercise these forms.
 
 Reference-expression elements can contain explicit null entries:
 
@@ -452,8 +574,9 @@ Reference-expression elements can contain explicit null entries:
 ```
 
 The binary loader accepts all eight element encodings, including explicit table
-zero and padded indices. Initializer expressions are limited to `ref.func` and
-`ref.null func`. References retain their type through calls, returns, branches,
+zero and padded indices. Reference initializers accept `ref.func`,
+`ref.null` with a function heap type, and reads from immutable globals; table-declaration initializers
+support the first two forms. References retain their type through calls, returns, branches,
 loop backedges and state merges; integer operations cannot consume them. Internal
 `call_indirect` signatures can include references and still match structurally.
 The reference VM represents null separately from function index zero.
@@ -498,8 +621,8 @@ python run.py division-loop.ttf 100 7 3
 
 The implementation follows WebAssembly's [structured control semantics](https://webassembly.github.io/spec/core/exec/instructions.html#control-instructions)
 and [text block signatures](https://webassembly.github.io/spec/core/text/instructions.html#control-instructions).
-Floating-point/reference signatures and named block-parameter bindings remain
-unsupported. Integer block types in binaries use signed LEB128 type indices.
+Floating-point and externref signatures and named block-parameter bindings remain
+unsupported. Integer/funcref block types in binaries use signed LEB128 type indices.
 
 ### Bulk memory
 
@@ -691,6 +814,29 @@ arrays, so the gaps do not add selection cells. Address/bounds checks remain
 separate from those selection counts. Smaller legacy windows retain their
 existing layout.
 
+Wide loads from runtime-valued windows of at least 32 bytes share one selection
+of an overlapping block using the high address bits, then shift within that
+small block using the low bits. Known alignment bits shorten the block and
+remove unnecessary shifts. This avoids repeating a full byte lookup and address
+addition for every byte of an i32/i64 load. Constant-only windows and narrow
+loads retain their existing selection path. Actual Wasm bounds and backed-region
+bounds still guard the complete load, including unaligned and signed variants.
+
+For a 128-byte buffer populated by sixteen runtime i64 inputs, a dynamic i64
+read drops from 4,261 to 2,185 gates and from 1,153,092 to 600,176 font bytes
+(49% fewer gates and 48% smaller font). The read now fits a 2,500-gate construction
+budget. Two unaligned reads feeding addition, XOR and a full-width unsigned
+divider drop from 8,937 to 7,243 gates and from 3,247,904 to 2,703,188 font bytes.
+The [indexed-word example](examples/indexed_words.wat) fits an 8,000-gate budget
+and backs 64 bytes at address zero. Both read offsets must be 0–56.
+Before/after metrics are recorded in
+[wide_memory_capacity.json](benchmarks/wide_memory_capacity.json).
+
+```sh
+python build.py examples/indexed_words.wat --export run --memory-bytes 64 --max-gates 8000 -o words.ttf
+python run.py words.ttf 0x0807060504030201 0x1122334455667788 3 29 7
+```
+
 ```sh
 python build.py examples/indexed_memory.wat --export run --memory-bytes 64 -o indexed.ttf
 python run.py indexed.ttf 34 0x0807060504030201
@@ -704,6 +850,13 @@ three initialized globals and passes it to a non-inlined helper. Its Wasm binary
 contains actual `call` and `call_indirect` instructions. Operations 0, 1 and 2
 perform unsigned i64 addition, XOR and division. Other operations trap; division
 by zero traps only for operation 2. The twelve pointer bytes start at 65536.
+
+[`callbacks_tail.wasm`](examples/callbacks_tail.wasm) compiles the same C source
+with `-mtail-call`. Its export uses `return_call` to the helper, which uses
+`return_call_indirect` to the callback. Both calls reuse one frame; the bundled
+**Compiled C · tail-call callbacks** playground example sets `call_depth=1`.
+`build_examples.py --recompile-c` rebuilds this variant alongside the ordinary
+callback fixture.
 
 [`packet.c`](examples/packet.c) checks a runtime count against an embedded packet
 header, copies and adjusts up to seven payload bytes into a local array, then
@@ -727,7 +880,8 @@ Changing the compiler/linker layout may require updating the backed regions.
 
 ### Circuit and execution budgets
 
-CLI limits are 1–64 loop iterations, 1–32 call frames, 0–256 backed memory bytes,
+CLI limits are 1–64 loop iterations, 1–32 ordinary call frames, 0–64 tail
+transitions per frame, 0–256 backed memory bytes,
 and 1–32,000 constructed gates. Serialization chooses the smallest batch size
 from 1–64 gate groups that fits the lookup headers and extension offsets.
 If none fits, it tries those batch sizes with bounded subtable coalescing.
@@ -867,9 +1021,37 @@ Independent binary fixtures cover all eight element encodings and padded table,
 reference and typed-select operands. Function-reference tests also cover mixed
 reference/integer signatures, direct and indirect calls, typed blocks and loop
 backedges, globals initialized before start, null entries and fresh invocations.
+Multiple-table regressions cover independent storage and growth, cross-table
+copies with different sizes, shared segment lifetimes, nonzero table indices in
+binary instructions and elements, and reference-valued indirect calls. Their
+results and traps are compared with V8, the reference VM and actual HarfBuzz.
+Tail-call regressions cover direct/indirect and mutual recursion, frame and
+local replacement, mixed/reference results, loop exits, shared mutable state,
+independent frame budgets, trap precedence and padded binary immediates. Maximum
+ordinary/tail bounds and long reference-VM tail chains check that host stack
+growth does not replace the declared execution budgets. Both tail-call
+playground examples run in browser HarfBuzzJS against fresh V8 instances.
+Wide-read regressions check every padded lookup index, non-power-of-two arrays,
+known and partial alignment, repeated runtime bytes, every signed/unsigned wide
+load, sparse gaps, growth, unaligned endpoints and reduced construction budgets.
 C fixtures verify actual callback dispatch and packet loops against V8, the
 reference VM and HarfBuzz. Both new memory examples and mutable dispatch also run in browser
 HarfBuzzJS against fresh V8 instances.
+Constant-expression regressions cover both integer widths, wrapping arithmetic,
+immutable-global aliases, computed data/element offsets, nullable reference
+initializers, retained binary instructions and edits to resolved module values.
+Null-control regressions check distinct successor stacks, multi-value branches,
+function labels, loop bounds, inactive assertions and trap order. Table-seeding
+tests cover empty and 256-slot tables, active overlays, independent instances,
+growth operands, start functions and padded initializer immediates. The computed
+layout and optional-callback examples also run in browser HarfBuzzJS against V8.
+Typed-reference regressions cover nullable/non-null values and definite local
+initialization, generic/indexed aliases, higher-order signatures, signed heap
+indices, unsigned call indices, and compact reference block types. Direct and
+tail-reference calls check null/bound precedence, frame replacement, mutable
+state and reference-valued results. Typed-table tests cover nullable/non-null
+seeding, all element modes, alias-compatible copies, growth/fill/init/drop,
+start functions and invalid static type combinations.
 
 Reduced four-bit circuits are exhaustively checked across all 256 operand pairs
 for 13 operations. Addition, subtraction and multiplication also run all 256
@@ -882,7 +1064,7 @@ the supplied C-produced binary is always tested.
 Run this suite independently from the other projects, whose test modules use
 their own imports and build entry points. From the repository root the command
 is `python -m pytest -q languages/wasm`.
-Browser-engine tests compare all thirty-four bundled programs with V8. Capacity regressions cover
+Browser-engine tests compare all thirty-eight bundled programs with V8. Capacity regressions cover
 packed truth tables, interleaved paired outputs, two independent signed i64
 dividers, division/multiplication, two multipliers, chained division/remainder,
 and two quotients feeding a multiplier on both active and inactive branches.
@@ -1002,10 +1184,11 @@ the original integration notes and source manifest.
 
 ## Further compatibility investigation
 
-Further reference support would include externref, typed/non-null references,
-reference-call instructions from newer proposals, and multiple tables. Those forms
-currently fail closed. Nullable funcref values, element expressions, typed select,
-internal reference signatures and mutable tables are implemented within the
+Further reference support would include externref, recursive function type
+definitions, recursive groups, explicit subtype declarations and GC heap types.
+Those forms currently fail closed. Generic and acyclic indexed function-reference
+values, direct reference calls/tail calls, typed mutable tables, typed elements,
+null-control instructions and table initializers are implemented within the
 bounds above. Font entry parameters/results remain integers.
 
 Floating-point support would need actual IEEE-754 bit circuits, including

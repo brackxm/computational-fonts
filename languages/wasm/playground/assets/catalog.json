@@ -387,6 +387,27 @@
     "language": "WAT"
   },
   {
+    "id": "constant_layout",
+    "title": "Computed module initialization",
+    "description": "Compute the seed address and divisor with constant expressions, seed the callback table directly, then replace a callback using an immutable global. Operation 0 adds the embedded 64-bit seed; operation 1 XORs with the seed and divides unsigned by seven. Other operation indices trap.",
+    "parameters": [
+      "value",
+      "operation"
+    ],
+    "arguments": [
+      "100",
+      "1"
+    ],
+    "font": "constant_layout.ttf",
+    "manifest": "constant_layout.json",
+    "module": "constant_layout.wasm",
+    "source": "(module\n  (memory 1)\n  (table $operations 2 funcref (ref.func $add_seed))\n  (global $base i32 (i32.mul (i32.const 2) (i32.const 4)))\n  (global $divisor i64 (i64.sub (i64.const 10) (i64.const 3)))\n  (global $divide funcref (ref.func $divide_seed))\n  ;; Place the seed at byte 8 and replace table slot 1 with division.\n  (data (offset (global.get $base) (i32.const 0) i32.add)\n    \"\\01\\02\\03\\04\\05\\06\\07\\08\")\n  (elem (table $operations)\n    (i32.sub (global.get $base) (i32.const 7)) funcref\n    (item (global.get $divide)))\n  (func $add_seed (param i64) (result i64)\n    local.get 0 global.get $base i64.load i64.add)\n  (func $divide_seed (param i64) (result i64)\n    local.get 0 global.get $base i64.load i64.xor\n    global.get $divisor i64.div_u)\n  (func (export \"run\") (param $value i64) (param $operation i32) (result i64)\n    local.get $value local.get $operation\n    call_indirect $operations (param i64) (result i64)))\n",
+    "result_labels": [
+      "Selected result"
+    ],
+    "language": "WAT"
+  },
+  {
     "id": "indirect64",
     "title": "Choose a 64-bit function at runtime",
     "description": "Select addition (0), subtraction (1), multiplication (2), or unsigned division (3), then count the result\u2019s set bits. Slot 4 has the wrong signature, slot 5 is null, and indices 6+ are out of bounds. Only the selected function can trap.",
@@ -436,6 +457,55 @@
     "language": "WAT"
   },
   {
+    "id": "multiple_tables",
+    "title": "Copy callbacks between tables",
+    "description": "Copy a selected callback from a library into a separate dispatch table, grow that table with the callback, then call the new slot. Operation 0 adds, 1 XORs, and 2 divides unsigned i64 values. Other indices trap. The library stays at three slots while the dispatch table grows from one to two.",
+    "parameters": [
+      "a",
+      "b",
+      "operation"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "2"
+    ],
+    "font": "multiple_tables.ttf",
+    "manifest": "multiple_tables.json",
+    "module": "multiple_tables.wasm",
+    "source": ";; Copy one callback from a library into a separate, growing dispatch table.\n(module\n  (type $binary (func (param i64 i64) (result i64)))\n  (table $library 3 3 funcref)\n  (table $dispatch 1 2 funcref)\n  (elem (i32.const 0) $add $xor $divide)\n  (func $add (type $binary) local.get 0 local.get 1 i64.add)\n  (func $xor (type $binary) local.get 0 local.get 1 i64.xor)\n  (func $divide (type $binary) local.get 0 local.get 1 i64.div_u)\n  (func (export \"run\") (param i64 i64 i32) (result i64 i32 i32)\n    i32.const 0 local.get 2 i32.const 1 table.copy $dispatch $library\n    i32.const 0 table.get $dispatch i32.const 1 table.grow $dispatch drop\n    local.get 0 local.get 1 i32.const 1 call_indirect $dispatch (type $binary)\n    table.size $library table.size $dispatch))\n",
+    "result_labels": [
+      "Selected result",
+      "Library slots",
+      "Dispatch slots"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "tail_calls",
+    "title": "64-bit division \u2192 tail recursion",
+    "description": "Divide once, then add the remainder into the checksum and increment it each round. Direct and indirect tail calls reuse one call frame. Rounds 0\u20137 fit the eight-transition tail budget; 8 reports a tail-call bound. A zero divisor traps before recursion.",
+    "parameters": [
+      "dividend",
+      "divisor",
+      "rounds"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "3"
+    ],
+    "font": "tail_calls.ttf",
+    "manifest": "tail_calls.json",
+    "module": "tail_calls.wasm",
+    "source": ";; Divide once, then carry quotient and remainder through tail-recursive rounds.\n(module\n  (table $unused 0 funcref)\n  (table $steps 1 funcref)\n  (elem (table $steps) (i32.const 0) $advance)\n  (func $advance (param i64 i64 i32) (result i64 i64)\n    local.get 2 if (result i64 i64)\n      local.get 0 local.get 1 i64.add\n      local.get 1 i64.const 1 i64.add\n      local.get 2 i32.const 1 i32.sub\n      i32.const 0 return_call_indirect $steps (param i64 i64 i32) (result i64 i64)\n    else local.get 0 local.get 1 end)\n  (func (export \"run\") (param i64 i64 i32) (result i64 i64)\n    local.get 0 local.get 1 i64.div_u\n    local.get 0 local.get 1 i64.rem_u\n    local.get 2 return_call $advance))\n",
+    "result_labels": [
+      "Checksum",
+      "Remainder + rounds"
+    ],
+    "language": "WAT"
+  },
+  {
     "id": "reference_flow",
     "title": "Pass function references through helpers",
     "description": "Choose a nullable table reference or fallback addition, pass it through a helper and typed block, store it in a mutable global, then dispatch and count bits. Slots 0 and 2 add or divide; slot 1 is null. Set use selected slot to 0 for fallback addition; the slot must still be in bounds.",
@@ -462,6 +532,102 @@
     "language": "WAT"
   },
   {
+    "id": "nullable_callbacks",
+    "title": "Optional callback or strict null check",
+    "description": "Choose addition (slot 0), an empty callback (slot 1), or unsigned 64-bit division (slot 2). With strict set to 0, a null-reference branch chooses fallback addition. With strict set to 1, a null callback traps before dispatch. The chosen reference passes through a helper into a separate table.",
+    "parameters": [
+      "a",
+      "b",
+      "callback slot",
+      "strict"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "1",
+      "0"
+    ],
+    "font": "nullable_callbacks.ttf",
+    "manifest": "nullable_callbacks.json",
+    "module": "nullable_callbacks.wasm",
+    "source": "(module\n  (table $callbacks 3 funcref)\n  (table $dispatch 1 funcref)\n  (elem (table $callbacks) (i32.const 0) $add)\n  (elem (table $callbacks) (i32.const 2) $divide)\n  (func $add (param i64 i64) (result i64)\n    local.get 0 local.get 1 i64.add)\n  (func $divide (param i64 i64) (result i64)\n    local.get 0 local.get 1 i64.div_u)\n  (func $choose (param $candidate funcref) (param $strict i32) (result funcref)\n    local.get $strict\n    if (result funcref)\n      local.get $candidate ref.as_non_null\n    else\n      block $found (result funcref)\n        local.get $candidate br_on_non_null $found\n        ref.func $add\n      end\n    end)\n  (func (export \"run\") (param $a i64) (param $b i64)\n    (param $slot i32) (param $strict i32) (result i64)\n    ;; Keep the operands below the callback-selection work on the stack.\n    local.get $a local.get $b\n    i32.const 0\n    local.get $slot table.get $callbacks local.get $strict call $choose\n    table.set $dispatch\n    i32.const 0 call_indirect $dispatch (param i64 i64) (result i64)))\n",
+    "result_labels": [
+      "Selected result"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "typed_callbacks",
+    "title": "Call typed callbacks without a table",
+    "description": "Pass a typed function reference through a helper and call it directly. Operation 0 adds, 1 XORs, and 2 divides unsigned i64 values. Operation 3 selects null and traps at call_ref; other indices trap while selecting the callback.",
+    "parameters": [
+      "a",
+      "b",
+      "operation"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "2"
+    ],
+    "font": "typed_callbacks.ttf",
+    "manifest": "typed_callbacks.json",
+    "module": "typed_callbacks.wasm",
+    "source": "(module\n  (type $binary (func (param i64 i64) (result i64)))\n  (global $add (ref $binary) (ref.func $add))\n  (global $xor (ref $binary) (ref.func $xor))\n  (global $divide (ref $binary) (ref.func $divide))\n  (func $add (type $binary) local.get 0 local.get 1 i64.add)\n  (func $xor (type $binary) local.get 0 local.get 1 i64.xor)\n  (func $divide (type $binary) local.get 0 local.get 1 i64.div_u)\n  (func $choose (param $operation i32) (result (ref null $binary))\n    local.get $operation i32.const 3 i32.gt_u if unreachable end\n    local.get $operation i32.const 3 i32.eq\n    if (result (ref null $binary))\n      ref.null $binary\n    else\n      local.get $operation i32.eqz\n      if (result (ref $binary)) global.get $add\n      else\n        local.get $operation i32.const 1 i32.eq\n        if (result (ref $binary)) global.get $xor else global.get $divide end\n      end\n    end)\n  (func (export \"run\") (param i64 i64 i32) (result i64)\n    local.get 0 local.get 1 local.get 2 call $choose call_ref $binary))\n",
+    "result_labels": [
+      "Selected result"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "tail_reference64",
+    "title": "64-bit division \u2192 reference tail calls",
+    "description": "Divide once, then carry the quotient and remainder through reference tail calls in one frame. Each round adds the remainder to the checksum and increments it. Rounds 0\u20137 fit the eight-transition tail budget; 8 reports a tail-call bound.",
+    "parameters": [
+      "dividend",
+      "divisor",
+      "rounds"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "3"
+    ],
+    "font": "tail_reference64.ttf",
+    "manifest": "tail_reference64.json",
+    "module": "tail_reference64.wasm",
+    "source": "(module\n  (type $step (func (param i32 i64 i64) (result i64 i64)))\n  (elem declare func $step)\n  (func $step (type $step)\n    local.get 0\n    if (result i64 i64)\n      local.get 0 i32.const 1 i32.sub\n      local.get 1 local.get 2 i64.add\n      local.get 2 i64.const 1 i64.add\n      ref.func $step return_call_ref $step\n    else local.get 1 local.get 2 end)\n  (func (export \"run\") (param $dividend i64) (param $divisor i64)\n    (param $rounds i32) (result i64 i64)\n    local.get $rounds\n    local.get $dividend local.get $divisor i64.div_u\n    local.get $dividend local.get $divisor i64.rem_u\n    ref.func $step return_call_ref $step))\n",
+    "result_labels": [
+      "Checksum",
+      "Remainder + rounds"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "typed_dispatch",
+    "title": "Grow and call a non-null typed table",
+    "description": "Read a typed callback from a non-null library, grow a separate typed dispatch table with it, then tail-call the new slot directly. Operation 0 adds, 1 XORs, and 2 divides unsigned i64 values. Other indices trap. Returns the selected result and the two-slot dispatch size.",
+    "parameters": [
+      "a",
+      "b",
+      "operation"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "2"
+    ],
+    "font": "typed_dispatch.ttf",
+    "manifest": "typed_dispatch.json",
+    "module": "typed_dispatch.wasm",
+    "source": "(module\n  (type $binary (func (param i64 i64) (result i64 i32)))\n  (table $library 3 (ref $binary) (ref.func $add))\n  (table $dispatch 1 2 (ref $binary) (ref.func $add))\n  (elem (table $library) (i32.const 1) (ref $binary)\n    (ref.func $xor) (ref.func $divide))\n  (func $add (type $binary)\n    local.get 0 local.get 1 i64.add table.size $dispatch)\n  (func $xor (type $binary)\n    local.get 0 local.get 1 i64.xor table.size $dispatch)\n  (func $divide (type $binary)\n    local.get 0 local.get 1 i64.div_u table.size $dispatch)\n  (func (export \"run\") (param i64 i64 i32) (result i64 i32)\n    local.get 2 table.get $library i32.const 1 table.grow $dispatch drop\n    local.get 0 local.get 1 i32.const 1 table.get $dispatch\n    return_call_ref $binary))\n",
+    "result_labels": [
+      "Selected result",
+      "Dispatch slots"
+    ],
+    "language": "WAT"
+  },
+  {
     "id": "indexed_memory",
     "title": "Indexed byte in a 64-byte window",
     "description": "Store an i64 seed at bytes 32\u201339, then read a byte at a runtime offset and count the seed\u2019s set bits. Offsets 0\u201363 fit the backed window; higher valid Wasm addresses report a memory bound.",
@@ -480,6 +646,34 @@
     "result_labels": [
       "Selected byte",
       "Seed set bits"
+    ],
+    "language": "WAT"
+  },
+  {
+    "id": "indexed_words",
+    "title": "Indexed words \u2192 64-bit arithmetic",
+    "description": "Fill a 64-byte buffer from two runtime seeds, read two unaligned i64 words, then return their wrapping sum and their XOR divided by the unsigned divisor. Offsets 0\u201356 fit the backed window. Shared wide reads leave room for the divider within an 8,000-gate construction budget.",
+    "parameters": [
+      "first seed",
+      "second seed",
+      "first byte offset",
+      "second byte offset",
+      "divisor"
+    ],
+    "arguments": [
+      "0x0807060504030201",
+      "0x1122334455667788",
+      "3",
+      "29",
+      "7"
+    ],
+    "font": "indexed_words.ttf",
+    "manifest": "indexed_words.json",
+    "module": "indexed_words.wasm",
+    "source": ";; Fill a 64-byte runtime buffer, read two unaligned words, then compose them.\n(module (memory 1)\n  (func (export \"run\") (param i64 i64 i32 i32 i64) (result i64 i64) (local i64 i64)\n    i32.const 0 local.get 0 i64.store\n    i32.const 8 local.get 1 i64.store\n    i32.const 16 local.get 0 i64.const 8 i64.rotl i64.store\n    i32.const 24 local.get 1 i64.const -1 i64.xor i64.store\n    i32.const 32 local.get 0 local.get 1 i64.add i64.store\n    i32.const 40 local.get 0 local.get 1 i64.xor i64.store\n    i32.const 48 local.get 1 i64.const 32 i64.rotl i64.store\n    i32.const 56 local.get 0 local.get 1 i64.sub i64.store\n    local.get 2 i64.load local.set 5\n    local.get 3 i64.load local.set 6\n    local.get 5 local.get 6 i64.add\n    local.get 5 local.get 6 i64.xor local.get 4 i64.div_u))\n",
+    "result_labels": [
+      "Wrapping word sum",
+      "XOR / divisor"
     ],
     "language": "WAT"
   },
@@ -719,6 +913,29 @@
     "font": "c-callbacks.ttf",
     "manifest": "c-callbacks.json",
     "module": "c-callbacks.wasm",
+    "source": "// Copyright 2026 Michael Brackx\n// SPDX-License-Identifier: Apache-2.0\n\n// Volatile function pointers keep runtime table dispatch in the Wasm binary.\n// The exported ABI uses integers; apply receives a real C function pointer.\ntypedef unsigned long long u64;\ntypedef u64 (*operation)(u64, u64);\nstatic u64 add(u64 a, u64 b) { return a + b; }\nstatic u64 mix(u64 a, u64 b) { return a ^ b; }\nstatic u64 divide(u64 a, u64 b) { return a / b; }\nstatic operation volatile operations[3] = {add, mix, divide};\n\n__attribute__((noinline)) static u64 apply(operation fn, u64 a, u64 b) {\n    return fn(a, b);\n}\nu64 run(u64 a, u64 b, unsigned selected) {\n    if (selected >= 3) __builtin_trap();\n    return apply(operations[selected], a, b);\n}\n",
+    "result_labels": [
+      "Selected result"
+    ],
+    "language": "C"
+  },
+  {
+    "id": "c-tail-callbacks",
+    "title": "Compiled C \u00b7 tail-call callbacks",
+    "description": "The callback C source compiled with -mtail-call: run tail-calls its helper, which tail-calls the selected function pointer. Both calls reuse one frame. Operation 0 adds, 1 XORs, and 2 divides unsigned i64 inputs; other operations trap.",
+    "parameters": [
+      "a",
+      "b",
+      "operation"
+    ],
+    "arguments": [
+      "100",
+      "7",
+      "2"
+    ],
+    "font": "c-tail-callbacks.ttf",
+    "manifest": "c-tail-callbacks.json",
+    "module": "c-tail-callbacks.wasm",
     "source": "// Copyright 2026 Michael Brackx\n// SPDX-License-Identifier: Apache-2.0\n\n// Volatile function pointers keep runtime table dispatch in the Wasm binary.\n// The exported ABI uses integers; apply receives a real C function pointer.\ntypedef unsigned long long u64;\ntypedef u64 (*operation)(u64, u64);\nstatic u64 add(u64 a, u64 b) { return a + b; }\nstatic u64 mix(u64 a, u64 b) { return a ^ b; }\nstatic u64 divide(u64 a, u64 b) { return a / b; }\nstatic operation volatile operations[3] = {add, mix, divide};\n\n__attribute__((noinline)) static u64 apply(operation fn, u64 a, u64 b) {\n    return fn(a, b);\n}\nu64 run(u64 a, u64 b, unsigned selected) {\n    if (selected >= 3) __builtin_trap();\n    return apply(operations[selected], a, b);\n}\n",
     "result_labels": [
       "Selected result"

@@ -14,6 +14,36 @@ def lookup(circuit,values,index):
     return layer[0]
 
 
+def lookup_window(circuit,values,index,length):
+    """Read consecutive entries, sharing a block selection and a short shift.
+
+    Like the dynamic lookup tree, this uses the low index bits of a padded
+    power-of-two array. Callers must check the logical range before using it.
+    """
+    if not 1<=length<=len(values):raise ValueError('indexed window must fit a nonempty array')
+    if length==1:return [lookup(circuit,values,index)]
+    count=1<<(len(values)-1).bit_length();width=values[0].width
+    zero=circuit.const(0,width);padded=list(values)+[zero]*(count-len(values))
+    known=circuit.known(index)
+    if known is not None:return [padded[(known+i)%count] for i in range(length)]
+    block_bits=(length-1).bit_length();block=1<<block_bits
+    shifts=[bit for bit in range(block_bits) if index.bits[bit] not in (0,1)]
+    fixed=sum(1<<bit for bit in range(block_bits) if index.bits[bit]==1)
+    span=length+sum(1<<bit for bit in shifts)
+    # Keep only entries reachable after applying the known alignment bits.
+    # Wrapping matches the original low-bit lookup behavior.
+    candidates=[Value(tuple(bit for i in range(span) for bit in padded[(start+fixed+i)%count].bits))
+                for start in range(0,count,block)]
+    selected=lookup(circuit,candidates,Value(index.bits[block_bits:]))
+    window=[Value(selected.bits[i*width:(i+1)*width]) for i in range(span)]
+    for bit in reversed(shifts):
+        step=1<<bit
+        remaining=sum(1<<lower for lower in shifts if lower<bit)
+        window=[circuit.mux(index.bits[bit],window[i+step],window[i])
+                for i in range(length+remaining)]
+    return window
+
+
 def selectors(circuit,index,count):
     known=circuit.known(index)
     if known is not None:return [int(known==i) for i in range(count)]

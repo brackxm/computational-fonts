@@ -1,0 +1,70 @@
+{
+  "before_read": "independent byte lookups with per-byte address additions",
+  "after_read": "shared high-address block lookup followed by a short low-address shift",
+  "programs": [
+    {
+      "program": "i64.load from a 128-byte buffer filled by sixteen runtime i64 parameters",
+      "regression": "tests/test_wide_memory_reads.py::test_full_runtime_buffer_read_fits_a_smaller_construction_budget",
+      "memory_bytes": 128,
+      "regression_gate_budget": 2500,
+      "before": {
+        "wires": 5318,
+        "gates": 4261,
+        "glyphs": 14899,
+        "lookups": 4230,
+        "font_bytes": 1153092,
+        "gate_groups": 4228,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 4228,
+        "gate_subtables": 4228,
+        "coalesced_gate_groups": 0
+      },
+      "after": {
+        "wires": 3242,
+        "gates": 2185,
+        "glyphs": 8671,
+        "lookups": 2183,
+        "font_bytes": 600176,
+        "gate_groups": 2181,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 2181,
+        "gate_subtables": 2181,
+        "coalesced_gate_groups": 0
+      },
+      "gate_reduction_percent": 48.72,
+      "font_byte_reduction_percent": 47.95
+    },
+    {
+      "program": "Two unaligned i64 reads from a 64-byte runtime buffer, followed by addition, XOR and dynamic unsigned division",
+      "regression": "tests/test_wide_memory_reads.py::test_two_unaligned_reads_compose_with_full_width_dynamic_division",
+      "memory_bytes": 64,
+      "regression_gate_budget": 8000,
+      "before": {
+        "wires": 9194,
+        "gates": 8937,
+        "glyphs": 27327,
+        "lookups": 4257,
+        "font_bytes": 3247904,
+        "gate_groups": 8510,
+        "lookup_batch_size": 2,
+        "unpacked_gate_groups": 0,
+        "gate_subtables": 8510,
+        "coalesced_gate_groups": 0
+      },
+      "after": {
+        "wires": 7500,
+        "gates": 7243,
+        "glyphs": 22245,
+        "lookups": 3495,
+        "font_bytes": 2703188,
+        "gate_groups": 6986,
+        "lookup_batch_size": 2,
+        "unpacked_gate_groups": 0,
+        "gate_subtables": 6986,
+        "coalesced_gate_groups": 0
+      },
+      "gate_reduction_percent": 18.95,
+      "font_byte_reduction_percent": 16.77
+    }
+  ]
+}

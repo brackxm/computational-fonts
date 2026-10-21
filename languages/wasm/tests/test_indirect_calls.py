@@ -215,7 +215,7 @@ def test_out_of_bounds_elements_fail_before_native_or_legacy_output(tmp_path,off
 
 
 @pytest.mark.parametrize('field',[
-    '(table 1 externref)','(table 1 funcref) (table 1 funcref)',
+    '(table 1 externref)',
     '(table 257 funcref)','(table 2 1 funcref)','(table -1 funcref)',
     '(table 1 257 funcref)','(table funcref)',
     '(table 1 funcref (export "t"))','(table (export) 1 funcref)',
@@ -257,10 +257,12 @@ def test_missing_table_and_ill_typed_calls_rejected(tmp_path,body):
     assert not path.with_suffix('.ttf').exists()
 
 
-def test_multiple_binary_tables_are_rejected(tmp_path):
+def test_multiple_binary_tables_preserve_the_default_table(tmp_path):
     data=independent_binary(table_count=2)
     path=tmp_path/'unsupported.wasm';path.write_bytes(data)
-    with pytest.raises(NotImplementedError):load_binary(path)
+    module=load_binary(path)
+    assert [table.entries for table in module.tables]==[[0,None],[None,None]]
+    assert execute_binary(data,'run',['i32','i32'],[(7,0)])==[{'values':['8']}]
 
 
 @pytest.mark.parametrize('body',[
@@ -282,8 +284,12 @@ def test_nonzero_binary_table_operand_is_never_ignored(tmp_path):
     data=encode_sections([(sid,p.replace(b'\x11\x00\x00',b'\x11\x00\x01') if sid==10 else p)
                           for sid,p in sections(data)])
     path=tmp_path/'second-table.wasm';path.write_bytes(data)
-    with pytest.raises(NotImplementedError,match='multiple tables'):load_binary(path)
-    with pytest.raises(NotImplementedError,match='multiple tables'):parse_binary(path)
+    module=load_binary(path)
+    assert parse_binary(path)[1].code[-1][1].table==1
+    assert 'trap' in execute_binary(data,'run',['i32','i32'],[(7,0)])[0]
+    compile_source(path,path.with_suffix('.ttf'),export='run')
+    with NativeFont(path.with_suffix('.ttf')) as font:
+        with pytest.raises(WasmTrap,match='uninitialized_element'):font.invoke(7,0)
 
 
 def test_inactive_indirect_calls_do_not_leak_table_or_callee_traps(tmp_path):

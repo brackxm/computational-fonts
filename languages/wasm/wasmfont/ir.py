@@ -6,6 +6,7 @@ from .opcodes import EXTRA, BULK_MEMORY, BULK_TABLE
 from .conversions import CONVERSIONS, convert
 from dataclasses import dataclass
 from pathlib import Path
+from .types import ReferenceType,signature_keys
 
 OPS={0x6a:'i32.add',0x6b:'i32.sub',0x6c:'i32.mul',0x71:'i32.and',0x72:'i32.or',0x73:'i32.xor',0x74:'i32.shl',0x75:'i32.shr_s',0x76:'i32.shr_u',0x7c:'i64.add',0x7d:'i64.sub',0x7e:'i64.mul',0x83:'i64.and',0x84:'i64.or',0x85:'i64.xor',0x86:'i64.shl',0x87:'i64.shr_s',0x88:'i64.shr_u',0x77:'i32.rotl',0x78:'i32.rotr',0x89:'i64.rotl',0x8a:'i64.rotr',0x45:'i32.eqz',0x50:'i64.eqz',0x67:'i32.clz',0x68:'i32.ctz',0x69:'i32.popcnt',0x79:'i64.clz',0x7a:'i64.ctz',0x7b:'i64.popcnt'}
 BINARY={x for x in OPS.values() if not x.endswith(('.eqz','.clz','.ctz','.popcnt'))}
@@ -22,9 +23,29 @@ class BlockType:
     results: tuple[str, ...] = ()
 
 
+@dataclass(frozen=True)
+class IndirectCall(BlockType):
+    table: int = 0
+
+
+@dataclass(frozen=True)
+class TableUse:
+    """Static table indices and the optional element segment for table.init."""
+    table: int = 0
+    source: int = 0
+    element: int | None = None
+
+
+def table_operand(op,arg):
+    """Keep hand-built single-table IR compatible with the indexed form."""
+    if isinstance(arg,TableUse):return arg
+    return TableUse(element=arg) if op=='table.init' else TableUse()
+
+
 def block_signature(arg):
     """Resolve both compact block types and integer/funcref signatures."""
     if isinstance(arg,BlockType):return arg
+    if isinstance(arg,ReferenceType):return BlockType(results=(arg,))
     if arg in (None,0x40):return BlockType()
     if arg in (0x7f,0x7e,0x70):return BlockType(results=({0x7f:'i32',0x7e:'i64',0x70:'funcref'}[arg],))
     raise NotImplementedError('unsupported block signature')
@@ -55,7 +76,23 @@ def section_order(sid):
     # The data-count section precedes code and data despite its larger ID.
     return {12:10,10:11,11:12}.get(sid,sid)
 
-def parse_binary(path):
+def heap_type(b,p):
+    heap,p=sleb(b,p,33)
+    if heap==-16:return 'func',p
+    if heap>=0:return heap,p
+    raise NotImplementedError('only function heap types are supported')
+
+
+def value_type(b,p):
+    if p>=len(b):raise ValueError('missing value type')
+    if b[p] in (0x7f,0x7e,0x70):return {0x7f:'i32',0x7e:'i64',0x70:'funcref'}[b[p]],p+1
+    if b[p] in (0x63,0x64):
+        nullable=b[p]==0x63;heap,p=heap_type(b,p+1)
+        return ReferenceType(heap,nullable),p
+    raise NotImplementedError('only i32/i64 and function-reference value types are supported')
+
+
+def parse_binary(path,*,with_types=False):
     b=Path(path).read_bytes()
     if b[:8]!=b'\0asm\x01\0\0\0':raise ValueError('bad Wasm header')
     sections={};p=8;last_section=0
@@ -67,13 +104,12 @@ def parse_binary(path):
         if sid and section_order(sid)<=last_section:raise ValueError('out-of-order section')
         if sid:last_section=section_order(sid)
         sections[sid]=b[p:p+n];p+=n
-    def valtype(b,p):
-        if p>=len(b) or b[p] not in (0x7f,0x7e,0x70):raise NotImplementedError('only i32/i64/funcref value types')
-        return {0x7f:'i32',0x7e:'i64',0x70:'funcref'}[b[p]],p+1
+    valtype=value_type
     def functype(b,p):
         if b[p]!=0x60:raise ValueError('invalid function type')
         a,p=vec(b,p+1,valtype);r,p=vec(b,p,valtype);return (a,r),p
     types,_=vec(sections.get(1,b'\0'),0,functype)
+    signature_keys(types)
     indices,_=vec(sections.get(3,b'\0'),0,uleb)
     code=sections.get(10,b'\0');bodies,_=vec(code,0,lambda b,p:(b[(q:=uleb(b,p)[1]):q+uleb(b,p)[0]],q+uleb(b,p)[0]))
     if len(indices)!=len(bodies):raise ValueError('function/code count mismatch')
@@ -117,9 +153,14 @@ def parse_binary(path):
                 if name is None:raise NotImplementedError(f'unsupported Wasm opcode 0xfc {subopcode}')
                 arg=None
                 if name in ('memory.init','data.drop','table.init','elem.drop'):arg,p=uleb(body,p)
-                for _ in range(2 if name in ('memory.copy','table.copy') else 0 if name in ('data.drop','elem.drop') else 1):
-                    memory_index,p=uleb(body,p)
-                    if memory_index!=0:raise NotImplementedError('multiple tables unsupported' if name in BULK_TABLE else 'multiple memories unsupported')
+                if name in BULK_TABLE and name!='elem.drop':
+                    table,p=uleb(body,p);source=0
+                    if name=='table.copy':source,p=uleb(body,p)
+                    arg=TableUse(table,source,arg if name=='table.init' else None)
+                elif name not in BULK_TABLE:
+                    for _ in range(2 if name=='memory.copy' else 0 if name=='data.drop' else 1):
+                        memory_index,p=uleb(body,p)
+                        if memory_index!=0:raise NotImplementedError('multiple memories unsupported')
                 instructions.append((name,arg))
             elif op in OPS:instructions.append((OPS[op],None))
             elif op in CONVERSIONS:instructions.append((CONVERSIONS[op],None))
@@ -128,6 +169,7 @@ def parse_binary(path):
                 if name in ('block','loop','if'):
                     if p>=len(body):raise ValueError('missing block type')
                     if body[p] in (0x40,0x7f,0x7e,0x70):arg=body[p];p+=1
+                    elif body[p] in (0x63,0x64):arg,p=valtype(body,p)
                     else:
                         type_index,p=sleb(body,p,33)
                         if type_index<0:raise NotImplementedError('only integer block signatures supported')
@@ -138,19 +180,20 @@ def parse_binary(path):
                     values,p=vec(body,p,valtype)
                     if len(values)!=1:raise ValueError('typed select requires exactly one value type')
                     arg=values[0]
-                elif name in ('br','br_if','call','ref.func'):arg,p=uleb(body,p)
+                elif name in ('br','br_if','br_on_null','br_on_non_null','call','return_call','ref.func'):arg,p=uleb(body,p)
                 elif name in ('table.get','table.set'):
                     table,p=uleb(body,p)
-                    if table!=0:raise NotImplementedError('multiple tables unsupported')
+                    arg=TableUse(table)
                 elif name=='ref.null':
-                    heaptype,p=sleb(body,p,33)
-                    if heaptype!=-16:raise NotImplementedError('only nullable function references supported')
-                elif name=='call_indirect':
-                    type_index,p=uleb(body,p);table_index,p=uleb(body,p)
+                    heap,p=heap_type(body,p)
+                    arg=None if heap=='func' else heap
+                elif name in ('call_indirect','return_call_indirect','call_ref','return_call_ref'):
+                    type_index,p=uleb(body,p);table_index=0
+                    if name not in ('call_ref','return_call_ref'):table_index,p=uleb(body,p)
                     if type_index>=len(types):raise ValueError('indirect call type index out of range')
-                    if table_index!=0:raise NotImplementedError('multiple tables unsupported')
                     params_,results_=types[type_index]
-                    arg=BlockType(tuple(params_),tuple(results_))
+                    arg=(IndirectCall(tuple(params_),tuple(results_),table_index) if table_index else
+                         BlockType(tuple(params_),tuple(results_)))
                 elif name=='br_table':
                     labels,p=vec(body,p,uleb);default,p=uleb(body,p);arg=labels+[default]
                 instructions.append((name,arg))
@@ -158,7 +201,7 @@ def parse_binary(path):
             else:raise NotImplementedError(f'unsupported Wasm opcode 0x{op:02x}')
         else:raise ValueError('missing function end')
         result.append(Function(params,returns,locals_,instructions))
-    return result
+    return (result,types) if with_types else result
 
 def parse_wat(path):
     s=Path(path).read_text();s=re.sub(r';;[^\n]*','',s)

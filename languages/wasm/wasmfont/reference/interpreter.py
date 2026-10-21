@@ -2,9 +2,10 @@
 
 Execution is reference-side only; native GSUB compilation uses wasmfont/compiler.py.
 """
-from ..ir import Function, block_signature
+from ..ir import Function, block_signature, table_operand
 from ..conversions import CONVERSIONS, convert
 from ..state import MachineState, MemoryTrap
+from ..types import is_reference,signature_keys,signature_key
 
 class WasmTrap(Exception): pass
 
@@ -12,12 +13,21 @@ COMPARE={'eq','ne','lt_s','lt_u','gt_s','gt_u','le_s','le_u','ge_s','ge_u'}
 
 def run(functions, index, args, fuel=100000, state=None, start=None):
     state = state if state is not None else MachineState()
+    type_keys=signature_keys(state.function_types)
     budget=[fuel]
     def invoke(idx, argv, depth):
+        while True:
+            result=execute_frame(idx,argv,depth)
+            if isinstance(result,list):return result
+            # A tail call returns the replacement target and arguments rather
+            # than nesting another Python invocation of the reference VM.
+            idx,argv=result
+
+    def execute_frame(idx, argv, depth):
         if depth>128: raise WasmTrap('call depth exceeded')
         fn=functions[idx]
         if len(argv)!=len(fn.params): raise WasmTrap('argument count mismatch')
-        values=[v if t=='funcref' else v&((1<<int(t[1:]))-1) for t,v in zip(fn.params,argv)]+[None if t=='funcref' else 0 for t in fn.locals]
+        values=[v if is_reference(t) else v&((1<<int(t[1:]))-1) for t,v in zip(fn.params,argv)]+[None if is_reference(t) else 0 for t in fn.locals]
         stack=[]; code=fn.code; matching={}; alternatives={}; frames=[]
         for pos,(op,arg) in enumerate(code):
             if op in ('block','loop','if'): frames.append(pos)
@@ -71,54 +81,71 @@ def run(functions, index, args, fuel=100000, state=None, start=None):
             elif op=='br':branch(arg)
             elif op=='br_if':
                 if stack.pop():branch(arg)
+            elif op in ('br_on_null','br_on_non_null'):
+                reference=stack.pop()
+                if op=='br_on_null':
+                    if reference is None:branch(arg)
+                    else:stack.append(reference)
+                elif reference is not None:
+                    stack.append(reference);branch(arg)
             elif op=='br_table':
                 choice=stack.pop();branch(arg[choice] if choice<len(arg)-1 else arg[-1])
             elif op=='return':branch(len(active)-1)
-            elif op in ('call','call_indirect'):
+            elif op in ('call','call_indirect','return_call','return_call_indirect','call_ref','return_call_ref'):
                 target=arg
-                if op=='call_indirect':
+                if op in ('call_ref','return_call_ref'):
+                    target=stack.pop()
+                    if target is None:raise WasmTrap('null_reference')
+                if op in ('call_indirect','return_call_indirect'):
                     slot=stack.pop()
-                    if not 0<=slot<len(state.table):raise WasmTrap('table_out_of_bounds')
-                    target=state.table[slot]
+                    table=state.tables[getattr(arg,'table',0)]
+                    if not 0<=slot<len(table):raise WasmTrap('table_out_of_bounds')
+                    target=table[slot]
                     if target is None:raise WasmTrap('uninitialized_element')
                     callee=functions[target]
-                    if (tuple(callee.params),tuple(callee.results))!=(arg.params,arg.results):
+                    if signature_key(callee.params,callee.results,type_keys)!=signature_key(arg.params,arg.results,type_keys):
                         raise WasmTrap('indirect_call_type_mismatch')
                 callee=functions[target];n=len(callee.params)
                 argv=stack[-n:] if n else []
                 if n:del stack[-n:]
+                if op in ('return_call','return_call_indirect','return_call_ref'):return target,argv
                 stack.extend(invoke(target,argv,depth+1))
             elif op=='global.get':stack.append(state.globals[arg])
             elif op=='global.set':
                 if not state.mutable[arg]:raise WasmTrap('immutable global')
                 value=stack.pop();typ=state.global_types[arg]
-                state.globals[arg]=value if typ=='funcref' else value&((1<<int(typ[1:]))-1)
+                state.globals[arg]=value if is_reference(typ) else value&((1<<int(typ[1:]))-1)
             elif op=='memory.size':stack.append(state.pages)
             elif op=='memory.grow':stack.append(state.grow(stack.pop())&0xffffffff)
             elif op=='ref.null':stack.append(None)
             elif op=='ref.func':stack.append(arg)
             elif op=='ref.is_null':stack.append(int(stack.pop() is None))
+            elif op=='ref.as_non_null':
+                if stack[-1] is None:raise WasmTrap('null_reference')
             elif op=='elem.drop':state.element_segments[arg]=[]
-            elif op=='table.size':stack.append(len(state.table))
+            elif op=='table.size':stack.append(len(state.tables[table_operand(op,arg).table]))
             elif op=='table.grow':
-                delta=stack.pop();initial=stack.pop();old=len(state.table)
-                if old+delta>state.table_maximum:stack.append(0xffffffff)
-                else:state.table.extend([initial]*delta);stack.append(old)
+                use=table_operand(op,arg);table=state.tables[use.table]
+                delta=stack.pop();initial=stack.pop();old=len(table)
+                if old+delta>state.table_maxima[use.table]:stack.append(0xffffffff)
+                else:table.extend([initial]*delta);stack.append(old)
             elif op in ('table.get','table.set'):
+                table=state.tables[table_operand(op,arg).table]
                 value=stack.pop() if op=='table.set' else None
                 slot=stack.pop()
-                if not 0<=slot<len(state.table):raise WasmTrap('table_out_of_bounds')
-                if op=='table.get':stack.append(state.table[slot])
-                else:state.table[slot]=value
+                if not 0<=slot<len(table):raise WasmTrap('table_out_of_bounds')
+                if op=='table.get':stack.append(table[slot])
+                else:table[slot]=value
             elif op in ('table.init','table.copy','table.fill'):
+                use=table_operand(op,arg);table=state.tables[use.table]
                 size=stack.pop();source=stack.pop();destination=stack.pop()
-                if destination+size>len(state.table):raise WasmTrap('table_out_of_bounds')
+                if destination+size>len(table):raise WasmTrap('table_out_of_bounds')
                 if op=='table.fill':payload=[source]*size
                 else:
-                    entries=state.table if op=='table.copy' else state.element_segments[arg]
+                    entries=state.tables[use.source] if op=='table.copy' else state.element_segments[use.element]
                     if source+size>len(entries):raise WasmTrap('table_out_of_bounds')
                     payload=entries[source:source+size]
-                state.table[destination:destination+size]=payload
+                table[destination:destination+size]=payload
             elif op=='data.drop':state.data_segments[arg]=b''
             elif op=='memory.init':
                 size=stack.pop();source=stack.pop();destination=stack.pop()

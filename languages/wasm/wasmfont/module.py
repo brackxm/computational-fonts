@@ -4,9 +4,21 @@ Uses the existing function decoder; unsupported module constructs fail closed.
 """
 from dataclasses import dataclass, field
 from pathlib import Path
-from .ir import parse_binary, uleb, sleb, section_order
+from .ir import parse_binary, uleb, section_order,value_type
 from .state import MachineState
 from .validation import validate_supported
+from .initializers import decode_expression
+from .types import is_reference
+
+MAX_TABLES=16
+
+
+@dataclass
+class FunctionTable:
+    entries: list[int | None]
+    maximum: int | None = None
+    element_type: object = 'funcref'
+
 
 @dataclass
 class ElementSegment:
@@ -14,6 +26,8 @@ class ElementSegment:
     offset: int
     functions: list[int | None]
     expressions: bool = False
+    table: int = 0
+    element_type: object = 'funcref'
 
 @dataclass
 class Module:
@@ -29,6 +43,21 @@ class Module:
     table_maximum: int | None = None
     start: int | None = None
     elements: list[ElementSegment] = field(default_factory=list)
+    extra_tables: list[FunctionTable] = field(default_factory=list)
+    # Original declaration instructions, keyed by kind and declaration index
+    # (plus entry index for reference elements). Values above stay resolved.
+    constant_expressions: dict = field(default_factory=dict)
+    function_types: list = field(default_factory=list)
+    table_type: object = 'funcref'
+
+    @property
+    def tables(self):
+        return ([] if self.table is None else [FunctionTable(self.table,self.table_maximum,self.table_type)])+self.extra_tables
+
+    def add_table(self,entries,maximum,element_type='funcref'):
+        if len(self.tables)>=MAX_TABLES:raise ValueError(f'at most {MAX_TABLES} function tables are supported')
+        if self.table is None:self.table=entries;self.table_maximum=maximum;self.table_type=element_type
+        else:self.extra_tables.append(FunctionTable(entries,maximum,element_type))
 
     def invoke(self, export_name, args, *, state=None, fuel=100000):
         """Execute an exported function against a module instance (reference VM)."""
@@ -49,6 +78,9 @@ class Module:
                              mutable=self.mutable.copy(),
                              data_segments=[payload if offset is None else b'' for offset,payload in self.segments],
                              table=self.table.copy() if self.table is not None else [],
+                             extra_tables=[table.entries.copy() for table in self.extra_tables],
+                             extra_table_maxima=[table.maximum if table.maximum is not None else 256 for table in self.extra_tables],
+                             function_types=self.function_types,
                              element_segments=[segment.functions.copy() if segment.mode=='passive' else [] for segment in self.elements],
                              table_maximum=(self.table_maximum if self.table_maximum is not None else 256) if self.table is not None else 0)
         for offset, payload in self.segments:
@@ -93,64 +125,79 @@ def load_binary(path):
         else:maximum=max(16,minimum)
         if minimum>maximum or maximum>256:raise ValueError('unsupported memory limits')
         return (minimum,maximum),p
-    def init_expr(b,p):
-        if p>=len(b):raise ValueError('truncated initializer')
-        opcode=b[p];p+=1
-        if opcode not in (0x41,0x42):raise NotImplementedError('only constant initializers supported')
-        value,p=sleb(b,p,32 if opcode==0x41 else 64)
-        if p>=len(b) or b[p]!=0x0b:raise ValueError('initializer missing end')
-        return value,p+1
-    def reference_expr(b,p):
-        opcode=b[p];p+=1
-        if opcode==0xd0:
-            heap,p=sleb(b,p,33)
-            if heap!=-16:raise NotImplementedError('only ref.null func initializers supported')
-            value=None
-        elif opcode==0xd2:value,p=uleb(b,p)
-        else:raise NotImplementedError('only ref.null/ref.func reference initializers supported')
-        if p>=len(b) or b[p]!=0x0b:raise ValueError('initializer missing end')
-        return value,p+1
+    constant_expressions={};global_values=[]
+    def initializer(b,p,typ,key):
+        expression,p=decode_expression(b,p)
+        value=expression.evaluate(typ,global_values)
+        constant_expressions[key]=expression
+        return value,p
     def global_entry(b,p):
-        if p+2>len(b):raise ValueError('truncated global')
-        typ={0x7f:'i32',0x7e:'i64',0x70:'funcref'}.get(b[p]);mut=b[p+1];p+=2
-        if typ is None or mut not in (0,1):raise NotImplementedError('unsupported global type')
-        value,p=(reference_expr if typ=='funcref' else init_expr)(b,p)
-        return (typ,bool(mut),value),p
+        typ,p=value_type(b,p)
+        if p>=len(b):raise ValueError('truncated global')
+        mut=b[p];p+=1
+        if mut not in (0,1):raise NotImplementedError('unsupported global mutability')
+        value,p=initializer(b,p,typ,('global',len(global_values)))
+        global_values.append((typ,bool(mut),value))
+        return global_values[-1],p
+    table_index=0
     def table_type(b,p):
-        if b[p]!=0x70:raise NotImplementedError('only funcref tables supported')
-        flag,p=uleb(b,p+1)
+        nonlocal table_index
+        current=table_index;table_index+=1
+        explicit=b[p]==0x40
+        if explicit:
+            if b[p:p+2]!=b'\x40\x00':raise ValueError('invalid table initializer prefix')
+            p+=2
+        typ,p=value_type(b,p)
+        if not is_reference(typ):raise NotImplementedError('only function-reference tables supported')
+        flag,p=uleb(b,p)
         if flag not in (0,1):raise NotImplementedError('unsupported table limits')
         minimum,p=uleb(b,p);maximum=None
         if flag:maximum,p=uleb(b,p)
         if minimum>256 or maximum is not None and not minimum<=maximum<=256:
             raise ValueError('table limits must be within 0..256')
-        return (minimum,maximum),p
+        initial=None
+        if explicit:
+            expression,p=decode_expression(b,p)
+            # Defined globals are outside the table-initializer context.
+            initial=expression.evaluate(typ)
+            constant_expressions['table',current]=expression
+        return (minimum,maximum,initial,typ),p
+    element_index=0
     def element(b,p):
+        nonlocal element_index
+        current=element_index;element_index+=1
         flag,p=uleb(b,p)
         if flag>7:raise NotImplementedError('unsupported element segment mode')
         mode='passive' if flag in (1,5) else 'declarative' if flag in (3,7) else 'active'
-        offset=0
+        offset=0;table_index=0
         if flag in (2,6):
             table_index,p=uleb(b,p)
-            if table_index!=0:raise NotImplementedError('multiple tables unsupported')
-        if mode=='active':offset,p=init_expr(b,p)
+        if mode=='active':offset,p=initializer(b,p,'i32',('elem',current))
         expressions=bool(flag&4)
+        typ='funcref'
         if flag in (1,2,3,5,6,7):
-            expected=0x70 if expressions else 0
-            if b[p]!=expected:raise NotImplementedError('only funcref element segments supported')
-            p+=1
+            if expressions:
+                typ,p=value_type(b,p)
+                if not is_reference(typ):raise NotImplementedError('only function-reference elements supported')
+            else:
+                if b[p]!=0:raise NotImplementedError('unsupported element kind')
+                p+=1
         count,p=uleb(b,p);entries=[]
-        for _ in range(count):
-            value,p=(reference_expr if expressions else uleb)(b,p);entries.append(value)
-        return ElementSegment(mode,offset,entries,expressions),p
+        for at in range(count):
+            value,p=initializer(b,p,typ,('element',current,at)) if expressions else uleb(b,p)
+            entries.append(value)
+        return ElementSegment(mode,offset,entries,expressions,table_index,typ),p
+    data_index=0
     def segment(b,p):
+        nonlocal data_index
+        current=data_index;data_index+=1
         flag,p=uleb(b,p)
-        if flag==0:offset,p=init_expr(b,p)
+        if flag==0:offset,p=initializer(b,p,'i32',('data',current))
         elif flag==1:offset=None
         elif flag==2:
             index,p=uleb(b,p)
             if index!=0:raise NotImplementedError('multiple memories unsupported')
-            offset,p=init_expr(b,p)
+            offset,p=initializer(b,p,'i32',('data',current))
         else:raise NotImplementedError('unsupported data segment mode')
         length,p=uleb(b,p)
         if p+length>len(b):raise ValueError('truncated data segment')
@@ -165,16 +212,17 @@ def load_binary(path):
     globals_=vector(6,global_entry)
     segments=vector(11,segment)
     exports=vector(7,export)
-    functions=parse_binary(path)
+    functions,function_types=parse_binary(path,with_types=True)
     tables=vector(4,table_type)
-    if len(tables)>1:raise NotImplementedError('multiple tables unsupported')
+    if len(tables)>MAX_TABLES:raise ValueError(f'at most {MAX_TABLES} function tables are supported')
     elements=vector(9,element)
-    table=[None]*tables[0][0] if tables else None
+    initialized_tables=[[initial]*minimum for minimum,_,initial,_ in tables]
     for element_ in elements:
         offset,entries=element_.offset,element_.functions
         if any(index is not None and index>=len(functions) for index in entries):raise ValueError('invalid element function index')
         if element_.mode!='active':continue
-        if table is None:raise ValueError('element segment without table')
+        if element_.table>=len(tables):raise ValueError('element segment without table')
+        table=initialized_tables[element_.table]
         if not 0<=offset<=len(table)-len(entries):raise ValueError('element segment out of table bounds')
         table[offset:offset+len(entries)]=entries
     mapping={}
@@ -187,7 +235,9 @@ def load_binary(path):
              [v for _,_,v in globals_],[t for t,_,_ in globals_],
              [mut for _,mut,_ in globals_],segments,mapping)
     m.has_memory=bool(memories)
-    m.table=table;m.table_maximum=tables[0][1] if tables else None
+    m.constant_expressions=constant_expressions
+    m.function_types=function_types
+    for entries,(_,maximum,_,typ) in zip(initialized_tables,tables):m.add_table(entries,maximum,typ)
     m.elements=elements
     if 8 in sections:
         m.start,end=uleb(sections[8],0)

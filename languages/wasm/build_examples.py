@@ -12,8 +12,13 @@ EXAMPLE_LIMITS={
     'c-array':Limits(memory_base=65536),
     'c-sparse-array':Limits(memory_regions=((65024,16),(65536,16))),
     'indexed_memory':Limits(memory_bytes=64),
+    'indexed_words':Limits(memory_bytes=64,max_gates=8000),
     'c-callbacks':Limits(memory_regions=((65536,12),)),
     'c-packet':Limits(memory_regions=((65504,8),(65536,8))),
+    'tail_calls':Limits(call_depth=1),
+    'tail_reference64':Limits(call_depth=1),
+    'typed_dispatch':Limits(call_depth=1),
+    'c-tail-callbacks':Limits(call_depth=1,memory_regions=((65536,12),)),
 }
 
 
@@ -33,10 +38,15 @@ def main():
                             '-Wl,--no-entry','-Wl,--export=run','-Wl,--strip-all',
                             '-Wl,--stack-first','-Wl,-z,stack-size=65536',str(ROOT/'examples'/(name+'.c')),
                             '-o',str(ROOT/'examples'/(name+'.wasm'))],check=True)
+        subprocess.run([clang,'--target=wasm32','-O2','-fno-unroll-loops','-mtail-call','-nostdlib','-ffreestanding',
+                        '-Wl,--no-entry','-Wl,--export=run','-Wl,--strip-all','-Wl,--stack-first',
+                        '-Wl,-z,stack-size=65536',str(ROOT/'examples'/'callbacks.c'),
+                        '-o',str(ROOT/'examples'/'callbacks_tail.wasm')],check=True)
     builds=[(p,p.stem,None) for p in sorted((ROOT/'examples').glob('*.wat'))]
     builds += [(ROOT/'examples'/'mix.wasm','c-mix32','run'),(ROOT/'examples'/'mix.wasm','c-mix64','run64')]
     builds += [(ROOT/'examples'/(name+'.wasm'),'c-'+name.replace('_','-'),'run')
                for name in ('array','sparse_array','callbacks','packet')]
+    builds.append((ROOT/'examples'/'callbacks_tail.wasm','c-tail-callbacks','run'))
     report={}
     for source,name,export in builds:
         limits=EXAMPLE_LIMITS.get(name)

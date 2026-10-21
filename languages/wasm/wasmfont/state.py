@@ -1,5 +1,6 @@
 """Bounded Wasm memory, mutable globals, and data-segment lifetimes (reference VM)."""
 from dataclasses import dataclass, field
+from .types import is_reference
 
 class MemoryTrap(Exception): pass
 
@@ -14,7 +15,16 @@ class MachineState:
     table: list[int | None] = field(default_factory=list)
     element_segments: list[list[int | None]] = field(default_factory=list)
     table_maximum: int = 256
+    extra_tables: list[list[int | None]] = field(default_factory=list)
+    extra_table_maxima: list[int] = field(default_factory=list)
+    function_types: list = field(default_factory=list)
     memory: bytearray = field(init=False)
+
+    @property
+    def tables(self):return [self.table]+self.extra_tables
+
+    @property
+    def table_maxima(self):return [self.table_maximum]+self.extra_table_maxima
 
     def __post_init__(self):
         if not 0 <= self.pages <= self.max_pages <= 256: raise ValueError('invalid memory bounds')
@@ -22,7 +32,7 @@ class MachineState:
         if not (len(self.globals)==len(self.global_types)==len(self.mutable)):
             raise ValueError('global metadata mismatch')
         for i,t in enumerate(self.global_types):
-            if t=='funcref':
+            if is_reference(t):
                 if self.globals[i] is not None and (type(self.globals[i]) is not int or self.globals[i]<0):raise ValueError('invalid function reference')
             elif t in ('i32','i64'):self.globals[i] &= (1<<int(t[1:]))-1
             else:raise ValueError('unsupported global type')
