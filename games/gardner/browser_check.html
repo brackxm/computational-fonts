@@ -1,0 +1,33 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gardner shaping checks</title>
+<style>
+@font-face{font-family:GardnerOpponent;src:url('./gardner-font.ttf?v=20261022-2')}
+body{font:16px system-ui;max-width:800px;margin:30px auto;padding:0 20px;background:#faf8f2;color:#243e43}
+.probe{display:inline-block;font:1000px GardnerOpponent;white-space:pre;font-feature-settings:"liga" 1,"kern" 0;position:absolute;visibility:hidden}
+.pass{color:#246b72}.fail{color:#ae4a3c}p{overflow-wrap:anywhere}
+</style>
+<h1>Gardner shaping checks</h1>
+<p><a href="playground.html">Play Gardner minichess</a></p>
+<p id="load">Loading…</p><div id="results"></div>
+<script src="../shared/game-controls.js"></script><script src="controls.js"></script>
+<script>
+(async()=>{
+  try{
+    const tests=[['',5],['b',1],['bA1A1;',4],['bgarbage',5],['bB4A3;',1],
+      ['bD4D3;C5B4;D5D4;D3E2;B5C3;C3B5;D4C5;',2],
+      ['bB4B3;B5C3;A5B5;E4E3;C5A3;D5D4;D4B2;C4C3;E5E4;E4E5;B3B2;B2A1R;E5D5;D5E5;',7]];
+    const faces=await document.fonts.load('1000px GardnerOpponent',gardnerText('b'));
+    let passed=0;
+    for(const [source,expected] of tests){
+      const probe=document.createElement('span');probe.className='probe';probe.textContent=gardnerText(source);document.body.append(probe);
+      const width=probe.getBoundingClientRect().width,ok=Math.abs(width-(1800+expected))<.1;
+      const result=document.createElement('p');result.className=ok?'pass':'fail';
+      result.textContent=(ok?'PASS ':'FAIL ')+JSON.stringify(source)+': width '+width+'; expected '+(1800+expected);
+      document.querySelector('#results').append(result);probe.remove();if(ok)passed++;
+    }
+    document.querySelector('#load').textContent=passed+'/'+tests.length+' checks passed; loaded font faces: '+faces.length;
+  }catch(error){document.querySelector('#load').textContent=String(error);}
+})();
+</script>

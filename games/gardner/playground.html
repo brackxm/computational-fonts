@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gardner minichess · font opponent</title>
+<style>
+@font-face{font-family:GardnerOpponent;src:url('./gardner-font.ttf?v=20261022-2') format('truetype');font-display:block}
+:root{font-family:system-ui,sans-serif;color:#243e43;background:#faf8f2}body{max-width:1100px;margin:30px auto;padding:0 20px}h1{margin-bottom:8px}p{line-height:1.6}a{color:#246269}button,select,textarea{font:inherit}button,select{padding:9px 12px;border:1px solid #9daba9;border-radius:6px;background:white;color:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:default}button:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #bd872a;outline-offset:3px}textarea{display:block;box-sizing:border-box;width:100%;padding:12px;margin:8px 0;font-family:ui-monospace,monospace;border:1px solid #9daba9;border-radius:8px;resize:vertical}.board{background:white;border:1px solid #dadfd8;border-radius:12px;padding:12px;margin:20px 0}.board svg{display:block;width:100%;height:auto;max-height:550px}.replay{font-family:GardnerOpponent;font-size:1000px;font-feature-settings:"liga" 1,"kern" 0;font-variant-ligatures:common-ligatures;font-kerning:none;letter-spacing:0;word-spacing:0;white-space:pre;direction:ltr;unicode-bidi:isolate;fill:#243e43}#status{padding:12px 16px;background:#e9eee8;border-radius:6px;min-height:26px}.controls{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:20px 0}label{display:inline-flex;gap:8px;align-items:center}footer{margin-top:28px;padding-top:15px;border-top:1px solid #ccd3ca}.probe-holder{position:fixed;top:0;left:0;width:0;height:0;overflow:hidden;visibility:hidden;pointer-events:none}.probe{display:inline-block;width:max-content;white-space:pre;font:1000px/1 GardnerOpponent;font-feature-settings:"liga" 1,"kern" 0;font-kerning:none;letter-spacing:0;word-spacing:0;direction:ltr;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<p><a href="../../index.html">← Computational fonts</a></p>
+<h1>Gardner minichess</h1>
+<p>A playable opponent inside an OpenType font. White uses a bounded engine-generated opening book, then a legal capture-and-safety heuristic. It can make mistakes and can be beaten.</p>
+<p>Chess on a 5 × 5 board. The font takes White; you play Black. Checkmate wins, stalemate draws. Pawns move one square, capture diagonally, and promote on the far rank. There is no castling, en passant, or double pawn step.</p>
+<div class="controls"><button id="reset">New game</button><button id="undo" disabled>Undo</button></div>
+<div class="controls" aria-label="Your move"><label for="from">From <select id="from"><option>A1</option><option>B1</option><option>C1</option><option>D1</option><option>E1</option><option>A2</option><option>B2</option><option>C2</option><option>D2</option><option>E2</option><option>A3</option><option>B3</option><option>C3</option><option>D3</option><option>E3</option><option>A4</option><option selected>B4</option><option>C4</option><option>D4</option><option>E4</option><option>A5</option><option>B5</option><option>C5</option><option>D5</option><option>E5</option></select></label><label for="to">To <select id="to"><option>A1</option><option>B1</option><option>C1</option><option>D1</option><option>E1</option><option>A2</option><option>B2</option><option>C2</option><option>D2</option><option>E2</option><option selected>A3</option><option>B3</option><option>C3</option><option>D3</option><option>E3</option><option>A4</option><option>B4</option><option>C4</option><option>D4</option><option>E4</option><option>A5</option><option>B5</option><option>C5</option><option>D5</option><option>E5</option></select></label><label for="promotion">Promotion <select id="promotion"><option value="">None</option><option value="Q">Queen</option><option value="R">Rook</option><option value="B">Bishop</option><option value="N">Knight</option></select></label><button id="play">Move</button></div>
+<p id="status" role="status" aria-live="polite">Loading Gardner font…</p>
+<div class="board"><svg viewBox="300 0 1200 1450" role="img" aria-labelledby="status"><text id="drawing" class="replay" x="0" y="1410"></text></svg></div>
+<p>White pieces are outlined; Black pieces are solid teal. White moves up toward rank 5, Black down toward rank 1. Choose a promotion piece only when your pawn reaches rank 1. The gold box marks the destination of the font’s latest move.</p>
+<p><label for="record"><strong>Your move history</strong></label></p>
+<textarea id="record" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">b</textarea>
+<p id="syntax"><code>b</code> starts with the font as White. Append only your moves, using uppercase coordinates and a semicolon, such as <code>bB4A3;</code>. Add Q, R, B, or N before the semicolon when promoting. Spaces and line breaks are allowed. The font applies moves, chooses replies, draws the board, and ends games; JavaScript only edits the text and reads the font’s status.</p>
+<p>Checkmate, stalemate, basic insufficient material, and an automatic draw after 75 moves by each side without a pawn move or capture are supported. Repetition draws and fifty-move draw claims are not implemented. The playground accepts up to 2,048 source characters.</p>
+<footer>Playable heuristic opponent · Original artwork · Apache 2.0</footer>
+<script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createGardnerPlayground();</script>
+</body></html>

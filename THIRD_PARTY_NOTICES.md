@@ -118,3 +118,12 @@ are retained. The generated Connect Four TTF/WOFF2 fonts contain derived GPL
 strategy material and are distributed as GPL-3.0-only, with corresponding
 source. They are an exception to the repository's Apache-2.0 default. See the
 [file-by-file provenance and license notes](games/connect-four/PROVENANCE.md).
+
+## Gardner opening-book generation
+
+The original move records in `games/gardner/book.json.gz` were generated using
+an external Fairy-Stockfish executable. Fairy-Stockfish is GPL-3.0; its code and
+executable are not bundled with the Gardner implementation or font. Font
+rebuilds use the generated records and do not require that engine. See
+[Gardner provenance](games/gardner/PROVENANCE.md) for the engine revision,
+executable fingerprint, search budgets, and generation method.

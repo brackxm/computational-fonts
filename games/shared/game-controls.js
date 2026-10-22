@@ -16,6 +16,7 @@ function gameSignal(width, frameWidth = 1800, count = 6) {
 
 function createFontGame(config) {
   const get = id => document.querySelector('#' + id);
+  const encode = config.encode || gameText;
   const input = get('record'), drawing = get('drawing'), status = get('status');
   const probe = document.createElement('span');
   probe.className = 'probe';
@@ -27,7 +28,7 @@ function createFontGame(config) {
   const limit = config.limit || 1024, buttons = Array.from(document.querySelectorAll('[data-move]'));
   let loaded = false, previous = input.value, history = [], timer;
   function measure(source) {
-    probe.textContent = gameText(source);
+    probe.textContent = encode(source);
     return gameSignal(probe.getBoundingClientRect().width, config.width || 1800, config.messages.length-1);
   }
   function show(message, code = 0) {
@@ -54,7 +55,7 @@ function createFontGame(config) {
     }
     const code = measure(input.value);
     if (!code) { clear(config.messages[0]); return; }
-    drawing.textContent = gameText(input.value);
+    drawing.textContent = encode(input.value);
     show(config.messages[code], code);
     enableMoves(code === 1);
   }
@@ -88,7 +89,7 @@ function createFontGame(config) {
   };
   for (const button of buttons) button.onclick = () => propose(button.dataset.move);
   if (get('play')) get('play').onclick = () => propose(config.move());
-  const ready = document.fonts.load('1000px '+config.family, gameText(config.tests[0][0])).then(fonts => {
+  const ready = document.fonts.load('1000px '+config.family, encode(config.tests[0][0])).then(fonts => {
     if (!fonts.length || config.tests.some(([source,code]) => measure(source) !== code)) {
       throw new Error('Font or ligature support unavailable');
     }

@@ -4,7 +4,7 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 38 playgrounds in your browser, with no installation needed.
+explore all 39 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
@@ -36,6 +36,7 @@ explore all 38 playgrounds in your browser, with no installation needed.
 | [Cram](games/cram/) | perfect first-player opponent | solved 6×5 board; human-only domino placements | [Browser playground](games/cram/playground.html) |
 | [Mū tōrere](games/mu-torere/) | perfect win/loss/draw opponent | origin-point history; either first player and two puzzles | [Browser playground](games/mu-torere/playground.html) |
 | [Hexapawn](games/hexapawn/) | perfect opponent on either side | standard 3×3 board; human-only coordinate moves | [Browser playground](games/hexapawn/playground.html) |
+| [Gardner minichess](games/gardner/) | playable book and heuristic opponent | 5×5 chess; font-generated legal moves; imperfect play | [Browser playground](games/gardner/playground.html) |
 | [Nim](games/nim/) | perfect normal/misère opponent | three configurable 0–31 heaps; font-computed XOR display | [Browser playground](games/nim/playground.html) |
 | [Chomp](games/chomp/) | perfect opponent on either side | complete 6×5 chocolate bar; human-only bites | [Browser playground](games/chomp/playground.html) |
 | [Dodgem](games/dodgem/) | perfect opponent on either side | standard 3×3 car race; human-only moves | [Browser playground](games/dodgem/playground.html) |
