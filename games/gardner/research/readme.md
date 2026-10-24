@@ -3,11 +3,12 @@
 Master keeps the generator, runtime, tests, manifest and certification evidence.
 The generated research font and binary build inputs are excluded from master and
 ignored locally. Only the latest accepted D font and its binary inputs are
-preserved on the local branch `codex/gardner-research-artifacts-20261024`,
-based on the source-only master. Earlier large-font versions are excluded from
-that branch too. The artifact branch is not published.
-A fresh clone of master alone does not contain the strategy corpus; obtain the
-artifact branch separately to reproduce this variant.
+published on the branch `codex/gardner-research-artifacts-20261024`, based
+on the source-only master. Earlier large-font versions are excluded from that
+branch too. An ordinary clone fetches the artifacts under
+`origin/codex/gardner-research-artifacts-20261024`; it does not check them out.
+A master-only clone excludes the strategy corpus; fetch that branch explicitly
+to reproduce this variant.
 
 After restoring and building below, [open the research playground](playground.html),
 or use the always-bundled [lightweight default opponent](../playground.html).
@@ -71,13 +72,22 @@ node games/gardner/research/test_benchmark.cjs
 node games/gardner/test_controls.cjs
 ```
 
-`restore_inputs.py` reads only local Git objects from the preserved branch and
-checks each binary input against the manifest before atomic replacement. It
-does not download data or run proof searches. Use `--ref` to select another
-local ref containing the same verified inputs. If the branch is absent, it
-stops with recovery instructions. Its regression check uses a small temporary
-Git repository and requires no research assets. The generated root TTF and
-restored inputs remain ignored; do not force-add them to master.
+`restore_inputs.py` first tries the local artifact branch, then its fetched
+`origin` ref. It reads only local Git objects and checks each binary input
+against the manifest before atomic replacement. It does not download data or
+run proof searches. An explicit `--ref` selects exactly that local ref or commit,
+without fallback. If no artifact ref exists (for example, after a master-only
+clone), fetch it yourself before restoring:
+
+```sh
+git fetch origin refs/heads/codex/gardner-research-artifacts-20261024:refs/remotes/origin/codex/gardner-research-artifacts-20261024
+```
+
+The regression check uses a small temporary Git repository and requires no
+research assets. It covers fetched-ref discovery, local-branch precedence,
+explicit refs, checksum failures, missing inputs and failure preservation. The
+generated root TTF and restored inputs remain ignored; do not force-add them
+to master.
 
 Build products go in ignored `build/`. Override with `--output-dir`; pass the
 same populated directory to tests with `--build-dir` and optionally `--font`.

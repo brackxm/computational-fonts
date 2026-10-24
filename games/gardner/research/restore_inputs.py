@@ -18,14 +18,28 @@ EXTERNAL_INPUTS = (
 )
 
 
+def resolve_ref(repo, ref):
+    candidates = [ref] if ref is not None else [
+        'refs/heads/' + ARTIFACT_REF,
+        'refs/remotes/origin/' + ARTIFACT_REF,
+    ]
+    for candidate in candidates:
+        try:
+            return subprocess.check_output(
+                ['git', 'rev-parse', '--verify', '--end-of-options', candidate + '^{commit}'],
+                cwd=repo, text=True, stderr=subprocess.PIPE).strip()
+        except subprocess.CalledProcessError:
+            pass
+    requested = ref if ref is not None else ARTIFACT_REF + ' (local branch or fetched origin ref)'
+    recovery = ('Use --ref with an existing local ref or commit.' if ref is not None else
+                f'Fetch explicitly with:\n  git fetch origin refs/heads/{ARTIFACT_REF}:'
+                f'refs/remotes/origin/{ARTIFACT_REF}')
+    raise ValueError(f'Artifact ref unavailable locally: {requested}.\n'
+                     f'{recovery}\nNo download was attempted.')
+
+
 def restore(repo, target, ref, inputs):
-    try:
-        commit = subprocess.check_output(
-            ['git', 'rev-parse', '--verify', '--end-of-options', ref + '^{commit}'],
-            cwd=repo, text=True, stderr=subprocess.PIPE).strip()
-    except subprocess.CalledProcessError as error:
-        raise ValueError(f'Artifact ref unavailable locally: {ref}. '
-                         'Obtain the preserved artifact branch first; no download was attempted.') from error
+    commit = resolve_ref(repo, ref)
     for name in EXTERNAL_INPUTS:
         expected = inputs[name]
         destination = target / name
@@ -37,7 +51,7 @@ def restore(repo, target, ref, inputs):
                     ['git', 'cat-file', 'blob', f'{commit}:games/gardner/research/{name}'],
                     cwd=repo, stdout=stream, stderr=subprocess.PIPE)
             if result.returncode:
-                raise ValueError(f'Artifact ref lacks {name}: {ref}')
+                raise ValueError(f'Artifact ref lacks {name}: {commit}')
             with draft.open('rb') as stream:
                 digest = hashlib.file_digest(stream, 'sha256').hexdigest()
             if draft.stat().st_size != expected['bytes'] or digest != expected['sha256']:
@@ -48,7 +62,7 @@ def restore(repo, target, ref, inputs):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--ref', default=ARTIFACT_REF, help='Local branch or commit containing the frozen inputs')
+    parser.add_argument('--ref', help='Exact local ref or commit; default: artifact branch, then its fetched origin ref')
     args = parser.parse_args()
     repo = Path(subprocess.check_output(['git', 'rev-parse', '--show-toplevel'], cwd=HERE, text=True).strip())
     manifest = json.loads((HERE / 'manifest.json').read_text())

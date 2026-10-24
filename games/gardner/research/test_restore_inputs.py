@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 import unittest
 
-from restore_inputs import EXTERNAL_INPUTS, restore
+from restore_inputs import ARTIFACT_REF, EXTERNAL_INPUTS, resolve_ref, restore
 
 
 class RestoreTests(unittest.TestCase):
@@ -34,10 +34,28 @@ class RestoreTests(unittest.TestCase):
             git('-c', 'user.name=Test', '-c', 'user.email=test@example.invalid',
                 '-c', 'commit.gpgsign=false', 'commit', '-qm', 'Frozen test inputs')
             commit = git('rev-parse', 'HEAD')
+            # An ordinary clone fetches the artifact branch without creating a local branch.
+            with self.assertRaisesRegex(ValueError, 'git fetch origin'):
+                resolve_ref(repo, None)
+            remote = 'refs/remotes/origin/' + ARTIFACT_REF
+            local = 'refs/heads/' + ARTIFACT_REF
+            git('update-ref', remote, commit)
+            self.assertEqual(resolve_ref(repo, None), commit)
             with contextlib.redirect_stdout(io.StringIO()):
-                restore(repo, output, commit, inputs)
+                restore(repo, output, None, inputs)
             for name in EXTERNAL_INPUTS:
                 self.assertEqual((output / name).read_bytes(), (repo / 'games/gardner/research' / name).read_bytes())
+
+            # Local artifacts take precedence; explicit refs never silently fall back.
+            git('-c', 'user.name=Test', '-c', 'user.email=test@example.invalid',
+                '-c', 'commit.gpgsign=false', 'commit', '--allow-empty', '-qm', 'Local artifact tip')
+            local_commit = git('rev-parse', 'HEAD')
+            git('update-ref', local, local_commit)
+            self.assertEqual(resolve_ref(repo, None), local_commit)
+            self.assertEqual(resolve_ref(repo, remote), commit)
+            self.assertEqual(resolve_ref(repo, commit), commit)
+            git('update-ref', '-d', local)
+            self.assertEqual(resolve_ref(repo, None), commit)
 
             first = EXTERNAL_INPUTS[0]
             previous = b'previous verified input'
@@ -47,8 +65,10 @@ class RestoreTests(unittest.TestCase):
                 restore(repo, output, commit, bad)
             self.assertEqual((output / first).read_bytes(), previous)
             self.assertFalse(list(output.rglob('.restore-*')))
-            with self.assertRaisesRegex(ValueError, 'Artifact ref unavailable locally'):
+            with self.assertRaisesRegex(ValueError, 'Artifact ref unavailable locally') as missing:
                 restore(repo, output, 'absent-ref', inputs)
+            self.assertIn('Use --ref', str(missing.exception))
+            self.assertNotIn('git fetch', str(missing.exception))
             self.assertEqual((output / first).read_bytes(), previous)
 
             git('rm', 'games/gardner/research/' + first)
