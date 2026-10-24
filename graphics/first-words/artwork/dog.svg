@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">dog</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M44 51C51 30 109 30 116 51L126 103C127 125 105 138 80 138C55 138 33 125 34 103Z" fill="#F7DFBB"/>
+<path d="M48 43C28 39 17 60 21 88C23 102 36 105 43 91L56 56Z" fill="#A78062"/>
+<path d="M112 43C132 39 143 60 139 88C137 102 124 105 117 91L104 56Z" fill="#A78062"/>
+<ellipse cx="59" cy="86" rx="4" ry="6" fill="#314047" stroke="none"/>
+<ellipse cx="101" cy="86" rx="4" ry="6" fill="#314047" stroke="none"/>
+<ellipse cx="80" cy="113" rx="23" ry="17" fill="#FFF8E9" stroke="none"/>
+<path d="M72 102Q80 98 88 102Q89 109 80 113Q71 109 72 102Z" fill="#314047"/>
+<path d="M80 113V118Q73 125 68 119M80 118Q87 125 92 119" fill="none"/></g>
+</svg>

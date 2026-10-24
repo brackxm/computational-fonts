@@ -1,0 +1,16 @@
+First Words — original vector illustrations
+
+Copyright 2026 Michael Brackx
+SPDX-License-Identifier: Apache-2.0
+
+The original SVG artwork, source geometry, previews, vocabulary annotations,
+approved_samples.json, aliases.json, plurals.json and the generator and build
+code are licensed under the Apache License, Version 2.0; see LICENSE.txt.
+
+The drawings were authored directly as SVG geometry with assistance from
+OpenAI Codex. No third-party illustrations, raster images or icon libraries
+were used. The six original studies are retained in approved_samples.json.
+
+Compiled fonts include third-party Roboto text outlines. Their original
+copyright, trademark and license notices are retained in FONT_NOTICE.txt
+and FONT_LICENSE.txt in the font distribution.

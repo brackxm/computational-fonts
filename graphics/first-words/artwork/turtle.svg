@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">turtle</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="53" cy="112" rx="10" ry="17" fill="#79AD86"/><ellipse cx="107" cy="112" rx="10" ry="17" fill="#79AD86"/><path d="M36 98L21 91L24 106L39 109Z" fill="#79AD86"/><ellipse cx="129" cy="87" rx="18" ry="16" fill="#B6CCA0"/><circle cx="134" cy="82" r="2.5" fill="#314047" stroke="none"/><path d="M32 101C31 37 119 37 120 101Z" fill="#79AD86"/><path d="M66 61L92 61L104 82L91 102H65L53 82Z" fill="#B6CCA0"/><path d="M53 82L34 80M104 82L117 80M66 61L61 53M92 61L98 53" fill="none" stroke-width="4"/></g>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">bear</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="43" cy="46" r="20" fill="#A78062"/><circle cx="117" cy="46" r="20" fill="#A78062"/><circle cx="43" cy="46" r="9" fill="#F7DFBB" stroke="none"/><circle cx="117" cy="46" r="9" fill="#F7DFBB" stroke="none"/><ellipse cx="80" cy="90" rx="52" ry="47" fill="#A78062"/><circle cx="59" cy="78" r="3" fill="#314047" stroke="none"/><circle cx="101" cy="78" r="3" fill="#314047" stroke="none"/><ellipse cx="80" cy="109" rx="24" ry="19" fill="#F7DFBB" stroke="none"/><path d="M71 102Q80 97 89 102Q87 111 80 112Q73 111 71 102Z" fill="#314047"/><path d="M80 112V118Q72 125 67 119M80 118Q88 125 93 119" fill="none"/></g>
+</svg>

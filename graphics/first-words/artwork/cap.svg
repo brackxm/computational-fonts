@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">cap</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M29 90C25 28 121 24 128 87Z" fill="#89B9CC"/><path d="M78 44Q102 52 105 87" fill="none" stroke-width="3"/><path d="M27 88Q80 79 111 88L143 105Q111 126 59 112L27 103Z" fill="#89B9CC"/><circle cx="78" cy="40" r="5" fill="#89B9CC"/><path d="M40 62Q48 51 59 49" fill="none" stroke="#FFF8E9" stroke-width="4"/></g>
+</svg>

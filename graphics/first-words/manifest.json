@@ -1,0 +1,3155 @@
+{
+  "title": "First words \u2014 200 original vector illustrations",
+  "version": 2,
+  "license": "Apache-2.0",
+  "language": "en",
+  "selection": "curated; not a corpus-derived frequency ranking",
+  "viewBox": [
+    0,
+    0,
+    160,
+    160
+  ],
+  "outline_width": 5,
+  "palette": {
+    "ink": "#314047",
+    "red": "#EF7469",
+    "yellow": "#F2CB67",
+    "green": "#79AD86",
+    "blue": "#89B9CC",
+    "brown": "#A78062",
+    "cream": "#F7DFBB",
+    "white": "#FFF8E9",
+    "pink": "#EFAB9F",
+    "purple": "#A99AC6",
+    "orange": "#ECA46B",
+    "gray": "#B9C3C5",
+    "palegreen": "#B6CCA0",
+    "darkbrown": "#7E6150",
+    "highlight": "#FFE5CE",
+    "ochre": "#C89943"
+  },
+  "count": 200,
+  "plural_count": 191,
+  "plural_layout": "two diagonal copies at 78% scale in the original canvas",
+  "categories": {
+    "Food": 40,
+    "Animals": 40,
+    "Home": 50,
+    "Clothing and toys": 20,
+    "Transport": 20,
+    "Nature": 20,
+    "Body": 10
+  },
+  "drawings": [
+    {
+      "id": "apple",
+      "label": "apple",
+      "aliases": [
+        "apples"
+      ],
+      "plurals": [
+        "apples"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/apple.svg",
+      "file": "artwork/apple.svg",
+      "svg_bytes": 684
+    },
+    {
+      "id": "banana",
+      "label": "banana",
+      "aliases": [
+        "bananas"
+      ],
+      "plurals": [
+        "bananas"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/banana.svg",
+      "file": "artwork/banana.svg",
+      "svg_bytes": 597
+    },
+    {
+      "id": "pear",
+      "label": "pear",
+      "aliases": [
+        "pears"
+      ],
+      "plurals": [
+        "pears"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/pear.svg",
+      "file": "artwork/pear.svg",
+      "svg_bytes": 635
+    },
+    {
+      "id": "orange",
+      "label": "orange",
+      "aliases": [
+        "oranges"
+      ],
+      "plurals": [
+        "oranges"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/orange.svg",
+      "file": "artwork/orange.svg",
+      "svg_bytes": 793
+    },
+    {
+      "id": "lemon",
+      "label": "lemon",
+      "aliases": [
+        "lemons"
+      ],
+      "plurals": [
+        "lemons"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/lemon.svg",
+      "file": "artwork/lemon.svg",
+      "svg_bytes": 525
+    },
+    {
+      "id": "strawberry",
+      "label": "strawberry",
+      "aliases": [
+        "strawberries"
+      ],
+      "plurals": [
+        "strawberries"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/strawberry.svg",
+      "file": "artwork/strawberry.svg",
+      "svg_bytes": 942
+    },
+    {
+      "id": "cherry",
+      "label": "cherry",
+      "aliases": [
+        "cherries"
+      ],
+      "plurals": [
+        "cherries"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/cherry.svg",
+      "file": "artwork/cherry.svg",
+      "svg_bytes": 618
+    },
+    {
+      "id": "grapes",
+      "label": "grapes",
+      "aliases": [
+        "grape"
+      ],
+      "plurals": [],
+      "category": "Food",
+      "plural_file": null,
+      "file": "artwork/grapes.svg",
+      "svg_bytes": 822
+    },
+    {
+      "id": "watermelon",
+      "label": "watermelon",
+      "aliases": [
+        "watermelons"
+      ],
+      "plurals": [
+        "watermelons"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/watermelon.svg",
+      "file": "artwork/watermelon.svg",
+      "svg_bytes": 883
+    },
+    {
+      "id": "pineapple",
+      "label": "pineapple",
+      "aliases": [
+        "pineapples"
+      ],
+      "plurals": [
+        "pineapples"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/pineapple.svg",
+      "file": "artwork/pineapple.svg",
+      "svg_bytes": 634
+    },
+    {
+      "id": "carrot",
+      "label": "carrot",
+      "aliases": [
+        "carrots"
+      ],
+      "plurals": [
+        "carrots"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/carrot.svg",
+      "file": "artwork/carrot.svg",
+      "svg_bytes": 561
+    },
+    {
+      "id": "tomato",
+      "label": "tomato",
+      "aliases": [
+        "tomatoes"
+      ],
+      "plurals": [
+        "tomatoes"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/tomato.svg",
+      "file": "artwork/tomato.svg",
+      "svg_bytes": 590
+    },
+    {
+      "id": "potato",
+      "label": "potato",
+      "aliases": [
+        "potatoes"
+      ],
+      "plurals": [
+        "potatoes"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/potato.svg",
+      "file": "artwork/potato.svg",
+      "svg_bytes": 818
+    },
+    {
+      "id": "broccoli",
+      "label": "broccoli",
+      "aliases": [],
+      "plurals": [],
+      "category": "Food",
+      "plural_file": null,
+      "file": "artwork/broccoli.svg",
+      "svg_bytes": 669
+    },
+    {
+      "id": "mushroom",
+      "label": "mushroom",
+      "aliases": [
+        "mushrooms"
+      ],
+      "plurals": [
+        "mushrooms"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/mushroom.svg",
+      "file": "artwork/mushroom.svg",
+      "svg_bytes": 730
+    },
+    {
+      "id": "bread",
+      "label": "bread",
+      "aliases": [
+        "loaf",
+        "loaves",
+        "bread loaf",
+        "bread loaves"
+      ],
+      "plurals": [
+        "loaves",
+        "bread loaves"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/bread.svg",
+      "file": "artwork/bread.svg",
+      "svg_bytes": 702
+    },
+    {
+      "id": "cheese",
+      "label": "cheese",
+      "aliases": [
+        "cheeses",
+        "cheese wedge",
+        "cheese wedges"
+      ],
+      "plurals": [
+        "cheeses",
+        "cheese wedges"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/cheese.svg",
+      "file": "artwork/cheese.svg",
+      "svg_bytes": 768
+    },
+    {
+      "id": "egg",
+      "label": "egg",
+      "aliases": [
+        "eggs"
+      ],
+      "plurals": [
+        "eggs"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/egg.svg",
+      "file": "artwork/egg.svg",
+      "svg_bytes": 529
+    },
+    {
+      "id": "cake",
+      "label": "cake",
+      "aliases": [
+        "cakes"
+      ],
+      "plurals": [
+        "cakes"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/cake.svg",
+      "file": "artwork/cake.svg",
+      "svg_bytes": 705
+    },
+    {
+      "id": "ice-cream",
+      "label": "ice cream",
+      "aliases": [
+        "ice creams",
+        "ice cream cone",
+        "ice cream cones"
+      ],
+      "plurals": [
+        "ice creams",
+        "ice cream cones"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/ice-cream.svg",
+      "file": "artwork/ice-cream.svg",
+      "svg_bytes": 636
+    },
+    {
+      "id": "peach",
+      "label": "peach",
+      "aliases": [
+        "peaches"
+      ],
+      "plurals": [
+        "peaches"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/peach.svg",
+      "file": "artwork/peach.svg",
+      "svg_bytes": 600
+    },
+    {
+      "id": "plum",
+      "label": "plum",
+      "aliases": [
+        "plums"
+      ],
+      "plurals": [
+        "plums"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/plum.svg",
+      "file": "artwork/plum.svg",
+      "svg_bytes": 558
+    },
+    {
+      "id": "coconut",
+      "label": "coconut",
+      "aliases": [
+        "coconuts"
+      ],
+      "plurals": [
+        "coconuts"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/coconut.svg",
+      "file": "artwork/coconut.svg",
+      "svg_bytes": 566
+    },
+    {
+      "id": "avocado",
+      "label": "avocado",
+      "aliases": [
+        "avocados"
+      ],
+      "plurals": [
+        "avocados"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/avocado.svg",
+      "file": "artwork/avocado.svg",
+      "svg_bytes": 709
+    },
+    {
+      "id": "cucumber",
+      "label": "cucumber",
+      "aliases": [
+        "cucumbers"
+      ],
+      "plurals": [
+        "cucumbers"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/cucumber.svg",
+      "file": "artwork/cucumber.svg",
+      "svg_bytes": 534
+    },
+    {
+      "id": "corn",
+      "label": "corn",
+      "aliases": [
+        "maize",
+        "corn cob",
+        "corn cobs",
+        "sweetcorn",
+        "sweet corn"
+      ],
+      "plurals": [
+        "corn cobs"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/corn.svg",
+      "file": "artwork/corn.svg",
+      "svg_bytes": 649
+    },
+    {
+      "id": "peas",
+      "label": "peas",
+      "aliases": [
+        "pea",
+        "pea pod",
+        "pea pods"
+      ],
+      "plurals": [],
+      "category": "Food",
+      "plural_file": null,
+      "file": "artwork/peas.svg",
+      "svg_bytes": 621
+    },
+    {
+      "id": "onion",
+      "label": "onion",
+      "aliases": [
+        "onions"
+      ],
+      "plurals": [
+        "onions"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/onion.svg",
+      "file": "artwork/onion.svg",
+      "svg_bytes": 660
+    },
+    {
+      "id": "pizza",
+      "label": "pizza",
+      "aliases": [
+        "pizzas",
+        "pizza slice",
+        "pizza slices"
+      ],
+      "plurals": [
+        "pizzas",
+        "pizza slices"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/pizza.svg",
+      "file": "artwork/pizza.svg",
+      "svg_bytes": 680
+    },
+    {
+      "id": "cookie",
+      "label": "cookie",
+      "aliases": [
+        "cookies",
+        "biscuit",
+        "biscuits"
+      ],
+      "plurals": [
+        "cookies",
+        "biscuits"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/cookie.svg",
+      "file": "artwork/cookie.svg",
+      "svg_bytes": 873
+    },
+    {
+      "id": "sandwich",
+      "label": "sandwich",
+      "aliases": [
+        "sandwiches"
+      ],
+      "plurals": [
+        "sandwiches"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/sandwich.svg",
+      "file": "artwork/sandwich.svg",
+      "svg_bytes": 715
+    },
+    {
+      "id": "burger",
+      "label": "burger",
+      "aliases": [
+        "burgers",
+        "hamburger",
+        "hamburgers",
+        "cheeseburger",
+        "cheeseburgers"
+      ],
+      "plurals": [
+        "burgers",
+        "hamburgers",
+        "cheeseburgers"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/burger.svg",
+      "file": "artwork/burger.svg",
+      "svg_bytes": 968
+    },
+    {
+      "id": "doughnut",
+      "label": "doughnut",
+      "aliases": [
+        "doughnuts",
+        "donut",
+        "donuts"
+      ],
+      "plurals": [
+        "doughnuts",
+        "donuts"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/doughnut.svg",
+      "file": "artwork/doughnut.svg",
+      "svg_bytes": 701
+    },
+    {
+      "id": "pancake",
+      "label": "pancake",
+      "aliases": [
+        "pancakes",
+        "stack of pancakes"
+      ],
+      "plurals": [],
+      "category": "Food",
+      "plural_file": null,
+      "file": "artwork/pancake.svg",
+      "svg_bytes": 802
+    },
+    {
+      "id": "popcorn",
+      "label": "popcorn",
+      "aliases": [
+        "popped corn",
+        "popcorn tub",
+        "popcorn tubs"
+      ],
+      "plurals": [],
+      "category": "Food",
+      "plural_file": null,
+      "file": "artwork/popcorn.svg",
+      "svg_bytes": 759
+    },
+    {
+      "id": "pumpkin",
+      "label": "pumpkin",
+      "aliases": [
+        "pumpkins"
+      ],
+      "plurals": [
+        "pumpkins"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/pumpkin.svg",
+      "file": "artwork/pumpkin.svg",
+      "svg_bytes": 656
+    },
+    {
+      "id": "cabbage",
+      "label": "cabbage",
+      "aliases": [
+        "cabbages"
+      ],
+      "plurals": [
+        "cabbages"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/cabbage.svg",
+      "file": "artwork/cabbage.svg",
+      "svg_bytes": 694
+    },
+    {
+      "id": "lettuce",
+      "label": "lettuce",
+      "aliases": [
+        "lettuces",
+        "head of lettuce",
+        "heads of lettuce"
+      ],
+      "plurals": [
+        "lettuces",
+        "heads of lettuce"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/lettuce.svg",
+      "file": "artwork/lettuce.svg",
+      "svg_bytes": 677
+    },
+    {
+      "id": "radish",
+      "label": "radish",
+      "aliases": [
+        "radishes"
+      ],
+      "plurals": [
+        "radishes"
+      ],
+      "category": "Food",
+      "plural_file": "artwork/plurals/radish.svg",
+      "file": "artwork/radish.svg",
+      "svg_bytes": 848
+    },
+    {
+      "id": "blueberry",
+      "label": "blueberry",
+      "aliases": [
+        "blueberries"
+      ],
+      "plurals": [],
+      "category": "Food",
+      "plural_file": null,
+      "file": "artwork/blueberry.svg",
+      "svg_bytes": 809
+    },
+    {
+      "id": "cat",
+      "label": "cat",
+      "aliases": [
+        "cats",
+        "kitty",
+        "kitties"
+      ],
+      "plurals": [
+        "cats",
+        "kitties"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/cat.svg",
+      "file": "artwork/cat.svg",
+      "svg_bytes": 966
+    },
+    {
+      "id": "dog",
+      "label": "dog",
+      "aliases": [
+        "dogs",
+        "doggy",
+        "doggies"
+      ],
+      "plurals": [
+        "dogs",
+        "doggies"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/dog.svg",
+      "file": "artwork/dog.svg",
+      "svg_bytes": 971
+    },
+    {
+      "id": "rabbit",
+      "label": "rabbit",
+      "aliases": [
+        "rabbits",
+        "bunny",
+        "bunnies"
+      ],
+      "plurals": [
+        "rabbits",
+        "bunnies"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/rabbit.svg",
+      "file": "artwork/rabbit.svg",
+      "svg_bytes": 925
+    },
+    {
+      "id": "mouse",
+      "label": "mouse",
+      "aliases": [
+        "mice"
+      ],
+      "plurals": [
+        "mice"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/mouse.svg",
+      "file": "artwork/mouse.svg",
+      "svg_bytes": 881
+    },
+    {
+      "id": "bear",
+      "label": "bear",
+      "aliases": [
+        "bears"
+      ],
+      "plurals": [
+        "bears"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/bear.svg",
+      "file": "artwork/bear.svg",
+      "svg_bytes": 950
+    },
+    {
+      "id": "fox",
+      "label": "fox",
+      "aliases": [
+        "foxes"
+      ],
+      "plurals": [
+        "foxes"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/fox.svg",
+      "file": "artwork/fox.svg",
+      "svg_bytes": 830
+    },
+    {
+      "id": "pig",
+      "label": "pig",
+      "aliases": [
+        "pigs"
+      ],
+      "plurals": [
+        "pigs"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/pig.svg",
+      "file": "artwork/pig.svg",
+      "svg_bytes": 791
+    },
+    {
+      "id": "cow",
+      "label": "cow",
+      "aliases": [
+        "cows"
+      ],
+      "plurals": [
+        "cows"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/cow.svg",
+      "file": "artwork/cow.svg",
+      "svg_bytes": 1000
+    },
+    {
+      "id": "horse",
+      "label": "horse",
+      "aliases": [
+        "horses"
+      ],
+      "plurals": [
+        "horses"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/horse.svg",
+      "file": "artwork/horse.svg",
+      "svg_bytes": 902
+    },
+    {
+      "id": "sheep",
+      "label": "sheep",
+      "aliases": [],
+      "plurals": [],
+      "category": "Animals",
+      "plural_file": null,
+      "file": "artwork/sheep.svg",
+      "svg_bytes": 836
+    },
+    {
+      "id": "goat",
+      "label": "goat",
+      "aliases": [
+        "goats"
+      ],
+      "plurals": [
+        "goats"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/goat.svg",
+      "file": "artwork/goat.svg",
+      "svg_bytes": 865
+    },
+    {
+      "id": "duck",
+      "label": "duck",
+      "aliases": [
+        "ducks"
+      ],
+      "plurals": [
+        "ducks"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/duck.svg",
+      "file": "artwork/duck.svg",
+      "svg_bytes": 697
+    },
+    {
+      "id": "chicken",
+      "label": "chicken",
+      "aliases": [
+        "chickens",
+        "hen",
+        "hens"
+      ],
+      "plurals": [
+        "chickens",
+        "hens"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/chicken.svg",
+      "file": "artwork/chicken.svg",
+      "svg_bytes": 907
+    },
+    {
+      "id": "bird",
+      "label": "bird",
+      "aliases": [
+        "birds"
+      ],
+      "plurals": [
+        "birds"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/bird.svg",
+      "file": "artwork/bird.svg",
+      "svg_bytes": 712
+    },
+    {
+      "id": "fish",
+      "label": "fish",
+      "aliases": [
+        "fishes"
+      ],
+      "plurals": [
+        "fishes"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/fish.svg",
+      "file": "artwork/fish.svg",
+      "svg_bytes": 700
+    },
+    {
+      "id": "turtle",
+      "label": "turtle",
+      "aliases": [
+        "turtles"
+      ],
+      "plurals": [
+        "turtles"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/turtle.svg",
+      "file": "artwork/turtle.svg",
+      "svg_bytes": 842
+    },
+    {
+      "id": "frog",
+      "label": "frog",
+      "aliases": [
+        "frogs"
+      ],
+      "plurals": [
+        "frogs"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/frog.svg",
+      "file": "artwork/frog.svg",
+      "svg_bytes": 969
+    },
+    {
+      "id": "butterfly",
+      "label": "butterfly",
+      "aliases": [
+        "butterflies"
+      ],
+      "plurals": [
+        "butterflies"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/butterfly.svg",
+      "file": "artwork/butterfly.svg",
+      "svg_bytes": 853
+    },
+    {
+      "id": "bee",
+      "label": "bee",
+      "aliases": [
+        "bees",
+        "honeybee",
+        "honeybees",
+        "honey bee",
+        "honey bees"
+      ],
+      "plurals": [
+        "bees",
+        "honeybees",
+        "honey bees"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/bee.svg",
+      "file": "artwork/bee.svg",
+      "svg_bytes": 869
+    },
+    {
+      "id": "snail",
+      "label": "snail",
+      "aliases": [
+        "snails"
+      ],
+      "plurals": [
+        "snails"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/snail.svg",
+      "file": "artwork/snail.svg",
+      "svg_bytes": 804
+    },
+    {
+      "id": "lion",
+      "label": "lion",
+      "aliases": [
+        "lions"
+      ],
+      "plurals": [
+        "lions"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/lion.svg",
+      "file": "artwork/lion.svg",
+      "svg_bytes": 819
+    },
+    {
+      "id": "tiger",
+      "label": "tiger",
+      "aliases": [
+        "tigers"
+      ],
+      "plurals": [
+        "tigers"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/tiger.svg",
+      "file": "artwork/tiger.svg",
+      "svg_bytes": 867
+    },
+    {
+      "id": "elephant",
+      "label": "elephant",
+      "aliases": [
+        "elephants"
+      ],
+      "plurals": [
+        "elephants"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/elephant.svg",
+      "file": "artwork/elephant.svg",
+      "svg_bytes": 876
+    },
+    {
+      "id": "giraffe",
+      "label": "giraffe",
+      "aliases": [
+        "giraffes"
+      ],
+      "plurals": [
+        "giraffes"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/giraffe.svg",
+      "file": "artwork/giraffe.svg",
+      "svg_bytes": 1112
+    },
+    {
+      "id": "zebra",
+      "label": "zebra",
+      "aliases": [
+        "zebras"
+      ],
+      "plurals": [
+        "zebras"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/zebra.svg",
+      "file": "artwork/zebra.svg",
+      "svg_bytes": 939
+    },
+    {
+      "id": "monkey",
+      "label": "monkey",
+      "aliases": [
+        "monkeys"
+      ],
+      "plurals": [
+        "monkeys"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/monkey.svg",
+      "file": "artwork/monkey.svg",
+      "svg_bytes": 1009
+    },
+    {
+      "id": "panda",
+      "label": "panda",
+      "aliases": [
+        "pandas"
+      ],
+      "plurals": [
+        "pandas"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/panda.svg",
+      "file": "artwork/panda.svg",
+      "svg_bytes": 917
+    },
+    {
+      "id": "penguin",
+      "label": "penguin",
+      "aliases": [
+        "penguins"
+      ],
+      "plurals": [
+        "penguins"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/penguin.svg",
+      "file": "artwork/penguin.svg",
+      "svg_bytes": 829
+    },
+    {
+      "id": "whale",
+      "label": "whale",
+      "aliases": [
+        "whales"
+      ],
+      "plurals": [
+        "whales"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/whale.svg",
+      "file": "artwork/whale.svg",
+      "svg_bytes": 841
+    },
+    {
+      "id": "octopus",
+      "label": "octopus",
+      "aliases": [
+        "octopuses"
+      ],
+      "plurals": [
+        "octopuses"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/octopus.svg",
+      "file": "artwork/octopus.svg",
+      "svg_bytes": 771
+    },
+    {
+      "id": "crocodile",
+      "label": "crocodile",
+      "aliases": [
+        "crocodiles",
+        "croc",
+        "crocs"
+      ],
+      "plurals": [
+        "crocodiles",
+        "crocs"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/crocodile.svg",
+      "file": "artwork/crocodile.svg",
+      "svg_bytes": 778
+    },
+    {
+      "id": "snake",
+      "label": "snake",
+      "aliases": [
+        "snakes"
+      ],
+      "plurals": [
+        "snakes"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/snake.svg",
+      "file": "artwork/snake.svg",
+      "svg_bytes": 856
+    },
+    {
+      "id": "spider",
+      "label": "spider",
+      "aliases": [
+        "spiders"
+      ],
+      "plurals": [
+        "spiders"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/spider.svg",
+      "file": "artwork/spider.svg",
+      "svg_bytes": 923
+    },
+    {
+      "id": "ant",
+      "label": "ant",
+      "aliases": [
+        "ants"
+      ],
+      "plurals": [
+        "ants"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/ant.svg",
+      "file": "artwork/ant.svg",
+      "svg_bytes": 921
+    },
+    {
+      "id": "ladybird",
+      "label": "ladybird",
+      "aliases": [
+        "ladybirds",
+        "ladybug",
+        "ladybugs",
+        "lady beetle",
+        "lady beetles"
+      ],
+      "plurals": [
+        "ladybirds",
+        "ladybugs",
+        "lady beetles"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/ladybird.svg",
+      "file": "artwork/ladybird.svg",
+      "svg_bytes": 1108
+    },
+    {
+      "id": "dragonfly",
+      "label": "dragonfly",
+      "aliases": [
+        "dragonflies"
+      ],
+      "plurals": [
+        "dragonflies"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/dragonfly.svg",
+      "file": "artwork/dragonfly.svg",
+      "svg_bytes": 996
+    },
+    {
+      "id": "bat",
+      "label": "bat",
+      "aliases": [
+        "bats"
+      ],
+      "plurals": [
+        "bats"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/bat.svg",
+      "file": "artwork/bat.svg",
+      "svg_bytes": 751
+    },
+    {
+      "id": "owl",
+      "label": "owl",
+      "aliases": [
+        "owls"
+      ],
+      "plurals": [
+        "owls"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/owl.svg",
+      "file": "artwork/owl.svg",
+      "svg_bytes": 880
+    },
+    {
+      "id": "hedgehog",
+      "label": "hedgehog",
+      "aliases": [
+        "hedgehogs"
+      ],
+      "plurals": [
+        "hedgehogs"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/hedgehog.svg",
+      "file": "artwork/hedgehog.svg",
+      "svg_bytes": 749
+    },
+    {
+      "id": "crab",
+      "label": "crab",
+      "aliases": [
+        "crabs"
+      ],
+      "plurals": [
+        "crabs"
+      ],
+      "category": "Animals",
+      "plural_file": "artwork/plurals/crab.svg",
+      "file": "artwork/crab.svg",
+      "svg_bytes": 1224
+    },
+    {
+      "id": "house",
+      "label": "house",
+      "aliases": [
+        "houses",
+        "home",
+        "homes"
+      ],
+      "plurals": [
+        "houses",
+        "homes"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/house.svg",
+      "file": "artwork/house.svg",
+      "svg_bytes": 797
+    },
+    {
+      "id": "door",
+      "label": "door",
+      "aliases": [
+        "doors"
+      ],
+      "plurals": [
+        "doors"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/door.svg",
+      "file": "artwork/door.svg",
+      "svg_bytes": 686
+    },
+    {
+      "id": "window",
+      "label": "window",
+      "aliases": [
+        "windows"
+      ],
+      "plurals": [
+        "windows"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/window.svg",
+      "file": "artwork/window.svg",
+      "svg_bytes": 700
+    },
+    {
+      "id": "bed",
+      "label": "bed",
+      "aliases": [
+        "beds"
+      ],
+      "plurals": [
+        "beds"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/bed.svg",
+      "file": "artwork/bed.svg",
+      "svg_bytes": 715
+    },
+    {
+      "id": "chair",
+      "label": "chair",
+      "aliases": [
+        "chairs"
+      ],
+      "plurals": [
+        "chairs"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/chair.svg",
+      "file": "artwork/chair.svg",
+      "svg_bytes": 617
+    },
+    {
+      "id": "table",
+      "label": "table",
+      "aliases": [
+        "tables"
+      ],
+      "plurals": [
+        "tables"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/table.svg",
+      "file": "artwork/table.svg",
+      "svg_bytes": 532
+    },
+    {
+      "id": "sofa",
+      "label": "sofa",
+      "aliases": [
+        "sofas",
+        "couch",
+        "couches"
+      ],
+      "plurals": [
+        "sofas",
+        "couches"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/sofa.svg",
+      "file": "artwork/sofa.svg",
+      "svg_bytes": 824
+    },
+    {
+      "id": "lamp",
+      "label": "lamp",
+      "aliases": [
+        "lamps",
+        "table lamp",
+        "table lamps"
+      ],
+      "plurals": [
+        "lamps",
+        "table lamps"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/lamp.svg",
+      "file": "artwork/lamp.svg",
+      "svg_bytes": 674
+    },
+    {
+      "id": "clock",
+      "label": "clock",
+      "aliases": [
+        "clocks",
+        "wall clock",
+        "wall clocks"
+      ],
+      "plurals": [
+        "clocks",
+        "wall clocks"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/clock.svg",
+      "file": "artwork/clock.svg",
+      "svg_bytes": 623
+    },
+    {
+      "id": "key",
+      "label": "key",
+      "aliases": [
+        "keys"
+      ],
+      "plurals": [
+        "keys"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/key.svg",
+      "file": "artwork/key.svg",
+      "svg_bytes": 503
+    },
+    {
+      "id": "cup",
+      "label": "cup",
+      "aliases": [
+        "cups",
+        "mug",
+        "mugs"
+      ],
+      "plurals": [
+        "cups",
+        "mugs"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/cup.svg",
+      "file": "artwork/cup.svg",
+      "svg_bytes": 568
+    },
+    {
+      "id": "plate",
+      "label": "plate",
+      "aliases": [
+        "plates"
+      ],
+      "plurals": [
+        "plates"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/plate.svg",
+      "file": "artwork/plate.svg",
+      "svg_bytes": 590
+    },
+    {
+      "id": "bowl",
+      "label": "bowl",
+      "aliases": [
+        "bowls"
+      ],
+      "plurals": [
+        "bowls"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/bowl.svg",
+      "file": "artwork/bowl.svg",
+      "svg_bytes": 614
+    },
+    {
+      "id": "spoon",
+      "label": "spoon",
+      "aliases": [
+        "spoons"
+      ],
+      "plurals": [
+        "spoons"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/spoon.svg",
+      "file": "artwork/spoon.svg",
+      "svg_bytes": 530
+    },
+    {
+      "id": "fork",
+      "label": "fork",
+      "aliases": [
+        "forks"
+      ],
+      "plurals": [
+        "forks"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/fork.svg",
+      "file": "artwork/fork.svg",
+      "svg_bytes": 523
+    },
+    {
+      "id": "bottle",
+      "label": "bottle",
+      "aliases": [
+        "bottles"
+      ],
+      "plurals": [
+        "bottles"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/bottle.svg",
+      "file": "artwork/bottle.svg",
+      "svg_bytes": 632
+    },
+    {
+      "id": "book",
+      "label": "book",
+      "aliases": [
+        "books"
+      ],
+      "plurals": [
+        "books"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/book.svg",
+      "file": "artwork/book.svg",
+      "svg_bytes": 624
+    },
+    {
+      "id": "pencil",
+      "label": "pencil",
+      "aliases": [
+        "pencils"
+      ],
+      "plurals": [
+        "pencils"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/pencil.svg",
+      "file": "artwork/pencil.svg",
+      "svg_bytes": 753
+    },
+    {
+      "id": "scissors",
+      "label": "scissors",
+      "aliases": [
+        "pair of scissors"
+      ],
+      "plurals": [],
+      "category": "Home",
+      "plural_file": null,
+      "file": "artwork/scissors.svg",
+      "svg_bytes": 886
+    },
+    {
+      "id": "umbrella",
+      "label": "umbrella",
+      "aliases": [
+        "umbrellas"
+      ],
+      "plurals": [
+        "umbrellas"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/umbrella.svg",
+      "file": "artwork/umbrella.svg",
+      "svg_bytes": 640
+    },
+    {
+      "id": "toothbrush",
+      "label": "toothbrush",
+      "aliases": [
+        "toothbrushes",
+        "tooth brush",
+        "tooth brushes"
+      ],
+      "plurals": [
+        "toothbrushes",
+        "tooth brushes"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/toothbrush.svg",
+      "file": "artwork/toothbrush.svg",
+      "svg_bytes": 599
+    },
+    {
+      "id": "comb",
+      "label": "comb",
+      "aliases": [
+        "combs"
+      ],
+      "plurals": [
+        "combs"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/comb.svg",
+      "file": "artwork/comb.svg",
+      "svg_bytes": 927
+    },
+    {
+      "id": "brush",
+      "label": "brush",
+      "aliases": [
+        "brushes",
+        "hairbrush",
+        "hairbrushes",
+        "hair brush",
+        "hair brushes"
+      ],
+      "plurals": [
+        "brushes",
+        "hairbrushes",
+        "hair brushes"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/brush.svg",
+      "file": "artwork/brush.svg",
+      "svg_bytes": 996
+    },
+    {
+      "id": "mirror",
+      "label": "mirror",
+      "aliases": [
+        "mirrors",
+        "hand mirror",
+        "hand mirrors"
+      ],
+      "plurals": [
+        "mirrors",
+        "hand mirrors"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/mirror.svg",
+      "file": "artwork/mirror.svg",
+      "svg_bytes": 603
+    },
+    {
+      "id": "towel",
+      "label": "towel",
+      "aliases": [
+        "towels"
+      ],
+      "plurals": [
+        "towels"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/towel.svg",
+      "file": "artwork/towel.svg",
+      "svg_bytes": 663
+    },
+    {
+      "id": "soap",
+      "label": "soap",
+      "aliases": [
+        "soap bar",
+        "soap bars",
+        "bar of soap",
+        "bars of soap"
+      ],
+      "plurals": [
+        "soap bars",
+        "bars of soap"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/soap.svg",
+      "file": "artwork/soap.svg",
+      "svg_bytes": 673
+    },
+    {
+      "id": "bath",
+      "label": "bath",
+      "aliases": [
+        "baths",
+        "bathtub",
+        "bathtubs",
+        "bath tub",
+        "bath tubs"
+      ],
+      "plurals": [
+        "baths",
+        "bathtubs",
+        "bath tubs"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/bath.svg",
+      "file": "artwork/bath.svg",
+      "svg_bytes": 736
+    },
+    {
+      "id": "toilet",
+      "label": "toilet",
+      "aliases": [
+        "toilets",
+        "lavatory",
+        "lavatories"
+      ],
+      "plurals": [
+        "toilets",
+        "lavatories"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/toilet.svg",
+      "file": "artwork/toilet.svg",
+      "svg_bytes": 665
+    },
+    {
+      "id": "sink",
+      "label": "sink",
+      "aliases": [
+        "sinks",
+        "washbasin",
+        "washbasins",
+        "wash basin",
+        "wash basins"
+      ],
+      "plurals": [
+        "sinks",
+        "washbasins",
+        "wash basins"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/sink.svg",
+      "file": "artwork/sink.svg",
+      "svg_bytes": 732
+    },
+    {
+      "id": "fridge",
+      "label": "fridge",
+      "aliases": [
+        "fridges",
+        "refrigerator",
+        "refrigerators"
+      ],
+      "plurals": [
+        "fridges",
+        "refrigerators"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/fridge.svg",
+      "file": "artwork/fridge.svg",
+      "svg_bytes": 662
+    },
+    {
+      "id": "oven",
+      "label": "oven",
+      "aliases": [
+        "ovens"
+      ],
+      "plurals": [
+        "ovens"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/oven.svg",
+      "file": "artwork/oven.svg",
+      "svg_bytes": 741
+    },
+    {
+      "id": "pan",
+      "label": "pan",
+      "aliases": [
+        "pans",
+        "frying pan",
+        "frying pans",
+        "skillet",
+        "skillets"
+      ],
+      "plurals": [
+        "pans",
+        "frying pans",
+        "skillets"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/pan.svg",
+      "file": "artwork/pan.svg",
+      "svg_bytes": 574
+    },
+    {
+      "id": "kettle",
+      "label": "kettle",
+      "aliases": [
+        "kettles",
+        "tea kettle",
+        "tea kettles"
+      ],
+      "plurals": [
+        "kettles",
+        "tea kettles"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/kettle.svg",
+      "file": "artwork/kettle.svg",
+      "svg_bytes": 741
+    },
+    {
+      "id": "broom",
+      "label": "broom",
+      "aliases": [
+        "brooms"
+      ],
+      "plurals": [
+        "brooms"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/broom.svg",
+      "file": "artwork/broom.svg",
+      "svg_bytes": 654
+    },
+    {
+      "id": "basket",
+      "label": "basket",
+      "aliases": [
+        "baskets"
+      ],
+      "plurals": [
+        "baskets"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/basket.svg",
+      "file": "artwork/basket.svg",
+      "svg_bytes": 690
+    },
+    {
+      "id": "phone",
+      "label": "phone",
+      "aliases": [
+        "phones",
+        "smartphone",
+        "smartphones",
+        "mobile phone",
+        "mobile phones",
+        "cellphone",
+        "cellphones",
+        "cell phone",
+        "cell phones",
+        "telephone",
+        "telephones"
+      ],
+      "plurals": [
+        "phones",
+        "smartphones",
+        "mobile phones",
+        "cellphones",
+        "cell phones",
+        "telephones"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/phone.svg",
+      "file": "artwork/phone.svg",
+      "svg_bytes": 652
+    },
+    {
+      "id": "camera",
+      "label": "camera",
+      "aliases": [
+        "cameras",
+        "digital camera",
+        "digital cameras"
+      ],
+      "plurals": [
+        "cameras",
+        "digital cameras"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/camera.svg",
+      "file": "artwork/camera.svg",
+      "svg_bytes": 707
+    },
+    {
+      "id": "computer",
+      "label": "computer",
+      "aliases": [
+        "computers",
+        "pc",
+        "pcs",
+        "desktop computer",
+        "desktop computers"
+      ],
+      "plurals": [
+        "computers",
+        "pcs",
+        "desktop computers"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/computer.svg",
+      "file": "artwork/computer.svg",
+      "svg_bytes": 748
+    },
+    {
+      "id": "television",
+      "label": "television",
+      "aliases": [
+        "televisions",
+        "tv",
+        "tvs",
+        "tv set",
+        "tv sets"
+      ],
+      "plurals": [
+        "televisions",
+        "tvs",
+        "tv sets"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/television.svg",
+      "file": "artwork/television.svg",
+      "svg_bytes": 744
+    },
+    {
+      "id": "radio",
+      "label": "radio",
+      "aliases": [
+        "radios"
+      ],
+      "plurals": [
+        "radios"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/radio.svg",
+      "file": "artwork/radio.svg",
+      "svg_bytes": 1032
+    },
+    {
+      "id": "candle",
+      "label": "candle",
+      "aliases": [
+        "candles"
+      ],
+      "plurals": [
+        "candles"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/candle.svg",
+      "file": "artwork/candle.svg",
+      "svg_bytes": 683
+    },
+    {
+      "id": "hammer",
+      "label": "hammer",
+      "aliases": [
+        "hammers"
+      ],
+      "plurals": [
+        "hammers"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/hammer.svg",
+      "file": "artwork/hammer.svg",
+      "svg_bytes": 577
+    },
+    {
+      "id": "saw",
+      "label": "saw",
+      "aliases": [
+        "saws",
+        "handsaw",
+        "handsaws",
+        "hand saw",
+        "hand saws"
+      ],
+      "plurals": [
+        "saws",
+        "handsaws",
+        "hand saws"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/saw.svg",
+      "file": "artwork/saw.svg",
+      "svg_bytes": 619
+    },
+    {
+      "id": "ladder",
+      "label": "ladder",
+      "aliases": [
+        "ladders"
+      ],
+      "plurals": [
+        "ladders"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/ladder.svg",
+      "file": "artwork/ladder.svg",
+      "svg_bytes": 736
+    },
+    {
+      "id": "bucket",
+      "label": "bucket",
+      "aliases": [
+        "buckets",
+        "pail",
+        "pails"
+      ],
+      "plurals": [
+        "buckets",
+        "pails"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/bucket.svg",
+      "file": "artwork/bucket.svg",
+      "svg_bytes": 607
+    },
+    {
+      "id": "watering-can",
+      "label": "watering can",
+      "aliases": [
+        "watering cans"
+      ],
+      "plurals": [
+        "watering cans"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/watering-can.svg",
+      "file": "artwork/watering-can.svg",
+      "svg_bytes": 780
+    },
+    {
+      "id": "backpack",
+      "label": "backpack",
+      "aliases": [
+        "backpacks",
+        "rucksack",
+        "rucksacks",
+        "schoolbag",
+        "schoolbags",
+        "school bag",
+        "school bags"
+      ],
+      "plurals": [
+        "backpacks",
+        "rucksacks",
+        "schoolbags",
+        "school bags"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/backpack.svg",
+      "file": "artwork/backpack.svg",
+      "svg_bytes": 831
+    },
+    {
+      "id": "bag",
+      "label": "bag",
+      "aliases": [
+        "bags",
+        "handbag",
+        "handbags",
+        "tote",
+        "totes",
+        "tote bag",
+        "tote bags",
+        "shopping bag",
+        "shopping bags"
+      ],
+      "plurals": [
+        "bags",
+        "handbags",
+        "totes",
+        "tote bags",
+        "shopping bags"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/bag.svg",
+      "file": "artwork/bag.svg",
+      "svg_bytes": 635
+    },
+    {
+      "id": "envelope",
+      "label": "envelope",
+      "aliases": [
+        "envelopes",
+        "letter",
+        "letters"
+      ],
+      "plurals": [
+        "envelopes",
+        "letters"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/envelope.svg",
+      "file": "artwork/envelope.svg",
+      "svg_bytes": 496
+    },
+    {
+      "id": "ruler",
+      "label": "ruler",
+      "aliases": [
+        "rulers",
+        "measuring ruler",
+        "measuring rulers"
+      ],
+      "plurals": [
+        "rulers",
+        "measuring rulers"
+      ],
+      "category": "Home",
+      "plural_file": "artwork/plurals/ruler.svg",
+      "file": "artwork/ruler.svg",
+      "svg_bytes": 1060
+    },
+    {
+      "id": "shoe",
+      "label": "shoe",
+      "aliases": [
+        "shoes"
+      ],
+      "plurals": [
+        "shoes"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/shoe.svg",
+      "file": "artwork/shoe.svg",
+      "svg_bytes": 568
+    },
+    {
+      "id": "sock",
+      "label": "sock",
+      "aliases": [
+        "socks"
+      ],
+      "plurals": [
+        "socks"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/sock.svg",
+      "file": "artwork/sock.svg",
+      "svg_bytes": 579
+    },
+    {
+      "id": "hat",
+      "label": "hat",
+      "aliases": [
+        "hats"
+      ],
+      "plurals": [
+        "hats"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/hat.svg",
+      "file": "artwork/hat.svg",
+      "svg_bytes": 564
+    },
+    {
+      "id": "shirt",
+      "label": "shirt",
+      "aliases": [
+        "shirts",
+        "t shirt",
+        "t shirts",
+        "tee shirt",
+        "tee shirts"
+      ],
+      "plurals": [
+        "shirts",
+        "t shirts",
+        "tee shirts"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/shirt.svg",
+      "file": "artwork/shirt.svg",
+      "svg_bytes": 524
+    },
+    {
+      "id": "trousers",
+      "label": "trousers",
+      "aliases": [
+        "pants",
+        "pair of trousers",
+        "pair of pants"
+      ],
+      "plurals": [],
+      "category": "Clothing and toys",
+      "plural_file": null,
+      "file": "artwork/trousers.svg",
+      "svg_bytes": 585
+    },
+    {
+      "id": "dress",
+      "label": "dress",
+      "aliases": [
+        "dresses"
+      ],
+      "plurals": [
+        "dresses"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/dress.svg",
+      "file": "artwork/dress.svg",
+      "svg_bytes": 594
+    },
+    {
+      "id": "coat",
+      "label": "coat",
+      "aliases": [
+        "coats",
+        "jacket",
+        "jackets"
+      ],
+      "plurals": [
+        "coats",
+        "jackets"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/coat.svg",
+      "file": "artwork/coat.svg",
+      "svg_bytes": 744
+    },
+    {
+      "id": "ball",
+      "label": "ball",
+      "aliases": [
+        "balls",
+        "beach ball",
+        "beach balls"
+      ],
+      "plurals": [
+        "balls",
+        "beach balls"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/ball.svg",
+      "file": "artwork/ball.svg",
+      "svg_bytes": 679
+    },
+    {
+      "id": "kite",
+      "label": "kite",
+      "aliases": [
+        "kites"
+      ],
+      "plurals": [
+        "kites"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/kite.svg",
+      "file": "artwork/kite.svg",
+      "svg_bytes": 703
+    },
+    {
+      "id": "teddy-bear",
+      "label": "teddy bear",
+      "aliases": [
+        "teddy bears",
+        "teddy",
+        "teddies",
+        "toy bear",
+        "toy bears"
+      ],
+      "plurals": [
+        "teddy bears",
+        "teddies",
+        "toy bears"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/teddy-bear.svg",
+      "file": "artwork/teddy-bear.svg",
+      "svg_bytes": 1142
+    },
+    {
+      "id": "glove",
+      "label": "glove",
+      "aliases": [
+        "gloves"
+      ],
+      "plurals": [
+        "gloves"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/glove.svg",
+      "file": "artwork/glove.svg",
+      "svg_bytes": 676
+    },
+    {
+      "id": "scarf",
+      "label": "scarf",
+      "aliases": [
+        "scarves",
+        "scarfs"
+      ],
+      "plurals": [
+        "scarves",
+        "scarfs"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/scarf.svg",
+      "file": "artwork/scarf.svg",
+      "svg_bytes": 695
+    },
+    {
+      "id": "boot",
+      "label": "boot",
+      "aliases": [
+        "boots"
+      ],
+      "plurals": [
+        "boots"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/boot.svg",
+      "file": "artwork/boot.svg",
+      "svg_bytes": 623
+    },
+    {
+      "id": "crown",
+      "label": "crown",
+      "aliases": [
+        "crowns"
+      ],
+      "plurals": [
+        "crowns"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/crown.svg",
+      "file": "artwork/crown.svg",
+      "svg_bytes": 621
+    },
+    {
+      "id": "drum",
+      "label": "drum",
+      "aliases": [
+        "drums"
+      ],
+      "plurals": [
+        "drums"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/drum.svg",
+      "file": "artwork/drum.svg",
+      "svg_bytes": 787
+    },
+    {
+      "id": "balloon",
+      "label": "balloon",
+      "aliases": [
+        "balloons",
+        "party balloon",
+        "party balloons"
+      ],
+      "plurals": [
+        "balloons",
+        "party balloons"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/balloon.svg",
+      "file": "artwork/balloon.svg",
+      "svg_bytes": 603
+    },
+    {
+      "id": "doll",
+      "label": "doll",
+      "aliases": [
+        "dolls",
+        "toy doll",
+        "toy dolls"
+      ],
+      "plurals": [
+        "dolls",
+        "toy dolls"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/doll.svg",
+      "file": "artwork/doll.svg",
+      "svg_bytes": 907
+    },
+    {
+      "id": "puzzle",
+      "label": "puzzle",
+      "aliases": [
+        "puzzles",
+        "jigsaw",
+        "jigsaws",
+        "jigsaw puzzle",
+        "jigsaw puzzles"
+      ],
+      "plurals": [
+        "puzzles",
+        "jigsaws",
+        "jigsaw puzzles"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/puzzle.svg",
+      "file": "artwork/puzzle.svg",
+      "svg_bytes": 700
+    },
+    {
+      "id": "guitar",
+      "label": "guitar",
+      "aliases": [
+        "guitars",
+        "acoustic guitar",
+        "acoustic guitars"
+      ],
+      "plurals": [
+        "guitars",
+        "acoustic guitars"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/guitar.svg",
+      "file": "artwork/guitar.svg",
+      "svg_bytes": 892
+    },
+    {
+      "id": "cap",
+      "label": "cap",
+      "aliases": [
+        "caps",
+        "baseball cap",
+        "baseball caps"
+      ],
+      "plurals": [
+        "caps",
+        "baseball caps"
+      ],
+      "category": "Clothing and toys",
+      "plural_file": "artwork/plurals/cap.svg",
+      "file": "artwork/cap.svg",
+      "svg_bytes": 651
+    },
+    {
+      "id": "car",
+      "label": "car",
+      "aliases": [
+        "cars",
+        "automobile",
+        "automobiles"
+      ],
+      "plurals": [
+        "cars",
+        "automobiles"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/car.svg",
+      "file": "artwork/car.svg",
+      "svg_bytes": 911
+    },
+    {
+      "id": "bus",
+      "label": "bus",
+      "aliases": [
+        "buses",
+        "busses"
+      ],
+      "plurals": [
+        "buses",
+        "busses"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/bus.svg",
+      "file": "artwork/bus.svg",
+      "svg_bytes": 1010
+    },
+    {
+      "id": "truck",
+      "label": "truck",
+      "aliases": [
+        "trucks",
+        "lorry",
+        "lorries"
+      ],
+      "plurals": [
+        "trucks",
+        "lorries"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/truck.svg",
+      "file": "artwork/truck.svg",
+      "svg_bytes": 800
+    },
+    {
+      "id": "train",
+      "label": "train",
+      "aliases": [
+        "trains",
+        "locomotive",
+        "locomotives"
+      ],
+      "plurals": [
+        "trains",
+        "locomotives"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/train.svg",
+      "file": "artwork/train.svg",
+      "svg_bytes": 1295
+    },
+    {
+      "id": "bicycle",
+      "label": "bicycle",
+      "aliases": [
+        "bicycles",
+        "bike",
+        "bikes",
+        "cycle",
+        "cycles"
+      ],
+      "plurals": [
+        "bicycles",
+        "bikes",
+        "cycles"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/bicycle.svg",
+      "file": "artwork/bicycle.svg",
+      "svg_bytes": 719
+    },
+    {
+      "id": "boat",
+      "label": "boat",
+      "aliases": [
+        "boats",
+        "sailboat",
+        "sailboats",
+        "sail boat",
+        "sail boats",
+        "sailing boat",
+        "sailing boats"
+      ],
+      "plurals": [
+        "boats",
+        "sailboats",
+        "sail boats",
+        "sailing boats"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/boat.svg",
+      "file": "artwork/boat.svg",
+      "svg_bytes": 667
+    },
+    {
+      "id": "airplane",
+      "label": "airplane",
+      "aliases": [
+        "airplanes",
+        "aeroplane",
+        "aeroplanes",
+        "plane",
+        "planes"
+      ],
+      "plurals": [
+        "airplanes",
+        "aeroplanes",
+        "planes"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/airplane.svg",
+      "file": "artwork/airplane.svg",
+      "svg_bytes": 626
+    },
+    {
+      "id": "helicopter",
+      "label": "helicopter",
+      "aliases": [
+        "helicopters"
+      ],
+      "plurals": [
+        "helicopters"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/helicopter.svg",
+      "file": "artwork/helicopter.svg",
+      "svg_bytes": 759
+    },
+    {
+      "id": "rocket",
+      "label": "rocket",
+      "aliases": [
+        "rockets",
+        "space rocket",
+        "space rockets"
+      ],
+      "plurals": [
+        "rockets",
+        "space rockets"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/rocket.svg",
+      "file": "artwork/rocket.svg",
+      "svg_bytes": 722
+    },
+    {
+      "id": "tractor",
+      "label": "tractor",
+      "aliases": [
+        "tractors"
+      ],
+      "plurals": [
+        "tractors"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/tractor.svg",
+      "file": "artwork/tractor.svg",
+      "svg_bytes": 1089
+    },
+    {
+      "id": "scooter",
+      "label": "scooter",
+      "aliases": [
+        "scooters",
+        "kick scooter",
+        "kick scooters"
+      ],
+      "plurals": [
+        "scooters",
+        "kick scooters"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/scooter.svg",
+      "file": "artwork/scooter.svg",
+      "svg_bytes": 803
+    },
+    {
+      "id": "motorcycle",
+      "label": "motorcycle",
+      "aliases": [
+        "motorcycles",
+        "motorbike",
+        "motorbikes",
+        "motor bike",
+        "motor bikes"
+      ],
+      "plurals": [
+        "motorcycles",
+        "motorbikes",
+        "motor bikes"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/motorcycle.svg",
+      "file": "artwork/motorcycle.svg",
+      "svg_bytes": 904
+    },
+    {
+      "id": "taxi",
+      "label": "taxi",
+      "aliases": [
+        "taxis",
+        "cab",
+        "cabs",
+        "taxicab",
+        "taxicabs"
+      ],
+      "plurals": [
+        "taxis",
+        "cabs",
+        "taxicabs"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/taxi.svg",
+      "file": "artwork/taxi.svg",
+      "svg_bytes": 1233
+    },
+    {
+      "id": "ambulance",
+      "label": "ambulance",
+      "aliases": [
+        "ambulances"
+      ],
+      "plurals": [
+        "ambulances"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/ambulance.svg",
+      "file": "artwork/ambulance.svg",
+      "svg_bytes": 930
+    },
+    {
+      "id": "canoe",
+      "label": "canoe",
+      "aliases": [
+        "canoes"
+      ],
+      "plurals": [
+        "canoes"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/canoe.svg",
+      "file": "artwork/canoe.svg",
+      "svg_bytes": 676
+    },
+    {
+      "id": "hot-air-balloon",
+      "label": "hot air balloon",
+      "aliases": [
+        "hot air balloons"
+      ],
+      "plurals": [
+        "hot air balloons"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/hot-air-balloon.svg",
+      "file": "artwork/hot-air-balloon.svg",
+      "svg_bytes": 808
+    },
+    {
+      "id": "skateboard",
+      "label": "skateboard",
+      "aliases": [
+        "skateboards"
+      ],
+      "plurals": [
+        "skateboards"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/skateboard.svg",
+      "file": "artwork/skateboard.svg",
+      "svg_bytes": 693
+    },
+    {
+      "id": "submarine",
+      "label": "submarine",
+      "aliases": [
+        "submarines",
+        "submersible",
+        "submersibles"
+      ],
+      "plurals": [
+        "submarines",
+        "submersibles"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/submarine.svg",
+      "file": "artwork/submarine.svg",
+      "svg_bytes": 675
+    },
+    {
+      "id": "fire-engine",
+      "label": "fire engine",
+      "aliases": [
+        "fire engines",
+        "fire truck",
+        "fire trucks"
+      ],
+      "plurals": [
+        "fire engines",
+        "fire trucks"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/fire-engine.svg",
+      "file": "artwork/fire-engine.svg",
+      "svg_bytes": 1150
+    },
+    {
+      "id": "traffic-light",
+      "label": "traffic light",
+      "aliases": [
+        "traffic lights",
+        "stoplight",
+        "stoplights",
+        "traffic signal",
+        "traffic signals"
+      ],
+      "plurals": [
+        "traffic lights",
+        "stoplights",
+        "traffic signals"
+      ],
+      "category": "Transport",
+      "plural_file": "artwork/plurals/traffic-light.svg",
+      "file": "artwork/traffic-light.svg",
+      "svg_bytes": 806
+    },
+    {
+      "id": "sun",
+      "label": "sun",
+      "aliases": [
+        "suns"
+      ],
+      "plurals": [
+        "suns"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/sun.svg",
+      "file": "artwork/sun.svg",
+      "svg_bytes": 1388
+    },
+    {
+      "id": "moon",
+      "label": "moon",
+      "aliases": [
+        "moons",
+        "crescent moon",
+        "crescent moons"
+      ],
+      "plurals": [
+        "moons",
+        "crescent moons"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/moon.svg",
+      "file": "artwork/moon.svg",
+      "svg_bytes": 445
+    },
+    {
+      "id": "star",
+      "label": "star",
+      "aliases": [
+        "stars"
+      ],
+      "plurals": [
+        "stars"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/star.svg",
+      "file": "artwork/star.svg",
+      "svg_bytes": 432
+    },
+    {
+      "id": "cloud",
+      "label": "cloud",
+      "aliases": [
+        "clouds"
+      ],
+      "plurals": [
+        "clouds"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/cloud.svg",
+      "file": "artwork/cloud.svg",
+      "svg_bytes": 534
+    },
+    {
+      "id": "rainbow",
+      "label": "rainbow",
+      "aliases": [
+        "rainbows"
+      ],
+      "plurals": [
+        "rainbows"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/rainbow.svg",
+      "file": "artwork/rainbow.svg",
+      "svg_bytes": 581
+    },
+    {
+      "id": "tree",
+      "label": "tree",
+      "aliases": [
+        "trees"
+      ],
+      "plurals": [
+        "trees"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/tree.svg",
+      "file": "artwork/tree.svg",
+      "svg_bytes": 635
+    },
+    {
+      "id": "flower",
+      "label": "flower",
+      "aliases": [
+        "flowers"
+      ],
+      "plurals": [
+        "flowers"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/flower.svg",
+      "file": "artwork/flower.svg",
+      "svg_bytes": 1279
+    },
+    {
+      "id": "leaf",
+      "label": "leaf",
+      "aliases": [
+        "leaves"
+      ],
+      "plurals": [
+        "leaves"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/leaf.svg",
+      "file": "artwork/leaf.svg",
+      "svg_bytes": 521
+    },
+    {
+      "id": "mountain",
+      "label": "mountain",
+      "aliases": [
+        "mountains"
+      ],
+      "plurals": [
+        "mountains"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/mountain.svg",
+      "file": "artwork/mountain.svg",
+      "svg_bytes": 560
+    },
+    {
+      "id": "snowflake",
+      "label": "snowflake",
+      "aliases": [
+        "snowflakes"
+      ],
+      "plurals": [
+        "snowflakes"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/snowflake.svg",
+      "file": "artwork/snowflake.svg",
+      "svg_bytes": 1315
+    },
+    {
+      "id": "rock",
+      "label": "rock",
+      "aliases": [
+        "rocks",
+        "stone",
+        "stones"
+      ],
+      "plurals": [
+        "rocks",
+        "stones"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/rock.svg",
+      "file": "artwork/rock.svg",
+      "svg_bytes": 505
+    },
+    {
+      "id": "shell",
+      "label": "shell",
+      "aliases": [
+        "shells",
+        "seashell",
+        "seashells",
+        "sea shell",
+        "sea shells"
+      ],
+      "plurals": [
+        "shells",
+        "seashells",
+        "sea shells"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/shell.svg",
+      "file": "artwork/shell.svg",
+      "svg_bytes": 665
+    },
+    {
+      "id": "feather",
+      "label": "feather",
+      "aliases": [
+        "feathers"
+      ],
+      "plurals": [
+        "feathers"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/feather.svg",
+      "file": "artwork/feather.svg",
+      "svg_bytes": 549
+    },
+    {
+      "id": "nest",
+      "label": "nest",
+      "aliases": [
+        "nests",
+        "bird nest",
+        "bird nests"
+      ],
+      "plurals": [
+        "nests",
+        "bird nests"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/nest.svg",
+      "file": "artwork/nest.svg",
+      "svg_bytes": 756
+    },
+    {
+      "id": "fire",
+      "label": "fire",
+      "aliases": [
+        "fires",
+        "flame",
+        "flames"
+      ],
+      "plurals": [
+        "fires",
+        "flames"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/fire.svg",
+      "file": "artwork/fire.svg",
+      "svg_bytes": 557
+    },
+    {
+      "id": "acorn",
+      "label": "acorn",
+      "aliases": [
+        "acorns"
+      ],
+      "plurals": [
+        "acorns"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/acorn.svg",
+      "file": "artwork/acorn.svg",
+      "svg_bytes": 748
+    },
+    {
+      "id": "pinecone",
+      "label": "pinecone",
+      "aliases": [
+        "pinecones",
+        "pine cone",
+        "pine cones"
+      ],
+      "plurals": [
+        "pinecones",
+        "pine cones"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/pinecone.svg",
+      "file": "artwork/pinecone.svg",
+      "svg_bytes": 672
+    },
+    {
+      "id": "cactus",
+      "label": "cactus",
+      "aliases": [
+        "cacti",
+        "cactuses",
+        "potted cactus",
+        "potted cacti"
+      ],
+      "plurals": [
+        "cacti",
+        "cactuses",
+        "potted cacti"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/cactus.svg",
+      "file": "artwork/cactus.svg",
+      "svg_bytes": 652
+    },
+    {
+      "id": "raindrop",
+      "label": "raindrop",
+      "aliases": [
+        "raindrops",
+        "rain drop",
+        "rain drops",
+        "water drop",
+        "water drops",
+        "droplet",
+        "droplets"
+      ],
+      "plurals": [
+        "raindrops",
+        "rain drops",
+        "water drops",
+        "droplets"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/raindrop.svg",
+      "file": "artwork/raindrop.svg",
+      "svg_bytes": 515
+    },
+    {
+      "id": "snowman",
+      "label": "snowman",
+      "aliases": [
+        "snowmen",
+        "snow person",
+        "snow people",
+        "snowperson",
+        "snowpeople"
+      ],
+      "plurals": [
+        "snowmen",
+        "snow people",
+        "snowpeople"
+      ],
+      "category": "Nature",
+      "plural_file": "artwork/plurals/snowman.svg",
+      "file": "artwork/snowman.svg",
+      "svg_bytes": 1179
+    },
+    {
+      "id": "eye",
+      "label": "eye",
+      "aliases": [
+        "eyes"
+      ],
+      "plurals": [
+        "eyes"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/eye.svg",
+      "file": "artwork/eye.svg",
+      "svg_bytes": 551
+    },
+    {
+      "id": "ear",
+      "label": "ear",
+      "aliases": [
+        "ears"
+      ],
+      "plurals": [
+        "ears"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/ear.svg",
+      "file": "artwork/ear.svg",
+      "svg_bytes": 615
+    },
+    {
+      "id": "nose",
+      "label": "nose",
+      "aliases": [
+        "noses"
+      ],
+      "plurals": [
+        "noses"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/nose.svg",
+      "file": "artwork/nose.svg",
+      "svg_bytes": 545
+    },
+    {
+      "id": "mouth",
+      "label": "mouth",
+      "aliases": [
+        "mouths"
+      ],
+      "plurals": [
+        "mouths"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/mouth.svg",
+      "file": "artwork/mouth.svg",
+      "svg_bytes": 574
+    },
+    {
+      "id": "hand",
+      "label": "hand",
+      "aliases": [
+        "hands"
+      ],
+      "plurals": [
+        "hands"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/hand.svg",
+      "file": "artwork/hand.svg",
+      "svg_bytes": 645
+    },
+    {
+      "id": "foot",
+      "label": "foot",
+      "aliases": [
+        "feet"
+      ],
+      "plurals": [
+        "feet"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/foot.svg",
+      "file": "artwork/foot.svg",
+      "svg_bytes": 799
+    },
+    {
+      "id": "tooth",
+      "label": "tooth",
+      "aliases": [
+        "teeth"
+      ],
+      "plurals": [
+        "teeth"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/tooth.svg",
+      "file": "artwork/tooth.svg",
+      "svg_bytes": 572
+    },
+    {
+      "id": "heart",
+      "label": "heart",
+      "aliases": [
+        "hearts"
+      ],
+      "plurals": [
+        "hearts"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/heart.svg",
+      "file": "artwork/heart.svg",
+      "svg_bytes": 529
+    },
+    {
+      "id": "bone",
+      "label": "bone",
+      "aliases": [
+        "bones"
+      ],
+      "plurals": [
+        "bones"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/bone.svg",
+      "file": "artwork/bone.svg",
+      "svg_bytes": 572
+    },
+    {
+      "id": "face",
+      "label": "face",
+      "aliases": [
+        "faces"
+      ],
+      "plurals": [
+        "faces"
+      ],
+      "category": "Body",
+      "plural_file": "artwork/plurals/face.svg",
+      "file": "artwork/face.svg",
+      "svg_bytes": 733
+    }
+  ]
+}

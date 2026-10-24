@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">rocket</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M61 95L36 116L31 137L64 125M99 95L124 116L129 137L96 125" fill="#EF7469"/><path d="M67 126Q63 143 80 151Q97 143 93 126Z" fill="#F2CB67"/><path d="M80 16C54 40 52 79 61 124H99C108 79 106 40 80 16Z" fill="#FFF8E9"/><path d="M80 16Q98 33 102 52H58Q62 33 80 16Z" fill="#EF7469"/><circle cx="80" cy="76" r="15" fill="#89B9CC"/><path d="M61 111H99" fill="none" stroke-width="4"/></g>
+</svg>

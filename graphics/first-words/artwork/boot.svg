@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">boot</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M51 25H104V95L127 106Q139 110 137 132H26V113Q26 99 51 96Z" fill="#F2CB67"/><rect x="26" y="127" width="111" height="13" rx="3" fill="#A78062"/><rect x="48" y="22" width="60" height="14" rx="4" fill="#F2CB67"/><path d="M65 47V85" fill="none" stroke="#FFF8E9" stroke-width="4"/></g>
+</svg>

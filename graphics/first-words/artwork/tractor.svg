@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">tractor</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><rect x="28" y="40" width="44" height="57" rx="3" fill="#79AD86"/><rect x="37" y="49" width="25" height="29" rx="2" fill="#89B9CC"/><rect x="22" y="33" width="57" height="10" rx="3" fill="#79AD86"/><rect x="69" y="73" width="62" height="41" rx="5" fill="#79AD86"/><rect x="103" y="47" width="9" height="27" rx="2" fill="#A78062"/><path d="M122 83V104M113 83V104" fill="none" stroke-width="3"/><circle cx="51" cy="115" r="25" fill="#314047"/><circle cx="51" cy="115" r="9.5" fill="#FFF8E9" stroke="none"/><circle cx="124" cy="122" r="16" fill="#314047"/><circle cx="124" cy="122" r="6.08" fill="#FFF8E9" stroke="none"/><circle cx="51" cy="115" r="12" fill="#F2CB67" stroke-width="3"/><circle cx="124" cy="122" r="7" fill="#F2CB67" stroke-width="3"/></g>
+</svg>

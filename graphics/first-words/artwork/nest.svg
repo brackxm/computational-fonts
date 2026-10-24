@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">nest</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="80" cy="95" rx="61" ry="26" fill="#A78062"/><ellipse cx="59" cy="81" rx="16" ry="23" fill="#FFF8E9" transform="rotate(-20 59 81)"/><ellipse cx="94" cy="77" rx="17" ry="24" fill="#89B9CC" transform="rotate(12 94 77)"/><path d="M19 91Q80 129 141 91L131 119Q80 152 29 119Z" fill="#A78062"/><path d="M29 104L111 128M48 129L129 105M24 117L103 137M47 101L134 121" fill="none" stroke="#F7DFBB" stroke-width="3"/></g>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">burger</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M27 72C29 14 131 14 133 72Z" fill="#A78062"/><path d="M50 50l4-2" fill="none" stroke="#F7DFBB" stroke-width="3"/><path d="M75 40l4-2" fill="none" stroke="#F7DFBB" stroke-width="3"/><path d="M103 48l4-2" fill="none" stroke="#F7DFBB" stroke-width="3"/><path d="M84 59l4-2" fill="none" stroke="#F7DFBB" stroke-width="3"/><rect x="24" y="95" width="112" height="26" rx="12" fill="#7E6150"/><path d="M24 91H136L109 109L84 100L57 110L24 100Z" fill="#F2CB67"/><path d="M22 77Q35 69 47 79Q59 69 72 79Q86 69 99 79Q113 69 138 77L133 91H27Z" fill="#79AD86"/><path d="M25 119H135Q132 141 110 141H50Q28 141 25 119Z" fill="#A78062"/></g>
+</svg>

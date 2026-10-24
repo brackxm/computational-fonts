@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">dragonfly</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="48" cy="63" rx="33" ry="13" fill="#89B9CC" transform="rotate(25 48 63)"/><ellipse cx="112" cy="63" rx="33" ry="13" fill="#89B9CC" transform="rotate(-25 112 63)"/><ellipse cx="47" cy="91" rx="31" ry="12" fill="#B6CCA0" transform="rotate(-15 47 91)"/><ellipse cx="113" cy="91" rx="31" ry="12" fill="#B6CCA0" transform="rotate(15 113 91)"/><rect x="72" y="53" width="16" height="86" rx="8" fill="#79AD86"/><path d="M73 86H87M73 103H87M73 120H87" fill="none" stroke-width="3"/><circle cx="80" cy="44" r="16" fill="#79AD86"/><circle cx="73" cy="40" r="3" fill="#314047" stroke="none"/><circle cx="87" cy="40" r="3" fill="#314047" stroke="none"/></g>
+</svg>

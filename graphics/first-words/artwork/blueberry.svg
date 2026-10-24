@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">blueberry</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="103" cy="62" r="30" fill="#89B9CC"/><circle cx="54" cy="91" r="32" fill="#89B9CC"/><circle cx="104" cy="111" r="29" fill="#89B9CC"/><path d="M103 44L108 55L119 55L111 63L113 74L103 68L93 74L95 63L87 55H98Z" fill="#A99AC6" stroke-width="3"/><path d="M54 73L59 84H70L62 92L64 103L54 97L44 103L46 92L38 84H49Z" fill="#A99AC6" stroke-width="3"/><path d="M104 96L108 105H118L111 112L113 122L104 117L95 122L97 112L90 105H100Z" fill="#A99AC6" stroke-width="3"/></g>
+</svg>

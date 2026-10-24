@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">clouds</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(36 2) scale(.78)"><path d="M40 120C11 118 12 82 38 78C29 45 69 28 89 51C118 38 142 64 128 87C154 100 140 125 119 122Z" fill="#FFF8E9"/><path d="M43 88Q40 100 48 105" fill="none" stroke="#89B9CC" stroke-width="4"/></g><g transform="translate(-2 32) scale(.78)"><path d="M40 120C11 118 12 82 38 78C29 45 69 28 89 51C118 38 142 64 128 87C154 100 140 125 119 122Z" fill="#FFF8E9"/><path d="M43 88Q40 100 48 105" fill="none" stroke="#89B9CC" stroke-width="4"/></g></g>
+</svg>

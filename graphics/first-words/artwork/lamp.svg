@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">lamp</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M80 75V127" fill="none" stroke="#A78062" stroke-width="9"/><path d="M51 127H109L118 139H42Z" fill="#A78062"/><path d="M52 26H108L131 82H29Z" fill="#F2CB67"/><path d="M109 84V103" fill="none" stroke-width="3"/><circle cx="109" cy="107" r="4" fill="#A78062"/><path d="M62 38L50 68" fill="none" stroke="#FFF8E9" stroke-width="4"/></g>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">helicopter</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M77 43V26M26 26H132" fill="none" stroke-width="6"/><path d="M102 74L136 57L143 65L134 95L106 96Z" fill="#F2CB67"/><path d="M34 65Q52 46 81 48Q111 50 111 84Q110 109 82 111H48Q19 112 19 90Q18 76 34 65Z" fill="#89B9CC"/><path d="M41 64Q54 56 67 58V83H26Q29 72 41 64Z" fill="#FFF8E9"/><path d="M48 112V129M88 112V129M28 129H109" fill="none" stroke-width="5"/><path d="M136 49V85" fill="none" stroke-width="4"/></g>
+</svg>

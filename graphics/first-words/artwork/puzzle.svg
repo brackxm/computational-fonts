@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">puzzle</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M27 28H70V43C55 38 54 62 70 57V79H48C56 95 32 98 36 80H27Z" fill="#89B9CC"/><path d="M78 28H132V70H117C123 55 99 53 103 70H78V57C95 62 94 38 78 43Z" fill="#F2CB67"/><path d="M27 88H38C32 105 57 104 52 88H70V108C54 103 53 127 70 122V140H27Z" fill="#79AD86"/><path d="M78 79H103C98 96 122 95 117 79H132V140H78V122C94 128 95 103 78 108Z" fill="#EF7469"/></g>
+</svg>

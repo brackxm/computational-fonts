@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">truck</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><rect x="17" y="41" width="77" height="70" rx="5" fill="#EF7469"/><path d="M94 64H120L143 88V114H94Z" fill="#89B9CC"/><path d="M104 73H117L131 89H104Z" fill="#FFF8E9"/><path d="M24 112H142" fill="none" stroke="#A78062" stroke-width="8"/><circle cx="43" cy="117" r="15" fill="#314047"/><circle cx="43" cy="117" r="5.7" fill="#FFF8E9" stroke="none"/><circle cx="119" cy="117" r="15" fill="#314047"/><circle cx="119" cy="117" r="5.7" fill="#FFF8E9" stroke="none"/></g>
+</svg>

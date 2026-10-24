@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">pencil</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><g transform="rotate(35 80 80)"><rect x="64" y="34" width="32" height="88" rx="1" fill="#F2CB67"/><rect x="64" y="20" width="32" height="20" rx="4" fill="#EFAB9F"/><rect x="64" y="38" width="32" height="8" rx="0" fill="#B9C3C5"/><path d="M64 122L80 144L96 122Z" fill="#F7DFBB"/><path d="M74 136L80 144L86 136Z" fill="#314047" stroke="none"/><path d="M80 49V116" fill="none" stroke="#FFF8E9" stroke-width="3"/></g></g>
+</svg>
