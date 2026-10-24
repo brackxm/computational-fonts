@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">clocks</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(36 2) scale(.78)"><circle cx="80" cy="80" r="57" fill="#89B9CC"/><circle cx="80" cy="80" r="46" fill="#FFF8E9"/><path d="M80 42V48M118 80H112M80 118V112M42 80H48" fill="none" stroke-width="4"/><path d="M80 80V54M80 80L101 96" fill="none" stroke-width="6"/><circle cx="80" cy="80" r="5" fill="#EF7469"/></g><g transform="translate(-2 32) scale(.78)"><circle cx="80" cy="80" r="57" fill="#89B9CC"/><circle cx="80" cy="80" r="46" fill="#FFF8E9"/><path d="M80 42V48M118 80H112M80 118V112M42 80H48" fill="none" stroke-width="4"/><path d="M80 80V54M80 80L101 96" fill="none" stroke-width="6"/><circle cx="80" cy="80" r="5" fill="#EF7469"/></g></g>
+</svg>

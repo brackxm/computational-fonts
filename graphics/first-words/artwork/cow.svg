@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
-<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
 <title id="title">cow</title>
 <g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M47 52Q24 48 19 67Q39 81 55 68M113 52Q136 48 141 67Q121 81 105 68" fill="#F7DFBB"/><path d="M52 48Q34 29 48 19L64 45M108 48Q126 29 112 19L96 45" fill="#FFF8E9"/><path d="M48 59C45 35 115 35 112 59L119 104Q116 135 80 138Q44 135 41 104Z" fill="#FFF8E9"/><path d="M48 59Q63 44 75 53Q77 68 64 75Q53 78 46 71Z" fill="#A78062" stroke="none"/><circle cx="61" cy="82" r="3" fill="#314047" stroke="none"/><circle cx="99" cy="82" r="3" fill="#314047" stroke="none"/><ellipse cx="80" cy="113" rx="35" ry="23" fill="#EFAB9F"/><ellipse cx="63" cy="112" rx="3" ry="5" fill="#314047" stroke="none"/><ellipse cx="97" cy="112" rx="3" ry="5" fill="#314047" stroke="none"/></g>
 </svg>

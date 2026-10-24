@@ -102,12 +102,14 @@ upstream sources and checksums in its readme.
 Roboto Regular text outlines described above. These modified derivatives use
 the new family name **First Words Pictures** and preserve Google's copyright,
 Roboto trademark and Apache-2.0 license metadata. Michael Brackx's modifications
-add whole-word ligatures and 100 original vector pictures, with colour layers
-and monochrome fallbacks. The compiled fonts and font build code are Apache-2.0;
+add whole-word ligatures and 200 original vector pictures, with colour layers,
+191 derived stacked plural variants and monochrome fallbacks.
+The compiled fonts and font build code are Apache-2.0;
 see that folder's `FONT_LICENSE.txt` and `FONT_NOTICE.txt`.
 
-The illustration artwork and `generate_artwork.py` are original CC0-1.0
-material, separately dedicated in `graphics/first-words/LICENSE.txt`.
+The illustration artwork and `generate_artwork.py` are original Apache-2.0
+material; see `graphics/first-words/LICENSE.txt` and
+`graphics/first-words/NOTICE.txt`.
 
 ## SMILES diagram font
 

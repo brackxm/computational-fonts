@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">snake</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M43 138C13 132 16 94 45 91L101 94C120 95 119 77 103 77L70 77C32 76 33 29 72 29L110 32V56L73 53C57 52 57 57 72 58L105 58C149 59 151 116 104 117L46 114Q33 116 45 122Q56 128 43 138Z" fill="#79AD86"/><ellipse cx="116" cy="44" rx="25" ry="19" fill="#79AD86"/><circle cx="119" cy="37" r="3" fill="#314047" stroke="none"/><path d="M139 47L149 50M149 50L153 45M149 50L153 55" fill="none" stroke="#EF7469" stroke-width="3"/><path d="M46 101l-1 9M69 103l-1 9M86 63l-1 9" fill="none" stroke="#B6CCA0" stroke-width="4"/></g>
+</svg>

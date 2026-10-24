@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">avocado</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M80 20C57 20 54 52 37 78C13 117 44 143 80 143C116 143 147 117 123 78C106 52 103 20 80 20Z" fill="#79AD86"/><path d="M80 32C65 32 65 59 48 86C31 115 54 132 80 132C106 132 129 115 112 86C95 59 95 32 80 32Z" fill="#B6CCA0" stroke="none"/><circle cx="80" cy="104" r="24" fill="#A78062"/><path d="M68 97Q73 88 83 90" fill="none" stroke="#F7DFBB" stroke-width="3"/></g>
+</svg>

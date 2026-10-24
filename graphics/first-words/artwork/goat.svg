@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
-<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
 <title id="title">goat</title>
 <g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M59 51Q29 24 43 15Q50 36 69 42M101 51Q131 24 117 15Q110 36 91 42" fill="#A78062"/><path d="M48 63Q23 49 21 71Q31 85 47 77M112 63Q137 49 139 71Q129 85 113 77" fill="#F7DFBB"/><path d="M48 67Q50 39 80 43Q110 39 112 67L104 106Q99 126 80 131Q61 126 56 106Z" fill="#F7DFBB"/><path d="M70 126L80 145L90 126" fill="#FFF8E9"/><circle cx="63" cy="78" r="3" fill="#314047" stroke="none"/><circle cx="97" cy="78" r="3" fill="#314047" stroke="none"/><path d="M74 106H86L80 112Z" fill="#A78062"/><path d="M80 112V118" fill="none"/></g>
 </svg>

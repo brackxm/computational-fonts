@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">phones</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(36 2) scale(.78)"><rect x="46" y="16" width="68" height="128" rx="12" fill="#B9C3C5"/><rect x="53" y="31" width="54" height="91" rx="3" fill="#89B9CC"/><path d="M70 24H90" fill="none" stroke-width="3"/><circle cx="80" cy="133" r="4" fill="#FFF8E9"/><path d="M64 55L88 39M65 74L98 51" fill="none" stroke="#FFF8E9" stroke-width="4"/></g><g transform="translate(-2 32) scale(.78)"><rect x="46" y="16" width="68" height="128" rx="12" fill="#B9C3C5"/><rect x="53" y="31" width="54" height="91" rx="3" fill="#89B9CC"/><path d="M70 24H90" fill="none" stroke-width="3"/><circle cx="80" cy="133" r="4" fill="#FFF8E9"/><path d="M64 55L88 39M65 74L98 51" fill="none" stroke="#FFF8E9" stroke-width="4"/></g></g>
+</svg>

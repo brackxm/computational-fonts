@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
-<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
 <title id="title">coat</title>
 <g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M58 25L34 39L18 101L40 110L49 73L44 139H116L111 73L120 110L142 101L126 39L102 25Z" fill="#79AD86"/><path d="M61 25L80 48L65 65L52 38Z" fill="#B6CCA0"/><path d="M99 25L80 48L95 65L108 38Z" fill="#B6CCA0"/><path d="M80 49V139M51 106H65M95 106H109" fill="none" stroke-width="4"/><circle cx="87" cy="82" r="2" fill="#314047" stroke="none"/><circle cx="87" cy="104" r="2" fill="#314047" stroke="none"/></g>
 </svg>

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
-<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
 <title id="title">duck</title>
 <g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M33 87Q18 76 22 98C25 127 62 139 99 123C121 113 128 88 111 72C126 48 109 27 90 30C65 32 65 60 75 74Q57 72 48 87Z" fill="#F2CB67"/><path d="M113 48L139 56L113 65Z" fill="#ECA46B"/><circle cx="99" cy="45" r="3" fill="#314047" stroke="none"/><path d="M49 94Q67 81 88 91Q83 113 57 112" fill="#F2CB67"/><path d="M25 137H134" fill="none" stroke="#89B9CC"/></g>
 </svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">balloons</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(36 2) scale(.78)"><path d="M80 112Q106 125 83 143Q70 150 77 154" fill="none" stroke-width="3"/><path d="M75 108L68 120H92L85 108Z" fill="#EF7469"/><ellipse cx="80" cy="64" rx="44" ry="51" fill="#EF7469"/><path d="M55 46Q47 60 52 75" fill="none" stroke="#FFF8E9" stroke-width="5"/></g><g transform="translate(-2 32) scale(.78)"><path d="M80 112Q106 125 83 143Q70 150 77 154" fill="none" stroke-width="3"/><path d="M75 108L68 120H92L85 108Z" fill="#EF7469"/><ellipse cx="80" cy="64" rx="44" ry="51" fill="#EF7469"/><path d="M55 46Q47 60 52 75" fill="none" stroke="#FFF8E9" stroke-width="5"/></g></g>
+</svg>

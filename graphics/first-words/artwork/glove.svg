@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">glove</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M53 91L31 71Q20 62 19 76L37 114Q42 126 59 127H112Q130 123 130 104V59Q130 46 119 48V40Q119 27 108 29V31Q108 18 97 22Q97 10 86 14Q79 16 79 28V80L67 50Q61 38 52 45Q47 50 52 61Z" fill="#F2CB67"/><rect x="52" y="123" width="63" height="21" rx="4" fill="#ECA46B"/><path d="M97 29V76M108 34V78M119 51V82" fill="none" stroke-width="3"/></g>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">motorcycle</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="36" cy="116" r="23" fill="#314047"/><circle cx="36" cy="116" r="8.74" fill="#FFF8E9" stroke="none"/><circle cx="124" cy="116" r="23" fill="#314047"/><circle cx="124" cy="116" r="8.74" fill="#FFF8E9" stroke="none"/><path d="M36 115L60 78L91 115H36L78 84H105" fill="none" stroke="#EF7469" stroke-width="7"/><path d="M82 75Q95 61 111 73L104 88H79Z" fill="#EF7469"/><path d="M124 116L106 56L117 49M47 76H76" fill="none" stroke-width="7"/><circle cx="118" cy="65" r="7" fill="#F2CB67"/><rect x="64" y="102" width="30" height="21" rx="5" fill="#B9C3C5"/></g>
+</svg>

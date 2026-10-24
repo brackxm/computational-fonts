@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">bat</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M65 74L21 38Q25 71 15 101Q34 89 45 109Q59 100 70 124H90Q101 100 115 109Q126 89 145 101Q135 71 139 38L95 74Z" fill="#A99AC6"/><path d="M65 73L61 35L78 48L99 35L95 73V107Q80 130 65 107Z" fill="#A99AC6"/><circle cx="73" cy="65" r="3" fill="#314047" stroke="none"/><circle cx="87" cy="65" r="3" fill="#314047" stroke="none"/><path d="M72 85Q80 92 88 85M27 57L64 94M133 57L96 94" fill="none" stroke-width="3"/></g>
+</svg>

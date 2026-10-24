@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
-<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
 <title id="title">face</title>
 <g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="80" cy="85" rx="49" ry="55" fill="#F7DFBB"/><path d="M33 69C26 30 55 15 84 20C115 16 137 39 127 72Q111 60 101 41Q76 63 42 52Z" fill="#A78062"/><circle cx="62" cy="82" r="4" fill="#314047" stroke="none"/><circle cx="99" cy="82" r="4" fill="#314047" stroke="none"/><path d="M80 87L75 103H83" fill="none" stroke-width="4"/><path d="M62 113Q80 129 99 113" fill="none" stroke-width="4"/></g>
 </svg>

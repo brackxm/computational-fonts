@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
-<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
 <title id="title">sheep</title>
 <g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M47 75Q25 59 21 78Q31 96 48 89M113 75Q135 59 139 78Q129 96 112 89" fill="#B9C3C5"/><ellipse cx="80" cy="93" rx="35" ry="43" fill="#B9C3C5"/><path d="M41 66C26 51 37 32 53 35C59 17 78 18 87 31C104 17 125 33 119 48C138 61 123 83 107 75C94 89 79 78 73 75C59 86 40 81 41 66Z" fill="#FFF8E9"/><circle cx="65" cy="96" r="3" fill="#314047" stroke="none"/><circle cx="95" cy="96" r="3" fill="#314047" stroke="none"/><path d="M74 113H86L80 119Z" fill="#314047"/><path d="M80 119V125" fill="none"/></g>
 </svg>

@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
-<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
 <title id="title">rabbit</title>
 <g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="58" cy="48" rx="14" ry="35" fill="#FFF8E9"/><ellipse cx="102" cy="48" rx="14" ry="35" fill="#FFF8E9"/><ellipse cx="58" cy="45" rx="5" ry="22" fill="#EFAB9F" stroke="none"/><ellipse cx="102" cy="45" rx="5" ry="22" fill="#EFAB9F" stroke="none"/><ellipse cx="80" cy="101" rx="43" ry="36" fill="#FFF8E9"/><circle cx="63" cy="94" r="3" fill="#314047" stroke="none"/><circle cx="97" cy="94" r="3" fill="#314047" stroke="none"/><path d="M74 108Q80 103 86 108L80 114Z" fill="#EFAB9F"/><path d="M80 114V119M52 112L30 107M52 120L31 124M108 112L130 107M108 120L129 124" fill="none"/></g>
 </svg>

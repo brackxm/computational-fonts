@@ -1,0 +1,978 @@
+word	drawing	layout
+apple	apple	original
+apples	apple	stacked
+banana	banana	original
+bananas	banana	stacked
+pear	pear	original
+pears	pear	stacked
+orange	orange	original
+oranges	orange	stacked
+lemon	lemon	original
+lemons	lemon	stacked
+strawberries	strawberry	stacked
+strawberry	strawberry	original
+cherries	cherry	stacked
+cherry	cherry	original
+grape	grapes	original
+grapes	grapes	original
+watermelon	watermelon	original
+watermelons	watermelon	stacked
+pineapple	pineapple	original
+pineapples	pineapple	stacked
+carrot	carrot	original
+carrots	carrot	stacked
+tomato	tomato	original
+tomatoes	tomato	stacked
+potato	potato	original
+potatoes	potato	stacked
+broccoli	broccoli	original
+mushroom	mushroom	original
+mushrooms	mushroom	stacked
+bread	bread	original
+bread loaf	bread	original
+bread loaves	bread	stacked
+bread-loaf	bread	original
+bread-loaves	bread	stacked
+breadloaf	bread	original
+breadloaves	bread	stacked
+bread loaf	bread	original
+bread loaves	bread	stacked
+loaf	bread	original
+loaves	bread	stacked
+cheese	cheese	original
+cheese wedge	cheese	original
+cheese wedges	cheese	stacked
+cheese-wedge	cheese	original
+cheese-wedges	cheese	stacked
+cheeses	cheese	stacked
+cheesewedge	cheese	original
+cheesewedges	cheese	stacked
+cheese wedge	cheese	original
+cheese wedges	cheese	stacked
+egg	egg	original
+eggs	egg	stacked
+cake	cake	original
+cakes	cake	stacked
+ice cream	ice-cream	original
+ice cream cone	ice-cream	original
+ice cream cones	ice-cream	stacked
+ice creams	ice-cream	stacked
+ice-cream	ice-cream	original
+ice-cream-cone	ice-cream	original
+ice-cream-cones	ice-cream	stacked
+ice-creams	ice-cream	stacked
+icecream	ice-cream	original
+icecreamcone	ice-cream	original
+icecreamcones	ice-cream	stacked
+icecreams	ice-cream	stacked
+ice cream	ice-cream	original
+ice creams	ice-cream	stacked
+ice cream cone	ice-cream	original
+ice cream cones	ice-cream	stacked
+peach	peach	original
+peaches	peach	stacked
+plum	plum	original
+plums	plum	stacked
+coconut	coconut	original
+coconuts	coconut	stacked
+avocado	avocado	original
+avocados	avocado	stacked
+cucumber	cucumber	original
+cucumbers	cucumber	stacked
+corn	corn	original
+corn cob	corn	original
+corn cobs	corn	stacked
+corn-cob	corn	original
+corn-cobs	corn	stacked
+corncob	corn	original
+corncobs	corn	stacked
+corn cob	corn	original
+corn cobs	corn	stacked
+maize	corn	original
+sweet corn	corn	original
+sweet-corn	corn	original
+sweetcorn	corn	original
+sweet corn	corn	original
+pea	peas	original
+pea pod	peas	original
+pea pods	peas	original
+pea-pod	peas	original
+pea-pods	peas	original
+peapod	peas	original
+peapods	peas	original
+peas	peas	original
+pea pod	peas	original
+pea pods	peas	original
+onion	onion	original
+onions	onion	stacked
+pizza	pizza	original
+pizza slice	pizza	original
+pizza slices	pizza	stacked
+pizza-slice	pizza	original
+pizza-slices	pizza	stacked
+pizzas	pizza	stacked
+pizzaslice	pizza	original
+pizzaslices	pizza	stacked
+pizza slice	pizza	original
+pizza slices	pizza	stacked
+biscuit	cookie	original
+biscuits	cookie	stacked
+cookie	cookie	original
+cookies	cookie	stacked
+sandwich	sandwich	original
+sandwiches	sandwich	stacked
+burger	burger	original
+burgers	burger	stacked
+cheeseburger	burger	original
+cheeseburgers	burger	stacked
+hamburger	burger	original
+hamburgers	burger	stacked
+donut	doughnut	original
+donuts	doughnut	stacked
+doughnut	doughnut	original
+doughnuts	doughnut	stacked
+pancake	pancake	original
+pancakes	pancake	original
+stack of pancakes	pancake	original
+stack-of-pancakes	pancake	original
+stackofpancakes	pancake	original
+stack of pancakes	pancake	original
+popcorn	popcorn	original
+popcorn tub	popcorn	original
+popcorn tubs	popcorn	original
+popcorn-tub	popcorn	original
+popcorn-tubs	popcorn	original
+popcorntub	popcorn	original
+popcorntubs	popcorn	original
+popcorn tub	popcorn	original
+popcorn tubs	popcorn	original
+popped corn	popcorn	original
+popped-corn	popcorn	original
+poppedcorn	popcorn	original
+popped corn	popcorn	original
+pumpkin	pumpkin	original
+pumpkins	pumpkin	stacked
+cabbage	cabbage	original
+cabbages	cabbage	stacked
+head of lettuce	lettuce	original
+head-of-lettuce	lettuce	original
+headoflettuce	lettuce	original
+heads of lettuce	lettuce	stacked
+heads-of-lettuce	lettuce	stacked
+headsoflettuce	lettuce	stacked
+heads of lettuce	lettuce	stacked
+head of lettuce	lettuce	original
+lettuce	lettuce	original
+lettuces	lettuce	stacked
+radish	radish	original
+radishes	radish	stacked
+blueberries	blueberry	original
+blueberry	blueberry	original
+cat	cat	original
+cats	cat	stacked
+kitties	cat	stacked
+kitty	cat	original
+dog	dog	original
+doggies	dog	stacked
+doggy	dog	original
+dogs	dog	stacked
+bunnies	rabbit	stacked
+bunny	rabbit	original
+rabbit	rabbit	original
+rabbits	rabbit	stacked
+mice	mouse	stacked
+mouse	mouse	original
+bear	bear	original
+bears	bear	stacked
+fox	fox	original
+foxes	fox	stacked
+pig	pig	original
+pigs	pig	stacked
+cow	cow	original
+cows	cow	stacked
+horse	horse	original
+horses	horse	stacked
+sheep	sheep	original
+goat	goat	original
+goats	goat	stacked
+duck	duck	original
+ducks	duck	stacked
+chicken	chicken	original
+chickens	chicken	stacked
+hen	chicken	original
+hens	chicken	stacked
+bird	bird	original
+birds	bird	stacked
+fish	fish	original
+fishes	fish	stacked
+turtle	turtle	original
+turtles	turtle	stacked
+frog	frog	original
+frogs	frog	stacked
+butterflies	butterfly	stacked
+butterfly	butterfly	original
+bee	bee	original
+bees	bee	stacked
+honey bee	bee	original
+honey bees	bee	stacked
+honey-bee	bee	original
+honey-bees	bee	stacked
+honeybee	bee	original
+honeybees	bee	stacked
+honey bee	bee	original
+honey bees	bee	stacked
+snail	snail	original
+snails	snail	stacked
+lion	lion	original
+lions	lion	stacked
+tiger	tiger	original
+tigers	tiger	stacked
+elephant	elephant	original
+elephants	elephant	stacked
+giraffe	giraffe	original
+giraffes	giraffe	stacked
+zebra	zebra	original
+zebras	zebra	stacked
+monkey	monkey	original
+monkeys	monkey	stacked
+panda	panda	original
+pandas	panda	stacked
+penguin	penguin	original
+penguins	penguin	stacked
+whale	whale	original
+whales	whale	stacked
+octopus	octopus	original
+octopuses	octopus	stacked
+croc	crocodile	original
+crocodile	crocodile	original
+crocodiles	crocodile	stacked
+crocs	crocodile	stacked
+snake	snake	original
+snakes	snake	stacked
+spider	spider	original
+spiders	spider	stacked
+ant	ant	original
+ants	ant	stacked
+lady beetle	ladybird	original
+lady beetles	ladybird	stacked
+lady-beetle	ladybird	original
+lady-beetles	ladybird	stacked
+ladybeetle	ladybird	original
+ladybeetles	ladybird	stacked
+ladybird	ladybird	original
+ladybirds	ladybird	stacked
+ladybug	ladybird	original
+ladybugs	ladybird	stacked
+lady beetle	ladybird	original
+lady beetles	ladybird	stacked
+dragonflies	dragonfly	stacked
+dragonfly	dragonfly	original
+bat	bat	original
+bats	bat	stacked
+owl	owl	original
+owls	owl	stacked
+hedgehog	hedgehog	original
+hedgehogs	hedgehog	stacked
+crab	crab	original
+crabs	crab	stacked
+home	house	original
+homes	house	stacked
+house	house	original
+houses	house	stacked
+door	door	original
+doors	door	stacked
+window	window	original
+windows	window	stacked
+bed	bed	original
+beds	bed	stacked
+chair	chair	original
+chairs	chair	stacked
+table	table	original
+tables	table	stacked
+couch	sofa	original
+couches	sofa	stacked
+sofa	sofa	original
+sofas	sofa	stacked
+lamp	lamp	original
+lamps	lamp	stacked
+table lamp	lamp	original
+table lamps	lamp	stacked
+table-lamp	lamp	original
+table-lamps	lamp	stacked
+tablelamp	lamp	original
+tablelamps	lamp	stacked
+table lamp	lamp	original
+table lamps	lamp	stacked
+clock	clock	original
+clocks	clock	stacked
+wall clock	clock	original
+wall clocks	clock	stacked
+wall-clock	clock	original
+wall-clocks	clock	stacked
+wallclock	clock	original
+wallclocks	clock	stacked
+wall clock	clock	original
+wall clocks	clock	stacked
+key	key	original
+keys	key	stacked
+cup	cup	original
+cups	cup	stacked
+mug	cup	original
+mugs	cup	stacked
+plate	plate	original
+plates	plate	stacked
+bowl	bowl	original
+bowls	bowl	stacked
+spoon	spoon	original
+spoons	spoon	stacked
+fork	fork	original
+forks	fork	stacked
+bottle	bottle	original
+bottles	bottle	stacked
+book	book	original
+books	book	stacked
+pencil	pencil	original
+pencils	pencil	stacked
+pair of scissors	scissors	original
+pair-of-scissors	scissors	original
+pairofscissors	scissors	original
+pair of scissors	scissors	original
+scissors	scissors	original
+umbrella	umbrella	original
+umbrellas	umbrella	stacked
+tooth brush	toothbrush	original
+tooth brushes	toothbrush	stacked
+tooth-brush	toothbrush	original
+tooth-brushes	toothbrush	stacked
+toothbrush	toothbrush	original
+toothbrushes	toothbrush	stacked
+tooth brush	toothbrush	original
+tooth brushes	toothbrush	stacked
+comb	comb	original
+combs	comb	stacked
+brush	brush	original
+brushes	brush	stacked
+hair brush	brush	original
+hair brushes	brush	stacked
+hair-brush	brush	original
+hair-brushes	brush	stacked
+hairbrush	brush	original
+hairbrushes	brush	stacked
+hair brush	brush	original
+hair brushes	brush	stacked
+hand mirror	mirror	original
+hand mirrors	mirror	stacked
+hand-mirror	mirror	original
+hand-mirrors	mirror	stacked
+handmirror	mirror	original
+handmirrors	mirror	stacked
+hand mirror	mirror	original
+hand mirrors	mirror	stacked
+mirror	mirror	original
+mirrors	mirror	stacked
+towel	towel	original
+towels	towel	stacked
+bar of soap	soap	original
+bar-of-soap	soap	original
+barofsoap	soap	original
+bars of soap	soap	stacked
+bars-of-soap	soap	stacked
+barsofsoap	soap	stacked
+bars of soap	soap	stacked
+bar of soap	soap	original
+soap	soap	original
+soap bar	soap	original
+soap bars	soap	stacked
+soap-bar	soap	original
+soap-bars	soap	stacked
+soapbar	soap	original
+soapbars	soap	stacked
+soap bar	soap	original
+soap bars	soap	stacked
+bath	bath	original
+bath tub	bath	original
+bath tubs	bath	stacked
+bath-tub	bath	original
+bath-tubs	bath	stacked
+baths	bath	stacked
+bathtub	bath	original
+bathtubs	bath	stacked
+bath tub	bath	original
+bath tubs	bath	stacked
+lavatories	toilet	stacked
+lavatory	toilet	original
+toilet	toilet	original
+toilets	toilet	stacked
+sink	sink	original
+sinks	sink	stacked
+wash basin	sink	original
+wash basins	sink	stacked
+wash-basin	sink	original
+wash-basins	sink	stacked
+washbasin	sink	original
+washbasins	sink	stacked
+wash basin	sink	original
+wash basins	sink	stacked
+fridge	fridge	original
+fridges	fridge	stacked
+refrigerator	fridge	original
+refrigerators	fridge	stacked
+oven	oven	original
+ovens	oven	stacked
+frying pan	pan	original
+frying pans	pan	stacked
+frying-pan	pan	original
+frying-pans	pan	stacked
+fryingpan	pan	original
+fryingpans	pan	stacked
+frying pan	pan	original
+frying pans	pan	stacked
+pan	pan	original
+pans	pan	stacked
+skillet	pan	original
+skillets	pan	stacked
+kettle	kettle	original
+kettles	kettle	stacked
+tea kettle	kettle	original
+tea kettles	kettle	stacked
+tea-kettle	kettle	original
+tea-kettles	kettle	stacked
+teakettle	kettle	original
+teakettles	kettle	stacked
+tea kettle	kettle	original
+tea kettles	kettle	stacked
+broom	broom	original
+brooms	broom	stacked
+basket	basket	original
+baskets	basket	stacked
+cell phone	phone	original
+cell phones	phone	stacked
+cell-phone	phone	original
+cell-phones	phone	stacked
+cellphone	phone	original
+cellphones	phone	stacked
+cell phone	phone	original
+cell phones	phone	stacked
+mobile phone	phone	original
+mobile phones	phone	stacked
+mobile-phone	phone	original
+mobile-phones	phone	stacked
+mobilephone	phone	original
+mobilephones	phone	stacked
+mobile phone	phone	original
+mobile phones	phone	stacked
+phone	phone	original
+phones	phone	stacked
+smartphone	phone	original
+smartphones	phone	stacked
+telephone	phone	original
+telephones	phone	stacked
+camera	camera	original
+cameras	camera	stacked
+digital camera	camera	original
+digital cameras	camera	stacked
+digital-camera	camera	original
+digital-cameras	camera	stacked
+digitalcamera	camera	original
+digitalcameras	camera	stacked
+digital camera	camera	original
+digital cameras	camera	stacked
+computer	computer	original
+computers	computer	stacked
+desktop computer	computer	original
+desktop computers	computer	stacked
+desktop-computer	computer	original
+desktop-computers	computer	stacked
+desktopcomputer	computer	original
+desktopcomputers	computer	stacked
+desktop computer	computer	original
+desktop computers	computer	stacked
+pc	computer	original
+pcs	computer	stacked
+television	television	original
+televisions	television	stacked
+tv	television	original
+tv set	television	original
+tv sets	television	stacked
+tv-set	television	original
+tv-sets	television	stacked
+tvs	television	stacked
+tvset	television	original
+tvsets	television	stacked
+tv set	television	original
+tv sets	television	stacked
+radio	radio	original
+radios	radio	stacked
+candle	candle	original
+candles	candle	stacked
+hammer	hammer	original
+hammers	hammer	stacked
+hand saw	saw	original
+hand saws	saw	stacked
+hand-saw	saw	original
+hand-saws	saw	stacked
+handsaw	saw	original
+handsaws	saw	stacked
+hand saw	saw	original
+hand saws	saw	stacked
+saw	saw	original
+saws	saw	stacked
+ladder	ladder	original
+ladders	ladder	stacked
+bucket	bucket	original
+buckets	bucket	stacked
+pail	bucket	original
+pails	bucket	stacked
+watering can	watering-can	original
+watering cans	watering-can	stacked
+watering-can	watering-can	original
+watering-cans	watering-can	stacked
+wateringcan	watering-can	original
+wateringcans	watering-can	stacked
+watering can	watering-can	original
+watering cans	watering-can	stacked
+backpack	backpack	original
+backpacks	backpack	stacked
+rucksack	backpack	original
+rucksacks	backpack	stacked
+school bag	backpack	original
+school bags	backpack	stacked
+school-bag	backpack	original
+school-bags	backpack	stacked
+schoolbag	backpack	original
+schoolbags	backpack	stacked
+school bag	backpack	original
+school bags	backpack	stacked
+bag	bag	original
+bags	bag	stacked
+handbag	bag	original
+handbags	bag	stacked
+shopping bag	bag	original
+shopping bags	bag	stacked
+shopping-bag	bag	original
+shopping-bags	bag	stacked
+shoppingbag	bag	original
+shoppingbags	bag	stacked
+shopping bag	bag	original
+shopping bags	bag	stacked
+tote	bag	original
+tote bag	bag	original
+tote bags	bag	stacked
+tote-bag	bag	original
+tote-bags	bag	stacked
+totebag	bag	original
+totebags	bag	stacked
+totes	bag	stacked
+tote bag	bag	original
+tote bags	bag	stacked
+envelope	envelope	original
+envelopes	envelope	stacked
+letter	envelope	original
+letters	envelope	stacked
+measuring ruler	ruler	original
+measuring rulers	ruler	stacked
+measuring-ruler	ruler	original
+measuring-rulers	ruler	stacked
+measuringruler	ruler	original
+measuringrulers	ruler	stacked
+measuring ruler	ruler	original
+measuring rulers	ruler	stacked
+ruler	ruler	original
+rulers	ruler	stacked
+shoe	shoe	original
+shoes	shoe	stacked
+sock	sock	original
+socks	sock	stacked
+hat	hat	original
+hats	hat	stacked
+shirt	shirt	original
+shirts	shirt	stacked
+t shirt	shirt	original
+t shirts	shirt	stacked
+t-shirt	shirt	original
+t-shirts	shirt	stacked
+tee shirt	shirt	original
+tee shirts	shirt	stacked
+tee-shirt	shirt	original
+tee-shirts	shirt	stacked
+teeshirt	shirt	original
+teeshirts	shirt	stacked
+tee shirt	shirt	original
+tee shirts	shirt	stacked
+tshirt	shirt	original
+tshirts	shirt	stacked
+t shirt	shirt	original
+t shirts	shirt	stacked
+pair of pants	trousers	original
+pair of trousers	trousers	original
+pair-of-pants	trousers	original
+pair-of-trousers	trousers	original
+pairofpants	trousers	original
+pairoftrousers	trousers	original
+pair of pants	trousers	original
+pair of trousers	trousers	original
+pants	trousers	original
+trousers	trousers	original
+dress	dress	original
+dresses	dress	stacked
+coat	coat	original
+coats	coat	stacked
+jacket	coat	original
+jackets	coat	stacked
+ball	ball	original
+balls	ball	stacked
+beach ball	ball	original
+beach balls	ball	stacked
+beach-ball	ball	original
+beach-balls	ball	stacked
+beachball	ball	original
+beachballs	ball	stacked
+beach ball	ball	original
+beach balls	ball	stacked
+kite	kite	original
+kites	kite	stacked
+teddies	teddy-bear	stacked
+teddy	teddy-bear	original
+teddy bear	teddy-bear	original
+teddy bears	teddy-bear	stacked
+teddy-bear	teddy-bear	original
+teddy-bears	teddy-bear	stacked
+teddybear	teddy-bear	original
+teddybears	teddy-bear	stacked
+teddy bear	teddy-bear	original
+teddy bears	teddy-bear	stacked
+toy bear	teddy-bear	original
+toy bears	teddy-bear	stacked
+toy-bear	teddy-bear	original
+toy-bears	teddy-bear	stacked
+toybear	teddy-bear	original
+toybears	teddy-bear	stacked
+toy bear	teddy-bear	original
+toy bears	teddy-bear	stacked
+glove	glove	original
+gloves	glove	stacked
+scarf	scarf	original
+scarfs	scarf	stacked
+scarves	scarf	stacked
+boot	boot	original
+boots	boot	stacked
+crown	crown	original
+crowns	crown	stacked
+drum	drum	original
+drums	drum	stacked
+balloon	balloon	original
+balloons	balloon	stacked
+party balloon	balloon	original
+party balloons	balloon	stacked
+party-balloon	balloon	original
+party-balloons	balloon	stacked
+partyballoon	balloon	original
+partyballoons	balloon	stacked
+party balloon	balloon	original
+party balloons	balloon	stacked
+doll	doll	original
+dolls	doll	stacked
+toy doll	doll	original
+toy dolls	doll	stacked
+toy-doll	doll	original
+toy-dolls	doll	stacked
+toydoll	doll	original
+toydolls	doll	stacked
+toy doll	doll	original
+toy dolls	doll	stacked
+jigsaw	puzzle	original
+jigsaw puzzle	puzzle	original
+jigsaw puzzles	puzzle	stacked
+jigsaw-puzzle	puzzle	original
+jigsaw-puzzles	puzzle	stacked
+jigsawpuzzle	puzzle	original
+jigsawpuzzles	puzzle	stacked
+jigsaws	puzzle	stacked
+jigsaw puzzle	puzzle	original
+jigsaw puzzles	puzzle	stacked
+puzzle	puzzle	original
+puzzles	puzzle	stacked
+acoustic guitar	guitar	original
+acoustic guitars	guitar	stacked
+acoustic-guitar	guitar	original
+acoustic-guitars	guitar	stacked
+acousticguitar	guitar	original
+acousticguitars	guitar	stacked
+acoustic guitar	guitar	original
+acoustic guitars	guitar	stacked
+guitar	guitar	original
+guitars	guitar	stacked
+baseball cap	cap	original
+baseball caps	cap	stacked
+baseball-cap	cap	original
+baseball-caps	cap	stacked
+baseballcap	cap	original
+baseballcaps	cap	stacked
+baseball cap	cap	original
+baseball caps	cap	stacked
+cap	cap	original
+caps	cap	stacked
+automobile	car	original
+automobiles	car	stacked
+car	car	original
+cars	car	stacked
+bus	bus	original
+buses	bus	stacked
+busses	bus	stacked
+lorries	truck	stacked
+lorry	truck	original
+truck	truck	original
+trucks	truck	stacked
+locomotive	train	original
+locomotives	train	stacked
+train	train	original
+trains	train	stacked
+bicycle	bicycle	original
+bicycles	bicycle	stacked
+bike	bicycle	original
+bikes	bicycle	stacked
+cycle	bicycle	original
+cycles	bicycle	stacked
+boat	boat	original
+boats	boat	stacked
+sail boat	boat	original
+sail boats	boat	stacked
+sail-boat	boat	original
+sail-boats	boat	stacked
+sailboat	boat	original
+sailboats	boat	stacked
+sailing boat	boat	original
+sailing boats	boat	stacked
+sailing-boat	boat	original
+sailing-boats	boat	stacked
+sailingboat	boat	original
+sailingboats	boat	stacked
+sailing boat	boat	original
+sailing boats	boat	stacked
+sail boat	boat	original
+sail boats	boat	stacked
+aeroplane	airplane	original
+aeroplanes	airplane	stacked
+airplane	airplane	original
+airplanes	airplane	stacked
+plane	airplane	original
+planes	airplane	stacked
+helicopter	helicopter	original
+helicopters	helicopter	stacked
+rocket	rocket	original
+rockets	rocket	stacked
+space rocket	rocket	original
+space rockets	rocket	stacked
+space-rocket	rocket	original
+space-rockets	rocket	stacked
+spacerocket	rocket	original
+spacerockets	rocket	stacked
+space rocket	rocket	original
+space rockets	rocket	stacked
+tractor	tractor	original
+tractors	tractor	stacked
+kick scooter	scooter	original
+kick scooters	scooter	stacked
+kick-scooter	scooter	original
+kick-scooters	scooter	stacked
+kickscooter	scooter	original
+kickscooters	scooter	stacked
+kick scooter	scooter	original
+kick scooters	scooter	stacked
+scooter	scooter	original
+scooters	scooter	stacked
+motor bike	motorcycle	original
+motor bikes	motorcycle	stacked
+motor-bike	motorcycle	original
+motor-bikes	motorcycle	stacked
+motorbike	motorcycle	original
+motorbikes	motorcycle	stacked
+motorcycle	motorcycle	original
+motorcycles	motorcycle	stacked
+motor bike	motorcycle	original
+motor bikes	motorcycle	stacked
+cab	taxi	original
+cabs	taxi	stacked
+taxi	taxi	original
+taxicab	taxi	original
+taxicabs	taxi	stacked
+taxis	taxi	stacked
+ambulance	ambulance	original
+ambulances	ambulance	stacked
+canoe	canoe	original
+canoes	canoe	stacked
+hot air balloon	hot-air-balloon	original
+hot air balloons	hot-air-balloon	stacked
+hot-air-balloon	hot-air-balloon	original
+hot-air-balloons	hot-air-balloon	stacked
+hotairballoon	hot-air-balloon	original
+hotairballoons	hot-air-balloon	stacked
+hot air balloon	hot-air-balloon	original
+hot air balloons	hot-air-balloon	stacked
+skateboard	skateboard	original
+skateboards	skateboard	stacked
+submarine	submarine	original
+submarines	submarine	stacked
+submersible	submarine	original
+submersibles	submarine	stacked
+fire engine	fire-engine	original
+fire engines	fire-engine	stacked
+fire truck	fire-engine	original
+fire trucks	fire-engine	stacked
+fire-engine	fire-engine	original
+fire-engines	fire-engine	stacked
+fire-truck	fire-engine	original
+fire-trucks	fire-engine	stacked
+fireengine	fire-engine	original
+fireengines	fire-engine	stacked
+firetruck	fire-engine	original
+firetrucks	fire-engine	stacked
+fire engine	fire-engine	original
+fire engines	fire-engine	stacked
+fire truck	fire-engine	original
+fire trucks	fire-engine	stacked
+stoplight	traffic-light	original
+stoplights	traffic-light	stacked
+traffic light	traffic-light	original
+traffic lights	traffic-light	stacked
+traffic signal	traffic-light	original
+traffic signals	traffic-light	stacked
+traffic-light	traffic-light	original
+traffic-lights	traffic-light	stacked
+traffic-signal	traffic-light	original
+traffic-signals	traffic-light	stacked
+trafficlight	traffic-light	original
+trafficlights	traffic-light	stacked
+trafficsignal	traffic-light	original
+trafficsignals	traffic-light	stacked
+traffic light	traffic-light	original
+traffic lights	traffic-light	stacked
+traffic signal	traffic-light	original
+traffic signals	traffic-light	stacked
+sun	sun	original
+suns	sun	stacked
+crescent moon	moon	original
+crescent moons	moon	stacked
+crescent-moon	moon	original
+crescent-moons	moon	stacked
+crescentmoon	moon	original
+crescentmoons	moon	stacked
+crescent moon	moon	original
+crescent moons	moon	stacked
+moon	moon	original
+moons	moon	stacked
+star	star	original
+stars	star	stacked
+cloud	cloud	original
+clouds	cloud	stacked
+rainbow	rainbow	original
+rainbows	rainbow	stacked
+tree	tree	original
+trees	tree	stacked
+flower	flower	original
+flowers	flower	stacked
+leaf	leaf	original
+leaves	leaf	stacked
+mountain	mountain	original
+mountains	mountain	stacked
+snowflake	snowflake	original
+snowflakes	snowflake	stacked
+rock	rock	original
+rocks	rock	stacked
+stone	rock	original
+stones	rock	stacked
+sea shell	shell	original
+sea shells	shell	stacked
+sea-shell	shell	original
+sea-shells	shell	stacked
+seashell	shell	original
+seashells	shell	stacked
+sea shell	shell	original
+sea shells	shell	stacked
+shell	shell	original
+shells	shell	stacked
+feather	feather	original
+feathers	feather	stacked
+bird nest	nest	original
+bird nests	nest	stacked
+bird-nest	nest	original
+bird-nests	nest	stacked
+birdnest	nest	original
+birdnests	nest	stacked
+bird nest	nest	original
+bird nests	nest	stacked
+nest	nest	original
+nests	nest	stacked
+fire	fire	original
+fires	fire	stacked
+flame	fire	original
+flames	fire	stacked
+acorn	acorn	original
+acorns	acorn	stacked
+pine cone	pinecone	original
+pine cones	pinecone	stacked
+pine-cone	pinecone	original
+pine-cones	pinecone	stacked
+pinecone	pinecone	original
+pinecones	pinecone	stacked
+pine cone	pinecone	original
+pine cones	pinecone	stacked
+cacti	cactus	stacked
+cactus	cactus	original
+cactuses	cactus	stacked
+potted cacti	cactus	stacked
+potted cactus	cactus	original
+potted-cacti	cactus	stacked
+potted-cactus	cactus	original
+pottedcacti	cactus	stacked
+pottedcactus	cactus	original
+potted cacti	cactus	stacked
+potted cactus	cactus	original
+droplet	raindrop	original
+droplets	raindrop	stacked
+rain drop	raindrop	original
+rain drops	raindrop	stacked
+rain-drop	raindrop	original
+rain-drops	raindrop	stacked
+raindrop	raindrop	original
+raindrops	raindrop	stacked
+rain drop	raindrop	original
+rain drops	raindrop	stacked
+water drop	raindrop	original
+water drops	raindrop	stacked
+water-drop	raindrop	original
+water-drops	raindrop	stacked
+waterdrop	raindrop	original
+waterdrops	raindrop	stacked
+water drop	raindrop	original
+water drops	raindrop	stacked
+snow people	snowman	stacked
+snow person	snowman	original
+snow-people	snowman	stacked
+snow-person	snowman	original
+snowman	snowman	original
+snowmen	snowman	stacked
+snowpeople	snowman	stacked
+snowperson	snowman	original
+snow people	snowman	stacked
+snow person	snowman	original
+eye	eye	original
+eyes	eye	stacked
+ear	ear	original
+ears	ear	stacked
+nose	nose	original
+noses	nose	stacked
+mouth	mouth	original
+mouths	mouth	stacked
+hand	hand	original
+hands	hand	stacked
+feet	foot	stacked
+foot	foot	original
+teeth	tooth	stacked
+tooth	tooth	original
+heart	heart	original
+hearts	heart	stacked
+bone	bone	original
+bones	bone	stacked
+face	face	original
+faces	face	stacked

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">cactus</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M68 119V76H45Q24 76 24 55V41Q24 27 38 27Q50 27 50 41V52H68V30Q68 14 82 14Q96 14 96 30V71H112V56Q112 42 125 42Q138 42 138 56V78Q138 97 116 97H96V119Z" fill="#79AD86"/><path d="M51 117H111L103 145H59Z" fill="#A78062"/><path d="M80 31V107M35 40V57M124 55V79" fill="none" stroke="#B6CCA0" stroke-width="3"/></g>
+</svg>

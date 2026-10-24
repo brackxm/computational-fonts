@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">backpack</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M63 32V21Q80 13 97 21V32" fill="none" stroke="#A78062" stroke-width="7"/><path d="M42 52Q17 66 30 119M118 52Q143 66 130 119" fill="none" stroke="#A78062" stroke-width="8"/><rect x="38" y="31" width="84" height="111" rx="23" fill="#89B9CC"/><path d="M40 55Q80 41 120 55" fill="none" stroke-width="3"/><rect x="52" y="86" width="56" height="40" rx="8" fill="#89B9CC"/><path d="M54 98H106M101 98V107" fill="none" stroke-width="3"/><path d="M67 31H93V68L80 77L67 68Z" fill="#F7DFBB"/></g>
+</svg>

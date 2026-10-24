@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">traffic light</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><rect x="72" y="119" width="16" height="26" rx="3" fill="#B9C3C5"/><rect x="53" y="15" width="54" height="110" rx="10" fill="#B9C3C5"/><path d="M52 33H36L52 48M108 33H124L108 48M52 67H36L52 82M108 67H124L108 82M52 101H36L52 116M108 101H124L108 116" fill="#B9C3C5"/><circle cx="80" cy="36" r="12" fill="#EF7469"/><circle cx="80" cy="70" r="12" fill="#F2CB67"/><circle cx="80" cy="104" r="12" fill="#79AD86"/><path d="M58 146H102" fill="none" stroke-width="5"/></g>
+</svg>

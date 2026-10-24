@@ -1,0 +1,691 @@
+{
+  "apple": [
+    "apples"
+  ],
+  "banana": [
+    "bananas"
+  ],
+  "pear": [
+    "pears"
+  ],
+  "orange": [
+    "oranges"
+  ],
+  "lemon": [
+    "lemons"
+  ],
+  "strawberry": [
+    "strawberries"
+  ],
+  "cherry": [
+    "cherries"
+  ],
+  "grapes": [],
+  "watermelon": [
+    "watermelons"
+  ],
+  "pineapple": [
+    "pineapples"
+  ],
+  "carrot": [
+    "carrots"
+  ],
+  "tomato": [
+    "tomatoes"
+  ],
+  "potato": [
+    "potatoes"
+  ],
+  "broccoli": [],
+  "mushroom": [
+    "mushrooms"
+  ],
+  "bread": [
+    "loaves",
+    "bread loaves"
+  ],
+  "cheese": [
+    "cheeses",
+    "cheese wedges"
+  ],
+  "egg": [
+    "eggs"
+  ],
+  "cake": [
+    "cakes"
+  ],
+  "ice-cream": [
+    "ice creams",
+    "ice cream cones"
+  ],
+  "peach": [
+    "peaches"
+  ],
+  "plum": [
+    "plums"
+  ],
+  "coconut": [
+    "coconuts"
+  ],
+  "avocado": [
+    "avocados"
+  ],
+  "cucumber": [
+    "cucumbers"
+  ],
+  "corn": [
+    "corn cobs"
+  ],
+  "peas": [],
+  "onion": [
+    "onions"
+  ],
+  "pizza": [
+    "pizzas",
+    "pizza slices"
+  ],
+  "cookie": [
+    "cookies",
+    "biscuits"
+  ],
+  "sandwich": [
+    "sandwiches"
+  ],
+  "burger": [
+    "burgers",
+    "hamburgers",
+    "cheeseburgers"
+  ],
+  "doughnut": [
+    "doughnuts",
+    "donuts"
+  ],
+  "pancake": [],
+  "popcorn": [],
+  "pumpkin": [
+    "pumpkins"
+  ],
+  "cabbage": [
+    "cabbages"
+  ],
+  "lettuce": [
+    "lettuces",
+    "heads of lettuce"
+  ],
+  "radish": [
+    "radishes"
+  ],
+  "blueberry": [],
+  "cat": [
+    "cats",
+    "kitties"
+  ],
+  "dog": [
+    "dogs",
+    "doggies"
+  ],
+  "rabbit": [
+    "rabbits",
+    "bunnies"
+  ],
+  "mouse": [
+    "mice"
+  ],
+  "bear": [
+    "bears"
+  ],
+  "fox": [
+    "foxes"
+  ],
+  "pig": [
+    "pigs"
+  ],
+  "cow": [
+    "cows"
+  ],
+  "horse": [
+    "horses"
+  ],
+  "sheep": [],
+  "goat": [
+    "goats"
+  ],
+  "duck": [
+    "ducks"
+  ],
+  "chicken": [
+    "chickens",
+    "hens"
+  ],
+  "bird": [
+    "birds"
+  ],
+  "fish": [
+    "fishes"
+  ],
+  "turtle": [
+    "turtles"
+  ],
+  "frog": [
+    "frogs"
+  ],
+  "butterfly": [
+    "butterflies"
+  ],
+  "bee": [
+    "bees",
+    "honeybees",
+    "honey bees"
+  ],
+  "snail": [
+    "snails"
+  ],
+  "lion": [
+    "lions"
+  ],
+  "tiger": [
+    "tigers"
+  ],
+  "elephant": [
+    "elephants"
+  ],
+  "giraffe": [
+    "giraffes"
+  ],
+  "zebra": [
+    "zebras"
+  ],
+  "monkey": [
+    "monkeys"
+  ],
+  "panda": [
+    "pandas"
+  ],
+  "penguin": [
+    "penguins"
+  ],
+  "whale": [
+    "whales"
+  ],
+  "octopus": [
+    "octopuses"
+  ],
+  "crocodile": [
+    "crocodiles",
+    "crocs"
+  ],
+  "snake": [
+    "snakes"
+  ],
+  "spider": [
+    "spiders"
+  ],
+  "ant": [
+    "ants"
+  ],
+  "ladybird": [
+    "ladybirds",
+    "ladybugs",
+    "lady beetles"
+  ],
+  "dragonfly": [
+    "dragonflies"
+  ],
+  "bat": [
+    "bats"
+  ],
+  "owl": [
+    "owls"
+  ],
+  "hedgehog": [
+    "hedgehogs"
+  ],
+  "crab": [
+    "crabs"
+  ],
+  "house": [
+    "houses",
+    "homes"
+  ],
+  "door": [
+    "doors"
+  ],
+  "window": [
+    "windows"
+  ],
+  "bed": [
+    "beds"
+  ],
+  "chair": [
+    "chairs"
+  ],
+  "table": [
+    "tables"
+  ],
+  "sofa": [
+    "sofas",
+    "couches"
+  ],
+  "lamp": [
+    "lamps",
+    "table lamps"
+  ],
+  "clock": [
+    "clocks",
+    "wall clocks"
+  ],
+  "key": [
+    "keys"
+  ],
+  "cup": [
+    "cups",
+    "mugs"
+  ],
+  "plate": [
+    "plates"
+  ],
+  "bowl": [
+    "bowls"
+  ],
+  "spoon": [
+    "spoons"
+  ],
+  "fork": [
+    "forks"
+  ],
+  "bottle": [
+    "bottles"
+  ],
+  "book": [
+    "books"
+  ],
+  "pencil": [
+    "pencils"
+  ],
+  "scissors": [],
+  "umbrella": [
+    "umbrellas"
+  ],
+  "toothbrush": [
+    "toothbrushes",
+    "tooth brushes"
+  ],
+  "comb": [
+    "combs"
+  ],
+  "brush": [
+    "brushes",
+    "hairbrushes",
+    "hair brushes"
+  ],
+  "mirror": [
+    "mirrors",
+    "hand mirrors"
+  ],
+  "towel": [
+    "towels"
+  ],
+  "soap": [
+    "soap bars",
+    "bars of soap"
+  ],
+  "bath": [
+    "baths",
+    "bathtubs",
+    "bath tubs"
+  ],
+  "toilet": [
+    "toilets",
+    "lavatories"
+  ],
+  "sink": [
+    "sinks",
+    "washbasins",
+    "wash basins"
+  ],
+  "fridge": [
+    "fridges",
+    "refrigerators"
+  ],
+  "oven": [
+    "ovens"
+  ],
+  "pan": [
+    "pans",
+    "frying pans",
+    "skillets"
+  ],
+  "kettle": [
+    "kettles",
+    "tea kettles"
+  ],
+  "broom": [
+    "brooms"
+  ],
+  "basket": [
+    "baskets"
+  ],
+  "phone": [
+    "phones",
+    "smartphones",
+    "mobile phones",
+    "cellphones",
+    "cell phones",
+    "telephones"
+  ],
+  "camera": [
+    "cameras",
+    "digital cameras"
+  ],
+  "computer": [
+    "computers",
+    "pcs",
+    "desktop computers"
+  ],
+  "television": [
+    "televisions",
+    "tvs",
+    "tv sets"
+  ],
+  "radio": [
+    "radios"
+  ],
+  "candle": [
+    "candles"
+  ],
+  "hammer": [
+    "hammers"
+  ],
+  "saw": [
+    "saws",
+    "handsaws",
+    "hand saws"
+  ],
+  "ladder": [
+    "ladders"
+  ],
+  "bucket": [
+    "buckets",
+    "pails"
+  ],
+  "watering-can": [
+    "watering cans"
+  ],
+  "backpack": [
+    "backpacks",
+    "rucksacks",
+    "schoolbags",
+    "school bags"
+  ],
+  "bag": [
+    "bags",
+    "handbags",
+    "totes",
+    "tote bags",
+    "shopping bags"
+  ],
+  "envelope": [
+    "envelopes",
+    "letters"
+  ],
+  "ruler": [
+    "rulers",
+    "measuring rulers"
+  ],
+  "shoe": [
+    "shoes"
+  ],
+  "sock": [
+    "socks"
+  ],
+  "hat": [
+    "hats"
+  ],
+  "shirt": [
+    "shirts",
+    "t shirts",
+    "tee shirts"
+  ],
+  "trousers": [],
+  "dress": [
+    "dresses"
+  ],
+  "coat": [
+    "coats",
+    "jackets"
+  ],
+  "ball": [
+    "balls",
+    "beach balls"
+  ],
+  "kite": [
+    "kites"
+  ],
+  "teddy-bear": [
+    "teddy bears",
+    "teddies",
+    "toy bears"
+  ],
+  "glove": [
+    "gloves"
+  ],
+  "scarf": [
+    "scarves",
+    "scarfs"
+  ],
+  "boot": [
+    "boots"
+  ],
+  "crown": [
+    "crowns"
+  ],
+  "drum": [
+    "drums"
+  ],
+  "balloon": [
+    "balloons",
+    "party balloons"
+  ],
+  "doll": [
+    "dolls",
+    "toy dolls"
+  ],
+  "puzzle": [
+    "puzzles",
+    "jigsaws",
+    "jigsaw puzzles"
+  ],
+  "guitar": [
+    "guitars",
+    "acoustic guitars"
+  ],
+  "cap": [
+    "caps",
+    "baseball caps"
+  ],
+  "car": [
+    "cars",
+    "automobiles"
+  ],
+  "bus": [
+    "buses",
+    "busses"
+  ],
+  "truck": [
+    "trucks",
+    "lorries"
+  ],
+  "train": [
+    "trains",
+    "locomotives"
+  ],
+  "bicycle": [
+    "bicycles",
+    "bikes",
+    "cycles"
+  ],
+  "boat": [
+    "boats",
+    "sailboats",
+    "sail boats",
+    "sailing boats"
+  ],
+  "airplane": [
+    "airplanes",
+    "aeroplanes",
+    "planes"
+  ],
+  "helicopter": [
+    "helicopters"
+  ],
+  "rocket": [
+    "rockets",
+    "space rockets"
+  ],
+  "tractor": [
+    "tractors"
+  ],
+  "scooter": [
+    "scooters",
+    "kick scooters"
+  ],
+  "motorcycle": [
+    "motorcycles",
+    "motorbikes",
+    "motor bikes"
+  ],
+  "taxi": [
+    "taxis",
+    "cabs",
+    "taxicabs"
+  ],
+  "ambulance": [
+    "ambulances"
+  ],
+  "canoe": [
+    "canoes"
+  ],
+  "hot-air-balloon": [
+    "hot air balloons"
+  ],
+  "skateboard": [
+    "skateboards"
+  ],
+  "submarine": [
+    "submarines",
+    "submersibles"
+  ],
+  "fire-engine": [
+    "fire engines",
+    "fire trucks"
+  ],
+  "traffic-light": [
+    "traffic lights",
+    "stoplights",
+    "traffic signals"
+  ],
+  "sun": [
+    "suns"
+  ],
+  "moon": [
+    "moons",
+    "crescent moons"
+  ],
+  "star": [
+    "stars"
+  ],
+  "cloud": [
+    "clouds"
+  ],
+  "rainbow": [
+    "rainbows"
+  ],
+  "tree": [
+    "trees"
+  ],
+  "flower": [
+    "flowers"
+  ],
+  "leaf": [
+    "leaves"
+  ],
+  "mountain": [
+    "mountains"
+  ],
+  "snowflake": [
+    "snowflakes"
+  ],
+  "rock": [
+    "rocks",
+    "stones"
+  ],
+  "shell": [
+    "shells",
+    "seashells",
+    "sea shells"
+  ],
+  "feather": [
+    "feathers"
+  ],
+  "nest": [
+    "nests",
+    "bird nests"
+  ],
+  "fire": [
+    "fires",
+    "flames"
+  ],
+  "acorn": [
+    "acorns"
+  ],
+  "pinecone": [
+    "pinecones",
+    "pine cones"
+  ],
+  "cactus": [
+    "cacti",
+    "cactuses",
+    "potted cacti"
+  ],
+  "raindrop": [
+    "raindrops",
+    "rain drops",
+    "water drops",
+    "droplets"
+  ],
+  "snowman": [
+    "snowmen",
+    "snow people",
+    "snowpeople"
+  ],
+  "eye": [
+    "eyes"
+  ],
+  "ear": [
+    "ears"
+  ],
+  "nose": [
+    "noses"
+  ],
+  "mouth": [
+    "mouths"
+  ],
+  "hand": [
+    "hands"
+  ],
+  "foot": [
+    "feet"
+  ],
+  "tooth": [
+    "teeth"
+  ],
+  "heart": [
+    "hearts"
+  ],
+  "bone": [
+    "bones"
+  ],
+  "face": [
+    "faces"
+  ]
+}

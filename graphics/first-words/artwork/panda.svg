@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">panda</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle cx="43" cy="41" r="22" fill="#314047"/><circle cx="117" cy="41" r="22" fill="#314047"/><ellipse cx="80" cy="87" rx="53" ry="49" fill="#FFF8E9"/><ellipse cx="58" cy="80" rx="16" ry="20" fill="#314047" transform="rotate(25 58 80)"/><ellipse cx="102" cy="80" rx="16" ry="20" fill="#314047" transform="rotate(-25 102 80)"/><circle cx="60" cy="76" r="4" fill="#FFF8E9" stroke="none"/><circle cx="100" cy="76" r="4" fill="#FFF8E9" stroke="none"/><ellipse cx="80" cy="109" rx="10" ry="7" fill="#314047"/><path d="M80 116V122M70 123Q80 129 90 123" fill="none" stroke-width="3"/></g>
+</svg>

@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">eyes</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(36 2) scale(.78)"><path d="M20 80Q80 19 140 80Q80 141 20 80Z" fill="#FFF8E9"/><circle cx="80" cy="80" r="25" fill="#79AD86"/><circle cx="80" cy="80" r="12" fill="#314047"/><circle cx="87" cy="73" r="4" fill="#FFF8E9" stroke="none"/></g><g transform="translate(-2 32) scale(.78)"><path d="M20 80Q80 19 140 80Q80 141 20 80Z" fill="#FFF8E9"/><circle cx="80" cy="80" r="25" fill="#79AD86"/><circle cx="80" cy="80" r="12" fill="#314047"/><circle cx="87" cy="73" r="4" fill="#FFF8E9" stroke="none"/></g></g>
+</svg>

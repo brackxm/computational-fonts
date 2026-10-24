@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">owl</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M42 59L34 22L66 38Q80 32 94 38L126 22L118 59Q140 126 80 141Q20 126 42 59Z" fill="#A78062"/><path d="M43 85Q29 103 44 124L61 113M117 85Q131 103 116 124L99 113" fill="#A78062"/><circle cx="59" cy="65" r="23" fill="#F7DFBB"/><circle cx="101" cy="65" r="23" fill="#F7DFBB"/><circle cx="59" cy="65" r="7" fill="#314047" stroke="none"/><circle cx="101" cy="65" r="7" fill="#314047" stroke="none"/><path d="M72 88H88L80 100Z" fill="#F2CB67"/><path d="M65 111l6 5M89 116l6-5M72 128l8 5l8-5M59 139H71M89 139H101" fill="none" stroke-width="3"/></g>
+</svg>

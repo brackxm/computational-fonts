@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">doughnut</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M25 80A55 55 0 1 1 135 80A55 55 0 1 1 25 80ZM61 80A19 19 0 1 0 99 80A19 19 0 1 0 61 80Z" fill="#A78062"/><path d="M33 80A47 47 0 1 1 127 80A47 47 0 1 1 33 80ZM54 80A26 26 0 1 0 106 80A26 26 0 1 0 54 80Z" fill="#EFAB9F" stroke-width="3"/><path d="M51 51l7 3M99 47l-4 6M116 83l-7-2M90 116l-4-6M45 98l7-3" fill="none" stroke="#FFF8E9" stroke-width="3"/></g>
+</svg>

@@ -11,7 +11,7 @@ explore all 41 playgrounds in your browser, with no installation needed.
 | Project | Mode | Input or configuration | Editable document |
 | --- | --- | --- | --- |
 | [Poem Oracle](literature/poem-oracle/) | seeded poetry font | each paragraph selects one of 2876 poems | [Browser playground](literature/poem-oracle/playground.html) |
-| [First Words Pictures](graphics/first-words/) | picture-word font | 100 familiar words become colour vector drawings | [Browser playground](graphics/first-words/playground.html) |
+| [First Words Pictures](graphics/first-words/) | picture-word font | 622 labels share 200 colour vector drawings | [Browser playground](graphics/first-words/playground.html) |
 | [PPM image renderer](graphics/ppm/) | text image format | plain PPM (`P3`) RGB | [ODT specimen](graphics/ppm/ppm.odt) |
 | [PGM image renderer](graphics/pgm/) | text image format | plain PGM (`P2`) grayscale | [ODT specimen](graphics/pgm/pgm.odt) |
 | [PBM image renderer](graphics/pbm/) | text image format | plain PBM (`P1`) bitmap | [ODT specimen](graphics/pbm/pbm.odt) |
@@ -95,11 +95,12 @@ runtimes](languages/shared/).
 
 ## Original artwork
 
-[First Words Pictures](graphics/first-words/) turns 100 familiar word labels into
-original colour vector drawings through whole-word ligatures. Its TTF and WOFF2
+[First Words Pictures](graphics/first-words/) turns 622 familiar word labels into
+200 original colour vector drawings through whole-word ligatures. Its TTF and WOFF2
 include ordinary Roboto text for other words and monochrome picture fallbacks.
-The original SVG artwork and artwork generator are CC0-1.0; the font and font
-build code are Apache-2.0. An SVG review gallery and contact sheets are included.
+Countable plurals use two diagonally stacked copies in the same glyph width.
+The original SVG artwork, artwork generator, font and font build code are
+Apache-2.0. An SVG review gallery and contact sheets are included.
 
 ## Trying a font in a document
 
@@ -171,8 +172,8 @@ through ChatGPT and Codex.
 Licensed under the Apache License 2.0, except for the GPL-3.0 Connect Four
 strategy, implementation files and derived fonts identified in its
 [license notes](games/connect-four/PROVENANCE.md). See [`LICENSE`](LICENSE).
-The original [First words artwork and generator](graphics/first-words/) are
-CC0-1.0, another exception to the repository default.
+The original [First words artwork and generator](graphics/first-words/) use
+the repository's Apache-2.0 license.
 Bundled Roboto sources and fonts derived from them are also Apache-2.0.
 Arabizi Annotated and its bundled Noto Naskh Arabic source are SIL OFL 1.1.
 Upstream font attribution and imported-code notices are retained in

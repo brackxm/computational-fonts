@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Copyright 2026 Michael Brackx. SPDX-License-Identifier: Apache-2.0 -->
+<title id="title">candles</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><g transform="translate(36 2) scale(.78)"><ellipse cx="80" cy="135" rx="47" ry="11" fill="#B9C3C5"/><rect x="59" y="65" width="42" height="70" rx="4" fill="#F7DFBB"/><path d="M59 65Q69 56 80 65Q91 56 101 65V84Q91 98 87 77Q76 91 72 77Q63 91 59 80Z" fill="#FFF8E9"/><path d="M80 64V47" fill="none" stroke-width="3"/><path d="M80 18C59 38 61 53 80 53C99 53 101 38 80 18Z" fill="#F2CB67"/></g><g transform="translate(-2 32) scale(.78)"><ellipse cx="80" cy="135" rx="47" ry="11" fill="#B9C3C5"/><rect x="59" y="65" width="42" height="70" rx="4" fill="#F7DFBB"/><path d="M59 65Q69 56 80 65Q91 56 101 65V84Q91 98 87 77Q76 91 72 77Q63 91 59 80Z" fill="#FFF8E9"/><path d="M80 64V47" fill="none" stroke-width="3"/><path d="M80 18C59 38 61 53 80 53C99 53 101 38 80 18Z" fill="#F2CB67"/></g></g>
+</svg>
