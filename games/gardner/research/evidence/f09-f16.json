@@ -1,0 +1,124 @@
+{
+  "status": "pass",
+  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+  "source_audit": {
+    "path": "/Users/michael/.codex/visualizations/2026/10/06/01a112f8-5f55-7ae0-b244-b3bcb1d5fa8c/gardner-research-2026-10-20/resumed-2026-10-20/post-F08-gap-audit-20261024T202847Z",
+    "files": 379,
+    "bytes": 101674977,
+    "inventory_sha256": "127f94e45bf27b58c4f3465b467cd6f9f250e2b2fa28c33e399b68cadfb32b4a",
+    "verified": true,
+    "sealed_utc": "2026-10-24T21:12:51.851672+00:00"
+  },
+  "guarantee": "White nonloss from quiet clock zero for F09 and F16; not exact draw/win or a full-perfect claim.",
+  "new_roots": {
+    "F09": {
+      "board": "RNB.K..P.PP...pp.p..rnbk.",
+      "safe_entry_clock": 0,
+      "fixed_white": "c1b2"
+    },
+    "F16": {
+      "board": "RNBQK..P.PP...pp.p..rnbqk",
+      "safe_entry_clock": 0,
+      "fixed_white": "d1d5"
+    }
+  },
+  "new_rows": 7880,
+  "retained_rows": 24518928,
+  "full_font_rows": 24526808,
+  "closure": {
+    "known_closed_exit_edges": 6960,
+    "clock_overapproximation": true,
+    "status": "pass",
+    "loaded_unique": 45434273,
+    "reachable_rows": 7880,
+    "processed_clock_states": 7863,
+    "black_replies": 19107,
+    "terminals": 748,
+    "claim_endpoints": 0,
+    "missing": 0,
+    "root_count": 1,
+    "peak_rss_bytes": 2417491968,
+    "seconds": 4.93791,
+    "scope": "Incremental fixed-policy closure; every legal reply checked until a clock-safe exit to the unchanged independently verified retained corpus. No move search or exact optimality claim"
+  },
+  "encoded_guard_histogram": {
+    "0": 7880
+  },
+  "fixed_pair_certificate_sha256": "2797c13f3f322eaa06efac98af4a5301d4daa54f6629ea8c71c335f62790d3d5",
+  "joint_release_certificate_sha256": "389ceb15dad0b143777fa516b07556b88bfe5e4f31bf9aa914ce403316853962",
+  "fresh_actual_encoded_replay": {
+    "status": "pass",
+    "fresh_process": true,
+    "fresh_queue": true,
+    "verification_only": true,
+    "proof_searches": 0,
+    "source_basis_sha256": "93f46c6f01041057b9a3b2e0507b97bae99c8e8cc43ad27e7a1fb819f44ba8b1",
+    "all_encoded_guards_zero": true,
+    "result": {
+      "status": "pass",
+      "rows": 2488366,
+      "sha256": "389ceb15dad0b143777fa516b07556b88bfe5e4f31bf9aa914ce403316853962",
+      "roots": [
+        "R..QK..P.Pb.pP.p..q.r...k",
+        "R.BqK....PppP.P..p..r...k",
+        "R..QK..P.Pb.pPBp..p.r..qk",
+        "R.BQK.P..Pppb.P..pq.r...k",
+        "R.BQK.P.PPNp...p.pqpr.bk.",
+        "R.BQK.P.PPNp...pbpqpr...k",
+        "R.BQK.P.PPppN.p.bpq.r...k",
+        "RN.QK..P.Pn.pPBp..p.r.bqk",
+        "RNBQK.P.PP.p..ppbpq.r...k",
+        "RNBQK.P.PPnp...p.pbpr..qk",
+        "RN..K.BP.PP.p.pp....rnbk.",
+        "R..NK....PP.P.pp....rn..k",
+        "RNB.K..P.PP...pp.p..rnbk.",
+        "RNBQK..P.PP...pp.p..rnbqk"
+      ],
+      "bounds": [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "independent_bitboard_replay": true,
+      "proof_searches": 0
+    },
+    "admission": {
+      "status": "pass",
+      "basis": {
+        "path": "/tmp/gardner-nonloss-base-4ce5497c14569f572c39bee9e17f8fda55bf8cc092e63b3dc10bd072440eb5c6.json",
+        "sha256": "4ce5497c14569f572c39bee9e17f8fda55bf8cc092e63b3dc10bd072440eb5c6"
+      },
+      "verified_nonloss0": 8884078,
+      "proof_searches": 0
+    },
+    "worker": {
+      "exit_code": 0,
+      "stop_reason": "worker_finished",
+      "peak_rss_bytes": 7102758912,
+      "new_artifact_bytes": 80015767,
+      "completed_utc": "2026-10-24T23:25:25.179056+02:00"
+    }
+  },
+  "complete_joint_rows": 2488366,
+  "complete_joint_roots": 14,
+  "primary_basis": {
+    "path": "/tmp/gardner-nonloss-base-4ce5497c14569f572c39bee9e17f8fda55bf8cc092e63b3dc10bd072440eb5c6.json",
+    "sha256": "4ce5497c14569f572c39bee9e17f8fda55bf8cc092e63b3dc10bd072440eb5c6"
+  },
+  "source_basis_sha256": "93f46c6f01041057b9a3b2e0507b97bae99c8e8cc43ad27e7a1fb819f44ba8b1",
+  "all_prior_policies_retained": true,
+  "proof_searches_during_integration": 0,
+  "proof_searches_currently_stopped": true,
+  "perfect_opponent": false
+}

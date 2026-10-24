@@ -1,13 +1,13 @@
 {
   "status": "pass",
   "proofSearches": 0,
-  "fontBytes": 42139072,
-  "fontSHA256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
-  "loadAndFirstShapeMs": 169.20000000298023,
+  "fontBytes": 42155688,
+  "fontSHA256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+  "loadAndFirstShapeMs": 119.69999998807907,
   "loadPhases": {
-    "fetchMs": 128.8999999910593,
-    "fontLoadMs": 17.100000008940697,
-    "firstShapeMs": 23.200000002980232
+    "fetchMs": 91.69999998807907,
+    "fontLoadMs": 19.200000002980232,
+    "firstShapeMs": 8.799999997019768
   },
   "prefixChecks": 77,
   "longestLivePlies": 153,
@@ -17,24 +17,24 @@
   "benchmarkStatus": 1,
   "allPrefixes": {
     "count": 77,
-    "medianMs": 52.3999999910593,
-    "p95Ms": 87,
-    "maxMs": 92.70000000298023
+    "medianMs": 49.599999994039536,
+    "p95Ms": 89,
+    "maxMs": 90.40000000596046
   },
   "live150Ply": {
     "count": 20,
-    "medianMs": 90.79999999701977,
-    "p95Ms": 93.40000000596046,
-    "maxMs": 93.40000000596046
+    "medianMs": 87.75,
+    "p95Ms": 89.19999998807907,
+    "maxMs": 89.19999998807907
   },
   "twentyReply": {
     "count": 20,
-    "medianMs": 27.55000000447035,
-    "p95Ms": 28,
-    "maxMs": 28
+    "medianMs": 26.900000005960464,
+    "p95Ms": 27.799999997019768,
+    "maxMs": 27.799999997019768
   },
   "cacheAvoidance": "20 unique text runs using 1..20 extra inert padding characters",
-  "scope": "Retained certified corpus plus F20/F23/F22/F00/F01/F02/F03/F04/F05/F12/F13/F14/F15/F18/F19/F08/Ke5; two drawing openings remain unproved; standard start; complete histories; timings include transport encoding, input construction and shaping. Native checks independently compare every cell, last move and status.",
+  "scope": "Retained certified corpus plus F20/F23/F22/F00/F01/F02/F03/F04/F05/F12/F13/F14/F15/F18/F19/F08/Ke5/F09/F16; two drawing openings remain unproved; standard start; complete histories; timings include transport encoding, input construction and shaping. Native checks independently compare every cell, last move and status.",
   "phase": "replay",
   "loadAttempt": 1,
   "replayAttempt": 1

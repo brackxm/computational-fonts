@@ -1,13 +1,13 @@
 {
   "status": "pass",
-  "font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
-  "peak_growth_bytes": 375373824,
+  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+  "peak_growth_bytes": 349487104,
   "limit_bytes": 536870912,
   "samples": 240,
   "sample_interval_seconds": 0.5,
-  "baseline_processes": 13,
+  "baseline_processes": 12,
   "new_renderer_pids": [
-    "73391"
+    "98232"
   ],
   "scope": "Conservative sum of positive per-process RSS growth for the in-app browser host, before candidate tab/font loading; new renderers counted in full; sampled through load, replay and idle."
 }

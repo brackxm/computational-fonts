@@ -3,24 +3,24 @@
   "variant": "gardner-certified-corpus-research",
   "perfect_opponent": false,
   "proof_searches": 0,
-  "font_family": "Gardner Ke5 F08 Research 20261024",
+  "font_family": "Gardner F09 F16 Research 20261024",
   "font_file": "gardner-research.ttf",
-  "font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
-  "font_bytes": 42139072,
+  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+  "font_bytes": 42155688,
   "head_timestamps": [
     3875584786,
     3875591863
   ],
-  "policy_tree_sha256": "f1e32dc201a316e8d4228aeb06655ba521668eb5548d7e151d9210b45287d2b4",
-  "font_reachable_rows": 24518928,
+  "policy_tree_sha256": "9c1bcc619b715fc3727ab1b1ca19ecb03d8b323f321275e8e8866092d82fedad",
+  "font_reachable_rows": 24526808,
   "unproved_openings": [
     "B4A3",
     "B4B3"
   ],
   "inputs": {
     "inputs/boundaries.records29": {
-      "bytes": 5829,
-      "sha256": "c0255eba9ef1517590e103adfe9098ab1ed4e92d3675d27fae5c80647598b6c7"
+      "bytes": 6090,
+      "sha256": "77158a3c90ebf07e88faa043a9e1d2ef6d975d9c2387ea4c831f39e393fb6d2e"
     },
     "inputs/game-base.gamepack": {
       "bytes": 21636,
@@ -39,8 +39,8 @@
       "sha256": "ef4cabe5ad5cdd22e01312ea6e253ca472d302e3bfef30e305e48a23b6feeea0"
     },
     "inputs/policy.tree.xz": {
-      "bytes": 35736552,
-      "sha256": "7c0feb0cf1bea6bdc860a702738c4375ab5ad704324a48ddb361d403f01bebf0"
+      "bytes": 35754632,
+      "sha256": "0b2b562e76cc5c079c1b9d05adc1e32159b3ec092ec7e1888ff8bbbd3f7799b8"
     }
   },
   "limits": {
@@ -140,9 +140,9 @@
     "evidence": "evidence/frontier-extension.json"
   },
   "extension": {
-    "retained_policy_rows": 23129338,
-    "added_policy_rows": 1389590,
-    "parent_font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+    "retained_policy_rows": 24518928,
+    "added_policy_rows": 7880,
+    "parent_font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
     "shared_roots": [
       "F02",
       "F03",
@@ -155,10 +155,12 @@
       "F18",
       "F19",
       "F08",
-      "Ke5"
+      "Ke5",
+      "F09",
+      "F16"
     ],
-    "runtime_certificate_sha256": "188a73e056a87ddd57cc24187d4d156698ced252fb506ae6ef406822b004ffb2",
-    "evidence": "evidence/ke5-f08.json"
+    "runtime_certificate_sha256": "389ceb15dad0b143777fa516b07556b88bfe5e4f31bf9aa914ce403316853962",
+    "evidence": "evidence/f09-f16.json"
   },
   "f08": {
     "board": "RN..K.BP.PP.p.pp....rnbk.",
@@ -169,5 +171,15 @@
     "board": "R..NK....PP.P.pp....rn..k",
     "safe_entry_clock": 0,
     "evidence": "evidence/ke5-f08.json"
+  },
+  "f09": {
+    "board": "RNB.K..P.PP...pp.p..rnbk.",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/f09-f16.json"
+  },
+  "f16": {
+    "board": "RNBQK..P.PP...pp.p..rnbqk",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/f09-f16.json"
   }
 }

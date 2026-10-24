@@ -2,7 +2,7 @@
 
 Master keeps the generator, runtime, tests, manifest and certification evidence.
 The generated research font and binary build inputs are excluded from master and
-ignored locally. Only the latest accepted Ke5/F08 font and its binary inputs are
+ignored locally. Only the latest accepted F09/F16 font and its binary inputs are
 kept on the branch `codex/gardner-research-artifacts-20261024`, based
 on the source-only master. Earlier large-font versions are excluded from that
 branch too. An ordinary clone fetches the artifacts under
@@ -15,23 +15,26 @@ the local artifact branch; fetching cannot retrieve an unpublished variant.
 After restoring and building below, [open the research playground](playground.html),
 or use the always-bundled [lightweight default opponent](../playground.html).
 
-The optional **42,139,072-byte font** extends the retained certified policy with
+The optional **42,155,688-byte font** extends the retained certified policy with
 F02, F03, F04, F05, F12, F13, F14, F15, F18 and F19, alongside the earlier
 F20, F23, F22, F00 and F01 continuations. It now also includes **F08 and the
 11-piece …Ke5 continuation**, both certified at quiet clock zero. This is stronger
-than the requested clock-one guarantee for …Ke5. It contains **24,518,928 policy
-rows and 57,011 glyphs** using the original artwork.
+than the requested clock-one guarantee for …Ke5. **F09 and F16 are now also
+certified at clock zero**, by composing existing fixed strategies without a new
+proof search. It contains **24,526,808 policy rows and 57,011 glyphs** using the original artwork.
 
 **It is not a complete perfect opponent.** After White's A2–A3, Black's
 **B4–A3** and **B4–B3** openings still display `UNPROVEN BRANCH` (status 6).
-Four frontier gaps remain: F09, F11, F16 and F21. Try B5–C3 for a supported
-branch. The original **4,463,004-byte playable font remains the default** and
+Two named frontier gaps remain: F11 and F21. Try B5–C3 for a supported
+branch. The lightweight **4,485,684-byte playable font remains the default** and
 continues on every legal branch using its opening book and heuristic.
 
 The added strategies guarantee White nonloss from quiet clock zero, without
 an exact draw/win classification. The two stopped openings prevent reaching
 these continuations from the standard start. Guarantees apply to the certified
-policy and its entry clocks.
+policy and its entry clocks. The historical opening scaffolds still contain
+uncovered earlier routes; these frontier certificates do not by themselves
+certify either complete stopped opening.
 
 ## Play and transport
 
@@ -102,10 +105,10 @@ before atomically replacing the output TTF; failure preserves any existing font.
 preservation, cleanup and byte-exact success using
 the real serialized font. The build must reproduce this exact archived font:
 
-`098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a`
+`9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97`
 
-The 35,736,552-byte `inputs/policy.tree.xz` freezes a shared binary classifier
-with 8,901,562 nodes and maximum depth 45. It uses six-bit XY coordinates for
+The 35,754,632-byte `inputs/policy.tree.xz` freezes a shared binary classifier
+with 8,905,648 nodes and maximum depth 45. It uses six-bit XY coordinates for
 32 piece-location registers and reflects positions only at five pieces or fewer.
 The compiler keeps 48,000-slot low banks, partitions banks twice by child-bank
 IDs, and shares reused outputs while retaining explicit maps elsewhere.
@@ -114,6 +117,10 @@ in nested lookups with LookupFlag 0. The compiler and game runtime are unchanged
 
 The separately restored `inputs/game-base.ttf` and `.gamepack` freeze the
 legal-move shell and linker layout independently of the lightweight generator.
+The research base retains its frozen lettering; the lightweight default
+separately uses Game Sans.
+The research base retains its frozen lettering; the lightweight default
+separately uses Game Sans.
 After restoring the binary inputs, normal builds need no engine, corpus
 extraction, table generation or proof search. The generator compiles the frozen
 classifier; source alone cannot reconstruct the certified strategy corpus.
@@ -122,59 +129,57 @@ archives outside Git.
 
 ## Certification and verification
 
-The retained **23,129,338 rows** include every policy in D, with all earlier
-F20, F23, F22, F00, F01 and ten-root frontier extensions unchanged. Their
-historical evidence remains in [evidence/](evidence/), including the
-[earlier D certificate](evidence/frontier-extension.json). The new
-[Ke5/F08 certificate](evidence/ke5-f08.json) adds **1,389,590 rows**. Shared
-support means these costs are not separate per-branch sizes.
+The retained **24,518,928 rows** include every Ke5/F08 policy and all earlier
+extensions unchanged. Their historical reports remain in [evidence/](evidence/),
+including the [Ke5/F08 certificate](evidence/ke5-f08.json). The new
+[F09/F16 certificate](evidence/f09-f16.json) adds **7,880 rows** for both roots;
+shared support means this is not a separate per-branch size.
 
-The new fixed-policy closure checks **7,519,306 legal Black replies**, with
-**3,387,432 safe exits**, **77,527 terminal edges** and **zero missing
-continuations**. Reachability expands every selected policy at its encoded
-entry clock; the complete new delta has guard zero. A fresh verification-only
-host independently replayed the full supporting certificate DAG. Another fresh
-host checked the actual **2,480,486-row joint delta** (D plus Ke5/F08), every
-encoded guard and all **12 roots at zero**, directly against original pre-F02
-basis93. Neither validation process ran proof search. Archive inventory and
-critical certificate/executable recovery hashes were independently checked.
-The admitted primary basis is:
+F09 uses Bc1-b2; its former unresolved c4-c3 reply now reaches F08 at zero.
+F16 uses Qd1xd5+ Ke5xd5, reaching F09 at zero. Their fixed-policy closure
+checks **19,107 legal Black replies**, with **6,960 safe exits**, **748 terminal
+edges** and **zero missing continuations**. Every new row has guard zero.
 
-`cbc351294ae5db00b3bae17c897a6f4711466044c7ce49c03c6b2de2f1dadded`
+A fresh verification-only host checked the actual **2,488,366-row joint release
+delta** (D, Ke5/F08 and F09/F16), every encoded guard and all **14 roots at zero**,
+directly against original pre-F02 basis93. No proof search ran. This extends the
+independent fixed-pair replay preserved in the source audit. The primary basis is:
+
+`4ce5497c14569f572c39bee9e17f8fda55bf8cc092e63b3dc10bd072440eb5c6`
 
 Encoded joint runtime certificate SHA256:
 
-`188a73e056a87ddd57cc24187d4d156698ced252fb506ae6ef406822b004ffb2`
+`389ceb15dad0b143777fa516b07556b88bfe5e4f31bf9aa914ce403316853962`
 
 The runtime can coalesce winning labels into nonloss labels with the same move,
 retaining safe-entry and reset/immediate-mate bounds. It can prefer a legal draw
 claim to pursuing a win outside the original bound.
 
-Packaged tests check **162 full-history prefixes and 1,206 clock boundaries**,
+Packaged tests check **162 full-history prefixes and 1,260 clock boundaries**,
 including the new roots and every first Black reply at quiet clocks 0, 98, 99,
 100, 149 and 150. They compare cells, last move and status against Python legality
 and the frozen policy, including underpromotions, reflection, malformed source,
-stalemates and stopped openings. All **17,803,124 binary-node/input pairs** run
-through the actual TTF lookups. HarfBuzz additionally executes **38,344 dictionary
-checks** and **29,061 route-class checks**, including `.notdef` and GDEF overlaps.
+stalemates and stopped openings. All **17,811,296 binary-node/input pairs** run
+through the actual TTF lookups. HarfBuzz additionally executes **38,472 dictionary
+checks** and **29,040 route-class checks**, including `.notdef` and GDEF overlaps.
 Four corrupt classifiers check early rejection of invalid structure.
 
 ## Size and performance limits
 
-These are preserved measurements of these exact Ke5/F08 font bytes on the validation
+These are preserved measurements of these exact F09/F16 font bytes on the validation
 host. They do not guarantee every device or load state. Native timings rerun
 locally; the [browser benchmark](benchmark.html) measures load and complete replay.
 
 | Gate | Accepted measurement | Limit |
 | --- | ---: | ---: |
-| TTF size | 42,139,072 bytes | 50,000,000 bytes |
+| TTF size | 42,155,688 bytes | 50,000,000 bytes |
 | Glyphs | 57,011 | 65,535 |
-| Browser load + first shape | 169.2 ms | 2,000 ms |
-| Renderer RSS growth | 357.98 MiB | 512 MiB |
-| Browser reply p95 | 28.0 ms | 250 ms |
-| Browser 150-live-ply maximum | 93.4 ms | 1,000 ms |
-| Native reply p95 | 44.16 ms | 250 ms |
-| Native 150-live-ply maximum | 93.54 ms | 1,000 ms |
+| Browser load + first shape | 119.7 ms | 2,000 ms |
+| Renderer RSS growth | 333.30 MiB | 512 MiB |
+| Browser reply p95 | 27.8 ms | 250 ms |
+| Browser 150-live-ply maximum | 89.2 ms | 1,000 ms |
+| Native reply p95 | 29.13 ms | 250 ms |
+| Native 150-live-ply maximum | 96.88 ms | 1,000 ms |
 
 The benchmark keeps each result, including load errors and failed timings, in
 a per-document trial history. A successful rerun preserves earlier failures;
@@ -182,17 +187,17 @@ load errors allow retry and release rejected font faces. Copy the history JSON
 before closing or reloading the page. Load/replay attempt counters distinguish
 retries; open a fresh document for cold-load measurements. Failure-injection
 checks run with `test_benchmark.cjs`; the [historical workflow evidence](evidence/benchmark-history.json)
-preserves D's injected failure and recovery tests. Current Ke5/F08 measurements
+preserves D's injected failure and recovery tests. Current F09/F16 measurements
 are in [browser.json](evidence/browser.json) and [memory.json](evidence/memory.json);
 the unchanged failure-injection checks run against the current benchmark.
 
-The first fresh-document Ke5/F08 browser trial passed. It checks 77 complete-history
+The first fresh-document F09/F16 browser trial passed. It checks 77 complete-history
 prefixes, a longest live history of 153 plies, and 150 executed plies after the
 opening while still live. Twenty inert-padding suffixes prevent cached text
 runs. Memory sums positive RSS growth over all host renderers across 240 samples,
 counting new renderers in full.
 
-There are **7,860,928 bytes and 8,524 glyphs of headroom**. Future additions must
+There are **7,844,312 bytes and 8,524 glyphs of headroom**. Future additions must
 pass every gate again. The independent proof archive preserves the earlier F02
 font's failed timing trial and passing isolated retry, the scratch-artifact guard
 stop and recovery, and the corrected archive/replay packaging issues.

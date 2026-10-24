@@ -1,17 +1,33 @@
 {
   "status": "pass",
-  "font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
-  "all_retained_rows_unchanged": true,
-  "strict_disjoint_delta": true,
-  "classifier_rows_verified": 24518928,
-  "actual_TTF_dispatch_pairs": 17803124,
-  "base_artwork_and_metrics_identical": 6404,
-  "normal_builder_and_compiler_unchanged": true,
+  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+  "all_retained_policy_rows_unchanged": true,
+  "retained_rows_checked": 24518928,
+  "strict_disjoint_new_rows": 7880,
+  "classifier_rows_verified": 24526808,
+  "actual_TTF_dispatch_pairs": 17811296,
+  "original_artwork_and_metrics_identical": 6404,
+  "normal_builder_compiler_and_runtime_unchanged": true,
   "checker_pins_unchanged": true,
-  "git_unchanged": true,
-  "old_default_unchanged": true,
-  "accepted_D_unchanged": true,
-  "integrated": false,
-  "committed": false,
-  "pushed": false
+  "default_variant_preserved": true,
+  "no_default_files_modified_by_this_integration": true,
+  "external_default_update": {
+    "initial_head": "56115f1fc2dbcd49f129aa3b2515dcab894f263c",
+    "current_head": "29b2af0ea33b836d06520f72809ba59719b9e98c",
+    "changed_files": [
+      "games/gardner/gardner-font.ttf",
+      "games/gardner/playground.html",
+      "games/gardner/readme.md",
+      "games/gardner/test_font.py",
+      "games/shared/exact_tests.py",
+      "games/shared/game_text.py",
+      "games/shared/readme.md",
+      "games/shared/test_game_text.py"
+    ],
+    "initial_default_font_sha256": "bd8a43df4b228cf6d1ede6e7b5474a283eb7335e25580cc1ab1a1696d3a039f0",
+    "current_default_font_sha256": "1be555acac58ec5f7016644fe8de5062a9e9ef9f1e8ce0a7325a67987e09e74e",
+    "current_default_font_bytes": 4485684,
+    "scope": "Separate committed Game Sans lettering update; preserved. The lightweight opponent remains the default; this integration made no default-file edits."
+  },
+  "proof_searches": 0
 }

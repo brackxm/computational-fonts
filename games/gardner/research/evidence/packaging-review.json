@@ -1,36 +1,31 @@
 {
   "status": "pass",
+  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
   "remaining_actionable_issues": 0,
-  "font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
   "rounds": [
     {
-      "scope": "Exact-clock proof, fresh full DAG replay and unchanged checker pins",
+      "scope": "Exact archived pair and unchanged retained policies; fresh actual joint replay from original basis93 with every encoded guard zero",
       "remaining_actionable_issues": 0
     },
     {
-      "scope": "Actual encoded guards and all Black replies against original predecessor93; strict retained corpus and exact full-font classifier mapping",
+      "scope": "Normal byte-exact rebuild, full native replay and actual dispatcher/dictionary checks, original artwork and default isolation",
       "remaining_actionable_issues": 0
     },
     {
-      "scope": "Normal deterministic rebuild, native dispatcher/replay, first isolated browser trial, renderer memory and original artwork",
+      "scope": "First isolated browser trial, full renderer-growth sampling, fetched-ref restore, failure controls and output preservation",
       "remaining_actionable_issues": 0
     },
     {
-      "scope": "Candidate metadata, resource stop state, honest nonloss scope and durable independent evidence",
+      "scope": "Source-only master and latest-only artifact layout, cache identity, current/historical evidence and honest opening limitations",
       "remaining_actionable_issues": 0
     }
   ],
-  "retained_failures": [
-    "009 advisory global proposer assertion; no result accepted",
-    "Initial cold supervisor sandbox ps denial; worker stopped before verification, monitored retry passed",
-    "Private package import path error; corrected and resumed from immutable compiler output, normal rebuild passed"
-  ],
   "limitations": [
-    "This is a White nonloss certificate; no exact draw/win or full perfect opponent claim.",
-    "F09, F11, F16, F21 and both drawing opening prefixes remain unproved unless separately certified.",
-    "Earlier separate F02 browser timing failure at 280 ms followed by one passing isolated retry remains preserved in parent archives. This candidate passed its first isolated trial; no claim that underlying variance was fixed.",
-    "Candidate stays outside Git. Published artifact-branch restoration still targets D; restore this candidate from its sealed archive, including all frozen inputs.",
-    "Host measurements do not guarantee performance on every device."
+    "F11 and F21 remain unproved named frontiers; both stopped opening prefixes still need complete coverage.",
+    "These nonloss guarantees are not exact draw/win or full-perfect classifications.",
+    "Earlier separate F02 timing failure and isolated retry remain archived; this font passed its first isolated trial, not a claim that underlying variance was fixed.",
+    "Performance measurements apply to this validation host.",
+    "Master stores source and evidence; a matching local artifact ref is required for binary restoration."
   ],
-  "proof_searches_during_validation": 0
+  "proof_searches": 0
 }
