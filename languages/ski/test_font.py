@@ -24,6 +24,7 @@ from bounded.outputs import font_artifacts
 from bounded.runtime import Machine
 from bounded.visible import DISPLAY_FONT
 from bounded.test_protocol import ProtocolTests
+from bounded.test_optimization import OptimizationTests
 from bounded.test_v37 import run as adversarial
 from bounded.test_v38 import run as alphabet_and_fuel
 from bounded.test_v44 import run as depth_six
@@ -193,7 +194,7 @@ def main():
     args = parser.parse_args()
 
     suite = unittest.TestSuite()
-    for case in (ProtocolTests, IntegrationTests, VisibleTests):
+    for case in (ProtocolTests, IntegrationTests, VisibleTests, OptimizationTests):
         suite.addTests(unittest.defaultTestLoader.loadTestsFromTestCase(case))
     if not unittest.TextTestRunner(verbosity=2).run(suite).wasSuccessful():
         return 1

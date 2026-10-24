@@ -14,8 +14,9 @@ from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from .layout import VALUES, paths, validate
 from .config import DEFAULT_FONT
 from .outputs import validate_machine_output
+from .optimize import prune_lookups
 
-def build(out, depth=5, rounds=32):
+def build(out, depth=5, rounds=32, *, optimize=True):
     validate(depth, rounds)
     validate_machine_output(out)
     started=time.perf_counter()
@@ -131,6 +132,9 @@ def build(out, depth=5, rounds=32):
             gs.LookupList.Lookup.append(copy.copy(gs.LookupList.Lookup[index]))
     gs.LookupList.LookupCount=len(gs.LookupList.Lookup)
     feature.LookupListIndex=active;feature.LookupCount=len(active)
+    if optimize:
+        prune_lookups(fb.font)
+        gs=fb.font['GSUB'].table
     fb.font['head'].created=fb.font['head'].modified=2082844800
     fb.font.recalcTimestamp=False
     out=Path(out);out.parent.mkdir(parents=True,exist_ok=True);fb.font.save(out)
@@ -147,9 +151,10 @@ def main():
     parser.add_argument('--depth',type=int,default=5)
     parser.add_argument('--rounds',type=int,default=32)
     parser.add_argument('--output','--out',type=Path,default=DEFAULT_FONT)
+    parser.add_argument('--no-optimize',action='store_true',help='retain unreachable templates for profiling')
     args=parser.parse_args()
     try:
-        build(args.output,args.depth,args.rounds)
+        build(args.output,args.depth,args.rounds,optimize=not args.no_optimize)
     except ValueError as error:
         parser.error(str(error))
 

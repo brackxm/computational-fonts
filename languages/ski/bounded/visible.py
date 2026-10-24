@@ -17,6 +17,7 @@ from fontTools.ttLib import TTFont
 from .config import ROOT, DEFAULT_FONT, DISPLAY_FONT
 from .layout import VALUES, paths, validate
 from .outputs import font_artifacts, overlap, validate_outputs
+from .optimize import prune_lookups
 
 sys.path.insert(0, str(ROOT.parents[1] / 'decoders'))
 from shared.font_metadata import DEFAULT_BASE, load_base_font, mark_modified_font, replace_font_names
@@ -37,7 +38,7 @@ def validate_visible_output(output, depth, rounds):
                          'the bundled playground font requires depth 5 and 32 rounds')
 
 
-def build_visible(machine_path, output):
+def build_visible(machine_path, output, *, optimize=True):
     """Compile preprocessing, reductions, and rendering into one rlig schedule.
 
     Input is SKI[optional fuel];PREFIX!. No host reducer or encoder is needed.
@@ -227,6 +228,9 @@ def build_visible(machine_path, output):
         for script in gsub.ScriptList.ScriptRecord:
             script.Script.DefaultLangSys.FeatureIndex = [0]
             script.Script.DefaultLangSys.FeatureCount = 1
+        if optimize:
+            prune_lookups(font)
+            gsub = font['GSUB'].table
         for name_id in (0, 7, 8, 9, 11, 13, 14):
             value = base['name'].getDebugName(name_id)
             if value:

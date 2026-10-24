@@ -3,10 +3,10 @@
   "depth": 5,
   "rounds": 32,
   "capacity": 63,
-  "font_bytes": 883416,
+  "font_bytes": 882872,
   "glyphs": 10158,
-  "lookups": 7021,
-  "font_sha256": "f4fcde597ecc473f929102a322be2ecab508b49cea27b6ee94eab630aab34e4e",
+  "lookups": 6749,
+  "font_sha256": "3170ca512c1aaab600e41e63499a95d8f2a5f8c7ab5c6cde8f19b68b81cd043c",
   "base_sha256": "56a45233d29f11b4dfb86d248e921939d115778f87325e7ae8cc108383d6664d",
   "display": {
     "ski.output0_A": "(",

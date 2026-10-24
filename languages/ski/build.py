@@ -13,8 +13,8 @@ from bounded.outputs import validate_machine_output
 from bounded.visible import DISPLAY_FONT, build_visible, validate_visible_output
 
 
-def build_font(output, *, depth=5, rounds=32):
-    return build(output, depth, rounds)
+def build_font(output, *, depth=5, rounds=32, optimize=True):
+    return build(output, depth, rounds, optimize=optimize)
 
 
 def main():
@@ -23,6 +23,7 @@ def main():
     parser.add_argument('--rounds', type=int, default=32)
     parser.add_argument('--output', '--out', type=Path)
     parser.add_argument('--visible', action='store_true', help='build a visible font at --output')
+    parser.add_argument('--no-optimize', action='store_true', help='retain unreachable templates for profiling')
     args = parser.parse_args()
     try:
         validate(args.depth, args.rounds)
@@ -32,14 +33,14 @@ def main():
         if args.visible:
             with tempfile.TemporaryDirectory(prefix='ski-visible-build-') as td:
                 machine = Path(td) / 'machine.ttf'
-                build(machine, args.depth, args.rounds)
-                build_visible(machine, args.output or DISPLAY_FONT)
+                build(machine, args.depth, args.rounds, optimize=not args.no_optimize)
+                build_visible(machine, args.output or DISPLAY_FONT, optimize=not args.no_optimize)
         else:
             output = args.output or DEFAULT_FONT
             validate_machine_output(output)
-            build(output, args.depth, args.rounds)
+            build(output, args.depth, args.rounds, optimize=not args.no_optimize)
             if args.output is None:
-                build_visible(output, DISPLAY_FONT)
+                build_visible(output, DISPLAY_FONT, optimize=not args.no_optimize)
     except ValueError as error:
         parser.error(str(error))
 

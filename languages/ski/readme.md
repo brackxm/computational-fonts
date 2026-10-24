@@ -118,6 +118,21 @@ and JSON files are bundled; generated feature sources and timings are ignored.
 Identical source and the pinned FontTools version produce identical bytes.
 Rebuild the specimen after changing the visible font.
 
+Both builders prune unreachable GSUB template lookups after allocating the
+complete execution schedule. Contextual helpers remain reachable, and each
+scheduled occurrence retains its own index. Glyph order, input characters,
+GDEF mark sets, outlines and evaluation bounds are preserved. The bundled
+machine font drops from 4,626 to 4,493 lookups and from 335,728 to 335,464 bytes;
+the visible font drops from 7,021 to 6,749 lookups and from 883,416 to 882,872
+bytes. These are size improvements; no shaping speedup is assumed. Pruning
+adds a GSUB serialization/remapping pass to build time.
+
+For an unpruned comparison build, use `--no-optimize` with a separate output:
+
+```bash
+python3 languages/ski/build.py --no-optimize --output /tmp/ski-unpruned.ttf
+```
+
 Non-default visible configurations require a separate `--output` path. The
 bundled visible font stays at depth 5 / 32 rounds to match the playground
 controls and specimen. The builder rejects incompatible bundled builds before
@@ -199,6 +214,12 @@ python3 languages/ski/test_font.py --full
 node languages/ski/test_controls.cjs
 ```
 
+The gate also runs the imported V42 pruning regression: 1,030 comparisons
+between unpruned and pruned machine fonts and the independent reference.
+Additional checks preserve protocol tables and unique schedule indices,
+compare visible-font output before and after pruning, and exercise the
+profiling commands from another working directory.
+
 The quick gate runs protocol, integration and visible-font tests, rebuild
 reproducibility, and 6,603 compact-machine differential checks. It verifies one-call execution with
 the reference disabled, feature-off detection, corrupt tape rejection, digest
@@ -240,6 +261,41 @@ compound S copying, input errors and depth exhaustion. The embedded specimen
 renders as one page. These checks establish bounded behavior on those engines,
 not unbounded evaluation or portability to every OpenType implementation.
 
+## Profiling and benchmarks
+
+Profile an existing machine font without rebuilding it:
+
+```bash
+python3 languages/ski/profile_font.py --samples 30 --warmups 5 > /tmp/ski-profile.json
+python3 languages/ski/profile_font.py --font /tmp/ski-unpruned.ttf --samples 30
+```
+
+Compare temporary unpruned and pruned builds at depth 4 / 8 rounds and
+depth 5 / 32 rounds, or select a single supported configuration:
+
+```bash
+python3 languages/ski/benchmark.py --samples 30 > /tmp/ski-benchmark.json
+python3 languages/ski/benchmark.py --depth 6 --rounds 16 --samples 15
+```
+
+The tools write JSON to stdout; benchmark build diagnostics go to stderr.
+Default font paths resolve relative to the scripts, and explicit paths resolve
+relative to the working directory. Benchmark fonts and sidecars are temporary.
+Reports include Python, FontTools, HarfBuzz and platform versions, font digest,
+size, glyph/lookup counts, statuses, reduction counts, median and nearest-rank
+p95 latency. The benchmark also measures total build time.
+
+Six fixed programs are encoded before timing. Only calls to the HarfBuzz
+binding are timed, including its buffer setup and glyph-name extraction;
+tree encoding, result decoding and deterministic-output checks are outside
+the timed region. Warmups precede samples. Overdeep inputs are reported as
+`input_overflow`; unexpected errors fail the command. These tools profile the
+PUA machine font, rather than the visible `rlig` frontend.
+
+Timings depend on hardware, load, engine and serializer versions. Compare
+runs in a quiet environment using the same versions; size reductions alone
+do not establish faster execution.
+
 ## Source and integration
 
 Imported the bounded evaluator, independent reference, architecture and
@@ -247,6 +303,13 @@ regressions from the user-supplied `font-ski-v44-source.zip` (SHA-256
 `3309d6dede02028a37e5437b3ec2f5683d8dd35119f0f0b04d7e99436a6f5032`).
 The V2–V35 prototype runners, old build logs and historical result files are
 not part of the integrated runtime.
+
+The profiler, comparative benchmark and lookup-pruning regression are adapted
+from [`brackxm/agent-work-2`, `font-ski/main` at `abb34b8`](https://github.com/brackxm/agent-work-2/tree/abb34b8659d1ee98fd38187c9ee00c2105366f75/font-ski).
+Pruning uses FontTools' GSUB reachability/remapping operation directly,
+limiting optimization to GSUB instead of running a whole-font subset.
+GSUB is serialized and reloaded first so shared in-memory contextual subtables
+receive exactly one index remapping, matching the original file-based tool.
 
 Integration replaces the unavailable FontTools 4.63.0 pin with tested 4.60.2,
 fixes the stale protocol assertion rejecting valid depth-six configurations,

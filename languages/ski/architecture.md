@@ -146,7 +146,9 @@ A successful running mode authorizes exactly one fuel decrement. Scratch values 
 
 ## Finite scheduling, not implicit iteration
 
-The compiler explicitly allocates distinct GSUB LookupList indices for every round. The default has 133 scheduled lookup entries per round, repeated 32 times, followed by selection and zero-fuel classification: 4,258 active entries. The default total is 4,626 including shared helper/template entries.
+The compiler explicitly allocates distinct GSUB LookupList indices for every round. The default has 133 scheduled lookup entries per round, repeated 32 times, followed by selection and zero-fuel classification: 4,258 active entries. FontTools' GSUB lookup closure then removes unreachable template entries and remaps contextual helper references. The default total is 4,493, including the reachable shared helpers (4,626 before pruning). The visible frontend performs the same pruning after installing its combined `rlig` schedule.
+
+This pass changes only GSUB: input cmap, glyph IDs, GDEF mark-filter sets, and outlines retain their meaning and bytes. It does not merge scheduled occurrences or reduce the finite execution budget. `--no-optimize` retains the pre-pruning layout for comparative profiling. Differential tests compare actual shaped outputs from both layouts against each other and the independent reference.
 
 Repeated references to the same lookup index are not used as an iteration mechanism. Helper subtables are shared in the compiled font, but each scheduled occurrence has its own index. There is no fixed-point loop in HarfBuzz, no unbounded recursion, and no arbitrary random-access RAM. All paths, filters, and rounds are compiled finite circuits.
 
