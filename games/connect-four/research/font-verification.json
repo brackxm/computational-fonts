@@ -1,0 +1,30 @@
+{
+  "tables": {
+    "dispatch_entries": 621348,
+    "branch_dispatch_entries": 357112,
+    "policy_dispatch_entries": 264229,
+    "terminal_dispatch_entries": 7,
+    "priority_entries": 1585374,
+    "profile_vectors": 37747,
+    "column_profiles": [
+      12839,
+      16005,
+      9680,
+      970,
+      7912,
+      13118,
+      10774
+    ]
+  },
+  "shaping": {
+    "history_shapes": 3286,
+    "complete_games": 500,
+    "harfbuzz": "14.6.0",
+    "median_ms": 0.4373340052552521,
+    "max_ms": 4.33300000440795,
+    "longest_human_history": "b11411123267755752776"
+  },
+  "font_sha256": "155f118e52ea59d6e28075ebdfabff99f50a314a94ee94460c365e67d980a242",
+  "controller_sha256": "a72e1dca6b12e290d34f57e93bd1d651a3ef9b1b7b8bc68ec7cf923b136e93bd",
+  "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995"
+}

@@ -1,0 +1,14 @@
+{
+  "verified": true,
+  "empty_board": true,
+  "nodes": 165071,
+  "edges": 192256,
+  "rank_leaves": 98099,
+  "leaf_states_checked": 86689995,
+  "maximum_plies": 41,
+  "longest_full_history": "41414441114132332236373755555775222767666",
+  "longest_human_history": "b11411123267755752776",
+  "seconds": 19.112,
+  "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995",
+  "checker_source_sha256": "ffa22af24d2e4b4acd0fd8d6ba1d295756024f6c1764eb2114aae6b584b399b0"
+}

@@ -23,8 +23,8 @@ function createConnectFourPlayground() {
     'Bad input. Start with b, then use only digits 1–7. Replay stopped at the first error.',
     'Red wins. Trailing input was ignored. Undo or edit the history to return to the game.',
     'Strategy error. The font could not complete this position.',
-    'Yellow wins. This should be unreachable from a legal history under the pinned strategy.',
-    'Draw. This should be unreachable from a legal history under the pinned strategy.',
+    'Yellow wins. This should be unreachable from a legal history under the verified independent strategy.',
+    'Draw. This should be unreachable from a legal history under the verified independent strategy.',
     'Input limit reached. Undo or edit the history.',
   ];
   let loaded = false, signal = 0, timer = null;
@@ -79,7 +79,7 @@ function createConnectFourPlayground() {
   const ready = Promise.resolve().then(() =>
     document.fonts.load('1000px ConnectFour', connectFourText('b1'))
   ).then(fonts => {
-    if (!fonts.length || measure('b1') !== 1 || measure('b135') !== 2 || measure('b!') !== 4) {
+    if (!fonts.length || measure('b') !== 1 || measure('b1') !== 1 || measure('b!') !== 4) {
       throw new Error('Shaping self-check failed');
     }
     loaded = true; render();

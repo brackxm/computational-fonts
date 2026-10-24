@@ -1,0 +1,184 @@
+{
+  "scope": "fixed endgame only; no empty-board guarantee",
+  "history": "77111372676733526176246",
+  "policy": "synthesized",
+  "certificate": {
+    "nodes": 919,
+    "edges": 1032,
+    "red_nodes": 474,
+    "yellow_nodes": 170,
+    "terminal_nodes": 275
+  },
+  "synthesis": {
+    "status": "verified",
+    "priorities_column_major_bottom_up": [
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      16,
+      17,
+      18,
+      19,
+      28,
+      21,
+      2,
+      3,
+      4,
+      9,
+      12,
+      5,
+      0,
+      8,
+      1,
+      10,
+      11,
+      20,
+      6,
+      35,
+      7,
+      13,
+      14,
+      15,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41
+    ],
+    "constraints": 9,
+    "iterations": 10,
+    "verification_nodes": 170,
+    "oracle_nodes": 5548,
+    "independently_checked_certificate": {
+      "nodes": 919,
+      "edges": 1032,
+      "red_nodes": 474,
+      "yellow_nodes": 170,
+      "terminal_nodes": 275
+    },
+    "examples": [
+      {
+        "board": "94b810808205/68400161418a/1",
+        "allowed_columns": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "board": "94b811808205/68400263418a/1",
+        "allowed_columns": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "board": "94b8118c8215/684006634d8a/1",
+        "allowed_columns": [
+          1,
+          2,
+          6
+        ]
+      },
+      {
+        "board": "94b8118c9215/694006634d8a/1",
+        "allowed_columns": [
+          1
+        ]
+      },
+      {
+        "board": "94b811888205/68400267418a/1",
+        "allowed_columns": [
+          1,
+          2
+        ]
+      },
+      {
+        "board": "94b813848605/6840046b41ba/1",
+        "allowed_columns": [
+          6
+        ]
+      },
+      {
+        "board": "94b810808605/68400061499a/1",
+        "allowed_columns": [
+          1,
+          2,
+          3,
+          6
+        ]
+      },
+      {
+        "board": "94b810008205/68402021418a/1",
+        "allowed_columns": [
+          5
+        ]
+      },
+      {
+        "board": "94b810808205/68400063418a/1",
+        "allowed_columns": [
+          1,
+          2,
+          4
+        ]
+      }
+    ]
+  },
+  "font": {
+    "glyphs": 800,
+    "lookups": 176,
+    "ttf_bytes": 181884,
+    "woff2_bytes": 10328,
+    "ttf_sha256": "679f8920c41ffb9689ad702572fc7cc252fdc8197e433f1ad0ac133bacc77c2d",
+    "woff2_sha256": "5b759f59f066b51f99095dcfeba5f0bd75faa8224ee3baf022f588f56fa974c5"
+  },
+  "shaping": {
+    "harfbuzz": "14.6.0",
+    "history_shapes": 2080,
+    "reachable_cursor_states": 445,
+    "maximum_human_inputs": 8,
+    "median_ms": 0.0137,
+    "max_ms": 0.1098
+  },
+  "verified_on": "2026-10-24",
+  "exact_policy_baseline": {
+    "scope": "fixed endgame only; no empty-board guarantee",
+    "history": "77111372676733526176246",
+    "certificate": {
+      "nodes": 4015,
+      "edges": 5156,
+      "red_nodes": 2062,
+      "yellow_nodes": 820,
+      "terminal_nodes": 1133
+    },
+    "font": {
+      "glyphs": 2958,
+      "lookups": 826,
+      "ttf_bytes": 818964
+    },
+    "shaping": {
+      "harfbuzz": "14.6.0",
+      "history_shapes": 9646,
+      "reachable_cursor_states": 1953,
+      "maximum_human_inputs": 9,
+      "median_ms": 0.0301,
+      "max_ms": 0.2731
+    }
+  },
+  "research_tests": {
+    "methods": 7,
+    "result": "passed",
+    "includes": "Array replay of all 5,040 counterexamples, independent minimax cross-check, certificate corruption rejection, constraint solver and synthesized-policy proof."
+  }
+}

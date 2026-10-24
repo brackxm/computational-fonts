@@ -22,7 +22,7 @@ class TypographyTests(unittest.TestCase):
                 self.assertIn('Michael Brackx', font['name'].getDebugName(0))
                 self.assertIn('Roboto', font['name'].getDebugName(7))
                 license_text = font['name'].getDebugName(13)
-                self.assertIn('GPL-3.0' if game == 'connect-four' else 'Apache License', license_text)
+                self.assertIn('Apache License', license_text)
                 name = TEXT_GLYPHS.get(game, 'status_ready')
                 glyph = font['glyf'][name]
                 _, _, flags = glyph.getCoordinates(font['glyf'])

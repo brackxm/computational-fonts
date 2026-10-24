@@ -1,85 +1,115 @@
 {
-  "verified_on": "2026-10-20",
-  "strategy_revision": "51dc8383472c63aa6e6796a9ef306662eb8bd4bf",
-  "font": {
-    "glyphs": 1855,
-    "lookups": 1567,
-    "driver_records": 312,
-    "shared_stages": 5,
-    "turns": 21,
-    "ttf_bytes": 434620,
-    "woff2_bytes": 46020
-  },
-  "upstream_validation": {
-    "checks_passed": 9,
-    "seconds": 36.2,
-    "scope": "Exhaustive pinned strategy validation; not a GSUB port proof."
-  },
-  "serialization": {
-    "bytes": 10290,
-    "entries": 654,
-    "diagrams": 384,
-    "round_trip": "passed"
-  },
-  "longest_reference": {
+  "verified_on": "2026-10-24",
+  "license": "Apache-2.0",
+  "strategy": {
+    "verified": true,
+    "empty_board": true,
+    "nodes": 165071,
+    "edges": 192256,
+    "rank_leaves": 98099,
+    "leaf_states_checked": 86689995,
     "maximum_plies": 41,
-    "human_history": "b65342431477741666255",
-    "reachable_oriented_leaf_entries": 1229,
-    "opening_states": 251,
-    "memoized_positions": 10163908,
-    "seconds": 67.203
+    "longest_full_history": "41414441114132332236373755555775222767666",
+    "longest_human_history": "b11411123267755752776",
+    "seconds": 19.112,
+    "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995",
+    "checker_source_sha256": "ffa22af24d2e4b4acd0fd8d6ba1d295756024f6c1764eb2114aae6b584b399b0"
   },
-  "differential": {
-    "fresh_and_bundled": "passed",
-    "legal_oriented_opening_edges_per_font": 1822,
-    "full_oriented_opening_edges_per_font": 26,
-    "oriented_diagram_entries_per_font": 1044,
-    "complete_random_and_deterministic_games": 600,
-    "adversarial_histories": 64,
-    "adversarial_unique_prefixes": 1044,
-    "policy_cases": {
-      "immediate_win": 600,
-      "block": 16,
-      "unique_priority": 748,
-      "tied_level_skipped": 259
-    },
-    "all_games": "Red wins",
-    "test_methods": 8,
-    "suite_seconds": 159.756
-  },
-  "shaping": {
-    "harfbuzz": "14.2.1",
-    "history_shapes": 8498,
-    "median_ms": 2.7253,
-    "max_ms": 176.7761,
-    "longest_history_median_ms": 13.2373
-  },
-  "controller": "Node tests against real hb-shape signals passed",
-  "browser": "Actual playground checked: 41-ply win, full-column rejection, undo, reset, color and monochrome.",
-  "limitations": "Finite GSUB differential testing, not an exhaustive implementation proof; one uninterrupted LTR shaping run required.",
-  "artifacts_sha256": {
-    "connect-four-font.ttf": "87133978b90c0a3add7da24dbece4354704c613b69fff2565f8f5932902dd534",
-    "connect-four-font.woff2": "cd5871b7a54f1c918fc3e14dfc01d4b99bf70623f9ec702f1a1d839e7668f6be"
-  },
-  "artwork_update": {
-    "yellow": "Filled color disks with ring outlines for monochrome fallback",
-    "checks": "Fresh/bundled metadata and WOFF2 checks, controller tests, actual browser visual check passed; GSUB/GDEF/cmap/hmtx unchanged."
-  },
-  "refactor_review": {
-    "refactor": "Named register offsets, explicit guarded stages, shared GSUB construction, common gravity-update generator; original GSUB bytes preserved.",
-    "fixed": [
-      "Reference and longest-game board updates no longer disappear under Python -O.",
-      "Absent and synchronously failing Font Loading APIs use the normal failure feedback.",
-      "Undo removes entire Unicode codepoints instead of leaving unmatched surrogate halves.",
-      "Native handles clean up on setup failure; close is idempotent and shaping after close raises a clear error."
+  "font": {
+    "glyphs": 22679,
+    "lookups": 1370,
+    "controller_modes": 58765,
+    "branch_modes": 51016,
+    "priority_maps": 37747,
+    "column_profiles": [
+      12839,
+      16005,
+      9680,
+      970,
+      7912,
+      13118,
+      10774
     ],
-    "validation": "8 Python tests, 14,282 differential comparisons, Node controller tests, real browser Unicode undo and normal game checks.",
-    "remaining_actionable_findings": 0
+    "profile_glyphs": 16005,
+    "driver_records": 139,
+    "tape_registers": 63,
+    "turns": 21,
+    "ttf_bytes": 5150264,
+    "woff2_bytes": 1304292
   },
-  "typography_update": {
-    "text": "Proportional Roboto 2 outlines, centered coordinates and diagnostics, sentence-case labels.",
-    "preserved": "Glyph order, GSUB, GDEF, cmap, COLR, CPAL and all advance widths match the published game; ink sidebearings follow the new outlines.",
-    "validation": "8 Python tests for fresh and bundled fonts, Node controller suite, shared typography tests and browser layout check passed.",
-    "license": "Roboto attribution retained; generated fonts remain GPL-3.0-only."
+  "implementation": {
+    "tables": {
+      "dispatch_entries": 621348,
+      "branch_dispatch_entries": 357112,
+      "policy_dispatch_entries": 264229,
+      "terminal_dispatch_entries": 7,
+      "priority_entries": 1585374,
+      "profile_vectors": 37747,
+      "column_profiles": [
+        12839,
+        16005,
+        9680,
+        970,
+        7912,
+        13118,
+        10774
+      ]
+    },
+    "shaping": {
+      "history_shapes": 3286,
+      "complete_games": 500,
+      "harfbuzz": "14.6.0",
+      "median_ms": 0.4373340052552521,
+      "max_ms": 4.33300000440795,
+      "longest_human_history": "b11411123267755752776"
+    },
+    "font_sha256": "155f118e52ea59d6e28075ebdfabff99f50a314a94ee94460c365e67d980a242",
+    "controller_sha256": "a72e1dca6b12e290d34f57e93bd1d651a3ef9b1b7b8bc68ec7cf923b136e93bd",
+    "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995"
+  },
+  "browser": {
+    "application": "Codex in-app browser on macOS",
+    "woff2_loaded": true,
+    "ttf_fallback_requested": false,
+    "checked": [
+      "Initial ready state",
+      "41-ply Red win",
+      "Undo restores ready",
+      "Full column rejected",
+      "Reset restores new game"
+    ],
+    "screenshot": "research/browser-winning.png",
+    "woff2_url": "connect-four-font.woff2?v=compact-20261024"
+  },
+  "artifacts_sha256": {
+    "connect-four-font.ttf": "155f118e52ea59d6e28075ebdfabff99f50a314a94ee94460c365e67d980a242",
+    "connect-four-font.woff2": "481b84f2a16270881f83c55a089ca422549505b35273e9c51ff2de6f62eae89b",
+    "connect-four-font.abi.json": "0484213cafff77ef609b02b9700d189d92f1e15fbd45e8e8b5e61f54216de761"
+  },
+  "size_optimization": {
+    "methods": [
+      "Direct reply-pair substitutions",
+      "Remove unreachable lookup tables",
+      "Exhaustively verified shared internal policies",
+      "Cross-column order sharing and coalesced same-column priorities",
+      "Shared column profiles"
+    ],
+    "previous_woff2_bytes": 2119548,
+    "woff2_bytes": 1304292,
+    "bytes_saved": 815256,
+    "reduction_percent": 38.4637,
+    "first_independent_woff2_bytes": 3584808,
+    "reduction_from_first_percent": 63.6161,
+    "historical_gpl3_woff2_bytes": 46020,
+    "ratio_to_historical_gpl3": 28.3419,
+    "previous_branch_modes": 60424,
+    "branch_modes": 51016,
+    "previous_priority_maps": 41314,
+    "priority_maps": 37747,
+    "compaction": {
+      "replaced_internal_vertices": 17671,
+      "checked_states": 1217617237,
+      "candidates": 256
+    }
   }
 }

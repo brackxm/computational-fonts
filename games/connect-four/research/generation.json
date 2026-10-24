@@ -1,0 +1,45 @@
+{
+  "license": "Apache-2.0",
+  "inputs": "Standard game rules and independently generated completed subgraphs; no external strategy data.",
+  "seed_sha256": "aac987b00f12e8f467342e1fe639d2cd725ff692616c800a9eff8dc95b5ca5c6",
+  "sources_sha256": {
+    "native.cpp": "43e37763c89040b2fd97f5d00d69423c808fae53c5799751ba43860a3bf1d1f6",
+    "generate.cpp": "81122dbdd9b4e5b5a1e4479ebaf8dc6444c3526471596dabc6254cffb4548817",
+    "check_hybrid.cpp": "ffa22af24d2e4b4acd0fd8d6ba1d295756024f6c1764eb2114aae6b584b399b0",
+    "check_hybrid.py": "ab9861b50ee00aa20cc513da4f0b2f20fa996f74da2ccd8b1974eff1860fff89",
+    "group_policies.cpp": "7e1c90f461ab3403c15067f2bead3ed1975a8b089bc5e30fef684b0183fbe485",
+    "lower.py": "224b49e58dec419e30723b587924b73d66604bd08794f041897647a17763674c",
+    "kernel.py": "a5464471cdb9dbd1f57ad2772b4610d8297fd7215b80c866979f28bde1287513",
+    "verify_kernel.py": "17349e001425fb0c96b6d6ceacfb326aa8b4c157049dd752bcf38c4542ee1f63",
+    "independent.py": "4d449a314fa6c8bcb438b6af7af3d2d4d80548fc02b94de556b0b91485ecfb51",
+    "opening.py": "bcc04acaccd40eeb5489912b6a379c7bfcdbd935c64be7694be52ed5b1fe5ecc",
+    "policy_io.py": "3352d1a4bf1ced4a8f95801b2f10327418bcefa984aba122030b477cebdce89e",
+    "runtime_reference.py": "1f73386ee75109ac3b0437e6f60b6ee47af1b3641036355e6d1b9c61f9b5d555",
+    "compact.cpp": "3d68e669d552d1042b90dabc57220693d985497f134cea1cccdc8df7f3ec8aef",
+    "test_lower.py": "ed38779d92ec26476b5bd6715a6c140d1ffebf17d16f3e351ff266acdd261111"
+  },
+  "generator": {
+    "compiler": "clang++ -O3 -std=c++17",
+    "table_bits": 25,
+    "transposition_table_bytes": 268435456,
+    "rank_iterations": 64,
+    "candidate_verification_budget": 20000000,
+    "completed_native_seconds": 541.98
+  },
+  "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995",
+  "build_source_sha256": "72e1386015127b926b6ca9d835d75bdcd2150f2f9880372370bf23a093aca7e1",
+  "controller_sha256": "a72e1dca6b12e290d34f57e93bd1d651a3ef9b1b7b8bc68ec7cf923b136e93bd",
+  "compaction": {
+    "replaced_internal_vertices": 17671,
+    "checked_states": 1217617237,
+    "candidates": 256,
+    "per_candidate_verification_budget": 10000,
+    "input_certificate_sha256": "cf23a16ab7c55a6dd4eee2bf40a28ecb873ebaeb01db5faafbd2b45951fa4773",
+    "input_tape_sha256": "9e5ed4111c73b632385fb4f68bab2977cd3ad7423085ea9c41de41ab76505c52"
+  },
+  "lowering": {
+    "leaf_orientations_checked": 196198,
+    "cross_column_comparisons_checked": 37020264,
+    "same_column_alternatives_may_share_levels": true
+  }
+}

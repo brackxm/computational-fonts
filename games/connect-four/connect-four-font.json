@@ -1,9 +1,22 @@
 {
-  "glyphs": 1855,
-  "lookups": 1567,
-  "driver_records": 312,
-  "shared_stages": 5,
+  "glyphs": 22679,
+  "lookups": 1370,
+  "controller_modes": 58765,
+  "branch_modes": 51016,
+  "priority_maps": 37747,
+  "column_profiles": [
+    12839,
+    16005,
+    9680,
+    970,
+    7912,
+    13118,
+    10774
+  ],
+  "profile_glyphs": 16005,
+  "driver_records": 139,
+  "tape_registers": 63,
   "turns": 21,
-  "ttf_bytes": 434620,
-  "woff2_bytes": 46020
+  "ttf_bytes": 5150264,
+  "woff2_bytes": 1304292
 }

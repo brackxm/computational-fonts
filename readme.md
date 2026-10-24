@@ -65,10 +65,11 @@ each paragraph separately to bundled HarfBuzz and draws the resulting font outli
 The same input selects the same poem. See its [corpus and shaping notes](literature/poem-oracle/readme.md).
 
 Connect Four reconstructs human-only histories such as `b135`, automatically
-plays Red first, and follows the complete pinned WeakC4 winning strategy. Its
+plays Red first, and follows an independently generated, exhaustively verified
+winning strategy. Its
 [playground](games/connect-four/playground.html) includes column controls, editable
-history, undo and reset. All game logic runs in OpenType shaping. The strategy
-and derived fonts are **GPL-3.0**, an exception to the repository default; see
+history, undo and reset. All game logic runs in OpenType shaping. The implementation, strategy and fonts
+are Apache-2.0; see
 [provenance, verification and limits](games/connect-four/readme.md).
 
 Backgammon reads a documented linear SGF subset from the standard starting
@@ -169,9 +170,9 @@ through ChatGPT and Codex.
 
 ## License
 
-Licensed under the Apache License 2.0, except for the GPL-3.0 Connect Four
-strategy, implementation files and derived fonts identified in its
-[license notes](games/connect-four/PROVENANCE.md). See [`LICENSE`](LICENSE).
+Licensed under the Apache License 2.0. Connect Four's independent strategy and
+fonts also use Apache-2.0; see its [provenance](games/connect-four/PROVENANCE.md).
+See [`LICENSE`](LICENSE).
 The original [First words artwork and generator](graphics/first-words/) use
 the repository's Apache-2.0 license.
 Bundled Roboto sources and fonts derived from them are also Apache-2.0.

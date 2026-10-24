@@ -11,7 +11,7 @@ function shapeWidth(text, disabled=false) {
   if(disabled) args.push('--features=liga=0');
   return JSON.parse(execFileSync('hb-shape',args,{encoding:'utf8'})).reduce((a,g)=>a+g.ax,0);
 }
-const cases={b:1,b1:1,b135:2,b1351:5,bb:4,b0:4,'b4444':3};
+const cases={b:1,b1:1,b135:1,b1351:2,b13511:5,bb:4,b0:4,'b4444':3};
 for(const [source,status] of Object.entries(cases)) {
   assert.equal(connectFourSignal(shapeWidth(connectFourText(source))),status,source);
   assert.equal(connectFourSignal(shapeWidth(connectFourText(source),true)),0);
@@ -44,12 +44,13 @@ async function test({disabled=false,missing=false,rejected=false,unavailable=fal
   let prevented=false;
   listeners.keydown({target:buttons[0],key:'3',preventDefault(){prevented=true;}});
   assert.equal(prevented,true);assert.equal(nodes.history.value,'b13');
-  buttons[4].onclick();assert.equal(nodes.history.value,'b135');assert.equal(nodes.status.dataset.signal,'2');
-  assert.ok(buttons.every(b=>b.disabled));buttons[0].onclick();assert.equal(nodes.history.value,'b135');
-  nodes.undo.onclick();assert.equal(nodes.history.value,'b13');assert.equal(nodes.status.dataset.signal,'1');
+  buttons[4].onclick();assert.equal(nodes.history.value,'b135');assert.equal(nodes.status.dataset.signal,'1');
+  buttons[0].onclick();assert.equal(nodes.history.value,'b1351');assert.equal(nodes.status.dataset.signal,'2');
+  assert.ok(buttons.every(b=>b.disabled));buttons[0].onclick();assert.equal(nodes.history.value,'b1351');
+  nodes.undo.onclick();assert.equal(nodes.history.value,'b135');assert.equal(nodes.status.dataset.signal,'1');
   nodes.reset.onclick();assert.equal(nodes.history.value,'b');
   app.replace('b4444');assert.equal(nodes.status.dataset.signal,'3');nodes.undo.onclick();assert.equal(nodes.status.dataset.signal,'1');
-  app.replace('b1351');assert.equal(nodes.status.dataset.signal,'5');
+  app.replace('b13511');assert.equal(nodes.status.dataset.signal,'5');
   app.replace('bλ');assert.equal(nodes.status.dataset.signal,'4');
   app.replace('b🙂');nodes.undo.onclick();assert.equal(nodes.history.value,'b');assert.equal(nodes.status.dataset.signal,'1');
   nodes.history.value='b1';nodes.history.listeners.input();assert.equal(nodes.drawing.textContent,'');assert.ok(buttons.every(b=>b.disabled));app.render();
@@ -58,6 +59,6 @@ async function test({disabled=false,missing=false,rejected=false,unavailable=fal
   assert.equal(nodes.history.value,'b1');
   app.replace('');assert.equal(nodes.drawing.textContent,'');
   app.replace('b'+'1'.repeat(256));assert.equal(nodes.drawing.textContent,'');
-  app.replace('b65342431477741666255');assert.equal(nodes.status.dataset.signal,'2');
+  app.replace('b11411123267755752776');assert.equal(nodes.status.dataset.signal,'2');
 }
 (async()=>{await test();await test({disabled:true});await test({missing:true});await test({rejected:true});await test({unavailable:true});await test({throws:true});console.log('Controller tests passed (real HarfBuzz font signals).');})().catch(e=>{console.error(e);process.exitCode=1;});

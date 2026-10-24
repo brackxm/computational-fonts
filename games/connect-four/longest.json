@@ -1,8 +1,0 @@
-{
-  "maximum_plies": 41,
-  "human_history": "b65342431477741666255",
-  "reachable_oriented_leaf_entries": 1229,
-  "opening_states": 251,
-  "memoized_positions": 10163908,
-  "seconds": 67.203
-}
