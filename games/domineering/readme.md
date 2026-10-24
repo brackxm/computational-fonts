@@ -36,7 +36,7 @@ with `liga` enabled; zero letter/word spacing and no kerning. Advance is 1,800
 units plus status 1–6. COLRv0 provides color with a monochrome fallback. The
 playground caps source at 1,024 characters. Actual host shaping limits apply.
 
-The bundled font contains 798 glyphs, 235 GSUB lookups and 180,996 bytes.
+The bundled font contains 798 glyphs, 235 GSUB lookups and 200,916 bytes.
 
 ## Build and verify
 
@@ -60,7 +60,7 @@ both sides, wins/losses, Undo/reset, stale clearing and font-loading failures.
 Original rules implementation, generated policy and geometric artwork;
 Apache 2.0. No external strategy data is embedded.
 
-Typography uses smooth, proportional Roboto Regular and Bold outlines from the
-[pinned Apache-2.0 sources](../../decoders/shared/fonts/roboto-2/readme.md).
-The generated font retains upstream attribution. Text is baked in at build
-time; no installed typeface or runtime font download is required.
+Typography uses original, proportional [Game Sans](../shared/fonts/game-sans/readme.md)
+Regular and Bold outlines, Copyright 2026 Michael Brackx, Apache 2.0.
+Text is baked in at build time; no installed typeface or runtime font download
+is required, and no third-party font outlines are used.

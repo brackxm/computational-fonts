@@ -20,7 +20,7 @@ Enter a command and press Enter, or use the common-command buttons. Type
 world unchanged. New game starts over; Undo removes the last command.
 
 You can also open [text-adventure.odt](text-adventure.odt) in **LibreOffice
-Writer**. It embeds the adventure font and Roboto, so no font installation or
+Writer**. It embeds the adventure font and Game Sans, so no font installation or
 web server is needed. Place the caret at the end of the blue scene and append
 commands such as `east;take key;`. Keep the whole history in that paragraph;
 do not press Enter inside it. Delete a complete command to undo. The plain-text
@@ -109,7 +109,7 @@ undo, reset, copyable history, restore and the command limit.
   Distinct lookup indices provide clock passes without copying the large
   rule tables. Previous feedback is hidden when a new command is applied.
 - World and feedback glyphs draw the latest scene. Room panels, inventory
-  panels and lines are shared as TrueType components. Proportional Roboto 2
+  panels and lines are shared as TrueType components. Original Game Sans
   outlines give the scene sentence-case prose and bold headings. Line wrapping
   uses measured text widths. Input letters and obsolete replies are invisible.
 - Up to **128 commands**, each at most **24 printable ASCII characters**,
@@ -138,8 +138,7 @@ start;east;take key;west;north;unlock door;east;take crystal;west;north;take lam
 ## License
 
 Apache License 2.0; see the root [LICENSE](../../LICENSE).
-The story and game rules are original work. Scene lettering uses Roboto 2
-Regular and Bold outlines, baked into the font by
-[`game_text.py`](../shared/game_text.py). Roboto is Copyright 2015 Google Inc.,
-Apache 2.0; the font metadata retains its attribution. See the root
-[third-party notices](../../THIRD_PARTY_NOTICES.md).
+The story and game rules are original work. Scene lettering uses original
+[Game Sans](../shared/fonts/game-sans/readme.md) Regular and Bold outlines,
+baked into the font by [`game_text.py`](../shared/game_text.py). The lettering
+is Copyright 2026 Michael Brackx, Apache 2.0; no third-party font outlines are used.

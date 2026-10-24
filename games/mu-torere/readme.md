@@ -87,7 +87,7 @@ verification. All strategy data is regenerated locally from these rules.
 
 ## A forward-reading font, with no shaping clock
 
-The bundled TTF contains **4,469 glyphs, 676 GSUB lookups, and 541,676 bytes**.
+The bundled TTF contains **4,469 glyphs, 676 GSUB lookups, and 535,348 bytes**.
 Its six feature stages are:
 
 1. Remove insignificant spaces.
@@ -169,7 +169,7 @@ are also checked against the Wythoff and Cram test suites.
 All code, generated policy data, and geometric artwork are
 original, licensed under Apache 2.0. No external strategy table is embedded.
 
-Titles, coordinates, and status labels use smooth, proportional Roboto 2
-outlines baked into the font by [`game_text.py`](../shared/game_text.py).
-Roboto is Copyright 2015 Google Inc., Apache 2.0; the font metadata retains
-its attribution. See the root [third-party notices](../../THIRD_PARTY_NOTICES.md).
+Titles, coordinates, and status labels use original, proportional
+[Game Sans](../shared/fonts/game-sans/readme.md) Regular and Bold outlines, baked
+into the font by [`game_text.py`](../shared/game_text.py). The lettering is
+Copyright 2026 Michael Brackx, Apache 2.0; no third-party font outlines are used.

@@ -51,11 +51,49 @@ class FontTests(unittest.TestCase):
         self.assertEqual(len(abi['registers']), 63)
         self.assertFalse((HERE/'upstream').exists())
 
+    def test_verification_records_match_distribution(self):
+        report = read_json(HERE/'verification.json')
+        implementation = read_json(HERE/'research/font-verification.json')
+        measurements = read_json(HERE/'connect-four-font.json')
+        abi = read_json(HERE/'connect-four-font.abi.json')
+        artifacts = ('connect-four-font.ttf', 'connect-four-font.woff2',
+                     'connect-four-font.abi.json', 'connect-four-font.json')
+        for name in artifacts:
+            with self.subTest(artifact=name):
+                self.assertEqual(report['artifacts_sha256'].get(name),
+                                 hashlib.sha256((HERE/name).read_bytes()).hexdigest())
+        self.assertEqual(set(report['artifacts_sha256']), set(artifacts))
+        self.assertEqual(report['implementation'], implementation)
+        self.assertEqual(implementation['font_sha256'], report['artifacts_sha256']['connect-four-font.ttf'])
+        self.assertEqual(implementation['font_sha256'], abi['font_sha256'])
+        self.assertEqual(implementation['controller_sha256'], abi['controller_sha256'])
+        self.assertEqual(implementation['certificate_sha256'], self.proof['certificate_sha256'])
+        self.assertEqual(report['strategy'], self.proof)
+        self.assertEqual(report['font'], measurements)
+        self.assertEqual(measurements, {key: abi[key] for key in measurements})
+        for suffix, key in (('ttf', 'ttf_bytes'), ('woff2', 'woff2_bytes')):
+            self.assertEqual(measurements[key], (HERE/f'connect-four-font.{suffix}').stat().st_size)
+        sizes = report['size_optimization']
+        self.assertEqual(sizes['woff2_bytes'], measurements['woff2_bytes'])
+        self.assertEqual(sizes['bytes_saved'], sizes['previous_woff2_bytes']-sizes['woff2_bytes'])
+        self.assertAlmostEqual(sizes['reduction_percent'],
+                               100*(1-sizes['woff2_bytes']/sizes['previous_woff2_bytes']), places=4)
+        self.assertAlmostEqual(sizes['reduction_from_first_percent'],
+                               100*(1-sizes['woff2_bytes']/sizes['first_independent_woff2_bytes']), places=4)
+        self.assertAlmostEqual(sizes['ratio_to_historical_gpl3'],
+                               sizes['woff2_bytes']/sizes['historical_gpl3_woff2_bytes'], places=4)
+        browser = report['browser']
+        self.assertEqual(browser['woff2_sha256'], report['artifacts_sha256']['connect-four-font.woff2'])
+        self.assertIn(browser['woff2_url'], (HERE/'playground.html').read_text())
+        self.assertEqual(browser['screenshot_sha256'],
+                         hashlib.sha256((HERE/browser['screenshot']).read_bytes()).hexdigest())
+
     def test_license_and_woff2_payload(self):
         with TTFont(HERE/'connect-four-font.ttf', lazy=True) as font, TTFont(HERE/'connect-four-font.woff2', lazy=True) as web:
             self.assertIn('Apache License', font['name'].getDebugName(13))
             self.assertNotIn('GPL', font['name'].getDebugName(13))
-            self.assertIn('Copyright 2015 Google Inc.', font['name'].getDebugName(0))
+            self.assertNotIn('Google', font['name'].getDebugName(0))
+            self.assertIn('Game Sans', font['name'].getDebugName(10))
             for tag in ('GSUB', 'GDEF', 'cmap', 'hmtx', 'glyf', 'COLR', 'CPAL'):
                 self.assertEqual(font.reader[tag], web.reader[tag], tag)
 

@@ -87,7 +87,7 @@ inspect the resulting board, including discovered attacks and pins. Opening
 positions use a small decision tree rather than a linear book scan. One
 cleanup pass hides complete older records and leaves only the final board.
 
-The bundled TTF is 4,463,004 bytes, with 7,433 glyphs and 2,682 lookups.
+The bundled TTF is 4,485,684 bytes, with 7,433 glyphs and 2,682 lookups.
 
 Use the encoder in [`protocol.py`](protocol.py) or `gardnerText()` in
 [`controls.js`](controls.js). It frames the source with U+E000/U+E001, maps
@@ -152,6 +152,6 @@ python3 games/gardner/book.py --engine /absolute/path/to/stockfish
 `--positions` and `--nodes` control the budgets. Normal font rebuilds use the
 bundled book and do not run or download an engine.
 
-Code, geometric piece artwork, and generated book are Apache 2.0. Text outlines
-use the repository's pinned Apache-2.0 Roboto 2 fonts, with attribution retained
-in the font metadata and root [third-party notices](../../THIRD_PARTY_NOTICES.md).
+Code, geometric piece artwork, and generated book are Apache 2.0. Text uses
+original [Game Sans](../shared/fonts/game-sans/readme.md) outlines, Copyright
+2026 Michael Brackx, Apache 2.0. No third-party font outlines are used.

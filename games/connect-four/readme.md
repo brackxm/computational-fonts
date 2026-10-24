@@ -38,7 +38,7 @@ The playground caps pasted input at 256 characters.
 
 The board, labels, diagnostics and last-move arrow are embedded in the font.
 COLR/CPAL paints the disks; the monochrome fallback draws Yellow as a ring.
-Labels use proportional Roboto 2 outlines.
+Labels use original, proportional [Game Sans](../shared/fonts/game-sans/readme.md) outlines.
 
 ## Strategy and proof
 
@@ -135,8 +135,15 @@ model, including the longest game and seeded complete legal games:
 .venv/bin/python games/connect-four/research/verify_kernel.py \
   games/connect-four/connect-four-font.ttf \
   --controller games/connect-four/research/controller.json.gz \
-  --proof games/connect-four/research/winning-policy-verification.json
+  --proof games/connect-four/research/winning-policy-verification.json \
+  --report games/connect-four/research/font-verification.json
 ```
+
+After rebuilding a distributed font, refresh `verification.json` with that
+implementation report, the current measurements and artifact hashes, and fresh
+browser evidence. `python3 games/connect-four/test_font.py` checks both reports
+against the shipped TTF, WOFF2, ABI, measurements, and browser screenshot; stale
+records fail even when the font and its ABI were rebuilt together.
 
 All **621,348 dispatch entries and 1,585,374 priority entries** matched. The
 recorded shaping run checked **3,286 histories and 500 complete games**, all
@@ -145,9 +152,9 @@ machine; timings depend on the machine, engine and history. The policy proof
 is exhaustive; engine tests and binary readback are implementation validation,
 not a formal proof of a font shaper. One uninterrupted LTR run is required.
 
-The font is **5,150,264 bytes TTF / 1,304,292 bytes WOFF2** (about 1.30 MB
-WOFF2). This is **38.5% smaller** than the previous 2.12 MB WOFF2 and **63.6%
-smaller** than the first complete independent font at 3.58 MB. See the generated
+The font is **5,159,328 bytes TTF / 1,311,492 bytes WOFF2** (about 1.31 MB
+WOFF2). Earlier complete independent builds were about 2.12 MB and 3.58 MB
+WOFF2. See the generated
 [measurements](connect-four-font.json) and [verification](verification.json).
 [Research instructions](research/README.md) describe complete regeneration.
 
@@ -169,6 +176,6 @@ search, lowering or font.
 ## License
 
 All current implementation code, strategy data and fonts in this folder are
-Apache-2.0. Roboto 2 is Copyright 2015 Google Inc., Apache-2.0, with attribution
-retained in the generated font. See [PROVENANCE.md](PROVENANCE.md). The removed
+Apache-2.0. Game Sans lettering is original, Copyright 2026 Michael Brackx;
+no third-party font outlines are used. See [PROVENANCE.md](PROVENANCE.md). The removed
 GPL strategy is not a dependency of builds, validation or play.

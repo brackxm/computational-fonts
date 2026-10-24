@@ -15,6 +15,7 @@ from fontTools.ttLib import TTFont
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "decoders/shared/fonts/roboto-2/Roboto-Regular.ttf"
+GAME_BASE = ROOT / "games/shared/fonts/game-sans/GameSans-Regular.ttf"
 MIMETYPE = "application/vnd.oasis.opendocument.text"
 NS = {
     "office": "urn:oasis:names:tc:opendocument:xmlns:office:1.0",
@@ -355,7 +356,7 @@ SPECS = (
         "history with start; to begin again.",
         "Up to 128 commands of at most 24 ASCII characters each. "
         "Keep the history in one paragraph and one font; do not press Enter inside it. "
-        "Copy the scene to save its underlying history. The Roboto copy is independent.",
+        "Copy the scene to save its underlying history. The Game Sans copy is independent.",
         size=64, line_height="100%", compact=True, unbroken_run=True,
     ),
 )
@@ -402,10 +403,14 @@ def font_family(path):
         return font["name"].getBestFamilyName()
 
 
-def declare_fonts(root, family):
+def body_font(spec):
+    return GAME_BASE if spec.folder.startswith('games/') else BASE
+
+
+def declare_fonts(root, family, base=BASE):
     decls = element(root, "office:font-face-decls")
     for name, actual, filename in (
-        ("BodyFont", font_family(BASE), "Roboto-Regular.ttf"),
+        ("BodyFont", font_family(base), base.name),
         ("ComputeFont", family, "computational.ttf"),
     ):
         face = element(decls, "style:font-face", {
@@ -423,7 +428,7 @@ def styles_xml(spec, family):
     shaping_margin = max(2000, ceil(max(len(e.source) for e in spec.examples)
                                     * spec.size * 2.54 / 72) + 2000)
     root = document("styles")
-    declare_fonts(root, family)
+    declare_fonts(root, family, body_font(spec))
     styles = element(root, "office:styles")
     default = element(styles, "style:default-style", {"style:family": "paragraph"})
     element(default, "style:paragraph-properties", {
@@ -498,7 +503,7 @@ def styles_xml(spec, family):
 
 def content_xml(spec, family):
     root = document("content")
-    declare_fonts(root, family)
+    declare_fonts(root, family, body_font(spec))
     if spec.unbroken_run:
         # Writer can estimate line breaks before applying GSUB. Give long
         # histories a wide shaping paragraph, inside a page-width blue cell.
@@ -531,7 +536,7 @@ def content_xml(spec, family):
     for index, example in enumerate(spec.examples, 1):
         paragraph("Section", example.label)
         if not spec.source_appendix:
-            paragraph("Label", "UNDERLYING TEXT / ROBOTO")
+            paragraph("Label", "UNDERLYING TEXT / " + font_family(body_font(spec)).upper())
             paragraph("Source", example.source)
         paragraph("Label", "SAME TEXT / COMPUTATIONAL FONT")
         if spec.unbroken_run:
@@ -554,7 +559,7 @@ def content_xml(spec, family):
     if spec.source_appendix:
         for example in spec.examples:
             paragraph("SourceAppendix", example.label + " / plain text")
-            paragraph("Label", "UNDERLYING TEXT / ROBOTO")
+            paragraph("Label", "UNDERLYING TEXT / " + font_family(body_font(spec)).upper())
             paragraph("Source", example.source)
     return xml_bytes(root)
 
@@ -588,7 +593,7 @@ def build(spec):
         "meta.xml": ("text/xml", xml_bytes(meta)),
         "settings.xml": ("text/xml", xml_bytes(settings)),
         "Fonts/computational.ttf": ("application/x-font-ttf", font_path.read_bytes()),
-        "Fonts/Roboto-Regular.ttf": ("application/x-font-ttf", BASE.read_bytes()),
+        "Fonts/" + body_font(spec).name: ("application/x-font-ttf", body_font(spec).read_bytes()),
         "LICENSE.txt": ("text/plain", (ROOT / "LICENSE").read_bytes()),
         "THIRD_PARTY_NOTICES.txt": ("text/plain", (ROOT / "THIRD_PARTY_NOTICES.md").read_bytes()),
     }

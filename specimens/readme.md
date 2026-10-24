@@ -1,7 +1,9 @@
 # Editable ODF specimens
 
 Each project has an `.odt` document with editable sample text, its bundled
-computational font, and the ordinary Roboto 2 font embedded in the package.
+computational font, and an ordinary text font embedded in the package.
+Game specimens use original [Game Sans](../games/shared/fonts/game-sans/readme.md);
+other specimens use Roboto 2.
 Open it in LibreOffice Writer and follow its "Try it" instructions. Font
 installation, macros, JavaScript, and a web server are unnecessary.
 

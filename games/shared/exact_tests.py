@@ -118,9 +118,9 @@ class ExactFontTests(unittest.TestCase):
 
     def test_smooth_typography(self):
         with TTFont(self.font) as font:
-            self.assertIn('Copyright 2015 Google Inc.', font['name'].getDebugName(0))
             self.assertIn('Michael Brackx', font['name'].getDebugName(0))
-            self.assertIn('Roboto', font['name'].getDebugName(7))
+            self.assertIn('Game Sans', font['name'].getDebugName(10))
+            self.assertNotIn('Google', font['name'].getDebugName(0))
             for name in ('board', 'role_0', 'status_ready'):
                 glyph = font['glyf'][name]
                 _, _, flags = glyph.getCoordinates(font['glyf'])

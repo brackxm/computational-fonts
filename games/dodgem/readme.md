@@ -33,7 +33,7 @@ GSUB cursors, removes old cursors and last-move marks afterward, and has no
 fixed shaping clock. The browser contains no board or strategy model. Artwork
 uses original reusable car components, distinguishable in monochrome too.
 Only the standard initial position is supported. The bundled font contains
-1,247 glyphs, 357 GSUB lookups and 343,480 bytes.
+1,247 glyphs, 357 GSUB lookups and 405,392 bytes.
 
 ## Protocol, build and verification
 
@@ -63,7 +63,7 @@ Undo/reset, terminal freezing and font/controller failures are covered.
 
 Original implementation, strategy data and artwork; Apache 2.0. No external strategy table is embedded.
 
-Typography uses smooth, proportional Roboto Regular and Bold outlines from the
-[pinned Apache-2.0 sources](../../decoders/shared/fonts/roboto-2/readme.md).
-The generated font retains upstream attribution. Text is baked in at build
-time; no installed typeface or runtime font download is required.
+Typography uses original, proportional [Game Sans](../shared/fonts/game-sans/readme.md)
+Regular and Bold outlines, Copyright 2026 Michael Brackx, Apache 2.0.
+Text is baked in at build time; no installed typeface or runtime font download
+is required, and no third-party font outlines are used.

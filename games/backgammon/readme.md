@@ -94,7 +94,7 @@ The practical limit is **128 turns**, including rolls with no movement: at most
 512 explicit checker transfers. The font runs 1674 shared clock passes; a turn
 with four transfers takes 13 passes, and supported framing/root properties
 take at most eight more. Property duplicates cannot consume unbounded passes.
-At the cap, the bundled font is about 1.2 MB. On the development machine a full
+At the cap, the bundled font is about 1.23 MB. On the development machine a full
 128-turn/512-transfer `hb-shape` invocation takes about 350 ms including process
 startup; measurements vary by host. The same maximum record was checked in the
 browser. The bound keeps interactive re-shaping practical without enumerating
@@ -201,7 +201,7 @@ Original board, checkers and pips; Copyright 2026 Michael Brackx.
 Apache License 2.0; see the root [LICENSE](../../LICENSE). Font metadata permits
 editable embedding (`fsType=0`).
 
-Coordinates, counts, and diagnostics use smooth, proportional Roboto 2 outlines
-baked into the font by [`game_text.py`](../shared/game_text.py). Roboto is
-Copyright 2015 Google Inc., Apache 2.0; the font metadata retains its attribution.
-See the root [third-party notices](../../THIRD_PARTY_NOTICES.md).
+Coordinates, counts, and diagnostics use original, proportional
+[Game Sans](../shared/fonts/game-sans/readme.md) outlines baked into the font by
+[`game_text.py`](../shared/game_text.py). The lettering is Copyright 2026
+Michael Brackx, Apache 2.0; no third-party font outlines are used.

@@ -39,7 +39,7 @@ The browser transports text, measures status and stores Undo; it has no
 board, score or strategy model. Only the fixed 2×2-box game is supported.
 
 The shared forward-cursor compiler has no repeated shaping clock or runtime
-search. The bundled font contains 1,432 glyphs, 574 GSUB lookups and 463,308
+search. The bundled font contains 1,432 glyphs, 574 GSUB lookups and 469,656
 bytes. The [Chomp transport protocol](../chomp/readme.md) applies: U+E000/U+E001
 framing, ASCII/private-use aliases, one LTR run with `liga`, and zero kerning
 or letter/word spacing. Advance is 1,800 units plus status 1–6, or **7 for a
@@ -69,7 +69,7 @@ wins/losses/draws, Undo/reset, stale clearing and font-loading failures.
 
 Original implementation, generated policies and artwork; Apache 2.0.
 
-Typography uses smooth, proportional Roboto Regular and Bold outlines from the
-[pinned Apache-2.0 sources](../../decoders/shared/fonts/roboto-2/readme.md).
-The generated font retains upstream attribution. Text is baked in at build
-time; no installed typeface or runtime font download is required.
+Typography uses original, proportional [Game Sans](../shared/fonts/game-sans/readme.md)
+Regular and Bold outlines, Copyright 2026 Michael Brackx, Apache 2.0.
+Text is baked in at build time; no installed typeface or runtime font download
+is required, and no third-party font outlines are used.

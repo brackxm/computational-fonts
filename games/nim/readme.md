@@ -74,7 +74,7 @@ The binary columns use five bits, weighted **16, 8, 4, 2, 1**. The gold XOR row
 shows both decimal and binary results. In normal play a zero XOR is losing for
 the next mover. It is not a sufficient rule for the small misère endgame.
 
-The bundled TTF contains **774 glyphs, 2,984 GSUB lookups, and 265,824 bytes**.
+The bundled TTF contains **774 glyphs, 2,984 GSUB lookups, and 471,240 bytes**.
 Forty-nine shaping passes cover every legal game: there are initially at most
 93 tokens and every move removes at least one. End validation, final XOR
 calculation, and source hiding run afterward. This is the complete bounded
@@ -142,7 +142,7 @@ tables, and shared scheduling changes are checked against existing game fonts.
 All code, generated arithmetic tables, and token artwork are
 original and licensed under Apache 2.0. Shared helpers are in `../shared/`.
 
-Titles, coordinates, and status labels use smooth, proportional Roboto 2
-outlines baked into the font by [`game_text.py`](../shared/game_text.py).
-Roboto is Copyright 2015 Google Inc., Apache 2.0; the font metadata retains
-its attribution. See the root [third-party notices](../../THIRD_PARTY_NOTICES.md).
+Titles, coordinates, and status labels use original, proportional
+[Game Sans](../shared/fonts/game-sans/readme.md) Regular and Bold outlines, baked
+into the font by [`game_text.py`](../shared/game_text.py). The lettering is
+Copyright 2026 Michael Brackx, Apache 2.0; no third-party font outlines are used.

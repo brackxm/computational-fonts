@@ -69,12 +69,15 @@ Fonts built solely from original geometric outlines do not incorporate Roboto.
 
 ## Game font typography
 
-Game fonts built with `games/shared/game_text.py` use decomposed outlines from
-the pinned Roboto Regular and Bold sources above for their titles, coordinates
-and status labels, and the text adventure's prose. The generated fonts retain
-Google's copyright, trademark, and Apache-2.0 attribution and identify Michael
-Brackx's modifications. Board
-artwork remains original. Text is baked into the font at build time; no
+Game fonts built with `games/shared/game_text.py` now use original Game Sans
+Regular and Bold outlines for their titles, coordinates, status labels, and
+the text adventure's prose. The independently drawn source is
+[`games/shared/game_sans.py`](games/shared/game_sans.py); see the
+[font documentation](games/shared/fonts/game-sans/readme.md). Game Sans and the
+board artwork are Copyright 2026 Michael Brackx, Apache-2.0. These game fonts
+contain no Roboto outlines. Game ODT specimens also embed Game Sans for body
+text. Earlier game-font editions used Roboto and retain their original
+attribution requirements. Text is baked into the font at build time; no
 installed typeface or runtime font download is required. Connect Four's
 independently generated strategy and derived font are also Apache-2.0; see its
 [provenance](games/connect-four/PROVENANCE.md).

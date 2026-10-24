@@ -19,10 +19,13 @@ The exact-opponent games can use these independent helpers:
   checks, status measurement, candidate submission, and stale-result clearing.
   The host supplies no board state or opponent strategy.
 - `native_font.py`: persistent HarfBuzz binding for testing real font outputs.
-- `game_text.py`: smooth, proportionally spaced labels from the bundled Roboto
-  Regular/Bold outlines, with ink centering, left alignment, measured widths,
-  accented game names, and retained quadratic curves.
-  `test_game_text.py` checks label curves, spacing, and bundled attribution.
+- `game_sans.py`: independently drawn Game Sans Regular/Bold, generated from
+  original stroke skeletons with quadratic curves. See the
+  [base fonts, license, and build instructions](fonts/game-sans/readme.md).
+- `game_text.py`: smooth, proportionally spaced labels from Game Sans, with
+  ink centering, left alignment, measured widths, and accented game names.
+  `test_game_text.py` checks reproducible base fonts, label curves, spacing,
+  metadata, and the current fonts embedded in game ODT specimens.
 - `exact-game.css`: shared presentation styling for finite-policy playgrounds.
 - `exactgame.py`: build-time exact finite-game policies and their forward-cursor
   font compiler. Games provide their own rules, move tokens, and artwork.

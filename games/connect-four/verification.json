@@ -34,8 +34,8 @@
     "driver_records": 139,
     "tape_registers": 63,
     "turns": 21,
-    "ttf_bytes": 5150264,
-    "woff2_bytes": 1304292
+    "ttf_bytes": 5159328,
+    "woff2_bytes": 1311492
   },
   "implementation": {
     "tables": {
@@ -59,11 +59,11 @@
       "history_shapes": 3286,
       "complete_games": 500,
       "harfbuzz": "14.6.0",
-      "median_ms": 0.4373340052552521,
-      "max_ms": 4.33300000440795,
+      "median_ms": 0.4235420055920258,
+      "max_ms": 53.008084010798484,
       "longest_human_history": "b11411123267755752776"
     },
-    "font_sha256": "155f118e52ea59d6e28075ebdfabff99f50a314a94ee94460c365e67d980a242",
+    "font_sha256": "eef61dd080003bf70b24cb64d32d810548b2bde08c8606f20c19539b5209c77d",
     "controller_sha256": "a72e1dca6b12e290d34f57e93bd1d651a3ef9b1b7b8bc68ec7cf923b136e93bd",
     "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995"
   },
@@ -79,12 +79,16 @@
       "Reset restores new game"
     ],
     "screenshot": "research/browser-winning.png",
-    "woff2_url": "connect-four-font.woff2?v=compact-20261024"
+    "woff2_url": "connect-four-font.woff2?v=game-sans-20261024-2",
+    "verified_on": "2026-10-24",
+    "woff2_sha256": "5fc14ce6ca33cb320f2419421c06b992083eca1af7d666da0c729d9d37f7963f",
+    "screenshot_sha256": "2ccb6cb5bd53af911941ebf92c6351293d2cc26c9dade4c855ee0f937c243bbc"
   },
   "artifacts_sha256": {
-    "connect-four-font.ttf": "155f118e52ea59d6e28075ebdfabff99f50a314a94ee94460c365e67d980a242",
-    "connect-four-font.woff2": "481b84f2a16270881f83c55a089ca422549505b35273e9c51ff2de6f62eae89b",
-    "connect-four-font.abi.json": "0484213cafff77ef609b02b9700d189d92f1e15fbd45e8e8b5e61f54216de761"
+    "connect-four-font.ttf": "eef61dd080003bf70b24cb64d32d810548b2bde08c8606f20c19539b5209c77d",
+    "connect-four-font.woff2": "5fc14ce6ca33cb320f2419421c06b992083eca1af7d666da0c729d9d37f7963f",
+    "connect-four-font.abi.json": "986d8aebebbf070bdc0c15c3a539fcade763f7263a37a686c35afe4e602a41b5",
+    "connect-four-font.json": "1b91f22fe4a36ffb8b908996173e44154c64e4f94bce44e818bedfde95c6661f"
   },
   "size_optimization": {
     "methods": [
@@ -95,13 +99,13 @@
       "Shared column profiles"
     ],
     "previous_woff2_bytes": 2119548,
-    "woff2_bytes": 1304292,
-    "bytes_saved": 815256,
-    "reduction_percent": 38.4637,
+    "woff2_bytes": 1311492,
+    "bytes_saved": 808056,
+    "reduction_percent": 38.124,
     "first_independent_woff2_bytes": 3584808,
-    "reduction_from_first_percent": 63.6161,
+    "reduction_from_first_percent": 63.4153,
     "historical_gpl3_woff2_bytes": 46020,
-    "ratio_to_historical_gpl3": 28.3419,
+    "ratio_to_historical_gpl3": 28.4983,
     "previous_branch_modes": 60424,
     "branch_modes": 51016,
     "previous_priority_maps": 41314,

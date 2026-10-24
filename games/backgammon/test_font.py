@@ -75,7 +75,8 @@ class BackgammonFontTests(unittest.TestCase):
             with self.subTest(font=path), TTFont(path) as font:
                 self.assertEqual(font["name"].getDebugName(1), "Backgammon SGF Replay")
                 self.assertIn("Copyright 2026 Michael Brackx", font["name"].getDebugName(0))
-                self.assertIn("Copyright 2015 Google Inc.", font["name"].getDebugName(0))
+                self.assertNotIn("Google", font["name"].getDebugName(0))
+                self.assertIn("Game Sans", font["name"].getDebugName(10))
                 self.assertIn("Apache License, Version 2.0", font["name"].getDebugName(13))
                 self.assertEqual(font["OS/2"].fsType, 0)
                 self.assertEqual(font["COLR"].version, 0)

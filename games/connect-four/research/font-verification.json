@@ -20,11 +20,11 @@
     "history_shapes": 3286,
     "complete_games": 500,
     "harfbuzz": "14.6.0",
-    "median_ms": 0.4373340052552521,
-    "max_ms": 4.33300000440795,
+    "median_ms": 0.4235420055920258,
+    "max_ms": 53.008084010798484,
     "longest_human_history": "b11411123267755752776"
   },
-  "font_sha256": "155f118e52ea59d6e28075ebdfabff99f50a314a94ee94460c365e67d980a242",
+  "font_sha256": "eef61dd080003bf70b24cb64d32d810548b2bde08c8606f20c19539b5209c77d",
   "controller_sha256": "a72e1dca6b12e290d34f57e93bd1d651a3ef9b1b7b8bc68ec7cf923b136e93bd",
   "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995"
 }

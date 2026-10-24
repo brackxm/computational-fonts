@@ -394,6 +394,11 @@ def build_font(output):
     lookups.LookupCount = len(lookups.Lookup)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
+    # The optional HarfBuzz repacker can produce invalid offsets for this long
+    # schedule of shared contextual wrappers. Use FontTools' own serializer,
+    # as in Connect Four, so rebuilds work with or without uharfbuzz installed.
+    from fontTools.ttLib.tables.otBase import USE_HARFBUZZ_REPACKER
+    font.cfg[USE_HARFBUZZ_REPACKER] = False
     font.save(output)
     font.close()
     print(f"Saved {output}: {MAX_TURNS} turns, {CLOCK_PASSES} shared shaping passes")

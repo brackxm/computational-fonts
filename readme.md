@@ -24,9 +24,11 @@ controls and examples; the project README documents its input and limits.
 ### Trying a font in a document
 
 Many projects also include an **editable ODT specimen**. Open it in LibreOffice
-Writer: the computational font and ordinary Roboto are embedded, so no font
+Writer: the computational font and an ordinary text font are embedded, so no font
 installation or web server is needed. Each example shows the same underlying
 text in both fonts. Edit a blue block to change the computed result.
+Game specimens use our original [Game Sans](games/shared/fonts/game-sans/readme.md);
+other specimens use Roboto.
 
 The documents contain ordinary text and no macros or JavaScript. Copying a
 result preserves the original input. Keep each example on one line with

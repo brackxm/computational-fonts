@@ -32,7 +32,7 @@ pass. Old cursors and last-move marks are deleted afterward. There is no runtime
 search, JavaScript board model or repeated shaping clock. This release is a
 fixed 6×5 game; other bar sizes and arbitrary setup positions are unsupported.
 
-The bundled font has 405 glyphs, 100 GSUB lookups and 105,832 bytes.
+The bundled font has 405 glyphs, 100 GSUB lookups and 123,256 bytes.
 Frame source with U+E000/U+E001. Printable ASCII also has U+E100+ASCII aliases
 to keep browser input in one LTR run. Unsupported characters become DEL.
 Enable `liga`, with zero letter/word spacing and no kerning. The board advances
@@ -61,9 +61,8 @@ through native HarfBuzz. Reachable policy histories, malformed input, Unicode
 transport, frozen errors/results, metrics, disabled ligatures, font failures,
 Undo/reset and the controller's actual font measurements are covered.
 
-Original implementation and board artwork; Apache 2.0. Text uses smooth,
-proportional Roboto Regular and Bold outlines from the repository’s
-[pinned Apache-2.0 sources](../../decoders/shared/fonts/roboto-2/readme.md),
-with upstream attribution retained in the generated font. The outlines are
-baked in at build time; no installed font or runtime fetch is needed. No
-external strategy table is embedded.
+Original implementation, board artwork, and
+[Game Sans](../shared/fonts/game-sans/readme.md) Regular/Bold lettering;
+Copyright 2026 Michael Brackx, Apache 2.0. Outlines are baked in at build time;
+no installed font or runtime fetch is needed. No third-party font outlines or
+external strategy table are embedded.

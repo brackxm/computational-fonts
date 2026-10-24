@@ -51,11 +51,11 @@ recorded complete generator and normal font build do not require Z3.
 
 Board and checker artwork is original. The generic
 [`fontgame.py`](../shared/fontgame.py), typography helper and shaping harness are
-Apache-2.0. Labels use decomposed Roboto 2 outlines from the repository's pinned
-[`decoders/shared/fonts/roboto-2`](../../decoders/shared/fonts/roboto-2/) sources,
-Copyright 2015 Google Inc., Apache-2.0. The font retains Google's attribution
-and identifies Michael Brackx's modifications. No installed typeface or runtime
-font download is needed.
+Apache-2.0. Labels use original [Game Sans](../shared/fonts/game-sans/readme.md)
+outlines, generated from independently drawn stroke skeletons in
+[`game_sans.py`](../shared/game_sans.py). Copyright 2026 Michael Brackx,
+Apache-2.0; no third-party font outlines are used. No installed typeface or
+runtime font download is needed.
 
 This records independently written code and rule-generated data. It is not a
 claim of a formal clean-room process or a relicensing of the removed upstream

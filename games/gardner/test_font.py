@@ -182,7 +182,8 @@ class GardnerTests(unittest.TestCase):
             self.assertEqual(font['head'].unitsPerEm,1000)
             self.assertEqual(font['OS/2'].fsType,0)
             self.assertNotIn(0xf0000,font.getBestCmap())
-            self.assertIn('Google',font['name'].getDebugName(0))
+            self.assertNotIn('Google',font['name'].getDebugName(0))
+            self.assertIn('Game Sans',font['name'].getDebugName(10))
             for code in STATUS.values():self.assertEqual(font['hmtx'].metrics['status_'+str(code)][0],code)
         self.assertEqual(self.shape('b'),self.shape(' b \n\t'))
         cases=['b','bB4A3;','🙂\ue000\0',' b\n\t']

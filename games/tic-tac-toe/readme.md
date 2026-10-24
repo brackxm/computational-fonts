@@ -59,7 +59,7 @@ than an arbitrary-position analysis font.
 
 ## Font implementation
 
-The bundled TTF contains **1,000 glyphs, 202 GSUB lookups, and 139,420 bytes**.
+The bundled TTF contains **1,000 glyphs, 202 GSUB lookups, and 149,080 bytes**.
 It uses a forward cursor: each input square produces the next board and a reply
 marker. Later lookups preserve the latest cursor and marker. No runtime search,
 external strategy file, fixed replay clock, or host-side opponent is required.
@@ -127,7 +127,7 @@ draw, and disabled terminal controls.
 All code, generated policy, and mark artwork are original and
 licensed under Apache 2.0. Shared helpers are in `../shared/`.
 
-Titles, coordinates, and status labels use smooth, proportional Roboto 2
-outlines baked into the font by [`game_text.py`](../shared/game_text.py).
-Roboto is Copyright 2015 Google Inc., Apache 2.0; the font metadata retains
-its attribution. See the root [third-party notices](../../THIRD_PARTY_NOTICES.md).
+Titles, coordinates, and status labels use original, proportional
+[Game Sans](../shared/fonts/game-sans/readme.md) Regular and Bold outlines, baked
+into the font by [`game_text.py`](../shared/game_text.py). The lettering is
+Copyright 2026 Michael Brackx, Apache 2.0; no third-party font outlines are used.

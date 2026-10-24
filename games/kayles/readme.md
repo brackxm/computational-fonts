@@ -34,7 +34,7 @@ letter/word spacing. Advance is 1,800 units plus status 1–6. Color uses COLRv0
 and monochrome outlines remain usable. The playground caps input at 1,024
 characters; actual host shaping limits apply.
 
-The bundled font contains 1,743 glyphs, 814 GSUB lookups and 555,132 bytes.
+The bundled font contains 1,743 glyphs, 814 GSUB lookups and 519,064 bytes.
 
 ## Build and verification
 
@@ -59,7 +59,7 @@ and missing, rejected or incompatible fonts using actual font measurements.
 
 Original implementation, generated policy and artwork; Apache 2.0.
 
-Typography uses smooth, proportional Roboto Regular and Bold outlines from the
-[pinned Apache-2.0 sources](../../decoders/shared/fonts/roboto-2/readme.md).
-The generated font retains upstream attribution. Text is baked in at build
-time; no installed typeface or runtime font download is required.
+Typography uses original, proportional [Game Sans](../shared/fonts/game-sans/readme.md)
+Regular and Bold outlines, Copyright 2026 Michael Brackx, Apache 2.0.
+Text is baked in at build time; no installed typeface or runtime font download
+is required, and no third-party font outlines are used.

@@ -1,4 +1,4 @@
-# Cram: a perfect opponent in a 113 KB font
+# Cram: a perfect opponent in a 118 KB font
 
 [Play in your browser](playground.html). This is complete normal-play **6×5
 Cram** from the empty board, with the font as first player. Both players can
@@ -61,7 +61,7 @@ another phase writes both halves. The font then mirrors, validates, and draws
 its own reply. An endgame lookup tests **all 49 adjacent pairs** for a remaining
 legal placement, including boards with isolated holes.
 
-The bundled font contains **528 glyphs, 166 GSUB lookups, and 113,428 bytes**.
+The bundled font contains **528 glyphs, 166 GSUB lookups, and 118,100 bytes**.
 There is no search or full-board state table. Nine shaping passes cover the
 opening and at most seven human turns, including explicit end validation.
 
@@ -124,7 +124,7 @@ timestamp fields.
 Shared construction, transport, and test helpers are in `../shared/`. All game
 code, strategy data, and artwork are original, Apache 2.0.
 
-Titles, coordinates, and status labels use smooth, proportional Roboto 2
-outlines baked into the font by [`game_text.py`](../shared/game_text.py).
-Roboto is Copyright 2015 Google Inc., Apache 2.0; the font metadata retains
-its attribution. See the root [third-party notices](../../THIRD_PARTY_NOTICES.md).
+Titles, coordinates, and status labels use original, proportional
+[Game Sans](../shared/fonts/game-sans/readme.md) Regular and Bold outlines, baked
+into the font by [`game_text.py`](../shared/game_text.py). The lettering is
+Copyright 2026 Michael Brackx, Apache 2.0; no third-party font outlines are used.
