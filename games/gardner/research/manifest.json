@@ -3,24 +3,24 @@
   "variant": "gardner-certified-corpus-research",
   "perfect_opponent": false,
   "proof_searches": 0,
-  "font_family": "Gardner Frontier Research 20261024 D",
+  "font_family": "Gardner Ke5 F08 Research 20261024",
   "font_file": "gardner-research.ttf",
-  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
-  "font_bytes": 39838416,
+  "font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
+  "font_bytes": 42139072,
   "head_timestamps": [
     3875584786,
     3875591863
   ],
-  "policy_tree_sha256": "ee12a65fcf8edf131b37ad052c01b7110cc7c634616e61b1e93c741946460dac",
-  "font_reachable_rows": 23129338,
+  "policy_tree_sha256": "f1e32dc201a316e8d4228aeb06655ba521668eb5548d7e151d9210b45287d2b4",
+  "font_reachable_rows": 24518928,
   "unproved_openings": [
     "B4A3",
     "B4B3"
   ],
   "inputs": {
     "inputs/boundaries.records29": {
-      "bytes": 5568,
-      "sha256": "ffd3f87384c36f85ffbe69302a1dfaa7b9ac97d70c5e6f6419c885ed697190fa"
+      "bytes": 5829,
+      "sha256": "c0255eba9ef1517590e103adfe9098ab1ed4e92d3675d27fae5c80647598b6c7"
     },
     "inputs/game-base.gamepack": {
       "bytes": 21636,
@@ -39,8 +39,8 @@
       "sha256": "ef4cabe5ad5cdd22e01312ea6e253ca472d302e3bfef30e305e48a23b6feeea0"
     },
     "inputs/policy.tree.xz": {
-      "bytes": 33594868,
-      "sha256": "55d37d9d233b2bb36c4a8f592ea0bca7e41be9678ab08b5f25e90c7a6bd9a053"
+      "bytes": 35736552,
+      "sha256": "7c0feb0cf1bea6bdc860a702738c4375ab5ad704324a48ddb361d403f01bebf0"
     }
   },
   "limits": {
@@ -52,7 +52,7 @@
     "live_150_ply_max_ms": 1000
   },
   "base_glyph_count": 6404,
-  "glyph_count": 56981,
+  "glyph_count": 57011,
   "base_corpus": {
     "corpus_rows": 22597454,
     "font_reachable_rows": 21178418,
@@ -140,7 +140,9 @@
     "evidence": "evidence/frontier-extension.json"
   },
   "extension": {
-    "added_rows_vs_F02": 958443,
+    "retained_policy_rows": 23129338,
+    "added_policy_rows": 1389590,
+    "parent_font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
     "shared_roots": [
       "F02",
       "F03",
@@ -151,12 +153,21 @@
       "F14",
       "F15",
       "F18",
-      "F19"
+      "F19",
+      "F08",
+      "Ke5"
     ],
-    "runtime_certificate_sha256": "0dd48525654803afab6cbcfa3a8c572d20f84650065acc3d3ac3111d3b959da1",
-    "evidence": "evidence/frontier-extension.json",
-    "retained_policy_rows": 22038442,
-    "added_policy_rows": 1090896,
-    "parent_font_sha256": "fdd64b9a90240a32463cfb152d99e4e244bd4a320c3bc6ff54e30b1caa108e20"
+    "runtime_certificate_sha256": "188a73e056a87ddd57cc24187d4d156698ced252fb506ae6ef406822b004ffb2",
+    "evidence": "evidence/ke5-f08.json"
+  },
+  "f08": {
+    "board": "RN..K.BP.PP.p.pp....rnbk.",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/ke5-f08.json"
+  },
+  "ke5": {
+    "board": "R..NK....PP.P.pp....rn..k",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/ke5-f08.json"
   }
 }

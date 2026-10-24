@@ -2,25 +2,29 @@
 
 Master keeps the generator, runtime, tests, manifest and certification evidence.
 The generated research font and binary build inputs are excluded from master and
-ignored locally. Only the latest accepted D font and its binary inputs are
-published on the branch `codex/gardner-research-artifacts-20261024`, based
+ignored locally. Only the latest accepted Ke5/F08 font and its binary inputs are
+kept on the branch `codex/gardner-research-artifacts-20261024`, based
 on the source-only master. Earlier large-font versions are excluded from that
 branch too. An ordinary clone fetches the artifacts under
 `origin/codex/gardner-research-artifacts-20261024`; it does not check them out.
 A master-only clone excludes the strategy corpus; fetch that branch explicitly
-to reproduce this variant.
+to reproduce this variant. Source and artifact updates must match: an older
+artifact ref is rejected by the manifest. Local unpublished updates restore from
+the local artifact branch; fetching cannot retrieve an unpublished variant.
 
 After restoring and building below, [open the research playground](playground.html),
 or use the always-bundled [lightweight default opponent](../playground.html).
 
-The optional **39,838,416-byte font** extends the retained certified policy with
+The optional **42,139,072-byte font** extends the retained certified policy with
 F02, F03, F04, F05, F12, F13, F14, F15, F18 and F19, alongside the earlier
-F20, F23, F22, F00 and F01 continuations. It contains **23,129,338 policy rows
-and 56,981 glyphs** using the original artwork.
+F20, F23, F22, F00 and F01 continuations. It now also includes **F08 and the
+11-piece …Ke5 continuation**, both certified at quiet clock zero. This is stronger
+than the requested clock-one guarantee for …Ke5. It contains **24,518,928 policy
+rows and 57,011 glyphs** using the original artwork.
 
 **It is not a complete perfect opponent.** After White's A2–A3, Black's
 **B4–A3** and **B4–B3** openings still display `UNPROVEN BRANCH` (status 6).
-Five frontier gaps remain: F08, F09, F11, F16 and F21. Try B5–C3 for a supported
+Four frontier gaps remain: F09, F11, F16 and F21. Try B5–C3 for a supported
 branch. The original **4,463,004-byte playable font remains the default** and
 continues on every legal branch using its opening book and heuristic.
 
@@ -98,10 +102,10 @@ before atomically replacing the output TTF; failure preserves any existing font.
 preservation, cleanup and byte-exact success using
 the real serialized font. The build must reproduce this exact archived font:
 
-`4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397`
+`098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a`
 
-The 33,594,868-byte `inputs/policy.tree.xz` freezes a shared binary classifier
-with 8,386,580 nodes and maximum depth 45. It uses six-bit XY coordinates for
+The 35,736,552-byte `inputs/policy.tree.xz` freezes a shared binary classifier
+with 8,901,562 nodes and maximum depth 45. It uses six-bit XY coordinates for
 32 piece-location registers and reflects positions only at five pieces or fewer.
 The compiler keeps 48,000-slot low banks, partitions banks twice by child-bank
 IDs, and shares reused outputs while retaining explicit maps elsewhere.
@@ -118,71 +122,77 @@ archives outside Git.
 
 ## Certification and verification
 
-The retained 22,038,442 rows include the original corpus and the earlier F20,
-F23, F22, F00 and F01 extensions. Their historical closure evidence remains in
-[evidence/](evidence/). The new [joint frontier certificate](evidence/frontier-extension.json)
-adds **1,090,896 rows**, retaining every earlier policy unchanged. Shared
+The retained **23,129,338 rows** include every policy in D, with all earlier
+F20, F23, F22, F00, F01 and ten-root frontier extensions unchanged. Their
+historical evidence remains in [evidence/](evidence/), including the
+[earlier D certificate](evidence/frontier-extension.json). The new
+[Ke5/F08 certificate](evidence/ke5-f08.json) adds **1,389,590 rows**. Shared
 support means these costs are not separate per-branch sizes.
 
-Its complete fixed-policy closure checks **4,063,403 legal Black replies**,
-with **1,314,500 safe exits**, **240,496 terminal edges** and **zero missing
-continuations**. A fresh verification-only host independently checked every
-encoded guard-zero row and all ten roots at zero directly against the original
-pre-F02 basis93. A second fresh queue reproduced that replay from the archive,
-without reusing old completion files. The admitted primary basis is:
+The new fixed-policy closure checks **7,519,306 legal Black replies**, with
+**3,387,432 safe exits**, **77,527 terminal edges** and **zero missing
+continuations**. Reachability expands every selected policy at its encoded
+entry clock; the complete new delta has guard zero. A fresh verification-only
+host independently replayed the full supporting certificate DAG. Another fresh
+host checked the actual **2,480,486-row joint delta** (D plus Ke5/F08), every
+encoded guard and all **12 roots at zero**, directly against original pre-F02
+basis93. Neither validation process ran proof search. Archive inventory and
+critical certificate/executable recovery hashes were independently checked.
+The admitted primary basis is:
 
-`d020613df1b75d97b5b09244efdc3c996b30166373a7f94bd427fffa58e6f0fc`
+`cbc351294ae5db00b3bae17c897a6f4711466044c7ce49c03c6b2de2f1dadded`
 
-Encoded runtime certificate SHA256:
+Encoded joint runtime certificate SHA256:
 
-`0dd48525654803afab6cbcfa3a8c572d20f84650065acc3d3ac3111d3b959da1`
+`188a73e056a87ddd57cc24187d4d156698ced252fb506ae6ef406822b004ffb2`
 
 The runtime can coalesce winning labels into nonloss labels with the same move,
 retaining safe-entry and reset/immediate-mate bounds. It can prefer a legal draw
 claim to pursuing a win outside the original bound.
 
-Packaged tests check **162 full-history prefixes and 1,152 clock boundaries**,
+Packaged tests check **162 full-history prefixes and 1,206 clock boundaries**,
 including the new roots and every first Black reply at quiet clocks 0, 98, 99,
 100, 149 and 150. They compare cells, last move and status against Python legality
 and the frozen policy, including underpromotions, reflection, malformed source,
-stalemates and stopped openings. All **16,773,160 binary-node/input pairs** run
-through the actual TTF lookups. HarfBuzz additionally executes **36,452 dictionary
-checks** and **27,426 route-class checks**, including `.notdef` and GDEF overlaps.
+stalemates and stopped openings. All **17,803,124 binary-node/input pairs** run
+through the actual TTF lookups. HarfBuzz additionally executes **38,344 dictionary
+checks** and **29,061 route-class checks**, including `.notdef` and GDEF overlaps.
 Four corrupt classifiers check early rejection of invalid structure.
 
 ## Size and performance limits
 
-These are preserved measurements of these exact D font bytes on the validation
+These are preserved measurements of these exact Ke5/F08 font bytes on the validation
 host. They do not guarantee every device or load state. Native timings rerun
 locally; the [browser benchmark](benchmark.html) measures load and complete replay.
 
 | Gate | Accepted measurement | Limit |
 | --- | ---: | ---: |
-| TTF size | 39,838,416 bytes | 50,000,000 bytes |
-| Glyphs | 56,981 | 65,535 |
-| Browser load + first shape | 105.9 ms | 2,000 ms |
-| Renderer RSS growth | 342.48 MiB | 512 MiB |
+| TTF size | 42,139,072 bytes | 50,000,000 bytes |
+| Glyphs | 57,011 | 65,535 |
+| Browser load + first shape | 169.2 ms | 2,000 ms |
+| Renderer RSS growth | 357.98 MiB | 512 MiB |
 | Browser reply p95 | 28.0 ms | 250 ms |
-| Browser 150-live-ply maximum | 94.1 ms | 1,000 ms |
-| Native reply p95 | 29.10 ms | 250 ms |
-| Native 150-live-ply maximum | 89.35 ms | 1,000 ms |
+| Browser 150-live-ply maximum | 93.4 ms | 1,000 ms |
+| Native reply p95 | 44.16 ms | 250 ms |
+| Native 150-live-ply maximum | 93.54 ms | 1,000 ms |
 
 The benchmark keeps each result, including load errors and failed timings, in
 a per-document trial history. A successful rerun preserves earlier failures;
 load errors allow retry and release rejected font faces. Copy the history JSON
 before closing or reloading the page. Load/replay attempt counters distinguish
 retries; open a fresh document for cold-load measurements. Failure-injection
-checks run with `test_benchmark.cjs`; the [current workflow evidence](evidence/benchmark-history.json)
-includes a fresh browser/memory pass and a separate injected failure followed by
-a successful retry.
+checks run with `test_benchmark.cjs`; the [historical workflow evidence](evidence/benchmark-history.json)
+preserves D's injected failure and recovery tests. Current Ke5/F08 measurements
+are in [browser.json](evidence/browser.json) and [memory.json](evidence/memory.json);
+the unchanged failure-injection checks run against the current benchmark.
 
-The first fresh-document D browser trial passed. It checks 77 complete-history
+The first fresh-document Ke5/F08 browser trial passed. It checks 77 complete-history
 prefixes, a longest live history of 153 plies, and 150 executed plies after the
 opening while still live. Twenty inert-padding suffixes prevent cached text
 runs. Memory sums positive RSS growth over all host renderers across 240 samples,
 counting new renderers in full.
 
-There are **10,161,584 bytes and 8,554 glyphs of headroom**. Future additions must
+There are **7,860,928 bytes and 8,524 glyphs of headroom**. Future additions must
 pass every gate again. The independent proof archive preserves the earlier F02
 font's failed timing trial and passing isolated retry, the scratch-artifact guard
 stop and recovery, and the corrected archive/replay packaging issues.

@@ -153,6 +153,7 @@ def main():
             ('f03', 'e1d1'), ('f04', 'a1a3'), ('f05', 'b2c3'),
             ('f12', 'a3b1'), ('f13', 'a3b1'), ('f14', 'd2e3'),
             ('f15', 'b1a3'), ('f18', 'b1c3'), ('f19', 'a1a3'),
+            ('f08', 'b1c3'), ('ke5', 'd1e3'),
         ]
         earlier = [('f20', 'b2a3'), ('f23', 'e2e3'), ('f22', 'c3b5')]
         for name, move in earlier + continuations:

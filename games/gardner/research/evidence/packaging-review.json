@@ -1,27 +1,36 @@
 {
   "status": "pass",
-  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
   "remaining_actionable_issues": 0,
+  "font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
   "rounds": [
     {
-      "scope": "Independent exact encoded-policy replay against original basis93; all legal Black replies and every guard",
+      "scope": "Exact-clock proof, fresh full DAG replay and unchanged checker pins",
       "remaining_actionable_issues": 0
     },
     {
-      "scope": "Strict merged corpus, all prior policies, actual-TTF dispatcher, full replay, original artwork and frozen compiler",
+      "scope": "Actual encoded guards and all Black replies against original predecessor93; strict retained corpus and exact full-font classifier mapping",
       "remaining_actionable_issues": 0
     },
     {
-      "scope": "Exact current evidence, isolated browser and memory gates, deterministic build, honest limits and resource-stop history",
+      "scope": "Normal deterministic rebuild, native dispatcher/replay, first isolated browser trial, renderer memory and original artwork",
+      "remaining_actionable_issues": 0
+    },
+    {
+      "scope": "Candidate metadata, resource stop state, honest nonloss scope and durable independent evidence",
       "remaining_actionable_issues": 0
     }
   ],
-  "limitations": [
-    "Remaining named roots: F08, F09, F11, F16, F21; both opening prefixes unproved.",
-    "Earlier separate F02 font timing variance remains archived; unchanged compiler is not claimed to fix it.",
-    "The proof/export host hit the unchanged scratch-artifact cap during packaging; guard stop and recovery remain preserved.",
-    "Host timings do not promise every device or load state."
+  "retained_failures": [
+    "009 advisory global proposer assertion; no result accepted",
+    "Initial cold supervisor sandbox ps denial; worker stopped before verification, monitored retry passed",
+    "Private package import path error; corrected and resumed from immutable compiler output, normal rebuild passed"
   ],
-  "proof_searches_during_review": 0,
-  "integrated": false
+  "limitations": [
+    "This is a White nonloss certificate; no exact draw/win or full perfect opponent claim.",
+    "F09, F11, F16, F21 and both drawing opening prefixes remain unproved unless separately certified.",
+    "Earlier separate F02 browser timing failure at 280 ms followed by one passing isolated retry remains preserved in parent archives. This candidate passed its first isolated trial; no claim that underlying variance was fixed.",
+    "Candidate stays outside Git. Published artifact-branch restoration still targets D; restore this candidate from its sealed archive, including all frozen inputs.",
+    "Host measurements do not guarantee performance on every device."
+  ],
+  "proof_searches_during_validation": 0
 }

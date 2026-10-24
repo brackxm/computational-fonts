@@ -1,15 +1,15 @@
 {
   "format": "gardner-research-integration-v1",
   "status": "pass",
-  "variant": "D",
-  "recorded_utc": "2026-10-24T13:50:24.638532+00:00",
-  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
-  "font_bytes": 39838416,
-  "glyphs": 56981,
-  "policy_rows": 23129338,
+  "variant": "Ke5/F08",
+  "recorded_utc": "2026-10-24T20:20:23.368373+00:00",
+  "font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
+  "font_bytes": 42139072,
+  "glyphs": 57011,
+  "policy_rows": 24518928,
   "source_archive": {
-    "name": "frontier-ten-root-validated-20261024-D",
-    "inventory_sha256": "865c4d901dfb4995e8c8118bcd8fcaaf7a159a2bfd7fbb5233dd054c2f9e3f1c"
+    "name": "Ke5-F08-validated-20261024T185818Z",
+    "inventory_sha256": "3d84b96cd1b2435b7a275ed014bbaa08dce00ccc9cbc1897d489d0346c287b37"
   },
   "exact_archived_font_preserved": true,
   "exact_frozen_rebuild": true,
@@ -21,69 +21,108 @@
   "all_default_files_unchanged": true,
   "source_syntax_checks": "pass",
   "research_controller": "pass",
+  "benchmark_failure_retry_history": "pass",
   "default_controller": "pass",
+  "restore_regression": "pass",
+  "fresh_clone_restore": {
+    "status": "pass",
+    "ordinary_fresh_clone": true,
+    "source_only_master": true,
+    "fetched_ref_only": true,
+    "no_local_artifact_branch": true,
+    "all_restored_inputs_verified": true,
+    "font_blob_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
+    "inputs": {
+      "inputs/boundaries.records29": {
+        "bytes": 5829,
+        "sha256": "c0255eba9ef1517590e103adfe9098ab1ed4e92d3675d27fae5c80647598b6c7"
+      },
+      "inputs/game-base.gamepack": {
+        "bytes": 21636,
+        "sha256": "501f56b676b34332906ce2600b2ea6e4c4fc2f8597a935c4c4ee3c61b08efd26"
+      },
+      "inputs/game-base.ttf": {
+        "bytes": 2394100,
+        "sha256": "9d77c6304abf4c1f4cd05d29380c549c313fbe0792af48ca3b0735894b2bd17c"
+      },
+      "inputs/games.json": {
+        "bytes": 11658,
+        "sha256": "569d434d85536388cd12cf5d8636af77fede0c9937852dd25c6f2693434700ab"
+      },
+      "inputs/replay.json": {
+        "bytes": 27338,
+        "sha256": "ef4cabe5ad5cdd22e01312ea6e253ca472d302e3bfef30e305e48a23b6feeea0"
+      },
+      "inputs/policy.tree.xz": {
+        "bytes": 35736552,
+        "sha256": "7c0feb0cf1bea6bdc860a702738c4375ab5ad704324a48ddb361d403f01bebf0"
+      }
+    },
+    "proof_searches": 0
+  },
   "native_repository_replay": {
     "status": "pass",
-    "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+    "font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
     "history_checks": 162,
-    "boundary_checks": 1152,
+    "boundary_checks": 1206,
     "bad_tree_checks": 4,
     "dispatch": {
       "status": "pass",
-      "node_value_pairs": 16773160,
+      "node_value_pairs": 17803124,
       "scope": "Every binary node and input bit independently executed through the actual TTF Context2, SingleSubst and deletion tables; exact state/leaf match"
     },
     "dictionary": {
       "status": "pass",
-      "temporary_dictionary_glyphs": 18226,
-      "checks": 36452,
-      "route_class_checks": 27426,
+      "temporary_dictionary_glyphs": 19172,
+      "checks": 38344,
+      "route_class_checks": 29061,
       "includes_notdef": true,
       "scope": "Actual HarfBuzz dispatcher, both bits for every temporary dictionary glyph and one representative per bank/bit route class; test-only cmap and top-level feature; nested GSUB and GDEF unchanged."
     },
     "live150": {
-      "median_ms": 92.32716699625598,
-      "p95_ms": 95.92804199201055,
-      "max_ms": 95.92804199201055
+      "median_ms": 90.31443749699974,
+      "p95_ms": 96.11787500034552,
+      "max_ms": 96.11787500034552
     },
     "twenty_reply": {
-      "median_ms": 28.68187500280328,
-      "p95_ms": 30.053374997805804,
-      "max_ms": 30.053374997805804
+      "median_ms": 27.782625002146233,
+      "p95_ms": 42.66474999894854,
+      "max_ms": 42.66474999894854
     },
     "proof_searches": 0
   },
   "mathematical_replay": {
     "status": "pass",
+    "fresh_supporting_DAG_replay": true,
     "direct_original_basis93": true,
-    "portable_fresh_queue": true,
-    "rows": 1090896,
-    "roots": 10,
-    "runtime_certificate_sha256": "0dd48525654803afab6cbcfa3a8c572d20f84650065acc3d3ac3111d3b959da1"
+    "rows": 2480486,
+    "roots": 12,
+    "all_encoded_guards_zero": true,
+    "runtime_certificate_sha256": "188a73e056a87ddd57cc24187d4d156698ced252fb506ae6ef406822b004ffb2"
   },
   "browser_and_memory": {
-    "scope": "Unchanged exact font and benchmark from the independently validated D archive.",
+    "scope": "Exact unchanged font and benchmark from the independently validated Ke5/F08 archive; no runtime, compiler, proof or font bytes changed during integration.",
     "browser_evidence": "browser.json",
     "memory_evidence": "memory.json"
   },
+  "artifact_layout": {
+    "source_only_master": true,
+    "branch": "codex/gardner-research-artifacts-20261024",
+    "latest_only_tip_on_source_master": true,
+    "publication": "Local commits only; no push authorized."
+  },
   "review_rounds": [
     {
-      "scope": "Release scope, historical evidence identities and default isolation",
+      "scope": "Release identities, root clocks, full proof guards, historical reports, default isolation and source-only artifact layout",
       "fixed": [
-        "Restore standard research variant metadata and remove proposal counters.",
-        "Label earlier representation evidence as historical; refresh current sizes, roots and limits."
+        "Replace stale D sizes, roots and current certificate identities; label D benchmark-history evidence as historical.",
+        "Remove redundant parent-extension metadata while preserving its certificate report.",
+        "Give the new playground font a new cache URL."
       ],
       "remaining_actionable_issues": 0
     },
     {
-      "scope": "Continuation checks, exact build, full native replay, both controllers and source syntax",
-      "fixed": [
-        "Share the extended continuation list between root and first-reply fixture checks."
-      ],
-      "remaining_actionable_issues": 0
-    },
-    {
-      "scope": "Final complete diff and source/archive identities",
+      "scope": "Exact normal rebuild, fresh fetched-ref restore, build failure preservation, current root/reply fixtures, full native replay, controllers, source syntax and final diff",
       "remaining_actionable_issues": 0
     }
   ],
@@ -91,7 +130,6 @@
   "integrated": true,
   "proof_searches_during_integration": 0,
   "remaining_named_frontiers": [
-    "F08",
     "F09",
     "F11",
     "F16",
@@ -102,5 +140,5 @@
     "B4B3"
   ],
   "perfect_opponent": false,
-  "archived_evidence_scope": "Copied mathematical, browser, memory and consistency reports describe D before integration; their integrated:false/repository_unchanged fields are historical. This report records the repository integration."
+  "archived_evidence_scope": "Copied mathematical, browser, memory, reproducibility, consistency and packaging reports describe the validated Ke5/F08 candidate before integration. Their integrated:false and git_unchanged fields refer to that historical validation. D frontier and benchmark-history reports retain their original D identities. This report records the current repository integration."
 }

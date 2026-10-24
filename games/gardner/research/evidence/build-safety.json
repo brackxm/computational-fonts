@@ -1,20 +1,8 @@
 {
   "status": "pass",
-  "recorded_utc": "2026-10-24T13:59:31.966175+00:00",
-  "scope": "Atomic publication of the research rebuild output only; font, inputs, compiler, rules and proof corpus unchanged.",
-  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
-  "failure_preserves_existing_output": true,
-  "temporary_output_cleaned_on_failure_and_success": true,
-  "real_serialization_regression": {
-    "status": "pass",
-    "failed_build_preserves_output": true,
-    "successful_build_byte_exact": true,
-    "temporary_fonts_cleaned": true,
-    "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
-    "proof_searches": 0
-  },
-  "full_normal_rebuild_byte_exact": true,
-  "default_font_unchanged": true,
-  "review_remaining_actionable_issues": 0,
+  "failed_build_preserves_output": true,
+  "successful_build_byte_exact": true,
+  "temporary_fonts_cleaned": true,
+  "font_sha256": "098c54735981b0aa7f0061692d206ef49e16668ccff3fef2614a3d54e359ce4a",
   "proof_searches": 0
 }
