@@ -96,6 +96,19 @@ Old MIT license. Both notices are retained in
 [`languages/shared/vendor/harfbuzzjs`](languages/shared/vendor/harfbuzzjs/), with
 upstream sources and checksums in its readme.
 
+## First Words Pictures font
+
+`graphics/first-words/first-words-font.ttf` and its WOFF2 retain the pinned
+Roboto Regular text outlines described above. These modified derivatives use
+the new family name **First Words Pictures** and preserve Google's copyright,
+Roboto trademark and Apache-2.0 license metadata. Michael Brackx's modifications
+add whole-word ligatures and 100 original vector pictures, with colour layers
+and monochrome fallbacks. The compiled fonts and font build code are Apache-2.0;
+see that folder's `FONT_LICENSE.txt` and `FONT_NOTICE.txt`.
+
+The illustration artwork and `generate_artwork.py` are original CC0-1.0
+material, separately dedicated in `graphics/first-words/LICENSE.txt`.
+
 ## SMILES diagram font
 
 The visible input and element labels in `graphics/smiles/smiles-font.ttf` use

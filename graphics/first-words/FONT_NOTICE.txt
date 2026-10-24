@@ -1,0 +1,22 @@
+First Words Pictures
+
+Copyright 2015 Google Inc. All Rights Reserved.
+Roboto is a trademark of Google.
+Copyright 2026 Michael Brackx. Picture-word font modifications.
+
+The compiled First Words Pictures fonts are modified derivatives of
+Roboto Regular from googlefonts/roboto-2, tag v2.138:
+https://github.com/googlefonts/roboto-2/tree/v2.138/src/hinted
+
+The original text outlines and their notices are retained. The family is
+renamed; 100 original picture glyphs, vector colour layers, monochrome
+fallbacks, and whole-word OpenType substitutions are added.
+
+Font builder, conversion code, playground, tests, and compiled fonts:
+Apache License 2.0; see FONT_LICENSE.txt.
+
+The original illustration SVGs and generate_artwork.py are dedicated under
+CC0-1.0; see LICENSE.txt. No third-party illustration set was incorporated.
+
+Source and build instructions:
+https://github.com/brackxm/computational-fonts/tree/main/graphics/first-words

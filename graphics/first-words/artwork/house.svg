@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<title id="title">house</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><rect x="37" y="68" width="86" height="68" rx="5" fill="#F7DFBB"/>
+<path d="M24 71L75 26Q80 22 85 26L136 71Q139 76 132 76H28Q21 76 24 71Z" fill="#EF7469"/>
+<path d="M49 136V105Q49 101 53 101H72Q76 101 76 105V136Z" fill="#A78062"/>
+<rect x="88" y="94" width="22" height="22" rx="3" fill="#89B9CC"/>
+<path d="M99 94V116M88 105H110" fill="none" stroke-width="3"/>
+<circle cx="68" cy="119" r="2" fill="#314047" stroke="none"/>
+<path d="M27 137H133" fill="none"/></g>
+</svg>

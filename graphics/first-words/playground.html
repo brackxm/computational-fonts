@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>First Words Pictures · computational fonts</title>
+<style>
+@font-face{font-family:FirstWordsPictures;src:url('./first-words-font.woff2') format('woff2'),url('./first-words-font.ttf') format('truetype');font-display:block}
+:root{color-scheme:light;font-family:system-ui,sans-serif;background:#f6f4ee;color:#314047;--line:#deded5;--muted:#626770}*{box-sizing:border-box}body{max-width:1200px;margin:0 auto;padding:32px 24px 60px;line-height:1.55}a{color:#275f71}h1{font-size:clamp(32px,5vw,52px);letter-spacing:-.045em;margin:20px 0 6px}h2{font-size:23px;margin-bottom:4px}p{margin-top:0}.muted{color:var(--muted)}label{font-weight:600}textarea,input,select,button{font:inherit;color:inherit}textarea,input[type=search],select{background:#fffdf8;border:1px solid var(--line);border-radius:10px;padding:12px 14px}textarea{width:100%;resize:vertical;min-height:104px;margin-top:8px;font-size:19px}textarea:focus-visible,input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid #89b9cc;outline-offset:3px}.tools{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:14px 0}.tools label{font-size:14px}.tools button{border:1px solid var(--line);background:#fffdf8;border-radius:24px;padding:8px 14px;cursor:pointer}.tools button:hover,.word:hover{border-color:#89b9cc;background:#eef1e9}input[type=range]{width:150px;vertical-align:middle}.result{background:#fffdf8;border:1px solid var(--line);border-radius:18px;min-height:210px;padding:20px 24px;overflow-x:auto;margin:18px 0 12px}.pictures{font-family:FirstWordsPictures;font-variant-ligatures:common-ligatures;font-feature-settings:"liga" 1,"kern" 0;font-kerning:none;font-size:var(--picture-size,96px);font-weight:400;font-style:normal;letter-spacing:normal}.result .pictures{white-space:pre-wrap;line-height:1.4;min-height:140px;margin:0}.pictures.ligatures-off{font-variant-ligatures:none;font-feature-settings:"liga" 0,"kern" 0}#status{font-size:14px;min-height:24px;margin:8px 0}#status.error{color:#a03628}.dictionary{margin-top:36px}.dictionary .tools{margin-bottom:20px}.dictionary input{flex:1;min-width:170px}.dictionary select{max-width:100%}#count{font-size:14px;color:var(--muted)}.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px}.word{display:flex;flex-direction:column;align-items:center;border:1px solid var(--line);background:#fffdf8;border-radius:14px;padding:10px 12px 16px;cursor:pointer}.word .pictures{display:block;font-size:96px;line-height:1.35;min-height:130px;max-width:100%}.word .label{font-size:14px}details{margin-top:28px;color:var(--muted)}summary{cursor:pointer;color:#314047;font-weight:600}details p{max-width:880px;margin:12px 0}footer{margin-top:28px;padding-top:22px;border-top:1px solid var(--line);font-size:14px}footer p{margin-bottom:8px}[hidden]{display:none!important}@media(max-width:600px){body{padding:24px 16px}.result{padding:16px 12px}.words{grid-template-columns:repeat(2,minmax(0,1fr))}.dictionary input{width:100%}}
+</style>
+</head>
+<body>
+<p><a href="../../index.html">← All demos</a></p>
+<h1>Words into pictures.</h1>
+<p class="muted">Type a familiar word. The font turns it into one of 100 original drawings.</p>
+<label for="source">Your words</label>
+<textarea id="source" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="status usage">apple banana cat dog house ball</textarea>
+<div class="tools" aria-label="Examples">
+<button type="button" data-example="apple banana pear carrot bread cake">Food</button>
+<button type="button" data-example="cat dog rabbit bird fish butterfly">Animals</button>
+<button type="button" data-example="The cat is in the house.">A sentence</button>
+<button type="button" data-example="ice cream, teddy bear, pineapple.">Compound words</button>
+<label for="size">Picture size <input id="size" type="range" min="48" max="160" value="96"> <output id="size-value" for="size">96 px</output></label>
+<label><input id="ligatures" type="checkbox" checked> Show pictures</label>
+</div>
+<p id="status" role="status" aria-live="polite">Loading the picture font…</p>
+<div class="result" aria-label="Text rendered by the First Words Pictures font"><div id="drawing" class="pictures" role="document"></div></div>
+<p id="usage" class="muted">Whole words match regardless of capitalization. Other words remain text. Copying the result preserves what you typed.</p>
+<section class="dictionary" aria-labelledby="dictionary-title">
+<h2 id="dictionary-title">The 100 picture words</h2>
+<p class="muted">Choose a picture to add its word to your text. These previews use the actual font.</p>
+<div class="tools"><input id="search" type="search" aria-label="Find a picture word" placeholder="Find a word…"><select id="category" aria-label="Category"><option value="">All categories</option></select><span id="count" role="status" aria-live="polite"></span></div>
+<div id="words" class="words"></div>
+</section>
+<details><summary>How it works and what it supports</summary>
+<p>The input is passed to the font unchanged. OpenType standard ligatures (<code>liga</code>) recognize words and substitute picture glyphs. COLR/CPAL tables supply vector colour layers, including the outlines converted from the original SVGs. JavaScript does not replace words with images.</p>
+<p>Use exact singular labels, except for the labels <code>grapes</code>, <code>trousers</code> and <code>scissors</code>. Plurals and synonyms are not added automatically. Both <code>ice cream</code> and <code>teddy bear</code> also accept hyphenated or joined spellings. Compounds need a single ordinary or non-breaking space. Keep a compound on one line with consistent formatting; some applications split shaping at spaces or formatting boundaries.</p>
+<p>Adjacent letters, digits, combining marks, underscores, apostrophes and hyphens block a partial match within the same shaping run. Thus <code>cat</code> is a picture while <code>caterpillar</code> and <code>cat's</code> remain text. Punctuation such as commas and parentheses can surround a picture word.</p>
+<p>Colour needs COLRv0 font support. Applications without it can use the font's monochrome outline drawings. In an installed font, the same word substitutions work when standard ligatures are enabled. Different applications can shape and export fonts differently.</p>
+</details>
+<footer><p><a href="first-words-font.ttf" download>Download TTF</a> · <a href="first-words-font.woff2" download>Download webfont</a> · <a href="index.html">Original SVG gallery</a> · <a href="readme.md">Build notes</a></p>
+<p>Original illustrations: <a href="LICENSE.txt">CC0</a>. Font and build code: <a href="FONT_LICENSE.txt">Apache 2.0</a>, including the retained Roboto text outlines.</p></footer>
+<script src="vocabulary.js"></script><script src="font-controls.js"></script>
+</body></html>

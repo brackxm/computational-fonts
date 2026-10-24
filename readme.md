@@ -4,13 +4,14 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 40 playgrounds in your browser, with no installation needed.
+explore all 41 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
 | Project | Mode | Input or configuration | Editable document |
 | --- | --- | --- | --- |
 | [Poem Oracle](literature/poem-oracle/) | seeded poetry font | each paragraph selects one of 2876 poems | [Browser playground](literature/poem-oracle/playground.html) |
+| [First Words Pictures](graphics/first-words/) | picture-word font | 100 familiar words become colour vector drawings | [Browser playground](graphics/first-words/playground.html) |
 | [PPM image renderer](graphics/ppm/) | text image format | plain PPM (`P3`) RGB | [ODT specimen](graphics/ppm/ppm.odt) |
 | [PGM image renderer](graphics/pgm/) | text image format | plain PGM (`P2`) grayscale | [ODT specimen](graphics/pgm/pgm.odt) |
 | [PBM image renderer](graphics/pbm/) | text image format | plain PBM (`P1`) bitmap | [ODT specimen](graphics/pbm/pbm.odt) |
@@ -92,6 +93,14 @@ ports. See the [supported syntax and build commands](languages/verilog/readme.md
 Both language compilers use the [shared circuit backend and shaping
 runtimes](languages/shared/).
 
+## Original artwork
+
+[First Words Pictures](graphics/first-words/) turns 100 familiar word labels into
+original colour vector drawings through whole-word ligatures. Its TTF and WOFF2
+include ordinary Roboto text for other words and monochrome picture fallbacks.
+The original SVG artwork and artwork generator are CC0-1.0; the font and font
+build code are Apache-2.0. An SVG review gallery and contact sheets are included.
+
 ## Trying a font in a document
 
 Open a project's **ODT specimen in LibreOffice Writer**. It embeds both the
@@ -162,6 +171,8 @@ through ChatGPT and Codex.
 Licensed under the Apache License 2.0, except for the GPL-3.0 Connect Four
 strategy, implementation files and derived fonts identified in its
 [license notes](games/connect-four/PROVENANCE.md). See [`LICENSE`](LICENSE).
+The original [First words artwork and generator](graphics/first-words/) are
+CC0-1.0, another exception to the repository default.
 Bundled Roboto sources and fonts derived from them are also Apache-2.0.
 Arabizi Annotated and its bundled Noto Naskh Arabic source are SIL OFL 1.1.
 Upstream font attribution and imported-code notices are retained in

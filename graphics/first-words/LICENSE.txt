@@ -1,0 +1,18 @@
+First words — original vector artwork and generator
+
+SPDX-License-Identifier: CC0-1.0
+
+To the extent possible under law, copyright and related rights in the original
+SVG artwork, source geometry, previews, vocabulary annotations, approved_samples.json
+and generate_artwork.py
+in this collection are waived under Creative Commons CC0 1.0 Universal.
+
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+The artwork was generated directly as SVG geometry with assistance from OpenAI
+Codex. No third-party illustrations, raster images or icon libraries were used.
+The six original approved studies are retained in approved_samples.json.
+
+The font builder, SVG-to-font conversion code, font playground, tests and
+compiled fonts are licensed separately under Apache-2.0; see FONT_LICENSE.txt
+and FONT_NOTICE.txt. The compiled fonts retain Roboto's Apache-2.0 notices.

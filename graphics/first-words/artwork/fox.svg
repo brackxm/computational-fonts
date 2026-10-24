@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<title id="title">fox</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M36 82L29 24L67 47Q80 41 93 47L131 24L124 82L136 90L101 126L80 140L59 126L24 90Z" fill="#ECA46B"/><path d="M40 46L46 70L60 57Z" fill="#7E6150" stroke="none"/><path d="M120 46L114 70L100 57Z" fill="#7E6150" stroke="none"/><path d="M33 90Q55 87 80 120Q105 87 127 90L101 126L80 140L59 126Z" fill="#FFF8E9" stroke="none"/><circle cx="59" cy="82" r="3" fill="#314047" stroke="none"/><circle cx="101" cy="82" r="3" fill="#314047" stroke="none"/><path d="M72 120H88L80 129Z" fill="#314047"/></g>
+</svg>

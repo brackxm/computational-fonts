@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<title id="title">cat</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M37 75L29 28L65 48Q80 43 95 48L131 28L123 75C137 113 113 137 80 137C47 137 23 113 37 75Z" fill="#F2CB67"/>
+<path d="M40 46L45 68L58 57Z" fill="#EFAB9F" stroke="none"/>
+<path d="M120 46L115 68L102 57Z" fill="#EFAB9F" stroke="none"/>
+<path d="M80 51L80 64M65 52L61 62M95 52L99 62" fill="none"/>
+<ellipse cx="58" cy="88" rx="4" ry="6" fill="#314047" stroke="none"/>
+<ellipse cx="102" cy="88" rx="4" ry="6" fill="#314047" stroke="none"/>
+<path d="M73 103Q80 98 87 103L80 110Z" fill="#EFAB9F"/>
+<path d="M80 110V115Q73 123 67 116M80 115Q87 123 93 116M46 105L25 100M46 114L24 118M114 105L135 100M114 114L136 118" fill="none"/></g>
+</svg>

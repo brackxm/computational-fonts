@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="160" height="160" viewBox="0 0 160 160" role="img" aria-labelledby="title">
+<!-- Original artwork. SPDX-License-Identifier: CC0-1.0 -->
+<title id="title">scissors</title>
+<g fill="none" stroke="#314047" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M71 95L123 23Q135 46 91 102Z" fill="#B9C3C5"/><path d="M89 95L37 23Q25 46 69 102Z" fill="#B9C3C5"/><ellipse cx="55" cy="119" rx="21" ry="23" fill="#EF7469" transform="rotate(25 55 119)"/><ellipse cx="105" cy="119" rx="21" ry="23" fill="#EF7469" transform="rotate(-25 105 119)"/><ellipse cx="55" cy="119" rx="9" ry="11" fill="#FFF8E9" transform="rotate(25 55 119)" stroke-width="3"/><ellipse cx="105" cy="119" rx="9" ry="11" fill="#FFF8E9" transform="rotate(-25 105 119)" stroke-width="3"/><circle cx="80" cy="90" r="6" fill="#A78062"/></g>
+</svg>

@@ -1,0 +1,744 @@
+{
+  "title": "First words \u2014 100 original vector illustrations",
+  "version": 1,
+  "license": "CC0-1.0",
+  "language": "en",
+  "selection": "curated; not a corpus-derived frequency ranking",
+  "viewBox": [
+    0,
+    0,
+    160,
+    160
+  ],
+  "outline_width": 5,
+  "palette": {
+    "ink": "#314047",
+    "red": "#EF7469",
+    "yellow": "#F2CB67",
+    "green": "#79AD86",
+    "blue": "#89B9CC",
+    "brown": "#A78062",
+    "cream": "#F7DFBB",
+    "white": "#FFF8E9",
+    "pink": "#EFAB9F",
+    "purple": "#A99AC6",
+    "orange": "#ECA46B",
+    "gray": "#B9C3C5",
+    "palegreen": "#B6CCA0",
+    "darkbrown": "#7E6150",
+    "highlight": "#FFE5CE",
+    "ochre": "#C89943"
+  },
+  "count": 100,
+  "categories": {
+    "Food": 20,
+    "Animals": 20,
+    "Home": 20,
+    "Clothing and toys": 10,
+    "Transport": 10,
+    "Nature": 10,
+    "Body": 10
+  },
+  "drawings": [
+    {
+      "id": "apple",
+      "label": "apple",
+      "category": "Food",
+      "file": "artwork/apple.svg",
+      "svg_bytes": 668
+    },
+    {
+      "id": "banana",
+      "label": "banana",
+      "category": "Food",
+      "file": "artwork/banana.svg",
+      "svg_bytes": 581
+    },
+    {
+      "id": "pear",
+      "label": "pear",
+      "category": "Food",
+      "file": "artwork/pear.svg",
+      "svg_bytes": 619
+    },
+    {
+      "id": "orange",
+      "label": "orange",
+      "category": "Food",
+      "file": "artwork/orange.svg",
+      "svg_bytes": 777
+    },
+    {
+      "id": "lemon",
+      "label": "lemon",
+      "category": "Food",
+      "file": "artwork/lemon.svg",
+      "svg_bytes": 509
+    },
+    {
+      "id": "strawberry",
+      "label": "strawberry",
+      "category": "Food",
+      "file": "artwork/strawberry.svg",
+      "svg_bytes": 926
+    },
+    {
+      "id": "cherry",
+      "label": "cherry",
+      "category": "Food",
+      "file": "artwork/cherry.svg",
+      "svg_bytes": 602
+    },
+    {
+      "id": "grapes",
+      "label": "grapes",
+      "category": "Food",
+      "file": "artwork/grapes.svg",
+      "svg_bytes": 806
+    },
+    {
+      "id": "watermelon",
+      "label": "watermelon",
+      "category": "Food",
+      "file": "artwork/watermelon.svg",
+      "svg_bytes": 867
+    },
+    {
+      "id": "pineapple",
+      "label": "pineapple",
+      "category": "Food",
+      "file": "artwork/pineapple.svg",
+      "svg_bytes": 618
+    },
+    {
+      "id": "carrot",
+      "label": "carrot",
+      "category": "Food",
+      "file": "artwork/carrot.svg",
+      "svg_bytes": 545
+    },
+    {
+      "id": "tomato",
+      "label": "tomato",
+      "category": "Food",
+      "file": "artwork/tomato.svg",
+      "svg_bytes": 574
+    },
+    {
+      "id": "potato",
+      "label": "potato",
+      "category": "Food",
+      "file": "artwork/potato.svg",
+      "svg_bytes": 802
+    },
+    {
+      "id": "broccoli",
+      "label": "broccoli",
+      "category": "Food",
+      "file": "artwork/broccoli.svg",
+      "svg_bytes": 653
+    },
+    {
+      "id": "mushroom",
+      "label": "mushroom",
+      "category": "Food",
+      "file": "artwork/mushroom.svg",
+      "svg_bytes": 714
+    },
+    {
+      "id": "bread",
+      "label": "bread",
+      "category": "Food",
+      "file": "artwork/bread.svg",
+      "svg_bytes": 686
+    },
+    {
+      "id": "cheese",
+      "label": "cheese",
+      "category": "Food",
+      "file": "artwork/cheese.svg",
+      "svg_bytes": 752
+    },
+    {
+      "id": "egg",
+      "label": "egg",
+      "category": "Food",
+      "file": "artwork/egg.svg",
+      "svg_bytes": 513
+    },
+    {
+      "id": "cake",
+      "label": "cake",
+      "category": "Food",
+      "file": "artwork/cake.svg",
+      "svg_bytes": 689
+    },
+    {
+      "id": "ice-cream",
+      "label": "ice cream",
+      "category": "Food",
+      "file": "artwork/ice-cream.svg",
+      "svg_bytes": 620
+    },
+    {
+      "id": "cat",
+      "label": "cat",
+      "category": "Animals",
+      "file": "artwork/cat.svg",
+      "svg_bytes": 950
+    },
+    {
+      "id": "dog",
+      "label": "dog",
+      "category": "Animals",
+      "file": "artwork/dog.svg",
+      "svg_bytes": 955
+    },
+    {
+      "id": "rabbit",
+      "label": "rabbit",
+      "category": "Animals",
+      "file": "artwork/rabbit.svg",
+      "svg_bytes": 909
+    },
+    {
+      "id": "mouse",
+      "label": "mouse",
+      "category": "Animals",
+      "file": "artwork/mouse.svg",
+      "svg_bytes": 865
+    },
+    {
+      "id": "bear",
+      "label": "bear",
+      "category": "Animals",
+      "file": "artwork/bear.svg",
+      "svg_bytes": 934
+    },
+    {
+      "id": "fox",
+      "label": "fox",
+      "category": "Animals",
+      "file": "artwork/fox.svg",
+      "svg_bytes": 814
+    },
+    {
+      "id": "pig",
+      "label": "pig",
+      "category": "Animals",
+      "file": "artwork/pig.svg",
+      "svg_bytes": 775
+    },
+    {
+      "id": "cow",
+      "label": "cow",
+      "category": "Animals",
+      "file": "artwork/cow.svg",
+      "svg_bytes": 984
+    },
+    {
+      "id": "horse",
+      "label": "horse",
+      "category": "Animals",
+      "file": "artwork/horse.svg",
+      "svg_bytes": 886
+    },
+    {
+      "id": "sheep",
+      "label": "sheep",
+      "category": "Animals",
+      "file": "artwork/sheep.svg",
+      "svg_bytes": 820
+    },
+    {
+      "id": "goat",
+      "label": "goat",
+      "category": "Animals",
+      "file": "artwork/goat.svg",
+      "svg_bytes": 849
+    },
+    {
+      "id": "duck",
+      "label": "duck",
+      "category": "Animals",
+      "file": "artwork/duck.svg",
+      "svg_bytes": 681
+    },
+    {
+      "id": "chicken",
+      "label": "chicken",
+      "category": "Animals",
+      "file": "artwork/chicken.svg",
+      "svg_bytes": 891
+    },
+    {
+      "id": "bird",
+      "label": "bird",
+      "category": "Animals",
+      "file": "artwork/bird.svg",
+      "svg_bytes": 696
+    },
+    {
+      "id": "fish",
+      "label": "fish",
+      "category": "Animals",
+      "file": "artwork/fish.svg",
+      "svg_bytes": 684
+    },
+    {
+      "id": "turtle",
+      "label": "turtle",
+      "category": "Animals",
+      "file": "artwork/turtle.svg",
+      "svg_bytes": 826
+    },
+    {
+      "id": "frog",
+      "label": "frog",
+      "category": "Animals",
+      "file": "artwork/frog.svg",
+      "svg_bytes": 953
+    },
+    {
+      "id": "butterfly",
+      "label": "butterfly",
+      "category": "Animals",
+      "file": "artwork/butterfly.svg",
+      "svg_bytes": 837
+    },
+    {
+      "id": "bee",
+      "label": "bee",
+      "category": "Animals",
+      "file": "artwork/bee.svg",
+      "svg_bytes": 853
+    },
+    {
+      "id": "snail",
+      "label": "snail",
+      "category": "Animals",
+      "file": "artwork/snail.svg",
+      "svg_bytes": 788
+    },
+    {
+      "id": "house",
+      "label": "house",
+      "category": "Home",
+      "file": "artwork/house.svg",
+      "svg_bytes": 781
+    },
+    {
+      "id": "door",
+      "label": "door",
+      "category": "Home",
+      "file": "artwork/door.svg",
+      "svg_bytes": 670
+    },
+    {
+      "id": "window",
+      "label": "window",
+      "category": "Home",
+      "file": "artwork/window.svg",
+      "svg_bytes": 684
+    },
+    {
+      "id": "bed",
+      "label": "bed",
+      "category": "Home",
+      "file": "artwork/bed.svg",
+      "svg_bytes": 699
+    },
+    {
+      "id": "chair",
+      "label": "chair",
+      "category": "Home",
+      "file": "artwork/chair.svg",
+      "svg_bytes": 601
+    },
+    {
+      "id": "table",
+      "label": "table",
+      "category": "Home",
+      "file": "artwork/table.svg",
+      "svg_bytes": 516
+    },
+    {
+      "id": "sofa",
+      "label": "sofa",
+      "category": "Home",
+      "file": "artwork/sofa.svg",
+      "svg_bytes": 808
+    },
+    {
+      "id": "lamp",
+      "label": "lamp",
+      "category": "Home",
+      "file": "artwork/lamp.svg",
+      "svg_bytes": 658
+    },
+    {
+      "id": "clock",
+      "label": "clock",
+      "category": "Home",
+      "file": "artwork/clock.svg",
+      "svg_bytes": 607
+    },
+    {
+      "id": "key",
+      "label": "key",
+      "category": "Home",
+      "file": "artwork/key.svg",
+      "svg_bytes": 487
+    },
+    {
+      "id": "cup",
+      "label": "cup",
+      "category": "Home",
+      "file": "artwork/cup.svg",
+      "svg_bytes": 552
+    },
+    {
+      "id": "plate",
+      "label": "plate",
+      "category": "Home",
+      "file": "artwork/plate.svg",
+      "svg_bytes": 574
+    },
+    {
+      "id": "bowl",
+      "label": "bowl",
+      "category": "Home",
+      "file": "artwork/bowl.svg",
+      "svg_bytes": 598
+    },
+    {
+      "id": "spoon",
+      "label": "spoon",
+      "category": "Home",
+      "file": "artwork/spoon.svg",
+      "svg_bytes": 514
+    },
+    {
+      "id": "fork",
+      "label": "fork",
+      "category": "Home",
+      "file": "artwork/fork.svg",
+      "svg_bytes": 507
+    },
+    {
+      "id": "bottle",
+      "label": "bottle",
+      "category": "Home",
+      "file": "artwork/bottle.svg",
+      "svg_bytes": 616
+    },
+    {
+      "id": "book",
+      "label": "book",
+      "category": "Home",
+      "file": "artwork/book.svg",
+      "svg_bytes": 608
+    },
+    {
+      "id": "pencil",
+      "label": "pencil",
+      "category": "Home",
+      "file": "artwork/pencil.svg",
+      "svg_bytes": 737
+    },
+    {
+      "id": "scissors",
+      "label": "scissors",
+      "category": "Home",
+      "file": "artwork/scissors.svg",
+      "svg_bytes": 870
+    },
+    {
+      "id": "umbrella",
+      "label": "umbrella",
+      "category": "Home",
+      "file": "artwork/umbrella.svg",
+      "svg_bytes": 624
+    },
+    {
+      "id": "shoe",
+      "label": "shoe",
+      "category": "Clothing and toys",
+      "file": "artwork/shoe.svg",
+      "svg_bytes": 552
+    },
+    {
+      "id": "sock",
+      "label": "sock",
+      "category": "Clothing and toys",
+      "file": "artwork/sock.svg",
+      "svg_bytes": 563
+    },
+    {
+      "id": "hat",
+      "label": "hat",
+      "category": "Clothing and toys",
+      "file": "artwork/hat.svg",
+      "svg_bytes": 548
+    },
+    {
+      "id": "shirt",
+      "label": "shirt",
+      "category": "Clothing and toys",
+      "file": "artwork/shirt.svg",
+      "svg_bytes": 508
+    },
+    {
+      "id": "trousers",
+      "label": "trousers",
+      "category": "Clothing and toys",
+      "file": "artwork/trousers.svg",
+      "svg_bytes": 569
+    },
+    {
+      "id": "dress",
+      "label": "dress",
+      "category": "Clothing and toys",
+      "file": "artwork/dress.svg",
+      "svg_bytes": 578
+    },
+    {
+      "id": "coat",
+      "label": "coat",
+      "category": "Clothing and toys",
+      "file": "artwork/coat.svg",
+      "svg_bytes": 728
+    },
+    {
+      "id": "ball",
+      "label": "ball",
+      "category": "Clothing and toys",
+      "file": "artwork/ball.svg",
+      "svg_bytes": 795
+    },
+    {
+      "id": "kite",
+      "label": "kite",
+      "category": "Clothing and toys",
+      "file": "artwork/kite.svg",
+      "svg_bytes": 687
+    },
+    {
+      "id": "teddy-bear",
+      "label": "teddy bear",
+      "category": "Clothing and toys",
+      "file": "artwork/teddy-bear.svg",
+      "svg_bytes": 1126
+    },
+    {
+      "id": "car",
+      "label": "car",
+      "category": "Transport",
+      "file": "artwork/car.svg",
+      "svg_bytes": 895
+    },
+    {
+      "id": "bus",
+      "label": "bus",
+      "category": "Transport",
+      "file": "artwork/bus.svg",
+      "svg_bytes": 994
+    },
+    {
+      "id": "truck",
+      "label": "truck",
+      "category": "Transport",
+      "file": "artwork/truck.svg",
+      "svg_bytes": 784
+    },
+    {
+      "id": "train",
+      "label": "train",
+      "category": "Transport",
+      "file": "artwork/train.svg",
+      "svg_bytes": 1279
+    },
+    {
+      "id": "bicycle",
+      "label": "bicycle",
+      "category": "Transport",
+      "file": "artwork/bicycle.svg",
+      "svg_bytes": 703
+    },
+    {
+      "id": "boat",
+      "label": "boat",
+      "category": "Transport",
+      "file": "artwork/boat.svg",
+      "svg_bytes": 651
+    },
+    {
+      "id": "airplane",
+      "label": "airplane",
+      "category": "Transport",
+      "file": "artwork/airplane.svg",
+      "svg_bytes": 610
+    },
+    {
+      "id": "helicopter",
+      "label": "helicopter",
+      "category": "Transport",
+      "file": "artwork/helicopter.svg",
+      "svg_bytes": 743
+    },
+    {
+      "id": "rocket",
+      "label": "rocket",
+      "category": "Transport",
+      "file": "artwork/rocket.svg",
+      "svg_bytes": 706
+    },
+    {
+      "id": "tractor",
+      "label": "tractor",
+      "category": "Transport",
+      "file": "artwork/tractor.svg",
+      "svg_bytes": 1073
+    },
+    {
+      "id": "sun",
+      "label": "sun",
+      "category": "Nature",
+      "file": "artwork/sun.svg",
+      "svg_bytes": 1372
+    },
+    {
+      "id": "moon",
+      "label": "moon",
+      "category": "Nature",
+      "file": "artwork/moon.svg",
+      "svg_bytes": 429
+    },
+    {
+      "id": "star",
+      "label": "star",
+      "category": "Nature",
+      "file": "artwork/star.svg",
+      "svg_bytes": 416
+    },
+    {
+      "id": "cloud",
+      "label": "cloud",
+      "category": "Nature",
+      "file": "artwork/cloud.svg",
+      "svg_bytes": 518
+    },
+    {
+      "id": "rainbow",
+      "label": "rainbow",
+      "category": "Nature",
+      "file": "artwork/rainbow.svg",
+      "svg_bytes": 565
+    },
+    {
+      "id": "tree",
+      "label": "tree",
+      "category": "Nature",
+      "file": "artwork/tree.svg",
+      "svg_bytes": 619
+    },
+    {
+      "id": "flower",
+      "label": "flower",
+      "category": "Nature",
+      "file": "artwork/flower.svg",
+      "svg_bytes": 1263
+    },
+    {
+      "id": "leaf",
+      "label": "leaf",
+      "category": "Nature",
+      "file": "artwork/leaf.svg",
+      "svg_bytes": 505
+    },
+    {
+      "id": "mountain",
+      "label": "mountain",
+      "category": "Nature",
+      "file": "artwork/mountain.svg",
+      "svg_bytes": 544
+    },
+    {
+      "id": "snowflake",
+      "label": "snowflake",
+      "category": "Nature",
+      "file": "artwork/snowflake.svg",
+      "svg_bytes": 1299
+    },
+    {
+      "id": "eye",
+      "label": "eye",
+      "category": "Body",
+      "file": "artwork/eye.svg",
+      "svg_bytes": 535
+    },
+    {
+      "id": "ear",
+      "label": "ear",
+      "category": "Body",
+      "file": "artwork/ear.svg",
+      "svg_bytes": 599
+    },
+    {
+      "id": "nose",
+      "label": "nose",
+      "category": "Body",
+      "file": "artwork/nose.svg",
+      "svg_bytes": 529
+    },
+    {
+      "id": "mouth",
+      "label": "mouth",
+      "category": "Body",
+      "file": "artwork/mouth.svg",
+      "svg_bytes": 558
+    },
+    {
+      "id": "hand",
+      "label": "hand",
+      "category": "Body",
+      "file": "artwork/hand.svg",
+      "svg_bytes": 629
+    },
+    {
+      "id": "foot",
+      "label": "foot",
+      "category": "Body",
+      "file": "artwork/foot.svg",
+      "svg_bytes": 783
+    },
+    {
+      "id": "tooth",
+      "label": "tooth",
+      "category": "Body",
+      "file": "artwork/tooth.svg",
+      "svg_bytes": 556
+    },
+    {
+      "id": "heart",
+      "label": "heart",
+      "category": "Body",
+      "file": "artwork/heart.svg",
+      "svg_bytes": 513
+    },
+    {
+      "id": "bone",
+      "label": "bone",
+      "category": "Body",
+      "file": "artwork/bone.svg",
+      "svg_bytes": 556
+    },
+    {
+      "id": "face",
+      "label": "face",
+      "category": "Body",
+      "file": "artwork/face.svg",
+      "svg_bytes": 717
+    }
+  ]
+}
