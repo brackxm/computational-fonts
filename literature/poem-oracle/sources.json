@@ -1,0 +1,443 @@
+[
+  {
+    "id": "dickinson",
+    "author": "Emily Dickinson",
+    "author_death_year": 1886,
+    "collection": "Poems, Three Series, Complete",
+    "edition_years": [
+      1890,
+      1891,
+      1896
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/12242",
+    "text_url": "https://www.gutenberg.org/cache/epub/12242/pg12242-images.html",
+    "snapshot": "sources/dickinson.html.gz",
+    "sha256": "d238e608739a6a4056eff8c3a434f2ad0b4721c37a1586a540b049382f657b60",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Early Todd/Higginson editions; editorial titles and punctuation differ from Dickinson manuscripts.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "rossetti",
+    "author": "Christina Rossetti",
+    "author_death_year": 1894,
+    "collection": "Sing-Song: A Nursery Rhyme Book",
+    "edition_years": [
+      1893
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/76703",
+    "text_url": "https://www.gutenberg.org/cache/epub/76703/pg76703-images.html",
+    "snapshot": "sources/rossetti.html.gz",
+    "sha256": "d441f634432f9b54d31062a541591a1a56c00960c2ad0ea55cc4e1de6c536d71",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Enlarged 1893 edition. Poem text only; illustrations excluded.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "stevenson",
+    "author": "Robert Louis Stevenson",
+    "author_death_year": 1894,
+    "collection": "A Child’s Garden of Verses",
+    "edition_years": [
+      1885,
+      1919
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/28722",
+    "text_url": "https://www.gutenberg.org/cache/epub/28722/pg28722-images.html",
+    "snapshot": "sources/stevenson.html.gz",
+    "sha256": "5a64eb2fec5bf96d42596790ca2ead974dcf25ec7ec06a690ecc26531451c204",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Poems originally published in 1885; transcription of a 1919 edition. Illustrations excluded.",
+    "anchor_kind": "title"
+  },
+  {
+    "id": "blake",
+    "author": "William Blake",
+    "author_death_year": 1827,
+    "collection": "Songs of Innocence and of Experience",
+    "edition_years": [
+      1789,
+      1794,
+      1901
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/1934",
+    "text_url": "https://www.gutenberg.org/cache/epub/1934/pg1934-images.html",
+    "snapshot": "sources/blake.html.gz",
+    "sha256": "13f1057257bb5d57c2033f18bd290ca01007cb79bbdfc186dd39536cf1f44ed4",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Transcribed from the 1901 R. Brimley Johnson edition.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "teasdale",
+    "author": "Sara Teasdale",
+    "author_death_year": 1933,
+    "collection": "Flame and Shadow",
+    "edition_years": [
+      1920
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/591",
+    "text_url": "https://www.gutenberg.org/cache/epub/591/pg591-images.html",
+    "snapshot": "sources/teasdale.html.gz",
+    "sha256": "22efd4e4ce5e289a474263ab3a2368f186b9d7e83fb3edb90da2aea4a8a9431b",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Original collection only; appended modern biographical notes excluded.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "teasdale-love",
+    "author": "Sara Teasdale",
+    "author_death_year": 1933,
+    "collection": "Love Songs",
+    "edition_years": [
+      1917,
+      1918
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/442",
+    "text_url": "https://www.gutenberg.org/cache/epub/442/pg442-images.html",
+    "snapshot": "sources/teasdale-love.html.gz",
+    "sha256": "bbd81acf28e5080abc51c43c33b5ee77077ed5b5ba7e7c00cab150bb73dda6b9",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "1918 reprinting of the 1917 edition; appended advertisements excluded.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "housman",
+    "author": "A. E. Housman",
+    "author_death_year": 1936,
+    "collection": "A Shropshire Lad",
+    "edition_years": [
+      1896,
+      1919
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/5720",
+    "text_url": "https://www.gutenberg.org/cache/epub/5720/pg5720-images.html",
+    "snapshot": "sources/housman.html.gz",
+    "sha256": "34092a25b0f7f7085946b7e0a1d22e562c319bd1c8baf74cf309ea361f3a26a6",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Poem text only; the Braithwaite introduction is excluded.",
+    "anchor_kind": "number"
+  },
+  {
+    "id": "millay",
+    "author": "Edna St. Vincent Millay",
+    "author_death_year": 1950,
+    "collection": "A Few Figs from Thistles",
+    "edition_years": [
+      1922
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/4399",
+    "text_url": "https://www.gutenberg.org/cache/epub/4399/pg4399-images.html",
+    "snapshot": "sources/millay.html.gz",
+    "sha256": "229b62e81ca9bdb7cd28cdeed43594af23cdddebc88d0fdb03e10c8043c065ca",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Enlarged edition; poem text only.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "dunbar",
+    "author": "Paul Laurence Dunbar",
+    "author_death_year": 1906,
+    "collection": "The Complete Poems of Paul Laurence Dunbar",
+    "edition_years": [
+      1913,
+      1922
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/18338",
+    "text_url": "https://www.gutenberg.org/cache/epub/18338/pg18338-images.html",
+    "snapshot": "sources/dunbar.html.gz",
+    "sha256": "66bd7f5a53518e38115b6cfd49348824f357d4163d518dc039b3c1d0b98b9118",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Poem text only; dedications, introduction and indexes excluded. Historical spelling retained.",
+    "anchor_kind": "title"
+  },
+  {
+    "id": "teasdale-rivers",
+    "author": "Sara Teasdale",
+    "author_death_year": 1933,
+    "collection": "Rivers to the Sea",
+    "edition_years": [
+      1915
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/596",
+    "text_url": "https://www.gutenberg.org/cache/epub/596/pg596-images.html",
+    "snapshot": "sources/teasdale-rivers.html.gz",
+    "sha256": "4888f9112d196d5522a479a38e9cd2f29465dea0472ecd7e28c331554f21275c",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Individual titled poems only; numbered movements of longer works are excluded. The Flight’s final verse line is restored from a spurious heading.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "millay-april",
+    "author": "Edna St. Vincent Millay",
+    "author_death_year": 1950,
+    "collection": "Second April",
+    "edition_years": [
+      1921
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/1247",
+    "text_url": "https://www.gutenberg.org/cache/epub/1247/pg1247-images.html",
+    "snapshot": "sources/millay-april.html.gz",
+    "sha256": "8759ae4f61ec69c47f120e9ba95b7bbfd25d7fa235f0e34e948caee89c3f3efe",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Poem text only; numbered sonnets are individual poems. Other multipart works are not split into excerpts.",
+    "anchor_kind": "title"
+  },
+  {
+    "id": "housman-last",
+    "author": "A. E. Housman",
+    "author_death_year": 1936,
+    "collection": "Last Poems",
+    "edition_years": [
+      1922
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/7848",
+    "text_url": "https://www.gutenberg.org/cache/epub/7848/pg7848-images.html",
+    "snapshot": "sources/housman-last.html.gz",
+    "sha256": "59c7006d2caf8e1be2d5444d0eedd7432e8de8377024ea011775e244e01b02a0",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Numbered poems only; introductory prose and the unnumbered opening poem are excluded.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "shakespeare",
+    "author": "William Shakespeare",
+    "author_death_year": 1616,
+    "collection": "Shakespeare’s Sonnets",
+    "edition_years": [
+      1609
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/1041",
+    "text_url": "https://www.gutenberg.org/cache/epub/1041/pg1041-images.html",
+    "snapshot": "sources/shakespeare.html.gz",
+    "sha256": "cce7ee715bc57fac8d4c7a31737bf397d02ab3f9f1909407029ac5a4258b6f40",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Numbered sonnets from the Gutenberg Shakespeare Team transcription; length limits apply to each complete sonnet.",
+    "anchor_kind": "number"
+  },
+  {
+    "id": "mckay",
+    "author": "Claude McKay",
+    "author_death_year": 1948,
+    "collection": "Harlem Shadows",
+    "edition_years": [
+      1922
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/64989",
+    "text_url": "https://www.gutenberg.org/cache/epub/64989/pg64989-images.html",
+    "snapshot": "sources/mckay.html.gz",
+    "sha256": "f72171de9ef786fbea2f2a66fc0fb671bfe3c6ab6ad39ca0d032307bd796114e",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Poems only; Max Eastman’s introduction and the author’s prefatory prose are excluded.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "crapsey",
+    "author": "Adelaide Crapsey",
+    "author_death_year": 1914,
+    "collection": "Verse",
+    "edition_years": [
+      1915,
+      1922,
+      1926
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/63010",
+    "text_url": "https://www.gutenberg.org/cache/epub/63010/pg63010-images.html",
+    "snapshot": "sources/crapsey.html.gz",
+    "sha256": "04f5154a8003fb8b2ce27936560481f88c6afed45f1d678c1f7f87422c25f448",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "1926 printing; poems only, excluding the foreword, preface and dated notes.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "yeats",
+    "author": "W. B. Yeats",
+    "author_death_year": 1939,
+    "collection": "The Wind Among the Reeds",
+    "edition_years": [
+      1899,
+      1903
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/32233",
+    "text_url": "https://www.gutenberg.org/cache/epub/32233/pg32233-images.html",
+    "snapshot": "sources/yeats.html.gz",
+    "sha256": "b53a3e1aeab6341a55dd0da400468dd8fe1c027e044a2e5dacc397be0970fb92",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Fourth edition (1903), first published in 1899; poems only, excluding prose notes and their verse quotations.",
+    "anchor_kind": "title"
+  },
+  {
+    "id": "herrick",
+    "author": "Robert Herrick",
+    "author_death_year": 1674,
+    "collection": "The Hesperides & Noble Numbers, Volumes I and II",
+    "edition_years": [
+      1648,
+      1898
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/22421",
+    "text_url": "https://www.gutenberg.org/cache/epub/22421/pg22421-images.html",
+    "snapshot": "sources/herrick.html.gz",
+    "sha256": "ec6296c9d065c448dfb15a99c41fd9d419181d9b9ce1b58b41433dfa78756e14",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "1898 revised edition edited by Alfred Pollard. Numbered original poems and the numbered epigram appendix only; commentary, biography and quoted verse in notes excluded.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "lear",
+    "author": "Edward Lear",
+    "author_death_year": 1888,
+    "collection": "A Book of Nonsense",
+    "edition_years": [
+      1846,
+      1894
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/13646",
+    "text_url": "https://www.gutenberg.org/cache/epub/13646/pg13646-images.html",
+    "snapshot": "sources/lear.html.gz",
+    "sha256": "448a87a5ec47dd6473114b62a0b1bd742d8733e2a7d8005ac04b8e7d99f38538",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "1894 edition; 112 numbered limericks only. The edition prints four verse lines per limerick. Illustrations and prose excluded.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "rossetti-poems",
+    "author": "Christina Rossetti",
+    "author_death_year": 1894,
+    "collection": "Poems",
+    "edition_years": [
+      1876
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/19188",
+    "text_url": "https://www.gutenberg.org/cache/epub/19188/pg19188-images.html",
+    "snapshot": "sources/rossetti-poems.html.gz",
+    "sha256": "19d693411de326dd88ede105e17cc07fd80ba8f5649799d22e9d23efcd51998f",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Author’s revised and enlarged edition (Boston, 1876); complete titled poems only. Includes Goblin Market and The Prince’s Progress collections and devotional pieces.",
+    "anchor_kind": "title"
+  },
+  {
+    "id": "browning",
+    "author": "Elizabeth Barrett Browning",
+    "author_death_year": 1861,
+    "collection": "Sonnets from the Portuguese",
+    "edition_years": [
+      1850,
+      1906
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/2002",
+    "text_url": "https://www.gutenberg.org/cache/epub/2002/pg2002-images.html",
+    "snapshot": "sources/browning.html.gz",
+    "sha256": "ef6877984b1e3073a021fec08b37cb88e727139e7dd5dc4bf724bbc3ba5e76cf",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "1906 Caradoc Press edition; the 44 numbered sonnets only, filtered by the same length limits.",
+    "anchor_kind": "number"
+  },
+  {
+    "id": "masters",
+    "author": "Edgar Lee Masters",
+    "author_death_year": 1950,
+    "collection": "Spoon River Anthology",
+    "edition_years": [
+      1915
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/1280",
+    "text_url": "https://www.gutenberg.org/cache/epub/1280/pg1280-images.html",
+    "snapshot": "sources/masters.html.gz",
+    "sha256": "d17c60198f30becfe82fd20c083a1820a6b4facc44a98ef4ed629912097b86cd",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Complete titled epitaphs only; longer works and dramatic epilogue excluded by the corpus limits.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "yeats-swans",
+    "author": "W. B. Yeats",
+    "author_death_year": 1939,
+    "collection": "The Wild Swans at Coole",
+    "edition_years": [
+      1917,
+      1919
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/32491",
+    "text_url": "https://www.gutenberg.org/cache/epub/32491/pg32491-images.html",
+    "snapshot": "sources/yeats-swans.html.gz",
+    "sha256": "5dc1befb8a24577a9263aa978801b9593082f3be7b3109fd7e527785639519ee",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "1919 Macmillan edition; standalone poems only. Preface, prose note and verse quotations in notes excluded.",
+    "anchor_kind": "title"
+  },
+  {
+    "id": "stevenson-underwoods",
+    "author": "Robert Louis Stevenson",
+    "author_death_year": 1894,
+    "collection": "Underwoods",
+    "edition_years": [
+      1887,
+      1898
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/438",
+    "text_url": "https://www.gutenberg.org/cache/epub/438/pg438-images.html",
+    "snapshot": "sources/stevenson-underwoods.html.gz",
+    "sha256": "af25a46f6c920f09caabfcbbd8b62e06e387d6cb8d54b26f5d8b99d4d5c2451b",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "1898 Chatto & Windus edition; complete English and Scots poems only. Dedication, prose note and footnotes excluded.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "teasdale-moon",
+    "author": "Sara Teasdale",
+    "author_death_year": 1933,
+    "collection": "Dark of the Moon",
+    "edition_years": [
+      1926
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/69866",
+    "text_url": "https://www.gutenberg.org/cache/epub/69866/pg69866-images.html",
+    "snapshot": "sources/teasdale-moon.html.gz",
+    "sha256": "6581bcac11819ddb0f17abab807f25110ba73cbe59202322f97c9c7de15984d9",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "1926 Macmillan edition; complete poems only. Explicit verse-line div boundaries are retained.",
+    "anchor_kind": "id"
+  },
+  {
+    "id": "millay-renascence",
+    "author": "Edna St. Vincent Millay",
+    "author_death_year": 1950,
+    "collection": "Renascence and Other Poems",
+    "edition_years": [
+      1917
+    ],
+    "source_url": "https://www.gutenberg.org/ebooks/109",
+    "text_url": "https://www.gutenberg.org/cache/epub/109/pg109-images.html",
+    "snapshot": "sources/millay-renascence.html.gz",
+    "sha256": "1403303e938ed75f02d1873045b3adbadc249008533ef82beb47541fc28a96f2",
+    "retrieved": "2026-10-24",
+    "rights": "Public domain in the USA according to source; author died over 70 years ago.",
+    "edition_note": "Titled poems and individual numbered sonnets only; table of contents excluded.",
+    "anchor_kind": "title"
+  }
+]

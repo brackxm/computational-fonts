@@ -1,0 +1,107 @@
+{
+  "poems": 2876,
+  "max_lines": 16,
+  "max_words": 120,
+  "sources": {
+    "dickinson": {
+      "complete_poems": 439,
+      "selected": 360
+    },
+    "rossetti": {
+      "complete_poems": 121,
+      "selected": 116
+    },
+    "stevenson": {
+      "complete_poems": 58,
+      "selected": 33
+    },
+    "blake": {
+      "complete_poems": 47,
+      "selected": 23
+    },
+    "teasdale": {
+      "complete_poems": 92,
+      "selected": 82
+    },
+    "teasdale-love": {
+      "complete_poems": 72,
+      "selected": 66
+    },
+    "housman": {
+      "complete_poems": 63,
+      "selected": 31
+    },
+    "millay": {
+      "complete_poems": 23,
+      "selected": 17
+    },
+    "dunbar": {
+      "complete_poems": 423,
+      "selected": 121
+    },
+    "teasdale-rivers": {
+      "complete_poems": 86,
+      "selected": 53
+    },
+    "millay-april": {
+      "complete_poems": 46,
+      "selected": 29
+    },
+    "housman-last": {
+      "complete_poems": 39,
+      "selected": 21
+    },
+    "shakespeare": {
+      "complete_poems": 154,
+      "selected": 136
+    },
+    "mckay": {
+      "complete_poems": 70,
+      "selected": 50
+    },
+    "crapsey": {
+      "complete_poems": 68,
+      "selected": 57
+    },
+    "yeats": {
+      "complete_poems": 37,
+      "selected": 26
+    },
+    "herrick": {
+      "complete_poems": 1396,
+      "selected": 1248
+    },
+    "lear": {
+      "complete_poems": 112,
+      "selected": 112
+    },
+    "rossetti-poems": {
+      "complete_poems": 213,
+      "selected": 75
+    },
+    "browning": {
+      "complete_poems": 44,
+      "selected": 35
+    },
+    "masters": {
+      "complete_poems": 245,
+      "selected": 84
+    },
+    "yeats-swans": {
+      "complete_poems": 32,
+      "selected": 16
+    },
+    "stevenson-underwoods": {
+      "complete_poems": 54,
+      "selected": 16
+    },
+    "teasdale-moon": {
+      "complete_poems": 59,
+      "selected": 51
+    },
+    "millay-renascence": {
+      "complete_poems": 25,
+      "selected": 18
+    }
+  }
+}

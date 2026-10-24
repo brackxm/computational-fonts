@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Type a word or paragraph and let an OpenType font reveal one of 2876 public-domain poems.">
+<title>Poem Oracle · computational fonts</title>
+<style>
+:root{color-scheme:light;--ink:#203a42;--muted:#5c706f;--line:#ced7cc;--paper:#fffef9;--accent:#b75136;font-family:system-ui,-apple-system,sans-serif;background:#f5f4ee;color:var(--ink)}
+*{box-sizing:border-box}body{margin:0 auto;max-width:1220px;padding:0 30px;line-height:1.6}a{color:inherit;text-underline-offset:4px}button,input,textarea{font:inherit;color:inherit}button,a,input,textarea,summary{outline-offset:5px}button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #287b87}
+header{display:flex;justify-content:space-between;align-items:center;padding:25px 0;border-bottom:1px solid var(--line);font-size:13px}header a{text-decoration:none}.brand{font-weight:700}header nav{display:flex;gap:25px;color:var(--muted)}
+.hero{display:flex;justify-content:space-between;gap:30px;align-items:end;padding:50px 0 33px}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.17em;font-weight:650;color:var(--accent);margin:0 0 16px}h1{font:400 clamp(42px,5.7vw,70px)/1.04 Georgia,serif;letter-spacing:-.045em;margin:0}h1 em{font-weight:400;color:#46706b}.intro{max-width:310px;color:var(--muted);font-size:15px;margin:0 0 3px}
+.workspace{display:grid;grid-template-columns:330px minmax(0,1fr);gap:28px;align-items:start}.input-panel{padding:26px 0}.label-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}label,.small-label{font-size:12px;font-weight:650}#length{font-size:11px;color:var(--muted);font-variant-numeric:tabular-nums}textarea{display:block;width:100%;height:213px;resize:vertical;border:1px solid #aebfb5;border-radius:7px;background:var(--paper);padding:18px;font:20px/1.55 Georgia,serif;min-height:130px;max-height:600px}textarea:focus{border-color:#46706b}.hint{font-size:12px;color:var(--muted);margin:10px 0 24px}.examples{display:flex;gap:8px;flex-wrap:wrap;margin:11px 0 26px}button{cursor:pointer;border:1px solid var(--line);border-radius:5px;background:transparent;padding:7px 11px;font-size:12px}button:hover{background:#e6ece3;border-color:#9bb0a5}.example{border-radius:25px}.example[aria-pressed=true]{background:#203a42;border-color:#203a42;color:var(--paper)}button:disabled{opacity:.5;cursor:wait}.fact{border-top:1px solid var(--line);padding:17px 0;display:flex;gap:12px;align-items:baseline}.fact strong{font:28px Georgia,serif;font-variant-numeric:tabular-nums}.fact span{font-size:12px;color:var(--muted)}.seed-note{font-size:13px;color:var(--muted);margin:6px 0 22px}.download{display:inline-block;font-size:13px;font-weight:600;color:#226a77}
+.result{background:var(--paper);border:1px solid var(--line);border-radius:10px;box-shadow:0 6px 24px #203a4205;overflow:hidden}.result-head{display:flex;justify-content:space-between;align-items:center;margin:0 30px;padding:20px 0 16px;border-bottom:1px solid #e4e7dc;font-size:11px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase}.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#62866b;margin-right:7px}.poem-number{letter-spacing:0;font-variant-numeric:tabular-nums}.poem-stage{min-height:465px;padding:25px 17px 10px;display:flex;align-items:center;justify-content:center}.poem-svg{display:block;max-width:100%;height:auto;fill:var(--ink)}.placeholder{font:italic 23px/1.5 Georgia,serif;color:#7a8981;max-width:330px;text-align:center;padding:40px}#disabled-text{font:20px/1.6 Georgia,serif;white-space:pre-wrap;overflow-wrap:anywhere;padding:20px;width:100%;max-height:500px;overflow:auto}.result-foot{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:0 30px;padding:17px 0 22px;border-top:1px solid #e4e7dc;font-size:12px}.result-foot a{color:var(--muted)}.text-button{border:0;padding:0;text-decoration:underline;text-underline-offset:4px;color:#226a77}.status{font-size:12px;min-height:22px;margin:12px 0 0;color:var(--muted)}.status[data-state=error]{color:#9d3626}
+.under{display:grid;grid-template-columns:330px minmax(0,1fr);gap:28px;margin:24px 0 35px}.under p{font-size:12px;color:var(--muted);margin:0}details{border-top:1px solid var(--line);padding:14px 0;font-size:13px}summary{cursor:pointer;font-weight:600}details p{color:var(--muted);margin:12px 0}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:12px/1.6 ui-monospace,monospace;background:#e9ede5;padding:15px;border-radius:5px;max-height:240px;overflow:auto}.toggle{display:flex;align-items:center;gap:9px;margin:17px 0;font-size:13px;font-weight:400}.reader{font:16px/1.7 Georgia,serif;background:transparent;padding:0}.reader-title{font-weight:700;margin-bottom:8px}.reader-author{font-style:italic}footer{border-top:1px solid var(--line);padding:22px 0 30px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:var(--muted);font-size:12px}footer div{display:flex;gap:20px}[hidden]{display:none!important}
+textarea[data-multiple=true]{height:320px}
+.results{display:grid;gap:20px}.results[data-multiple=true] .poem-stage{min-height:230px}.collection-actions{text-align:right;margin-top:12px}.reader-poem+.reader-poem{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+@media(max-width:850px){.workspace,.under{grid-template-columns:270px minmax(0,1fr);gap:20px}.hero{align-items:start;flex-direction:column;gap:22px}.intro{max-width:550px}.result-head,.result-foot{margin:0 20px}.poem-stage{padding:20px 8px;min-height:400px}}
+@media(max-width:640px){body{padding:0 18px}header{padding:19px 0}header nav{gap:16px}.hero{padding:33px 0 18px}h1{font-size:49px}.workspace,.under{grid-template-columns:1fr;gap:16px}.input-panel{padding:12px 0 0}textarea{height:140px}.examples{margin-bottom:15px}.fact{padding:11px 0}.seed-note{margin-bottom:12px}.poem-stage{min-height:330px}.under{margin:8px 0 25px}.result-head{padding-top:17px}.result-foot{align-items:start}.intro{font-size:14px}}
+</style>
+</head>
+<body>
+<header><a class="brand" href="../../index.html">Computational fonts</a><nav aria-label="Page links"><a href="readme.md">Build notes</a><a href="../../index.html#demos">All demos ↗</a></nav></header>
+<main>
+  <section class="hero" aria-labelledby="title"><div><p class="eyebrow">Poem Oracle · an OpenType experiment</p><h1>A poem hiding<br>in <em>your words.</em></h1></div><p class="intro">Type a word, a thought, or several paragraphs. Each paragraph reveals a small, unexpected poem.</p></section>
+  <div class="workspace">
+    <section class="input-panel" aria-label="Poem seed">
+      <div class="label-row"><label for="seed">Your words</label><span id="length">0 / 4,096</span></div>
+      <textarea id="seed" spellcheck="false" aria-describedby="input-hint status">serendipity</textarea>
+      <p id="input-hint" class="hint">Up to 16 paragraphs and 4,096 characters total. Blank lines start a new poem; single line breaks stay within a paragraph. Latin letters, accents and common punctuation.</p>
+      <span class="small-label">A place to start</span>
+      <div class="examples" aria-label="Example inputs"><button class="example" data-example="word" type="button" aria-pressed="true">A word</button><button class="example" data-example="phrase" type="button" aria-pressed="false">A phrase</button><button class="example" data-example="paragraph" type="button" aria-pressed="false">A paragraph</button><button class="example" data-example="paragraphs" type="button" aria-pressed="false">Two paragraphs</button></div>
+      <div class="fact"><strong id="poem-count">2876</strong><span>short poems · <span id="author-count">16</span> voices<br>all tucked inside one font</span></div>
+      <p class="seed-note">Each paragraph is its own seed. The same words find the same poem.</p>
+      <a class="download" href="poem-oracle.ttf" download>Download the font ↓</a>
+    </section>
+    <div>
+      <div id="poem-results" class="results" aria-label="Selected poems" hidden></div>
+      <section id="empty-result" class="result" aria-label="Poem output">
+        <div class="result-head"><span><span class="dot" aria-hidden="true"></span>Your words, revealed</span><span id="poem-number" class="poem-number">— / 2876</span></div>
+        <div class="poem-stage" id="stage" aria-busy="true"><p class="placeholder" id="placeholder">Opening the little library…</p><pre id="disabled-text" hidden></pre></div>
+        <div class="result-foot"><span>Public-domain poetry, with original stanza breaks.</span></div>
+      </section>
+      <div class="collection-actions"><button id="copy-all" class="text-button" type="button" hidden disabled>Copy all poems</button></div>
+      <p id="status" class="status" role="status" aria-live="polite">Loading the font and shaping engine…</p>
+    </div>
+  </div>
+  <div class="under"><p>Poetry from sixteen authors, including Dickinson, Shakespeare, Herrick, Lear, Browning and Rossetti. Historical texts and spelling follow the credited editions.</p><div>
+    <details><summary>Read as selectable text</summary><div id="reader" hidden></div><p id="reader-prompt">A readable copy appears here when the font reveals a poem.</p></details>
+    <details><summary>How does a font find a poem?</summary><p>The font folds your characters into a number using OpenType substitutions, then draws one of its built-in poems. The result is deterministic: a seed, not a reading of your words’ meaning. Different inputs can lead to the same poem.</p><p>Blank lines separate paragraphs. The playground sends each nonempty paragraph through the bundled HarfBuzz engine separately and draws its returned font outlines. Single line breaks within a paragraph become spaces. Everything runs locally in your browser.</p><label class="toggle"><input id="enabled" type="checkbox" checked> Enable font computation</label><p id="shaping-info"></p><pre id="normalized" aria-label="Normalized font input"></pre><p>In ordinary document apps, formatting and line breaks can split the input into separate runs. Copying the shaped glyphs retains your typed seed; “Copy poem text” copies the readable poem instead.</p><a href="readme.md">Corpus, font construction and limits →</a></details>
+  </div></div>
+</main>
+<noscript>This playground needs JavaScript and WebAssembly. The downloadable TTF contains the poem-selection rules.</noscript>
+<footer><span>Words in. Poetry out.</span><div><a href="poems.json">Poem collection</a><a href="sources.json">Sources</a><a href="../../THIRD_PARTY_NOTICES.md">Font &amp; engine credits</a></div></footer>
+<script type="module" src="playground.mjs"></script>
+</body>
+</html>

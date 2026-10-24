@@ -1,5 +1,19 @@
 # Third-party notices
 
+## Public-domain poetry research corpus
+
+`literature/poem-oracle/poems.json` contains historical public-domain poem
+texts, separate from the repository's code license. Source editions,
+attribution, dates and checksums are recorded in that directory's
+`sources.json` and `readme.md`. The unchanged compressed HTML source snapshots
+retain their own Project Gutenberg credits and distribution notices.
+
+The Poem Oracle TTF/WOFF2 fonts use modified, component-based Roboto 2 Regular
+and Bold outlines under Apache-2.0, with the upstream Google notices and Michael
+Brackx's modifications identified in their embedded metadata. The fonts contain
+2876 historical public-domain poems. Their browser playground reuses the pinned
+HarfBuzz runtime documented below; no additional runtime is imported.
+
 The project code is distributed under Apache License 2.0; the Arabizi font
 and its Noto source are distributed under SIL OFL 1.1 as noted below.
 Original notices for imported decoder code and the bundled Roboto sources are retained below.

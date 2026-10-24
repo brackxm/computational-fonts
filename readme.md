@@ -4,12 +4,13 @@ Experiments in using fonts for computation through OpenType shaping,
 substitutions, ligatures, and glyph composition.
 
 **[Try the interactive demos](https://brackxm.github.io/computational-fonts/)** —
-explore all 39 playgrounds in your browser, with no installation needed.
+explore all 40 playgrounds in your browser, with no installation needed.
 
 ## Projects
 
 | Project | Mode | Input or configuration | Editable document |
 | --- | --- | --- | --- |
+| [Poem Oracle](literature/poem-oracle/) | seeded poetry font | each paragraph selects one of 2876 poems | [Browser playground](literature/poem-oracle/playground.html) |
 | [PPM image renderer](graphics/ppm/) | text image format | plain PPM (`P3`) RGB | [ODT specimen](graphics/ppm/ppm.odt) |
 | [PGM image renderer](graphics/pgm/) | text image format | plain PGM (`P2`) grayscale | [ODT specimen](graphics/pgm/pgm.odt) |
 | [PBM image renderer](graphics/pbm/) | text image format | plain PBM (`P1`) bitmap | [ODT specimen](graphics/pbm/pbm.odt) |
@@ -54,6 +55,13 @@ Most display-font project folders include a `build.py` font generator, a bundled
 a `playground.html` browser demo, an editable `.odt` specimen, and a `readme.md`
 with usage, build commands, tests and limitations. SKI also includes a machine
 font and CLI for inspecting results and the internal tree tape.
+
+Poem Oracle turns each paragraph into one of 2876 short public-domain
+poems by sixteen authors. Blank lines separate paragraphs in its playground. A reverse chaining GSUB lookup computes a rolling hash
+of the input; the font then displays the selected poem with its stanza breaks
+and author. Its [playground](literature/poem-oracle/playground.html) sends
+each paragraph separately to bundled HarfBuzz and draws the resulting font outlines.
+The same input selects the same poem. See its [corpus and shaping notes](literature/poem-oracle/readme.md).
 
 Connect Four reconstructs human-only histories such as `b135`, automatically
 plays Red first, and follows the complete pinned WeakC4 winning strategy. Its
