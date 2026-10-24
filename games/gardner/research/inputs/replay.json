@@ -1,0 +1,631 @@
+{
+  "positions": [
+    {
+      "source": "b",
+      "board": "RNBQK.PPPPP....ppppprnbqk",
+      "last": "a3",
+      "status": 1,
+      "livePlies": 1,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;",
+      "board": "RNBQK.PPPP..p..pP.pprnbqk",
+      "last": "b4",
+      "status": 1,
+      "livePlies": 3,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;",
+      "board": "RNBQK.PPP...p.Ppb.pprn.qk",
+      "last": "e3",
+      "status": 1,
+      "livePlies": 5,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;",
+      "board": "RN.QK.BPP.....Ppb.pprn.qk",
+      "last": "b2",
+      "status": 1,
+      "livePlies": 7,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;",
+      "board": "RN.QK.BPP......p..Pprnbqk",
+      "last": "d4",
+      "status": 1,
+      "livePlies": 9,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;",
+      "board": "RN.QK.B.P...P..p..npr.bqk",
+      "last": "c3",
+      "status": 1,
+      "livePlies": 11,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;",
+      "board": "RN.QK.B.P......p.qPpr.b.k",
+      "last": "d4",
+      "status": 1,
+      "livePlies": 13,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;",
+      "board": "RN.QK...P......p.qBpr...k",
+      "last": "d4",
+      "status": 1,
+      "livePlies": 15,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;",
+      "board": "R..QK...P...N..p.qkpr....",
+      "last": "c3",
+      "status": 1,
+      "livePlies": 17,
+      "quietClock": 1
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;",
+      "board": "...QKR..P.p.N....qkpr....",
+      "last": "a2",
+      "status": 1,
+      "livePlies": 19,
+      "quietClock": 1
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;",
+      "board": "...QKR..PNp.....q.kpr....",
+      "last": "e2",
+      "status": 1,
+      "livePlies": 21,
+      "quietClock": 3
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;",
+      "board": "....KR.QPNp.....q..pr..k.",
+      "last": "c2",
+      "status": 1,
+      "livePlies": 23,
+      "quietClock": 5
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;",
+      "board": "....KR.QP.p.N...q..pr...k",
+      "last": "c3",
+      "status": 1,
+      "livePlies": 25,
+      "quietClock": 7
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;",
+      "board": "..Q.KR..P.p.N....q.pr...k",
+      "last": "c1",
+      "status": 1,
+      "livePlies": 27,
+      "quietClock": 9
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;",
+      "board": "Q...KR..P.p.N...q..pr...k",
+      "last": "a1",
+      "status": 1,
+      "livePlies": 29,
+      "quietClock": 11
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;",
+      "board": "Q...KR..PNp........pr.q.k",
+      "last": "e2",
+      "status": 1,
+      "livePlies": 31,
+      "quietClock": 13
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;",
+      "board": "Q...K..RPNp........pr.qk.",
+      "last": "c2",
+      "status": 1,
+      "livePlies": 33,
+      "quietClock": 15
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;",
+      "board": "....KQ.RPNp.....q..pr..k.",
+      "last": "a2",
+      "status": 1,
+      "livePlies": 35,
+      "quietClock": 17
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;",
+      "board": "....KQ..PNp.....qR.pr...k",
+      "last": "c4",
+      "status": 1,
+      "livePlies": 37,
+      "quietClock": 19
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;",
+      "board": "....KQq.P.p.N....R.pr...k",
+      "last": "c3",
+      "status": 1,
+      "livePlies": 39,
+      "quietClock": 21
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;",
+      "board": "..q..Q..PKp.N....R.pr...k",
+      "last": "e2",
+      "status": 1,
+      "livePlies": 41,
+      "quietClock": 23
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;",
+      "board": ".....Q..PKp.R......pr...k",
+      "last": "c3",
+      "status": 1,
+      "livePlies": 43,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;",
+      "board": ".....Q..PKR...p.....r...k",
+      "last": "a3",
+      "status": 1,
+      "livePlies": 45,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;",
+      "board": ".....Q..PK....R.......r.k",
+      "last": "e3",
+      "status": 1,
+      "livePlies": 47,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;",
+      "board": "........PK....R...k...rQ.",
+      "last": "d5",
+      "status": 1,
+      "livePlies": 49,
+      "quietClock": 2
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;",
+      "board": "........PK...R........rk.",
+      "last": "d3",
+      "status": 1,
+      "livePlies": 51,
+      "quietClock": 1
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;",
+      "board": "........PKR........k..r..",
+      "last": "a3",
+      "status": 1,
+      "livePlies": 53,
+      "quietClock": 3
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;",
+      "board": "..r.....PK.....R...k.....",
+      "last": "a4",
+      "status": 1,
+      "livePlies": 55,
+      "quietClock": 5
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;",
+      "board": "..r.....P....K.R.......k.",
+      "last": "d3",
+      "status": 1,
+      "livePlies": 57,
+      "quietClock": 7
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;",
+      "board": "..r.....P....K......R.k..",
+      "last": "a5",
+      "status": 1,
+      "livePlies": 59,
+      "quietClock": 9
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;",
+      "board": "..r.....P....K..k.......R",
+      "last": "e5",
+      "status": 1,
+      "livePlies": 61,
+      "quietClock": 11
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;",
+      "board": "..r.....P..k......K.....R",
+      "last": "d4",
+      "status": 1,
+      "livePlies": 63,
+      "quietClock": 13
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;",
+      "board": "...r.......k.P....K.....R",
+      "last": "d3",
+      "status": 1,
+      "livePlies": 65,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;",
+      "board": "...r...k.....P....K...R..",
+      "last": "c5",
+      "status": 1,
+      "livePlies": 67,
+      "quietClock": 2
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;",
+      "board": "...r....k....P....K.R....",
+      "last": "a5",
+      "status": 1,
+      "livePlies": 69,
+      "quietClock": 4
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;",
+      "board": "...r.R.k.....P....K......",
+      "last": "a2",
+      "status": 1,
+      "livePlies": 71,
+      "quietClock": 6
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;",
+      "board": "...r.....R.k.P....K......",
+      "last": "e2",
+      "status": 1,
+      "livePlies": 73,
+      "quietClock": 8
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;",
+      "board": "...r.........P..k.K.....R",
+      "last": "e5",
+      "status": 1,
+      "livePlies": 75,
+      "quietClock": 10
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;",
+      "board": "...r......k..P.....K....R",
+      "last": "e4",
+      "status": 1,
+      "livePlies": 77,
+      "quietClock": 12
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;",
+      "board": "....r.....k..P.........KR",
+      "last": "d5",
+      "status": 1,
+      "livePlies": 79,
+      "quietClock": 14
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;",
+      "board": ".r........k.......P....KR",
+      "last": "d4",
+      "status": 1,
+      "livePlies": 81,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;",
+      "board": ".r....k..R........P....K.",
+      "last": "e2",
+      "status": 1,
+      "livePlies": 83,
+      "quietClock": 2
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;",
+      "board": ".r.......R..k.....P.....K",
+      "last": "e5",
+      "status": 1,
+      "livePlies": 85,
+      "quietClock": 4
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;",
+      "board": ".........R..k...r......NK",
+      "last": "d5",
+      "status": 1,
+      "livePlies": 87,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;",
+      "board": ".............kR.r......NK",
+      "last": "e3",
+      "status": 1,
+      "livePlies": 89,
+      "quietClock": 2
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;",
+      "board": "........k.R.....r......NK",
+      "last": "a3",
+      "status": 1,
+      "livePlies": 91,
+      "quietClock": 4
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;",
+      "board": "........k..R.....r.....NK",
+      "last": "b3",
+      "status": 1,
+      "livePlies": 93,
+      "quietClock": 6
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;",
+      "board": ".......k.........r...R.NK",
+      "last": "b5",
+      "status": 1,
+      "livePlies": 95,
+      "quietClock": 8
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;",
+      "board": "........k.......Nr...R..K",
+      "last": "b4",
+      "status": 1,
+      "livePlies": 97,
+      "quietClock": 10
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;",
+      "board": ".....N......k....r...R..K",
+      "last": "a2",
+      "status": 1,
+      "livePlies": 99,
+      "quietClock": 12
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;",
+      "board": ".....N.k.........r...R.K.",
+      "last": "d5",
+      "status": 1,
+      "livePlies": 101,
+      "quietClock": 14
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;",
+      "board": ".....N.k.......r......RK.",
+      "last": "c5",
+      "status": 1,
+      "livePlies": 103,
+      "quietClock": 16
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;",
+      "board": "..N..........k.r......RK.",
+      "last": "c1",
+      "status": 1,
+      "livePlies": 105,
+      "quietClock": 18
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;",
+      "board": "........k..N...r......RK.",
+      "last": "b3",
+      "status": 1,
+      "livePlies": 107,
+      "quietClock": 20
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;",
+      "board": "..R........N.k.r.......K.",
+      "last": "c1",
+      "status": 1,
+      "livePlies": 109,
+      "quietClock": 22
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;",
+      "board": "..R..........k..r.....NK.",
+      "last": "c5",
+      "status": 1,
+      "livePlies": 111,
+      "quietClock": 24
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;",
+      "board": "R.......k.......r.....NK.",
+      "last": "a1",
+      "status": 1,
+      "livePlies": 113,
+      "quietClock": 26
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;",
+      "board": "R...........k...r..N...K.",
+      "last": "e4",
+      "status": 1,
+      "livePlies": 115,
+      "quietClock": 28
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;",
+      "board": "....R..k........r..N...K.",
+      "last": "e1",
+      "status": 1,
+      "livePlies": 117,
+      "quietClock": 30
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;",
+      "board": "...R..k.........r..N...K.",
+      "last": "d1",
+      "status": 1,
+      "livePlies": 119,
+      "quietClock": 32
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;",
+      "board": "......k.R......r...N...K.",
+      "last": "d2",
+      "status": 1,
+      "livePlies": 121,
+      "quietClock": 34
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;",
+      "board": "........R..k...r......NK.",
+      "last": "c5",
+      "status": 1,
+      "livePlies": 123,
+      "quietClock": 36
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;",
+      "board": "............kR.r......NK.",
+      "last": "d3",
+      "status": 1,
+      "livePlies": 125,
+      "quietClock": 38
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;",
+      "board": ".......k...R...r......NK.",
+      "last": "b3",
+      "status": 1,
+      "livePlies": 127,
+      "quietClock": 40
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;",
+      "board": ".......k........R...r.NK.",
+      "last": "b4",
+      "status": 1,
+      "livePlies": 129,
+      "quietClock": 42
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;",
+      "board": ".......k..r.....RK....N..",
+      "last": "c4",
+      "status": 1,
+      "livePlies": 131,
+      "quietClock": 44
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;",
+      "board": "r......k...R.....K....N..",
+      "last": "b3",
+      "status": 1,
+      "livePlies": 133,
+      "quietClock": 46
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;",
+      "board": ".....r.k....R....K....N..",
+      "last": "c3",
+      "status": 1,
+      "livePlies": 135,
+      "quietClock": 48
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;C2B1;",
+      "board": ".k...r......RK........N..",
+      "last": "d3",
+      "status": 1,
+      "livePlies": 137,
+      "quietClock": 50
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;C2B1;B1B2;",
+      "board": ".....rk......K...R....N..",
+      "last": "c4",
+      "status": 1,
+      "livePlies": 139,
+      "quietClock": 52
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;C2B1;B1B2;A2A3;",
+      "board": "......k.K.r......R....N..",
+      "last": "d2",
+      "status": 1,
+      "livePlies": 141,
+      "quietClock": 54
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;C2B1;B1B2;A2A3;A3A2;",
+      "board": "..R..rk.K.............N..",
+      "last": "c1",
+      "status": 1,
+      "livePlies": 143,
+      "quietClock": 56
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;C2B1;B1B2;A2A3;A3A2;A2A5;",
+      "board": "..R...k.K....N......r....",
+      "last": "d3",
+      "status": 1,
+      "livePlies": 145,
+      "quietClock": 58
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;C2B1;B1B2;A2A3;A3A2;A2A5;B2B3;",
+      "board": "........K..kRN......r....",
+      "last": "c3",
+      "status": 1,
+      "livePlies": 147,
+      "quietClock": 60
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;C2B1;B1B2;A2A3;A3A2;A2A5;B2B3;B3A4;",
+      "board": ".......K....RN.k....r....",
+      "last": "c2",
+      "status": 1,
+      "livePlies": 149,
+      "quietClock": 62
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;C2B1;B1B2;A2A3;A3A2;A2A5;B2B3;B3A4;A5C5;",
+      "board": ".......K.....N.k......R..",
+      "last": "c5",
+      "status": 1,
+      "livePlies": 151,
+      "quietClock": 0
+    },
+    {
+      "source": "bC4C3;C5B4;C3B2;B4C5;B5D4;D5C4;C5D4;E5D4;A4A3;C4B4;D4D5;D5E5;B4C4;C4B4;B4C5;E5D5;C5B4;D5E5;B4B2;B2C1;C1C3;E4E3;A5C5;E5D4;D4D5;D5E4;C5C1;E4D5;D5C5;C5B4;B4B3;C1D1;B3C2;C2D2;D2C2;C2B3;B3B4;B4A3;D1E1;E1B1;A3B2;B2C3;B1B4;C3D3;D3D2;B4C4;D2C2;C2D2;D2C3;C3C2;C4A4;C2D3;D3D2;D2D3;A4B4;D3D2;D2C3;C3C2;C2B2;B4A4;B2B3;B3C3;C3C2;A4A5;A5A3;A3A1;A1A2;C2B1;B1B2;A2A3;A3A2;A2A5;B2B3;B3A4;A5C5;A4A3;",
+      "board": ".......K..k..N......R....",
+      "last": "a5",
+      "status": 2,
+      "livePlies": 153,
+      "quietClock": 2
+    }
+  ],
+  "benchmarkIndex": 75,
+  "repairs": [
+    {
+      "index": 74,
+      "move": "a5c5"
+    },
+    {
+      "index": 75,
+      "move": "a4a3"
+    }
+  ]
+}

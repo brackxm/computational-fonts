@@ -1,0 +1,40 @@
+{
+  "status": "pass",
+  "root": "R..QK..P.Pb.pP.p..q.r...k",
+  "root_clock": 0,
+  "move": "a1a3",
+  "guarantee": "White nonloss only; no exact draw/win or whole perfect-opponent classification.",
+  "added_policy_rows": 132453,
+  "all_added_runtime_guards": 0,
+  "base": "Unchanged committed 22,038,442-row corpus.",
+  "black_replies": 578199,
+  "safe_exits": 264219,
+  "terminals": 16089,
+  "missing": 0,
+  "independent_runtime_replay": {
+    "status": "pass",
+    "rows": 132453,
+    "sha256": "e890361790dd9634c536d75701259d61f6b6299113e5c15bbded36a8d2e7ff89",
+    "roots": [
+      "R..QK..P.Pb.pP.p..q.r...k",
+      "...QK..P.PR.pP.p..q..r..k"
+    ],
+    "bounds": [
+      0,
+      0
+    ],
+    "independent_bitboard_replay": true,
+    "proof_searches": 0
+  },
+  "new_basis": {
+    "path": "/tmp/gardner-nonloss-base-82f6e2d859012cd93bbf2464b962afe15f1a404e48a042c5c313573f6250d1d4.json",
+    "sha256": "82f6e2d859012cd93bbf2464b962afe15f1a404e48a042c5c313573f6250d1d4"
+  },
+  "parent_basis_sha256": "93f46c6f01041057b9a3b2e0507b97bae99c8e8cc43ad27e7a1fb819f44ba8b1",
+  "verified_nonloss0": 6635757,
+  "prior_proof_search_jobs": 1,
+  "proof_searches_during_extraction_and_build": 0,
+  "font_sha256": "265ee400e707ecebc09cf4a54b3019f410c62fedddd5f42950cba22eeae6a794",
+  "archive": "f02-fresh-clock-20261024",
+  "integrated": false
+}

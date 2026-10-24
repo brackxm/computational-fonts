@@ -1,0 +1,101 @@
+{
+  "status": "pass",
+  "roots": [
+    "F02",
+    "F03",
+    "F04",
+    "F05",
+    "F12",
+    "F13",
+    "F14",
+    "F15",
+    "F18",
+    "F19"
+  ],
+  "root_boards": [
+    "R..QK..P.Pb.pP.p..q.r...k",
+    "R.BqK....PppP.P..p..r...k",
+    "R..QK..P.Pb.pPBp..p.r..qk",
+    "R.BQK.P..Pppb.P..pq.r...k",
+    "R.BQK.P.PPNp...p.pqpr.bk.",
+    "R.BQK.P.PPNp...pbpqpr...k",
+    "R.BQK.P.PPppN.p.bpq.r...k",
+    "RN.QK..P.Pn.pPBp..p.r.bqk",
+    "RNBQK.P.PP.p..ppbpq.r...k",
+    "RNBQK.P.PPnp...p.pbpr..qk"
+  ],
+  "root_entry_clocks": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "guarantee": "White nonloss from quiet clock zero only. No exact draw/win or full-perfect-opponent classification.",
+  "complete_encoded_runtime_rows": 1090896,
+  "encoded_guard_histogram": {
+    "0": 1090896
+  },
+  "fresh_independent_runtime_replay": {
+    "status": "pass",
+    "rows": 1090896,
+    "sha256": "0dd48525654803afab6cbcfa3a8c572d20f84650065acc3d3ac3111d3b959da1",
+    "roots": [
+      "R..QK..P.Pb.pP.p..q.r...k",
+      "R.BqK....PppP.P..p..r...k",
+      "R..QK..P.Pb.pPBp..p.r..qk",
+      "R.BQK.P..Pppb.P..pq.r...k",
+      "R.BQK.P.PPNp...p.pqpr.bk.",
+      "R.BQK.P.PPNp...pbpqpr...k",
+      "R.BQK.P.PPppN.p.bpq.r...k",
+      "RN.QK..P.Pn.pPBp..p.r.bqk",
+      "RNBQK.P.PP.p..ppbpq.r...k",
+      "RNBQK.P.PPnp...p.pbpr..qk"
+    ],
+    "bounds": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "independent_bitboard_replay": true,
+    "proof_searches": 0
+  },
+  "primary_basis": {
+    "path": "/tmp/gardner-nonloss-base-d020613df1b75d97b5b09244efdc3c996b30166373a7f94bd427fffa58e6f0fc.json",
+    "sha256": "d020613df1b75d97b5b09244efdc3c996b30166373a7f94bd427fffa58e6f0fc"
+  },
+  "parent_basis_sha256": "93f46c6f01041057b9a3b2e0507b97bae99c8e8cc43ad27e7a1fb819f44ba8b1",
+  "closure": {
+    "known_closed_exit_edges": 1314500,
+    "clock_overapproximation": false,
+    "status": "pass",
+    "loaded_unique": 37444371,
+    "reachable_rows": 1090896,
+    "processed_clock_states": 1241204,
+    "black_replies": 4063403,
+    "terminals": 240496,
+    "claim_endpoints": 0,
+    "missing": 0,
+    "root_count": 10,
+    "peak_rss_bytes": 2417246208,
+    "seconds": 8.5597,
+    "scope": "Incremental fixed-policy closure; every legal reply checked until a clock-safe exit to the unchanged independently verified retained corpus. No move search or exact optimality claim"
+  },
+  "added_rows_vs_F02": 958443,
+  "all_prior_candidate_policies_retained": true,
+  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+  "proof_searches_during_extraction_and_packaging": 0,
+  "integrated": false
+}

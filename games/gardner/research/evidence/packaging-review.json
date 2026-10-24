@@ -1,0 +1,27 @@
+{
+  "status": "pass",
+  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+  "remaining_actionable_issues": 0,
+  "rounds": [
+    {
+      "scope": "Independent exact encoded-policy replay against original basis93; all legal Black replies and every guard",
+      "remaining_actionable_issues": 0
+    },
+    {
+      "scope": "Strict merged corpus, all prior policies, actual-TTF dispatcher, full replay, original artwork and frozen compiler",
+      "remaining_actionable_issues": 0
+    },
+    {
+      "scope": "Exact current evidence, isolated browser and memory gates, deterministic build, honest limits and resource-stop history",
+      "remaining_actionable_issues": 0
+    }
+  ],
+  "limitations": [
+    "Remaining named roots: F08, F09, F11, F16, F21; both opening prefixes unproved.",
+    "Earlier separate F02 font timing variance remains archived; unchanged compiler is not claimed to fix it.",
+    "The proof/export host hit the unchanged scratch-artifact cap during packaging; guard stop and recovery remain preserved.",
+    "Host timings do not promise every device or load state."
+  ],
+  "proof_searches_during_review": 0,
+  "integrated": false
+}

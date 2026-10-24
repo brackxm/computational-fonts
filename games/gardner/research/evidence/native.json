@@ -1,0 +1,31 @@
+{
+  "status": "pass",
+  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+  "history_checks": 162,
+  "boundary_checks": 1152,
+  "bad_tree_checks": 4,
+  "dispatch": {
+    "status": "pass",
+    "node_value_pairs": 16773160,
+    "scope": "Every binary node and input bit independently executed through the actual TTF Context2, SingleSubst and deletion tables; exact state/leaf match"
+  },
+  "dictionary": {
+    "status": "pass",
+    "temporary_dictionary_glyphs": 18226,
+    "checks": 36452,
+    "route_class_checks": 27426,
+    "includes_notdef": true,
+    "scope": "Actual HarfBuzz dispatcher, both bits for every temporary dictionary glyph and one representative per bank/bit route class; test-only cmap and top-level feature; nested GSUB and GDEF unchanged."
+  },
+  "live150": {
+    "median_ms": 88.76662450347794,
+    "p95_ms": 89.35262500017416,
+    "max_ms": 89.35262500017416
+  },
+  "twenty_reply": {
+    "median_ms": 27.92847950331634,
+    "p95_ms": 29.09687499050051,
+    "max_ms": 29.09687499050051
+  },
+  "proof_searches": 0
+}

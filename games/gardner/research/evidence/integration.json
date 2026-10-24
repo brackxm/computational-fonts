@@ -1,0 +1,106 @@
+{
+  "format": "gardner-research-integration-v1",
+  "status": "pass",
+  "variant": "D",
+  "recorded_utc": "2026-10-24T13:50:24.638532+00:00",
+  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+  "font_bytes": 39838416,
+  "glyphs": 56981,
+  "policy_rows": 23129338,
+  "source_archive": {
+    "name": "frontier-ten-root-validated-20261024-D",
+    "inventory_sha256": "865c4d901dfb4995e8c8118bcd8fcaaf7a159a2bfd7fbb5233dd054c2f9e3f1c"
+  },
+  "exact_archived_font_preserved": true,
+  "exact_frozen_rebuild": true,
+  "all_frozen_inputs_verified": true,
+  "all_retained_policy_rows_unchanged": true,
+  "compiler_and_runtime_unchanged": true,
+  "original_artwork_preserved_glyphs": 6404,
+  "default_font_sha256": "bd8a43df4b228cf6d1ede6e7b5474a283eb7335e25580cc1ab1a1696d3a039f0",
+  "all_default_files_unchanged": true,
+  "source_syntax_checks": "pass",
+  "research_controller": "pass",
+  "default_controller": "pass",
+  "native_repository_replay": {
+    "status": "pass",
+    "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+    "history_checks": 162,
+    "boundary_checks": 1152,
+    "bad_tree_checks": 4,
+    "dispatch": {
+      "status": "pass",
+      "node_value_pairs": 16773160,
+      "scope": "Every binary node and input bit independently executed through the actual TTF Context2, SingleSubst and deletion tables; exact state/leaf match"
+    },
+    "dictionary": {
+      "status": "pass",
+      "temporary_dictionary_glyphs": 18226,
+      "checks": 36452,
+      "route_class_checks": 27426,
+      "includes_notdef": true,
+      "scope": "Actual HarfBuzz dispatcher, both bits for every temporary dictionary glyph and one representative per bank/bit route class; test-only cmap and top-level feature; nested GSUB and GDEF unchanged."
+    },
+    "live150": {
+      "median_ms": 92.32716699625598,
+      "p95_ms": 95.92804199201055,
+      "max_ms": 95.92804199201055
+    },
+    "twenty_reply": {
+      "median_ms": 28.68187500280328,
+      "p95_ms": 30.053374997805804,
+      "max_ms": 30.053374997805804
+    },
+    "proof_searches": 0
+  },
+  "mathematical_replay": {
+    "status": "pass",
+    "direct_original_basis93": true,
+    "portable_fresh_queue": true,
+    "rows": 1090896,
+    "roots": 10,
+    "runtime_certificate_sha256": "0dd48525654803afab6cbcfa3a8c572d20f84650065acc3d3ac3111d3b959da1"
+  },
+  "browser_and_memory": {
+    "scope": "Unchanged exact font and benchmark from the independently validated D archive.",
+    "browser_evidence": "browser.json",
+    "memory_evidence": "memory.json"
+  },
+  "review_rounds": [
+    {
+      "scope": "Release scope, historical evidence identities and default isolation",
+      "fixed": [
+        "Restore standard research variant metadata and remove proposal counters.",
+        "Label earlier representation evidence as historical; refresh current sizes, roots and limits."
+      ],
+      "remaining_actionable_issues": 0
+    },
+    {
+      "scope": "Continuation checks, exact build, full native replay, both controllers and source syntax",
+      "fixed": [
+        "Share the extended continuation list between root and first-reply fixture checks."
+      ],
+      "remaining_actionable_issues": 0
+    },
+    {
+      "scope": "Final complete diff and source/archive identities",
+      "remaining_actionable_issues": 0
+    }
+  ],
+  "remaining_actionable_issues": 0,
+  "integrated": true,
+  "proof_searches_during_integration": 0,
+  "remaining_named_frontiers": [
+    "F08",
+    "F09",
+    "F11",
+    "F16",
+    "F21"
+  ],
+  "unproved_openings": [
+    "B4A3",
+    "B4B3"
+  ],
+  "perfect_opponent": false,
+  "archived_evidence_scope": "Copied mathematical, browser, memory and consistency reports describe D before integration; their integrated:false/repository_unchanged fields are historical. This report records the repository integration."
+}

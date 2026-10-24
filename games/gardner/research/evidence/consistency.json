@@ -1,0 +1,13 @@
+{
+  "status": "pass",
+  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+  "byte_reproducible": true,
+  "original_glyphs_and_metrics_identical": 6404,
+  "frozen_compiler_and_game_runtime_unchanged": true,
+  "frozen_inputs_verified": true,
+  "all_committed_rows_retained": true,
+  "all_C_B_A_F02_policies_retained": true,
+  "repository_and_default_unchanged": true,
+  "proof_searches": 0,
+  "integrated": false
+}

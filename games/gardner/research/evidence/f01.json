@@ -1,0 +1,46 @@
+{
+  "known_closed_exit_edges": 259,
+  "clock_overapproximation": false,
+  "status": "pass",
+  "loaded_unique": 22038442,
+  "reachable_rows": 188,
+  "processed_clock_states": 188,
+  "black_replies": 490,
+  "terminals": 14,
+  "claim_endpoints": 0,
+  "missing": 0,
+  "root_count": 1,
+  "peak_rss_bytes": 1343569920,
+  "seconds": 1.822,
+  "scope": "Incremental fixed-policy closure; every legal reply checked until a clock-safe exit to the unchanged independently verified retained corpus. No move search or exact optimality claim",
+  "root": "R...K.BP.PP.n.pp....r.bk.",
+  "root_clock": 0,
+  "move": "b2c3",
+  "added_policy_rows": 188,
+  "font_reachable_rows": 22038442,
+  "previous_font_sha256": "fb675a7d134fa507d1de6e809f4494c767e9555783269423f802f547d5ff93d4",
+  "font_sha256": "fdd64b9a90240a32463cfb152d99e4e244bd4a320c3bc6ff54e30b1caa108e20",
+  "guarantee": "White nonloss at clock zero; no exact-draw, win, or complete-opening claim.",
+  "proof_searches": 0,
+  "independent_root_replay": true,
+  "serialized_policy_replay": {
+    "status": "pass",
+    "rows": 188,
+    "sha256": "26a53f15774f27626e4b9ba376fe0f9eb9075e5b1b9fb835b8d5ad767c8e179f",
+    "roots": [
+      "R...K.BP.PP.n.pp....r.bk."
+    ],
+    "bounds": [
+      0
+    ],
+    "independent_bitboard_replay": true,
+    "proof_searches": 0
+  },
+  "basis_head_sha256": "93f46c6f01041057b9a3b2e0507b97bae99c8e8cc43ad27e7a1fb819f44ba8b1",
+  "dependency_basis_head_sha256": "040b70d2cd0d848a84eaf86228a72e1c6c1ca6fa56a2f8a66eb9b4a9337e2b76",
+  "incremental_policy_sha256": "462914f687d01a925f2c9c1129f2e98035a9eb779208c9ae30bca871418e5ef3",
+  "policy_tree_sha256": "3913cfdf44a0c1eadf2204820d7b4943d40bb9aa5c8619a2f05617a924fabd7a",
+  "archive": "post-f00-audit-optimization-20261024",
+  "note": "F00 closes the only missing reply of the saved F01 move B2-C3. The other five replies reuse existing independently checked winning facts. Fixed-policy extraction adds 188 rows and checks all legal replies until clock-safe exits into the prior corpus. Seventy-seven winning labels are coalesced exactly as in the existing runtime compiler, with no move change; the resulting wide DAG is byte-identical. A fresh verifier checks all 188 runtime policies at entry zero and admits them to the verified basis. No move-choice or proof search runs in this phase. Full mathematical replay requires the separate certificate/tablebase archives. Earlier proof reports keep their historical scope and hashes.",
+  "archive_inventory_sha256": "37c01818e8c560cabcc9efe9b50b44575bc73d9890f05481729ca2e6e68877a4"
+}

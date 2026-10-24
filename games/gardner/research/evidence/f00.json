@@ -1,0 +1,45 @@
+{
+  "known_closed_exit_edges": 895570,
+  "clock_overapproximation": false,
+  "status": "pass",
+  "loaded_unique": 28416564,
+  "reachable_rows": 425126,
+  "processed_clock_states": 470961,
+  "black_replies": 2383957,
+  "terminals": 71483,
+  "claim_endpoints": 0,
+  "missing": 0,
+  "root_count": 1,
+  "peak_rss_bytes": 1006862336,
+  "seconds": 6.1298,
+  "scope": "Incremental fixed-policy closure; every legal reply checked until a clock-safe exit to the unchanged independently verified retained corpus. No move search or exact optimality claim",
+  "root": "R...K..P.PP.B.pp.....rbk.",
+  "root_clock": 0,
+  "move": "c3b4",
+  "added_policy_rows": 425126,
+  "font_reachable_rows": 22038254,
+  "previous_font_sha256": "7d7165d4f08dbc4402b76789f2df03aa3ac34444f925dd6d37b69a028ffb9790",
+  "font_sha256": "fb675a7d134fa507d1de6e809f4494c767e9555783269423f802f547d5ff93d4",
+  "guarantee": "White nonloss at clock zero; no exact-draw, win, or complete-opening claim.",
+  "proof_searches": 0,
+  "independent_root_replay": true,
+  "serialized_policy_replay": {
+    "status": "pass",
+    "rows": 425126,
+    "sha256": "a3c2fa73ae807bff771008e9d6f384167a7c5c149cd226fdd21e97d775d29277",
+    "roots": [
+      "R...K..P.PP.B.pp.....rbk."
+    ],
+    "bounds": [
+      0
+    ],
+    "independent_bitboard_replay": true,
+    "proof_searches": 0
+  },
+  "basis_head_sha256": "040b70d2cd0d848a84eaf86228a72e1c6c1ca6fa56a2f8a66eb9b4a9337e2b76",
+  "archive": "f00-fresh-clock-20261023",
+  "archive_inventory_sha256": "b40d0bd07248f0ad0cabc78fc8216cbb414dcd6775a533b256c104354481ec2b",
+  "incremental_policy_sha256": "ae4bd98ec7b8ccc4bc5391572a606afe18ccd327c2c503768c95150cc01b8652",
+  "policy_tree_sha256": "eacd7a876fbbcb877dcf47da55c30049c485305e66fc19e1fbf6cc74f3be528a",
+  "note": "The prior budgeted attempt independently certified c3b4 at quiet clock zero. A fresh host replayed the proof basis and another fresh verification-only host checked every final compact-policy row. Fixed-policy closure checks every Black reply until a clock-safe exit into the unchanged prior corpus. The closure loaded extra checked dependencies; loaded_unique is not the final font row count. Exact-table draw moves prefer corpus reuse without changing value or threshold checks. Integration performs no proof search. Full mathematical replay requires the separate certificate/tablebase archive. Earlier reports retain their historical scope and hashes."
+}

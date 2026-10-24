@@ -6,6 +6,12 @@ opening book**, then generates legal replies with a capture-and-safety
 heuristic. **It is not perfect and can be beaten.** Leaving the book does not
 stop the game.
 
+An optional [certified-corpus research variant](research/readme.md) can be built
+locally from its separately preserved inputs. Its
+[research playground](research/playground.html) requires that local build.
+It remains incomplete and stops at
+two unproved openings. This lightweight font remains the default.
+
 All board updates, move legality, opponent choices, terminal detection, and
 artwork run in OpenType GSUB. JavaScript edits the history, transports text,
 and reads the font's status; it contains no chess rules or move selection.

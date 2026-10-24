@@ -23,6 +23,7 @@
 <textarea id="record" rows="3" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">b</textarea>
 <p id="syntax"><code>b</code> starts with the font as White. Append only your moves, using uppercase coordinates and a semicolon, such as <code>bB4A3;</code>. Add Q, R, B, or N before the semicolon when promoting. Spaces and line breaks are allowed. The font applies moves, chooses replies, draws the board, and ends games; JavaScript only edits the text and reads the font’s status.</p>
 <p>Checkmate, stalemate, basic insufficient material, and an automatic draw after 75 moves by each side without a pawn move or capture are supported. Repetition draws and fifty-move draw claims are not implemented. The playground accepts up to 2,048 source characters.</p>
+<p>An optional <a href="research/readme.md">research variant and build instructions</a> use a separately preserved certified strategy corpus, with two unproved openings. This lightweight opponent remains the default.</p>
 <footer>Playable heuristic opponent · Original artwork · Apache 2.0</footer>
 <script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createGardnerPlayground();</script>
 </body></html>

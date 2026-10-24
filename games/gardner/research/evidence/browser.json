@@ -1,0 +1,38 @@
+{
+  "status": "pass",
+  "proofSearches": 0,
+  "fontBytes": 39838416,
+  "fontSHA256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+  "loadAndFirstShapeMs": 105.90000000596046,
+  "loadPhases": {
+    "fetchMs": 82.29999999701977,
+    "fontLoadMs": 15.800000011920929,
+    "firstShapeMs": 7.799999997019768
+  },
+  "prefixChecks": 77,
+  "longestLivePlies": 153,
+  "live150PlyTested": true,
+  "livePliesAfterOpening": 150,
+  "totalLivePliesInBenchmark": 151,
+  "benchmarkStatus": 1,
+  "allPrefixes": {
+    "count": 77,
+    "medianMs": 51.400000005960464,
+    "p95Ms": 85.90000000596046,
+    "maxMs": 90.40000000596046
+  },
+  "live150Ply": {
+    "count": 20,
+    "medianMs": 88.85000000149012,
+    "p95Ms": 94.1000000089407,
+    "maxMs": 94.1000000089407
+  },
+  "twentyReply": {
+    "count": 20,
+    "medianMs": 27.450000002980232,
+    "p95Ms": 28,
+    "maxMs": 28
+  },
+  "cacheAvoidance": "20 unique text runs using 1..20 extra inert padding characters",
+  "scope": "Retained certified corpus plus F20/F23/F22/F00/F01/F02/F03/F04/F05/F12/F13/F14/F15/F18/F19; two drawing openings remain unproved; standard start; complete histories; timings include transport encoding, input construction and shaping. Native checks independently compare every cell, last move and status."
+}

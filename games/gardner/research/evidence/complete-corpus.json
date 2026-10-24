@@ -1,0 +1,1 @@
+{"status":"pass","loaded_unique":22567956,"reachable_rows":22597454,"processed_clock_states":22567909,"black_replies":104522480,"terminals":4477566,"claim_endpoints":0,"missing":0,"root_count":12,"peak_rss_bytes":1343717376,"seconds":162.446,"scope":"Stored-policy closure from listed roots at their clocks, every legal opponent reply; no move search, no exact optimality claim"}

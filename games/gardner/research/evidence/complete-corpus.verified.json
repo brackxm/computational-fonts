@@ -1,0 +1,95 @@
+{
+  "status": "pass",
+  "rows": 22597454,
+  "low_rows": 16621261,
+  "higher_rows": 5976193,
+  "roots": [
+    "RNBQK.PPPPP.n..pppppr.bqk",
+    "RNBQK.PPPPP...ppppp.rnbqk",
+    "RNBQK.PPPPn....pppppr.bqk",
+    "RNBQK.PPPPP..p.ppp.prnbqk",
+    "RNBQK.PPPPP.p..pp.pprnbqk",
+    "RNQ.K..P.PP.pPpp..b.rn.qk",
+    "RN.QK..P.PP.pPpp....rnbqk",
+    "RN.QK..P.PP.pPpp..b.rnq.k",
+    "RN..K.BP.PP...pp.p.krnb..",
+    "RN..K.BP.PP...pp.pb.rn.k.",
+    "RNBQK.P.P.Pp.p.p.pqpr...k",
+    "R.BQK.P.P.PpNp.p.p.pr..qk"
+  ],
+  "source_sha256": "184bab449b581729cce040c05d4e96f31e417a889ed9123fded6ce80d615cf43",
+  "low_parts": [
+    {
+      "rows": 1000000,
+      "sha256": "f50af29cd7547832637fdb57b685a7668d35ff9644edb0f405144506f1737cf2"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "7c0707d69b82be6066d676760c924218baec5174c06b1988f930dbdc8b6f1ef0"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "c62d569f088e56b58f708ac258f7e7462d25325fd61398b0cb37a05fca389353"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "f3797f09a892b4c7750a060ea279b403afdbf2ceadde143d0c58f7c669102c6f"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "21178fa3ec4f5079ff5a4d2aebfc53cc58fffc55c32b096ddd1b16a03a7bdc11"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "62cb8b14a51398b5ecd7e220cb7ed5bafcb5da86849553011c0f9bfcf4f26898"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "680b1f75d138a3c96c3bc63662bc9496ecedc1c1611782766698b22b74e0f017"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "81ff4ecedea5597a863a09cd6ba439fd5fefc5ff8088584113b85a035f1257d9"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "99ffc208f8af0177190870229f46e1161a9fae1d04e910c9c5d0c6e640750308"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "963ec98c3a4d75d1870938843a56512655958bb315250be082a47e7fc00046f7"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "ae78d5d3efdaef009100b59fd9576e167ae69361ee600a561088d35dea06338b"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "3b6ea6525ab458b1b40a14e503d4cd09b7ee5e8563f7c8ee73ec657a655ebfe6"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "21a0b56b35b0cc89893a09524bf2099718ddad973069c1ed6986d772fff4d601"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "b9e6fe6bc25538172b34ca26b385ea27552a9d993038988ccb108e908691d584"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "893c449d343ed6f6ca28d9bf66ec3a6dbd1f93112c67eae35f3448f22ff9c797"
+    },
+    {
+      "rows": 1000000,
+      "sha256": "40cc486649736d39622d9fc5f0f0ecca66f8abe3ff6706e36f4aceab872632d0"
+    },
+    {
+      "rows": 621261,
+      "sha256": "2a1c0f064b7e6edb005799e9e09d731f36120c13520b82f408a54cf7682501b8"
+    }
+  ],
+  "higher_sha256": "517dc1b5f017b6c62b0543f8a5d19de8e548119f0fdad2cf76266ac0dac12f60",
+  "seconds": 312.67429358302616,
+  "proof_searches": 0,
+  "scope": "Every fixed policy row independently replayed by frozen V14: exact-table small-material checks and a closed higher-material witness; all twelve entry roots safe at clock zero; no search or persistent proof-registry mutation."
+}

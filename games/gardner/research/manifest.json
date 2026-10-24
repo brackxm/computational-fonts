@@ -1,0 +1,162 @@
+{
+  "format": 1,
+  "variant": "gardner-certified-corpus-research",
+  "perfect_opponent": false,
+  "proof_searches": 0,
+  "font_family": "Gardner Frontier Research 20261024 D",
+  "font_file": "gardner-research.ttf",
+  "font_sha256": "4152358532c0db1fb0e8948dad595fc512abe45e3cbca32996917d531f490397",
+  "font_bytes": 39838416,
+  "head_timestamps": [
+    3875584786,
+    3875591863
+  ],
+  "policy_tree_sha256": "ee12a65fcf8edf131b37ad052c01b7110cc7c634616e61b1e93c741946460dac",
+  "font_reachable_rows": 23129338,
+  "unproved_openings": [
+    "B4A3",
+    "B4B3"
+  ],
+  "inputs": {
+    "inputs/boundaries.records29": {
+      "bytes": 5568,
+      "sha256": "ffd3f87384c36f85ffbe69302a1dfaa7b9ac97d70c5e6f6419c885ed697190fa"
+    },
+    "inputs/game-base.gamepack": {
+      "bytes": 21636,
+      "sha256": "501f56b676b34332906ce2600b2ea6e4c4fc2f8597a935c4c4ee3c61b08efd26"
+    },
+    "inputs/game-base.ttf": {
+      "bytes": 2394100,
+      "sha256": "9d77c6304abf4c1f4cd05d29380c549c313fbe0792af48ca3b0735894b2bd17c"
+    },
+    "inputs/games.json": {
+      "bytes": 11658,
+      "sha256": "569d434d85536388cd12cf5d8636af77fede0c9937852dd25c6f2693434700ab"
+    },
+    "inputs/replay.json": {
+      "bytes": 27338,
+      "sha256": "ef4cabe5ad5cdd22e01312ea6e253ca472d302e3bfef30e305e48a23b6feeea0"
+    },
+    "inputs/policy.tree.xz": {
+      "bytes": 33594868,
+      "sha256": "55d37d9d233b2bb36c4a8f592ea0bca7e41be9678ab08b5f25e90c7a6bd9a053"
+    }
+  },
+  "limits": {
+    "font_bytes": 50000000,
+    "glyphs": 65535,
+    "load_first_shape_ms": 2000,
+    "renderer_growth_bytes": 536870912,
+    "twenty_reply_p95_ms": 250,
+    "live_150_ply_max_ms": 1000
+  },
+  "base_glyph_count": 6404,
+  "glyph_count": 56981,
+  "base_corpus": {
+    "corpus_rows": 22597454,
+    "font_reachable_rows": 21178418,
+    "corpus_certificate_sha256": "184bab449b581729cce040c05d4e96f31e417a889ed9123fded6ce80d615cf43"
+  },
+  "f20": {
+    "board": "RNBQK.P.PPnp...p.pkpr.bq.",
+    "safe_entry_clock": 0,
+    "added_policy_rows": 78906,
+    "evidence": "evidence/f20.json"
+  },
+  "f23": {
+    "board": "RN.QK.B.PPP.Pp.p.p.prnbqk",
+    "safe_entry_clock": 0,
+    "added_policy_rows": 12558,
+    "evidence": "evidence/f23.json"
+  },
+  "f22": {
+    "board": "R.BQK.P..PPpNPpp.pq.rnb.k",
+    "safe_entry_clock": 0,
+    "added_policy_rows": 343246,
+    "evidence": "evidence/f22.json"
+  },
+  "f00": {
+    "board": "R...K..P.PP.B.pp.....rbk.",
+    "safe_entry_clock": 0,
+    "added_policy_rows": 425126,
+    "evidence": "evidence/f00.json"
+  },
+  "f01": {
+    "board": "R...K.BP.PP.n.pp....r.bk.",
+    "safe_entry_clock": 0,
+    "added_policy_rows": 188,
+    "evidence": "evidence/f01.json"
+  },
+  "f02": {
+    "board": "R..QK..P.Pb.pP.p..q.r...k",
+    "safe_entry_clock": 0,
+    "added_policy_rows": 132453,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "f04": {
+    "board": "R..QK..P.Pb.pPBp..p.r..qk",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "f05": {
+    "board": "R.BQK.P..Pppb.P..pq.r...k",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "f12": {
+    "board": "R.BQK.P.PPNp...p.pqpr.bk.",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "f13": {
+    "board": "R.BQK.P.PPNp...pbpqpr...k",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "f14": {
+    "board": "R.BQK.P.PPppN.p.bpq.r...k",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "f03": {
+    "board": "R.BqK....PppP.P..p..r...k",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "f15": {
+    "board": "RN.QK..P.Pn.pPBp..p.r.bqk",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "f18": {
+    "board": "RNBQK.P.PP.p..ppbpq.r...k",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "f19": {
+    "board": "RNBQK.P.PPnp...p.pbpr..qk",
+    "safe_entry_clock": 0,
+    "evidence": "evidence/frontier-extension.json"
+  },
+  "extension": {
+    "added_rows_vs_F02": 958443,
+    "shared_roots": [
+      "F02",
+      "F03",
+      "F04",
+      "F05",
+      "F12",
+      "F13",
+      "F14",
+      "F15",
+      "F18",
+      "F19"
+    ],
+    "runtime_certificate_sha256": "0dd48525654803afab6cbcfa3a8c572d20f84650065acc3d3ac3111d3b959da1",
+    "evidence": "evidence/frontier-extension.json",
+    "retained_policy_rows": 22038442,
+    "added_policy_rows": 1090896,
+    "parent_font_sha256": "fdd64b9a90240a32463cfb152d99e4e244bd4a320c3bc6ff54e30b1caa108e20"
+  }
+}
