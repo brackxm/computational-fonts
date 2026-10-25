@@ -4,7 +4,7 @@ Fonts that play games, run programs, draw pictures, decode messages and format
 text. The computation happens during OpenType shaping, using substitutions,
 ligatures and glyph composition.
 
-**[Explore the 41 interactive demos](https://brackxm.github.io/computational-fonts/)**
+**[Explore the 42 interactive demos](https://brackxm.github.io/computational-fonts/)**
 in your browser, with no installation needed.
 
 ## Try the fonts
@@ -67,6 +67,7 @@ to the boards, rules and starting positions described in each project.
 | [Kayles](games/kayles/) | Perfect opponent with twelve pins; remove one or two original neighbors | [Demo](games/kayles/playground.html) |
 | [Achi](games/achi/) | Perfect win/loss/draw opponent for the Berkeley three-counter placement-and-sliding variant | [Demo](games/achi/playground.html) |
 | [Dots and Boxes](games/dots-and-boxes/) | Perfect score-maximizing opponent on 2×2 boxes; scoring and bonus turns inside the font | [Demo](games/dots-and-boxes/playground.html) |
+| [Sim](games/sim/) | Perfect opponent on either side of the six-dot game; avoid your own monochromatic triangle | [Demo](games/sim/playground.html) |
 | [Tic-tac-toe](games/tic-tac-toe/) | Perfect opponent on either side of the standard 3×3 board | [Demo](games/tic-tac-toe/playground.html) |
 
 Connect Four's implementation, independently generated strategy and fonts are

@@ -1,0 +1,4 @@
+# Pin the compiler: later releases' generic substitution builder can take
+# quadratic time for this game's large ligature lookup.
+fonttools==4.50.0
+uharfbuzz==0.57.0

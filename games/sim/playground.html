@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sim · a perfect opponent in a font</title>
+<style>
+@font-face{font-family:SimPerfect;src:url('./sim-font.ttf?v=1') format('truetype');font-display:block}
+:root{--game-font:SimPerfect}
+</style>
+<link rel="stylesheet" href="../shared/exact-game.css">
+</head>
+<body>
+<p><a href="../../index.html">← Computational fonts</a></p>
+<h1>Sim</h1>
+<p>Six dots, fifteen connections, two colours. Take turns colouring an unused edge. <strong>Complete a triangle in your own colour and you lose.</strong> Only triangles between three labelled dots count; crossings are not vertices.</p>
+<div class="controls"><label for="setup">Your side <select id="setup"><option value="h">You first · teal solid lines</option><option value="b">Font first · you have red double lines</option></select></label><button id="reset">New game</button><button id="undo" disabled>Undo</button></div>
+<div class="controls" aria-label="Your move"><label for="edge">Edge <select id="edge"><option>AB</option><option>AC</option><option>AD</option><option>AE</option><option>AF</option><option>BC</option><option>BD</option><option>BE</option><option>BF</option><option>CD</option><option>CE</option><option>CF</option><option>DE</option><option>DF</option><option>EF</option></select></label><button id="play">Colour edge</button></div>
+<p id="status" role="status" aria-live="polite">Loading Sim font…</p>
+<div class="board"><svg viewBox="0 0 1806 1280" role="img" aria-labelledby="status"><text id="drawing" class="replay" x="0" y="1250"></text></svg></div>
+<p>First-player edges are solid teal; second-player edges are red double lines, so the sides also differ in monochrome. The second player can force a win with perfect play. The font plays perfectly on either side.</p>
+<p><label for="record"><strong>Your move history</strong></label></p>
+<textarea id="record" rows="2" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="syntax status">h</textarea>
+<p id="syntax"><code>h</code> means you play first; <code>b</code> means the font starts. Append only your edges, with the earlier letter first and a semicolon: <code>hAB;CD;</code>. Spaces and line breaks are allowed. The font checks edges, plays its replies, detects losing triangles and draws the board.</p>
+<footer><a href="readme.md">Complete solution, notation, protocol, and tests</a> · <a href="sim-font.ttf" download>Download font</a> · Original game artwork · Original Game Sans typography · Apache 2.0</footer>
+<script src="../shared/game-controls.js"></script><script src="controls.js"></script><script>createSimPlayground();</script>
+</body>
+</html>

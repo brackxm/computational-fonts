@@ -66,7 +66,9 @@ def clock_wrapper(font,index,names):
     record = otTables.SubstLookupRecord()
     record.SequenceIndex, record.LookupListIndex = 0,index
     context.SubstLookupRecord, context.SubstCount = [record],1
-    return buildLookup([context],table='GSUB',extension=True)
+    extension = otTables.ExtensionSubst()
+    extension.Format, extension.ExtensionLookupType, extension.ExtSubTable = 1,5,context
+    return buildLookup([extension])
 
 
 class GameFont:
@@ -133,7 +135,7 @@ class GameFont:
         self.lookup('STATE_CLEAN',[f'sub {group(states)}\' {group(states)} by NULL;'],states,states)
         return ['SPACE',*[name for name,_,_ in preprocess],'INIT','TRANSITION','FINISH','LAST_CLEAN','STATE_CLEAN']
 
-    def save(self,output,before,stages,after,passes):
+    def save(self,output,before,stages,after,passes,*,color_version=0,optimize_layout=None):
         fb = FontBuilder(1000,isTTF=True)
         fb.setupGlyphOrder(self.order)
         cmap = {ord(c):name for c,name in self.raw.items()}
@@ -154,7 +156,8 @@ class GameFont:
         names.update(self.name_records)
         fb.setupNameTable(names)
         fb.setupOS2(sTypoAscender=self.height,sTypoDescender=-30,usWinAscent=self.height,usWinDescent=30,fsType=0)
-        fb.setupPost(); fb.setupMaxp(); fb.setupCOLR(self.layers,version=0)
+        fb.setupPost(); fb.setupMaxp()
+        fb.setupCOLR(self.layers,version=color_version,allowLayerReuse=color_version == 0)
         fb.setupCPAL([[tuple(int(c[i:i+2],16)/255 for i in (0,2,4))+(1.,) for c in self.palette]])
         registers=[name for name in self.order if name.startswith('r_')]
         definitions=['languagesystem DFLT dflt;','languagesystem latn dflt;',
@@ -178,6 +181,8 @@ class GameFont:
             lookups.Lookup.append(clock_wrapper(font,indices[name],self.coverages[name]))
         liga.LookupCount=len(liga.LookupListIndex)
         lookups.LookupCount=len(lookups.Lookup)
+        if optimize_layout is not None:
+            optimize_layout(font)
         output=Path(output); output.parent.mkdir(parents=True,exist_ok=True)
         font.save(output)
         stats=(len(self.order),lookups.LookupCount,output.stat().st_size)

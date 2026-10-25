@@ -11,6 +11,8 @@ The exact-opponent games can use these independent helpers:
   old cursors and last-move marks, so loopy games need no fixed shaping clock.
   Optional preprocessors tokenize longer instructions before cursor execution.
   Drawing helpers cover original pixel lettering, circles, and components.
+  The saver can select COLRv1 and apply a game-specific layout packing pass;
+  Sim uses these options for its larger exact policy.
   `layered()` shares positioned parts between COLRv0 and monochrome output;
   individual games can extend their font palette. A clock schedule may reuse
   the same named lookup at multiple points; each call receives its own wrapper
