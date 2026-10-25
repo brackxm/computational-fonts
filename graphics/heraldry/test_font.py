@@ -133,10 +133,10 @@ class HeraldryTests(unittest.TestCase):
         for name, values in layers.items():
             if name.startswith('device_'):
                 self.assertEqual(values[0].colorID, color_ids[name.rsplit('_', 1)[1]])
-                self.assertGreater(self.font['glyf'][name].numberOfContours, 0)
+                self.assertTrue(self.font['glyf'][name].getCoordinates(self.font['glyf'])[1])
             for layer in values:
                 glyph = self.font['glyf'][layer.name]
-                self.assertGreater(glyph.numberOfContours, 0)
+                self.assertTrue(glyph.getCoordinates(self.font['glyf'])[1])
                 # Clipping keeps the devices within the shield; rim adds 7 units.
                 self.assertGreaterEqual(glyph.xMin, round(.09*self.upem))
                 self.assertLessEqual(glyph.xMax, round(.91*self.upem))

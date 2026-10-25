@@ -94,7 +94,7 @@ The practical limit is **128 turns**, including rolls with no movement: at most
 512 explicit checker transfers. The font runs 1674 shared clock passes; a turn
 with four transfers takes 13 passes, and supported framing/root properties
 take at most eight more. Property duplicates cannot consume unbounded passes.
-At the cap, the bundled font is about 1.23 MB. On the development machine a full
+At the cap, the bundled font is about 0.82 MB. On the development machine a full
 128-turn/512-transfer `hb-shape` invocation takes about 350 ms including process
 startup; measurements vary by host. The same maximum record was checked in the
 browser. The bound keeps interactive re-shaping practical without enumerating

@@ -16,7 +16,7 @@ import sys
 import independent as c
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]/'shared'))
-from fontgame import GameFont, circle, group, rect
+from fontgame import GameFont, circle, group, rect, compact_layout, compact_woff2
 from game_text import NAME_RECORDS, centered_lettering
 from fontTools.otlLib.builder import buildCoverage, buildLookup
 from fontTools.ttLib import TTFont
@@ -453,6 +453,12 @@ def build(controller, output, initial_history='4'):
         font.cfg[USE_HARFBUZZ_REPACKER] = False
         if len(lookups) >= 65535:
             raise ValueError('OpenType lookup count exceeded')
+        # Pin the released revision's dates so unchanged webfont content stays
+        # byte-reproducible. Desktop and web retain their original export dates.
+        font.recalcTimestamp = False
+        font['head'].created, font['head'].modified = 3875721658, 3875721666
+        logical_gsub = font['GSUB']
+        compact_layout(font)
         font.save(output)
         metadata = {'glyphs': len(font.getGlyphOrder()), 'lookups': len(lookups),
                     'controller_modes': len(modes), 'branch_modes': len(branches),
@@ -461,7 +467,12 @@ def build(controller, output, initial_history='4'):
                     'abi': 'connect-four-independent-v1', 'max_driver_context': 64,
                     'driver_records': len(calls), 'mode_radix': RADIX, 'priority_radix': POLICY_RADIX,
                     'status_codes': STATUS, 'registers': slots}
+        # Brotli compresses the original layout more effectively than the
+        # shared desktop representation. Keep the original webfont encoding.
+        font['GSUB'] = logical_gsub
+        font['head'].modified = 3875721672
         font.flavor = 'woff2'; font.save(Path(output).with_suffix('.woff2'))
+        compact_woff2(Path(output).with_suffix('.woff2'))
     metadata.update(ttf_bytes=Path(output).stat().st_size, woff2_bytes=Path(output).with_suffix('.woff2').stat().st_size)
     Path(output).with_suffix('.independent.json').write_text(json.dumps(metadata, indent=2)+'\n')
     return metadata

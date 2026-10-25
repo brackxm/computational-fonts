@@ -34,7 +34,7 @@ letter/word spacing. Advance is 1,800 units plus status 1–6. Color uses COLRv0
 and monochrome outlines remain usable. The playground caps input at 1,024
 characters; actual host shaping limits apply.
 
-The bundled font contains 1,743 glyphs, 814 GSUB lookups and 519,064 bytes.
+The bundled font contains 1,826 glyphs, 814 GSUB lookups and 468,756 bytes.
 
 ## Build and verification
 

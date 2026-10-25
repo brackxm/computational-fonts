@@ -22,7 +22,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(ROOT))
 from decoders.shared.font_metadata import (DEFAULT_BASE, load_base_font,
-                                          mark_modified_font, replace_font_names)
+                                          mark_modified_font, replace_font_names, compact_glyphs)
 
 FAMILY = 'Heraldry'
 TINCTURES = dict(or_='#efbf4b', argent='#f5f2e5', azure='#205aa4',
@@ -449,6 +449,7 @@ def build_font(output=HERE / 'heraldry-font.ttf', *, base=DEFAULT_BASE):
     font['head'].fontRevision = 1.001
     replace_font_names(font, {1:FAMILY, 2:'Regular', 3:FAMILY+' 1.001', 4:FAMILY+' Regular',
                               5:'Version 1.001', 6:'Heraldry-Regular', 16:FAMILY, 17:'Regular'})
+    compact_glyphs(font)
     mark_modified_font(font, FAMILY, kind='heraldry font')
     font.recalcTimestamp = False
     font['head'].created = font['head'].modified = 3785270400

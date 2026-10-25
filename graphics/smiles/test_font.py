@@ -158,7 +158,7 @@ class FontTests(unittest.TestCase):
                 self.assertEqual(font['OS/2'].fsType,0)
                 self.assertIn('COLR',font)
                 for name in ('atom_O_2_0','bond_0_0_1_0_1_0'):
-                    self.assertGreater(font['glyf'][name].numberOfContours,0)
+                    self.assertTrue(font['glyf'][name].getCoordinates(font['glyf'])[1])
                     self.assertEqual(font['hmtx'][name][0],0)
                     self.assertIn(name,font['COLR'].ColorLayers)
 
@@ -209,7 +209,7 @@ class FontTests(unittest.TestCase):
                 self.assertTrue(any(n.startswith('chemical_label_O_') for n in labels))
                 self.assertTrue(any(n.startswith('chemical_label_N_') for n in labels))
                 for name in labels:
-                    self.assertGreater(font['glyf'][name].numberOfContours,0)
+                    self.assertTrue(font['glyf'][name].getCoordinates(font['glyf'])[1])
                 self.assertEqual(font['glyf']['atom_C_0_0'].numberOfContours,0)
                 self.assertIn('isolated_carbon',[g['g'] for g in self.shape('{C}',path,'liga=1,calt=1')])
 
@@ -349,7 +349,7 @@ class FontTests(unittest.TestCase):
                     self.assertFalse(any(n.startswith(('bracket_token_','bracket_input_','s_','p_')) for n in names),names)
                     self.assertEqual(sum(g['ax'] for g in shaped),2400)
                     for label in labels:
-                        self.assertGreater(font['glyf'][label['g']].numberOfContours,0)
+                        self.assertTrue(font['glyf'][label['g']].getCoordinates(font['glyf'])[1])
                         self.assertNotEqual((label['dx'],label['dy']),(0,0))
                         self.assertIn(label['g'],font['COLR'].ColorLayers)
                     if '1' in source and source.startswith(('[nH]','c1','[nH+]')):

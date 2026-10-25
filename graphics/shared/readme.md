@@ -33,6 +33,7 @@ counter and grid as PBM and PGM.
 From the repository root, build each format with its wrapper:
 
 ```bash
+python3 -m pip install -r graphics/shared/requirements.txt
 python3 graphics/pbm/build.py
 python3 graphics/pgm/build.py
 python3 graphics/ppm/build.py

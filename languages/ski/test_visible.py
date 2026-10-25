@@ -179,7 +179,7 @@ class VisibleTests(unittest.TestCase):
             self.assertIn('Google', font['name'].getDebugName(0))
             self.assertIn('Michael Brackx', font['name'].getDebugName(0))
             self.assertIn('Apache', font['name'].getDebugName(13))
-            self.assertGreater(font['glyf']['ski.output0_a'].numberOfContours, 0)
+            self.assertGreater(len(font['glyf']['ski.output0_a'].getCoordinates(font['glyf'])[0]), 0)
             self.assertEqual(font['GSUB'].table.FeatureList.FeatureRecord[0].FeatureTag, 'rlig')
         before = hashlib.sha256(DEFAULT_BASE.read_bytes()).hexdigest()
         with self.assertRaises(ValueError):

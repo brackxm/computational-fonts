@@ -159,7 +159,7 @@ def build_font(output):
         {'Format': 10, 'Glyph': part, 'Paint': {'Format': 2, 'PaletteIndex': color, 'Alpha': 1.0}}
         for part, color in parts]} for name, parts in layers.items()}
     return f.save(output, ['SPACE', 'TOKENS', 'INIT'], ['ERROR', 'MOVE'], ['ERROR', 'FINISH'], 9,
-                  color_version=1, optimize_layout=pack_layout)
+                  color_version=1, optimize_layout=pack_layout, compact=True, reuse_color_layers=True)
 
 
 if __name__ == '__main__':

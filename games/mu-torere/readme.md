@@ -87,7 +87,7 @@ verification. All strategy data is regenerated locally from these rules.
 
 ## A forward-reading font, with no shaping clock
 
-The bundled TTF contains **4,469 glyphs, 676 GSUB lookups, and 535,348 bytes**.
+The bundled TTF contains **4,558 glyphs, 676 GSUB lookups, and 469,400 bytes**.
 Its six feature stages are:
 
 1. Remove insignificant spaces.

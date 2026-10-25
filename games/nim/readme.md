@@ -74,7 +74,7 @@ The binary columns use five bits, weighted **16, 8, 4, 2, 1**. The gold XOR row
 shows both decimal and binary results. In normal play a zero XOR is losing for
 the next mover. It is not a sufficient rule for the small misère endgame.
 
-The bundled TTF contains **774 glyphs, 2,984 GSUB lookups, and 471,240 bytes**.
+The bundled TTF contains **1,028 glyphs, 2,984 GSUB lookups, and 235,544 bytes**.
 Forty-nine shaping passes cover every legal game: there are initially at most
 93 tokens and every move removes at least one. End validation, final XOR
 calculation, and source hiding run afterward. This is the complete bounded

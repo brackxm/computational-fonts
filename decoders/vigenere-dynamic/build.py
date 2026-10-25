@@ -87,6 +87,7 @@ from shared.font_metadata import (
     DEFAULT_BASE,
     load_base_font,
     mark_modified_font,
+    compact_layout,
     replace_font_names,
     validate_marker,
     validate_marker_glyph,
@@ -358,6 +359,7 @@ def build_font(
     output = Path(output_path)
     output.parent.mkdir(parents=True, exist_ok=True)
     mark_modified_font(font, "vigenere-dynamic")
+    compact_layout(font)
     font.save(output)
     font.close()
 

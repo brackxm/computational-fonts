@@ -6,6 +6,7 @@ import argparse
 from functools import cache
 import hashlib
 import json
+import sys
 from pathlib import Path
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
@@ -14,10 +15,14 @@ from fontTools.pens.recordingPen import DecomposingRecordingPen
 from fontTools.pens.transformPen import TransformPen
 from fontTools.pens.ttGlyphPen import TTGlyphPen
 from fontTools.ttLib import TTFont
+from fontTools.ttLib.tables._g_l_y_f import GlyphComponent
+from fontTools.ttLib.tables.otBase import USE_HARFBUZZ_REPACKER
 
 from model import CHARACTERS, MAX_INPUT, MULTIPLIER, SEEDS
 
 ROOT = Path(__file__).resolve().parent
+sys.path.insert(0, str(ROOT.parents[1]))
+from fontbuild import compact_glyphs, compact_woff2
 SOURCE = ROOT.parents[1]/'decoders/shared/fonts/roboto-2'
 PADDING, BODY_CAP, LINE_STEP = 240, 160, 260
 
@@ -105,6 +110,25 @@ def build(output):
         name = add(f'poem_{index:04d}', pen.glyph(), panel_width)
         panels.append(dict(glyph=name, index=index, width=panel_width, height=height))
 
+    # Every attribution occupies the same position. Store each author's exact
+    # component sequence once, after existing glyphs so their IDs stay stable.
+    original_order = list(glyphs)
+    original_glyphs = dict(glyphs)
+    original_components = {name: glyph.components for name, glyph in glyphs.items()
+                           if glyph.isComposite()}
+    authors = {}
+    for poem, panel in zip(poems, panels):
+        author = poem['author']
+        if author not in authors:
+            pen = TTGlyphPen(glyphs)
+            draw(pen, author, 130, cap=130)
+            authors[author] = add(f'author_{len(authors)}', pen.glyph())
+        part = GlyphComponent()
+        part.glyphName, part.x, part.y, part.flags = authors[author], 0, 0, 4
+        glyph = glyphs[panel['glyph']]
+        author_letters = sum(char != ' ' for char in author)
+        glyph.components = [*glyph.components[:-author_letters], part]
+
     order = list(glyphs)
     builder = FontBuilder(1000, isTTF=True)
     builder.setupGlyphOrder(order)
@@ -160,10 +184,24 @@ def build(output):
     builder.font['head'].created = builder.font['head'].modified = 3875644800
     builder.font.recalcTimestamp = False
     output.parent.mkdir(parents=True, exist_ok=True)
+    compact_glyphs(builder.font, positioned=True)
     builder.font.save(output)
     font_bytes = output.read_bytes()
+    # WOFF2 compresses the original flat letter sequences more effectively.
+    # Restore every original outline and omit all private TTF sharing helpers.
+    for name, parts in original_components.items():
+        original_glyphs[name].components = parts
+    builder.font['glyf'].glyphs = original_glyphs
+    builder.font['hmtx'].metrics = {name: builder.font['hmtx'].metrics[name]
+                                  for name in original_order}
+    builder.font.setGlyphOrder(original_order)
+    builder.font['glyf'].setGlyphOrder(original_order)
+    builder.font['post'].extraNames = [name for name in builder.font['post'].extraNames
+                                      if name in original_glyphs]
+    builder.font.cfg[USE_HARFBUZZ_REPACKER] = False
     builder.font.flavor = 'woff2'
     builder.font.save(output.with_suffix('.woff2'))
+    compact_woff2(output.with_suffix('.woff2'))
     manifest = dict(version=1, count=count, multiplier=MULTIPLIER, maxInput=MAX_INPUT,
                     alphabet=CHARACTERS, bodyCap=BODY_CAP, padding=PADDING,
                     fontSha256=hashlib.sha256(font_bytes).hexdigest(),

@@ -1,1 +1,2 @@
-fonttools==4.60.2
+fonttools[repacker]==4.60.2
+uharfbuzz==0.57.0

@@ -117,7 +117,7 @@ def build_font(output):
     finish += [f'sub {group(names)} end\' by status_{status};' for status,names in by_status.items()]
     pipeline=f.forward_program(['board',header,'r_last_none'],states,lasts,list(stopped.values()),rules,finish,
         inputs=inputs,preprocess=[('MOVES',lex,[raw[c] for c in 'ABC'])])
-    return f.save(output,pipeline,[],[],1)
+    return f.save(output,pipeline,[],[],1,compact=True,share_contours=True)
 
 
 def main():

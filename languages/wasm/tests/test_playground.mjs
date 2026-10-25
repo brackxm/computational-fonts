@@ -255,7 +255,10 @@ for (const entry of catalog) {
         assert.ok(manifest.metrics.gate_groups > 16000);
         assert.ok(manifest.metrics.gate_subtables < 10000);
         assert.ok(manifest.metrics.coalesced_gate_groups > 15000);
-      } else assert.ok(manifest.metrics.lookup_batch_size > 16);
+      } else {
+        assert.ok(manifest.metrics.coalesced_gate_groups > 8000);
+        assert.ok(manifest.metrics.font_bytes < 3 * 1024 * 1024);
+      }
       assert.ok(manifest.metrics.font_bytes < 32 * 1024 * 1024);
       assert.throws(() => font.invoke(entry.arguments, false), {name: 'IncompleteShaping'});
     }

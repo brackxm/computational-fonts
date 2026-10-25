@@ -104,7 +104,7 @@ def build_font(output):
     f.lookup('FINAL',[f'sub {group(residual)} by status_malformed;'],residual)
     hidden=[*raw.values(),'begin','end','.notdef']
     f.lookup('HIDE',[f'sub {group(hidden)} by hidden;'],hidden)
-    return f.save(output,['SPACE','INIT'],stages,['FINAL','HIDE'],PASSES)
+    return f.save(output,['SPACE','INIT'],stages,['FINAL','HIDE'],PASSES,compact=True,share_contours=True)
 
 
 def main():

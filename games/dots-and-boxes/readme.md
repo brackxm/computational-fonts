@@ -39,7 +39,7 @@ The browser transports text, measures status and stores Undo; it has no
 board, score or strategy model. Only the fixed 2×2-box game is supported.
 
 The shared forward-cursor compiler has no repeated shaping clock or runtime
-search. The bundled font contains 1,432 glyphs, 574 GSUB lookups and 469,656
+search. The bundled font contains 1,503 glyphs, 574 GSUB lookups and 399,576
 bytes. The [Chomp transport protocol](../chomp/readme.md) applies: U+E000/U+E001
 framing, ASCII/private-use aliases, one LTR run with `liga`, and zero kerning
 or letter/word spacing. Advance is 1,800 units plus status 1–6, or **7 for a

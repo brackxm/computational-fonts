@@ -19,6 +19,18 @@
 
 import argparse
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+try:
+    from fontbuild import compact_layout, compact_glyphs
+except ModuleNotFoundError as exc:
+    if exc.name != "fontbuild":
+        raise
+    def compact_layout(font):
+        return 0
+    def compact_glyphs(font):
+        return 0
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -338,6 +350,8 @@ def build_font(output):
     feature.LookupCount = len(feature_indices)
     out = Path(output)
     out.parent.mkdir(parents=True, exist_ok=True)
+    compact_layout(font)
+    compact_glyphs(font)
     font.save(out)
     font.close()
     print(f'Saved {out}: sizes {MIN_W}-{MAX_W} x {MIN_H}-{MAX_H}, up to {MAX_MOVES} moves')

@@ -10,6 +10,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'shared'))
 from game_text import NAME_RECORDS, lettering, centered_lettering
+from fontgame import compact_glyphs, compact_contours, compact_layout
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -399,6 +400,11 @@ def build_font(output):
     # as in Connect Four, so rebuilds work with or without uharfbuzz installed.
     from fontTools.ttLib.tables.otBase import USE_HARFBUZZ_REPACKER
     font.cfg[USE_HARFBUZZ_REPACKER] = False
+    compact_glyphs(font)
+    compact_contours(font)
+    compact_contours(font, rounds=8, min_uses=4)
+    compact_glyphs(font)
+    compact_layout(font)
     font.save(output)
     font.close()
     print(f"Saved {output}: {MAX_TURNS} turns, {CLOCK_PASSES} shared shaping passes")

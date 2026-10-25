@@ -147,12 +147,15 @@ records fail even when the font and its ABI were rebuilt together.
 
 All **621,348 dispatch entries and 1,585,374 priority entries** matched. The
 recorded shaping run checked **3,286 histories and 500 complete games**, all
-Red wins, using HarfBuzz 14.6.0. Median shaping was about 0.44 ms on the development
+Red wins, using HarfBuzz 15.0.0. Median shaping was about 0.43 ms on the development
 machine; timings depend on the machine, engine and history. The policy proof
 is exhaustive; engine tests and binary readback are implementation validation,
 not a formal proof of a font shaper. One uninterrupted LTR run is required.
 
-The font is **5,159,328 bytes TTF / 1,311,492 bytes WOFF2** (about 1.31 MB
+Desktop GSUB extension trees share identical records within bounded offset
+windows. The pure-Python pass retains every lookup and glyph ID; the WOFF2
+keeps its original, smaller Brotli representation. Export dates are pinned for
+reproducibility. The font is **4,653,232 bytes TTF / 1,311,492 bytes WOFF2** (about 1.31 MB
 WOFF2). Earlier complete independent builds were about 2.12 MB and 3.58 MB
 WOFF2. See the generated
 [measurements](connect-four-font.json) and [verification](verification.json).

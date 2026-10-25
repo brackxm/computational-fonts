@@ -52,7 +52,7 @@ def highlight(f, token):
 
 
 def build_font(output):
-    return build_game(model, 'Chomp', output, frame, paint, highlight)
+    return build_game(model, 'Chomp', output, frame, paint, highlight, share_contours=True)
 
 
 if __name__ == '__main__':

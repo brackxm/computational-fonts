@@ -1,5 +1,5 @@
 {
-  "verified_on": "2026-10-24",
+  "verified_on": "2026-10-25",
   "license": "Apache-2.0",
   "strategy": {
     "verified": true,
@@ -34,8 +34,8 @@
     "driver_records": 139,
     "tape_registers": 63,
     "turns": 21,
-    "ttf_bytes": 5159328,
-    "woff2_bytes": 1311492
+    "ttf_bytes": 4653232,
+    "woff2_bytes": 1310896
   },
   "implementation": {
     "tables": {
@@ -58,37 +58,40 @@
     "shaping": {
       "history_shapes": 3286,
       "complete_games": 500,
-      "harfbuzz": "14.6.0",
-      "median_ms": 0.4235420055920258,
-      "max_ms": 53.008084010798484,
+      "harfbuzz": "15.0.0",
+      "median_ms": 0.43295801151543856,
+      "max_ms": 4.370540991658345,
       "longest_human_history": "b11411123267755752776"
     },
-    "font_sha256": "eef61dd080003bf70b24cb64d32d810548b2bde08c8606f20c19539b5209c77d",
+    "font_sha256": "75ef09b90ff8e00726eeb8a1bdd87f55663bb8212b2b398cf08ef447ff55c6b0",
     "controller_sha256": "a72e1dca6b12e290d34f57e93bd1d651a3ef9b1b7b8bc68ec7cf923b136e93bd",
     "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995"
   },
   "browser": {
-    "application": "Codex in-app browser on macOS",
-    "woff2_loaded": true,
-    "ttf_fallback_requested": false,
-    "checked": [
-      "Initial ready state",
-      "41-ply Red win",
-      "Undo restores ready",
-      "Full column rejected",
-      "Reset restores new game"
-    ],
+    "desktop_web_pixels_identical": true,
+    "status": "Red wins. Reset to play again, or undo your last move.",
+    "witness": "b11411123267755752776",
+    "woff2_sha256": "faae4fe11b476107ac13d498240c85cec498c12ba2badb36f7e6d3441348dbfc",
+    "screenshot_sha256": "10a01e08b15cf8401301927699d0b8d12a160460f38b33e63ff9cece4dd6e41d",
+    "viewport": {
+      "width": 1440,
+      "height": 1100
+    },
+    "browser": "156.0.8078.48",
+    "verified_on": "2026-10-25",
     "screenshot": "research/browser-winning.png",
     "woff2_url": "connect-four-font.woff2?v=game-sans-20261024-2",
-    "verified_on": "2026-10-24",
-    "woff2_sha256": "5fc14ce6ca33cb320f2419421c06b992083eca1af7d666da0c729d9d37f7963f",
-    "screenshot_sha256": "2ccb6cb5bd53af911941ebf92c6351293d2cc26c9dade4c855ee0f937c243bbc"
+    "checks": [
+      "Initial self-checks for b, b1 and invalid b!",
+      "Certified 41-ply longest-game history reports Red wins",
+      "Compacted TTF and WOFF2 with the identical decoded stream preserve verified board pixels"
+    ]
   },
   "artifacts_sha256": {
-    "connect-four-font.ttf": "eef61dd080003bf70b24cb64d32d810548b2bde08c8606f20c19539b5209c77d",
-    "connect-four-font.woff2": "5fc14ce6ca33cb320f2419421c06b992083eca1af7d666da0c729d9d37f7963f",
-    "connect-four-font.abi.json": "986d8aebebbf070bdc0c15c3a539fcade763f7263a37a686c35afe4e602a41b5",
-    "connect-four-font.json": "1b91f22fe4a36ffb8b908996173e44154c64e4f94bce44e818bedfde95c6661f"
+    "connect-four-font.ttf": "75ef09b90ff8e00726eeb8a1bdd87f55663bb8212b2b398cf08ef447ff55c6b0",
+    "connect-four-font.woff2": "faae4fe11b476107ac13d498240c85cec498c12ba2badb36f7e6d3441348dbfc",
+    "connect-four-font.abi.json": "423047fc5574707d3eb6018f5257fad77dfc7d271284b4d3f11b825472f8bb69",
+    "connect-four-font.json": "bdf9e43b961076799a1594de18fc11dd012b70a7b3f0d2064f9ee39ca1a8c4bc"
   },
   "size_optimization": {
     "methods": [
@@ -96,16 +99,18 @@
       "Remove unreachable lookup tables",
       "Exhaustively verified shared internal policies",
       "Cross-column order sharing and coalesced same-column priorities",
-      "Shared column profiles"
+      "Shared column profiles",
+      "Bounded extension-tree sharing in TTF; original WOFF2 table packing",
+      "Brotli stream selection with identical decoded WOFF2 bytes"
     ],
     "previous_woff2_bytes": 2119548,
-    "woff2_bytes": 1311492,
-    "bytes_saved": 808056,
-    "reduction_percent": 38.124,
+    "woff2_bytes": 1310896,
+    "bytes_saved": 808652,
+    "reduction_percent": 38.1521,
     "first_independent_woff2_bytes": 3584808,
-    "reduction_from_first_percent": 63.4153,
+    "reduction_from_first_percent": 63.4319,
     "historical_gpl3_woff2_bytes": 46020,
-    "ratio_to_historical_gpl3": 28.4983,
+    "ratio_to_historical_gpl3": 28.4854,
     "previous_branch_modes": 60424,
     "branch_modes": 51016,
     "previous_priority_maps": 41314,
@@ -114,6 +119,9 @@
       "replaced_internal_vertices": 17671,
       "checked_states": 1217617237,
       "candidates": 256
-    }
+    },
+    "previous_ttf_bytes": 5159328,
+    "ttf_bytes": 4653232,
+    "ttf_bytes_saved": 506096
   }
 }

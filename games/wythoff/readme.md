@@ -61,7 +61,7 @@ losing outcome, so the deterministic fallback takes one token from A.
 
 There is no runtime search or external engine. The strategy is generated from
 the rules and the formula; no external table or artwork is embedded. The
-bundled TTF contains **1,239 glyphs, 2,696 GSUB lookups, and 674,032 bytes**.
+bundled TTF contains **1,541 glyphs, 2,696 GSUB lookups, and 324,428 bytes**.
 Heap art uses independent registers for 64 counts on each side, rather than a
 whole-board glyph for every combination. Sixty-five shaping passes cover all
 legal histories, since each move removes at least one of at most 126 tokens.

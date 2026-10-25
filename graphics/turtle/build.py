@@ -6,6 +6,17 @@
 import argparse
 from pathlib import Path
 import re
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+try:
+    from fontbuild import compact_glyphs
+except ModuleNotFoundError as exc:
+    if exc.name != 'fontbuild':
+        raise
+    # Keep the documented single-file builder usable outside the repository.
+    def compact_glyphs(font):
+        pass
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -323,6 +334,7 @@ def build_font(output, width=DEFAULT_WIDTH, height=DEFAULT_HEIGHT):
     lookups.LookupCount = len(lookups.Lookup)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
+    compact_glyphs(font)
     font.save(output)
     font.close()
     print(f"Saved {output}: {width}×{height} canvas, up to {MAX_COMMANDS} commands")

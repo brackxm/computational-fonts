@@ -22,6 +22,21 @@ from io import BytesIO
 from pathlib import Path
 import re
 import struct
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+try:
+    from fontbuild import compact_glyphs, compact_contours, compact_layout
+except ModuleNotFoundError as exc:
+    if exc.name != 'fontbuild':
+        raise
+    # Decoder distributions can copy this shared directory without the repo.
+    def compact_glyphs(font):
+        pass
+    def compact_contours(font, **kwargs):
+        pass
+    def compact_layout(font, tag="GSUB"):
+        return 0
 
 from fontTools.ttLib import TTFont, TTLibError
 

@@ -33,7 +33,7 @@ GSUB cursors, removes old cursors and last-move marks afterward, and has no
 fixed shaping clock. The browser contains no board or strategy model. Artwork
 uses original reusable car components, distinguishable in monochrome too.
 Only the standard initial position is supported. The bundled font contains
-1,247 glyphs, 357 GSUB lookups and 405,392 bytes.
+1,325 glyphs, 357 GSUB lookups and 313,232 bytes.
 
 ## Protocol, build and verification
 

@@ -149,7 +149,7 @@ def build_font(output):
     xor_stage('TOTAL_C','C',False);xor_stage('TOTAL_A','A',False)
     hidden=[*raw.values(),*numbers,'begin','end','.notdef']
     f.lookup('HIDE',[f'sub {group(hidden)} by hidden;'],hidden)
-    return f.save(output,['SPACE','NUMBER','INIT'],stages,['FINAL','TOTAL_B','TOTAL_C','TOTAL_A','HIDE'],PASSES)
+    return f.save(output,['SPACE','NUMBER','INIT'],stages,['FINAL','TOTAL_B','TOTAL_C','TOTAL_A','HIDE'],PASSES,share_contours=True)
 
 
 def main():

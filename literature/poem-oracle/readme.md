@@ -62,7 +62,10 @@ font hosts do not enforce that bound.
 Each poem is a composite glyph built from shared letter outlines from the
 repository's pinned Roboto 2 Regular and Bold fonts. Original line and stanza
 breaks are baked into its geometry. A title, poem and author are included in
-the glyph itself. The TTF is approximately 7.9 MiB; the WOFF2 is approximately
+the glyph itself. The TTF shares repeated pairs of exactly positioned letters
+and author attributions, with all original glyph IDs and outlines retained.
+The WOFF2 uses the original flat letter sequences for better Brotli compression.
+The TTF is approximately 7.3 MiB; the WOFF2 is approximately
 1.5 MiB. The default build bundles **all 2876 selected poems**.
 
 `model.py` is an independent Python reference for differential tests. The

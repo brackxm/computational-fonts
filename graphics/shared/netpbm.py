@@ -6,6 +6,16 @@
 from dataclasses import dataclass
 from itertools import product
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+try:
+    from fontbuild import compact_glyphs
+except ModuleNotFoundError as exc:
+    if exc.name != 'fontbuild':
+        raise
+    def compact_glyphs(font):
+        pass
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -331,6 +341,7 @@ def build_font(output, format=PBM, *, max_size=MAX_SIZE):
     # long sequences of distinct zero-width color glyphs with rounded spacing.
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
+    compact_glyphs(font)
     font.save(output)
     font.close()
     print(f"Saved {output}: plain {format.name}, dimensions 1–{max_size}, up to {max_pixels} pixels")

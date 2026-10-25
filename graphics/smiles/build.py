@@ -21,7 +21,7 @@ from fontTools.pens.recordingPen import DecomposingRecordingPen
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'decoders/shared'))
-from font_metadata import DEFAULT_BASE, load_base_font, mark_modified_font, replace_font_names
+from font_metadata import DEFAULT_BASE, load_base_font, mark_modified_font, replace_font_names, compact_glyphs, compact_contours
 
 MAX_ATOMS, MAX_DEPTH = 10, 2
 # Each atom needs one clock tick. Sibling branch openings and consecutive
@@ -516,7 +516,10 @@ def build_font(output):
     replace_font_names(font, {1:'SMILES Diagrams',2:'Regular',3:'SMILES Diagrams 1.0',
                              4:'SMILES Diagrams Regular',5:'Version 1.8',6:'SMILESDiagrams-Regular',
                              16:'SMILES Diagrams',17:'Regular'})
+    compact_glyphs(font)
+    compact_contours(font)
     mark_modified_font(font, 'SMILES diagrams', kind='molecular diagram')
+    compact_contours(font, rounds=8, min_uses=4)
     font['head'].created = font['head'].modified = 3849984000
     font.recalcTimestamp = False
     output.parent.mkdir(parents=True, exist_ok=True)

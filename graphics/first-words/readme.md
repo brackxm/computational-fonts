@@ -114,7 +114,7 @@ fallback subtracts later fills from earlier ink and retains visible outlines.
 
 The bundled font has 200 original picture glyphs and 191 stacked plural glyphs,
 16 palette colours, 5,307 colour layers and 9,025 total glyphs including retained
-Roboto text. The TTF is 1,609,992 bytes; the WOFF2 is 466,628 bytes. See the
+Roboto text. The TTF is 1,587,588 bytes; the WOFF2 is 466,460 bytes. See the
 generated JSON for exact build information. Plural words remain one glyph wide;
 the stack is drawn as ordered vector layers, including an occluded monochrome
 outline fallback. No raster images are embedded.

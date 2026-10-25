@@ -19,12 +19,12 @@
   "shaping": {
     "history_shapes": 3286,
     "complete_games": 500,
-    "harfbuzz": "14.6.0",
-    "median_ms": 0.4235420055920258,
-    "max_ms": 53.008084010798484,
+    "harfbuzz": "15.0.0",
+    "median_ms": 0.43295801151543856,
+    "max_ms": 4.370540991658345,
     "longest_human_history": "b11411123267755752776"
   },
-  "font_sha256": "eef61dd080003bf70b24cb64d32d810548b2bde08c8606f20c19539b5209c77d",
+  "font_sha256": "75ef09b90ff8e00726eeb8a1bdd87f55663bb8212b2b398cf08ef447ff55c6b0",
   "controller_sha256": "a72e1dca6b12e290d34f57e93bd1d651a3ef9b1b7b8bc68ec7cf923b136e93bd",
   "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995"
 }

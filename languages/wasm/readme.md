@@ -214,7 +214,11 @@ consuming or modifying operands. GSUB type-6 chained contexts call two shared
 type-1 write lookups. Larger circuits pack several gate groups into one lookup:
 Format 2 backtrack classes check each gate's own sources and accept any state
 of unrelated cells exposed by the batch using one common wildcard class.
-Sparse operand overrides keep class tables small even in wide batches.
+Backtrack class zero is the implicit wildcard. Class one is reserved for
+uninitialized operands, and initialized bits use distinct classes starting at
+two. Only operand overrides need storage; class definitions choose the smaller
+of Format 1 and Format 2. Singleton groups compare glyph-based Format 1 with
+class-based Format 2 and retain the smaller complete encoding.
 Gates still execute in tape order, so
 dependencies within a batch are written before use. Type-7 extension wrappers
 and lookup headers are placed in two waves to keep both Offset16 levels in range.
@@ -223,15 +227,16 @@ Each rule's context ends at its oldest required operand, omitting older inputs
 and unrelated cells before it. The resulting rules partition the truth table;
 this changes serialization without adding registers or runtime arithmetic.
 
-If separate gate subtables cannot fit the lookup-offset windows, a second
-packing tier lets two adjacent gate groups share one Format 2 subtable and
+An alternative packing policy lets two adjacent gate groups share one Format 2 subtable and
 extension wrapper. Each destination keeps its own input class and truth rules.
 The shared backtrack class map distinguishes both groups' operands; rules
 enumerate intervening operands from the other group as don't-care bits.
 At most three extra bits may be enumerated, and a conservative 60,000-byte
 subtable bound preserves its internal Offset16 fields. All earlier operand
-registers must be initialized. Existing layouts that fit retain separate
-subtables; the coverage-cache singleton exceptions also remain separate.
+registers must be initialized. Automatic serialization compares the smallest
+feasible batch in each policy and keeps the smaller GSUB/GDEF encoding. Explicit
+batch and coalescing options remain available. The coverage-cache singleton
+exceptions remain separate.
 
 Groups whose destination glyph IDs fall in `0x7f00..0x7fff` use singleton
 Format 1 lookups. This avoids a false empty-cache hit in HarfBuzz 14.2.1's
@@ -882,9 +887,10 @@ Changing the compiler/linker layout may require updating the backed regions.
 
 CLI limits are 1–64 loop iterations, 1–32 ordinary call frames, 0–64 tail
 transitions per frame, 0–256 backed memory bytes,
-and 1–32,000 constructed gates. Serialization chooses the smallest batch size
-from 1–64 gate groups that fits the lookup headers and extension offsets.
-If none fits, it tries those batch sizes with bounded subtable coalescing.
+and 1–32,000 constructed gates. Serialization finds the smallest batch size
+from 1–64 gate groups that fits the lookup headers and extension offsets in each
+of two policies: separate subtables and bounded subtable coalescing. It chooses
+the smaller serialized GSUB/GDEF pair from the feasible policies.
 It rejects layouts that cannot fit. Every source/constant/result/trap cell also
 counts toward the OpenType glyph limit of fewer than 65,535 glyphs. Constructed
 gates can be pruned before emission, so the construction budget is not a promise
@@ -915,18 +921,19 @@ runtime compositions, without increasing the current construction or glyph caps:
 
 | Bundled composition | Live gates | Glyphs | Physical lookups | Font size |
 | --- | ---: | ---: | ---: | ---: |
-| Two signed divisions + addition | 10,174 | 31,038 | 3,206 | 4.3 MB |
-| Two unsigned divisions → multiplication | 12,549 | 38,163 | 2,131 | 6.6 MB |
-| Two signed divisions → multiplication → popcount | 14,927 | 45,297 | 972 | 11.2 MB |
-| Three unsigned divisions + addition | 12,995 | 39,757 | 395 | 21.8 MB |
-| Four unsigned divisions + addition | 17,347 | 53,069 | 4,293 | 25.1 MB |
+| Two signed divisions + addition | 10,174 | 31,038 | 4,808 | 1.6 MB |
+| Two unsigned divisions → multiplication | 12,549 | 38,163 | 5,258 | 1.8 MB |
+| Two signed divisions → multiplication → popcount | 14,927 | 45,297 | 4,059 | 2.4 MB |
+| Three unsigned divisions + addition | 12,995 | 39,757 | 4,285 | 2.3 MB |
+| Four unsigned divisions + addition | 17,347 | 53,069 | 4,293 | 3.6 MB |
 
 The four-operation example previously exceeded the glyph limit; compact truth
-rules now reduce its font from 17.6 MB to 11.2 MB. The three-divider example's
-12,677 gate groups exceeded the previous maximum batch size of sixteen. It now
-fits with batches of up to forty-one groups, keeping both levels of Offset16
-within range. Larger batches reduce header overhead but add backtrack context,
-so gate count, lookup count and file size need not move together. Playground
+rules and shared storage now reduce its font from 17.6 MB to 2.4 MB. The
+three-divider example's 12,677 gate groups exceeded the previous maximum batch
+size of sixteen with separate subtables. Coalescing fits batches of three groups
+and reduces the font from 16.8 MB to 2.3 MB while retaining all glyph IDs, truth
+functions and execution bounds. Larger batches reduce header overhead but add
+backtrack context, so gate count, lookup count and file size need not move together. Playground
 uploads accept fonts up to 32 MiB and manifests up to 10 MiB.
 Four independent dynamic dividers exceed the separate-wrapper capacity even
 with batches of sixty-four groups. Coalescing reduces their 16,903 gate groups

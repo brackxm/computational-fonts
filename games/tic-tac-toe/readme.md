@@ -59,7 +59,7 @@ than an arbitrary-position analysis font.
 
 ## Font implementation
 
-The bundled TTF contains **1,000 glyphs, 202 GSUB lookups, and 149,080 bytes**.
+The bundled TTF contains **1,041 glyphs, 202 GSUB lookups, and 140,740 bytes**.
 It uses a forward cursor: each input square produces the next board and a reply
 marker. Later lookups preserve the latest cursor and marker. No runtime search,
 external strategy file, fixed replay clock, or host-side opponent is required.

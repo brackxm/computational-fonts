@@ -99,7 +99,9 @@ def test_three_full_width_dividers_cross_previous_offset_capacity(tmp_path):
     manifest,path=differential(tmp_path,source.read_text(),cases,binary_input=True)
     metrics=manifest['metrics']
     assert metrics['gate_groups']>12500
-    assert 16<metrics['lookup_batch_size']<=64
+    assert 1<metrics['lookup_batch_size']<=64
+    assert metrics['coalesced_gate_groups']>8000
+    assert metrics['font_bytes']<3*1024*1024
     assert metrics['font_bytes']<32*1024*1024
     assert metrics['glyphs']<65535
     with NativeFont(path) as font:
@@ -181,7 +183,7 @@ def test_two_independent_signed_dividers_cross_old_font_limits(tmp_path):
     unpacked = tmp_path / 'unpacked.ttf'
     with pytest.raises(ResourceLimit, match='lookup layout capacity'):
         emit_font(compiler.c, values, compiler.flags, fn.params, fn.results, unpacked,
-                  lookup_batch_size=1)
+                  lookup_batch_size=1,lookup_coalescing=False)
     assert not unpacked.exists()
 
 

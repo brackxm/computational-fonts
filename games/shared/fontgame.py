@@ -2,6 +2,23 @@
 # SPDX-License-Identifier: Apache-2.0
 """Small OpenType toolkit for stateful game fonts; no game rules live here."""
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
+try:
+    from fontbuild import compact_glyphs, compact_contours, compact_layout, compact_woff2
+except ModuleNotFoundError as exc:
+    if exc.name != 'fontbuild':
+        raise
+    # A copied games directory keeps its original build dependencies.
+    def compact_glyphs(font):
+        pass
+    def compact_contours(font, **kwargs):
+        pass
+    def compact_layout(font, tag="GSUB"):
+        return 0
+    def compact_woff2(path):
+        return 0
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -135,7 +152,8 @@ class GameFont:
         self.lookup('STATE_CLEAN',[f'sub {group(states)}\' {group(states)} by NULL;'],states,states)
         return ['SPACE',*[name for name,_,_ in preprocess],'INIT','TRANSITION','FINISH','LAST_CLEAN','STATE_CLEAN']
 
-    def save(self,output,before,stages,after,passes,*,color_version=0,optimize_layout=None):
+    def save(self,output,before,stages,after,passes,*,color_version=0,
+             optimize_layout=None,compact=False,share_contours=False,reuse_color_layers=False):
         fb = FontBuilder(1000,isTTF=True)
         fb.setupGlyphOrder(self.order)
         cmap = {ord(c):name for c,name in self.raw.items()}
@@ -157,7 +175,7 @@ class GameFont:
         fb.setupNameTable(names)
         fb.setupOS2(sTypoAscender=self.height,sTypoDescender=-30,usWinAscent=self.height,usWinDescent=30,fsType=0)
         fb.setupPost(); fb.setupMaxp()
-        fb.setupCOLR(self.layers,version=color_version,allowLayerReuse=color_version == 0)
+        fb.setupCOLR(self.layers,version=color_version,allowLayerReuse=color_version == 0 or reuse_color_layers)
         fb.setupCPAL([[tuple(int(c[i:i+2],16)/255 for i in (0,2,4))+(1.,) for c in self.palette]])
         registers=[name for name in self.order if name.startswith('r_')]
         definitions=['languagesystem DFLT dflt;','languagesystem latn dflt;',
@@ -183,9 +201,17 @@ class GameFont:
         lookups.LookupCount=len(lookups.Lookup)
         if optimize_layout is not None:
             optimize_layout(font)
+        if compact:
+            compact_glyphs(font)
+        if share_contours:
+            compact_contours(font)
+            # Factoring the remaining helper outlines exposes shorter runs.
+            compact_contours(font, rounds=8, min_uses=4)
+        if compact or share_contours:
+            compact_glyphs(font)
         output=Path(output); output.parent.mkdir(parents=True,exist_ok=True)
         font.save(output)
-        stats=(len(self.order),lookups.LookupCount,output.stat().st_size)
+        stats=(len(font.getGlyphOrder()),lookups.LookupCount,output.stat().st_size)
         print(f'Saved {output}: {stats[0]} glyphs, {stats[1]} lookups, {stats[2]:,} bytes')
         font.close()
         return stats

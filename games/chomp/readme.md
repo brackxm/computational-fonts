@@ -32,7 +32,7 @@ pass. Old cursors and last-move marks are deleted afterward. There is no runtime
 search, JavaScript board model or repeated shaping clock. This release is a
 fixed 6×5 game; other bar sizes and arbitrary setup positions are unsupported.
 
-The bundled font has 405 glyphs, 100 GSUB lookups and 123,256 bytes.
+The bundled font has 459 glyphs, 100 GSUB lookups and 103,068 bytes.
 Frame source with U+E000/U+E001. Printable ASCII also has U+E100+ASCII aliases
 to keep browser input in one LTR run. Unsupported characters become DEL.
 Enable `liga`, with zero letter/word spacing and no kerning. The board advances

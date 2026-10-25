@@ -116,7 +116,7 @@ class Policy:
         return node, last, status
 
 
-def build_game(rules, title, output, frame, paint, highlight):
+def build_game(rules, title, output, frame, paint, highlight, *, share_contours=False):
     """Artwork callbacks add reusable components; all cursor art is shared."""
     policy = Policy(rules)
     f = GameFont(title + ' Perfect Opponent', 1800, 1250, name_records=NAME_RECORDS)
@@ -200,4 +200,4 @@ def build_game(rules, title, output, frame, paint, highlight):
     program = f.forward_program(['board', header, last_none], states, [last_none, *lasts.values()],
                                 list(stopped.values()), transitions, finish, inputs=inputs,
                                 preprocess=[('MOVES', lex, list(raw.values()))])
-    return f.save(output, program, [], [], 1)
+    return f.save(output, program, [], [], 1, compact=True, share_contours=share_contours)

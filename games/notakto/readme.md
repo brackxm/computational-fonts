@@ -48,7 +48,7 @@ arbitrary number of boards. Each AI choice depends on one exact board mask and
 the other two boards' classes. It chooses the first legal move leaving a losing
 position, in board/square order. From the standard opening it always has one.
 
-The bundled TTF has **1,752 glyphs, 495 GSUB lookups, and 1,243,792 bytes**.
+The bundled TTF has **1,890 glyphs, 495 GSUB lookups, and 197,592 bytes**.
 It stores three individual board registers rather than a glyph for each whole
 game position. Fifteen shaping passes cover the conservative 27-ply bound,
 including the opening move and explicit end-of-input validation. There is no

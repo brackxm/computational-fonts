@@ -43,7 +43,7 @@ draw decisions and original geometric artwork all execute in GSUB. The
 browser transports text, measures status and stores Undo; it has no board
 or strategy model. Only the standard empty-board start is supported.
 
-The bundled font contains 1,475 glyphs, 620 GSUB lookups and 499,292 bytes.
+The bundled font contains 1,604 glyphs, 620 GSUB lookups and 379,152 bytes.
 The [Chomp transport protocol](../chomp/readme.md) applies: U+E000/U+E001
 framing, ASCII/private-use aliases, one LTR run with `liga`, no kerning or
 letter/word spacing. Advance is 1,800 units plus status 1–6, or **7 for an

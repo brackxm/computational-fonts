@@ -65,8 +65,10 @@ allocating a separate error-board glyph for every state.
 
 `layout.py` groups identical error-rule memberships into bounded class-context
 subtables and explicitly wraps GSUB lookups in extension tables. Binary
-readback tests verify the resulting packed table. The font contains 44,521
-glyphs and 120 lookups, and is approximately 8.2 MiB.
+readback tests verify the resulting packed table. The font contains 46,688
+glyphs and 120 lookups, and is approximately 4.5 MiB. Repeated color-layer
+sequences share storage; every scene keeps the same ordered edges, role label,
+palette and monochrome outline.
 
 The [Chomp transport protocol](../chomp/readme.md) applies: U+E000/U+E001
 framing, ASCII/private-use aliases, one LTR run with `liga`, and zero kerning

@@ -8,6 +8,7 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'shared'))
 from game_text import NAME_RECORDS, lettering, centered_lettering
+from fontgame import compact_glyphs
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -32,6 +33,16 @@ def rect(p, x, y, w, h):
 def cell_xy(board, cell):
     row, col = divmod(cell,3)
     return 160+board*540+col*140, 550-row*140
+
+
+def cross(p, shift, board, cell):
+    x,y=cell_xy(board,cell)
+    for sign in (-1,1):
+        p.moveTo((shift+x-32,y+sign*(-32)-6))
+        p.lineTo((shift+x+32,y+sign*32-6))
+        p.lineTo((shift+x+32,y+sign*32+6))
+        p.lineTo((shift+x-32,y+sign*(-32)+6))
+        p.closePath()
 
 
 def clock_wrapper(font, index, names):
@@ -78,13 +89,7 @@ def build_font(output):
             def marks(p, shift, board=board, mask=mask):
                 for cell in range(9):
                     if mask>>cell&1:
-                        x,y=cell_xy(board,cell)
-                        for sign in (-1,1):
-                            p.moveTo((shift+x-32,y+sign*(-32)-6))
-                            p.lineTo((shift+x+32,y+sign*32-6))
-                            p.lineTo((shift+x+32,y+sign*32+6))
-                            p.lineTo((shift+x-32,y+sign*(-32)+6))
-                            p.closePath()
+                        cross(p,shift,board,cell)
                 if dead(mask):
                     centered_lettering(p,'Closed',shift+310+board*540,150,9)
             names.append(add(f'r_board{board}_{mask}',marks,color=2 if dead(mask) else 1))
@@ -202,6 +207,22 @@ def build_font(output):
            ['p_start','p_human','p_ai',*events['human'],*events['ai']],stage=False)
     lookup('HIDE',['sub '+group([*raw.values(),'end','begin','.notdef'])+' by hidden;'],
            [*raw.values(),'end','begin','.notdef'],stage=False)
+    # Append shared artwork after all public glyphs, retaining their IDs.
+    # Each board mask keeps its original contour order and monochrome fallback.
+    for board in range(3):
+        crosses=[add(f'cross_{board}_{cell}',
+                     lambda p,s,board=board,cell=cell: cross(p,s,board,cell))
+                 for cell in range(9)]
+        closed=add(f'closed_{board}',lambda p,s,board=board:
+                   centered_lettering(p,'Closed',s+310+board*540,150,9))
+        for mask,name in enumerate(board_names[board]):
+            pen=TTGlyphPen(glyphs)
+            for cell in range(9):
+                if mask>>cell&1:
+                    pen.addComponent(crosses[cell],(1,0,0,1,0,0))
+            if dead(mask):
+                pen.addComponent(closed,(1,0,0,1,0,0))
+            glyphs[name]=pen.glyph()
     fb=FontBuilder(UPM,isTTF=True)
     fb.setupGlyphOrder(order)
     cmap={ord(c):name for c,name in raw.items()}
@@ -243,8 +264,9 @@ def build_font(output):
         lookups.Lookup.append(clock_wrapper(font,index,coverages[name]))
     liga.LookupCount=len(liga.LookupListIndex); lookups.LookupCount=len(lookups.Lookup)
     output=Path(output); output.parent.mkdir(parents=True,exist_ok=True)
+    compact_glyphs(font)
     font.save(output)
-    print(f'Saved {output}: {len(order)} glyphs, {lookups.LookupCount} lookups, {output.stat().st_size:,} bytes')
+    print(f'Saved {output}: {len(font.getGlyphOrder())} glyphs, {lookups.LookupCount} lookups, {output.stat().st_size:,} bytes')
     font.close()
 
 

@@ -202,6 +202,7 @@ Additional dependencies and coverage are documented with each suite:
 | [Graphics helpers](graphics/shared/) | Shared PBM, PGM and PPM font renderer |
 | [Game helpers](games/shared/) | Shared game font, text and playground utilities |
 | [Circuit backend](languages/shared/) | Glyph-register backend and shaping runtimes for WebAssembly and Verilog |
+| [Font storage](fontbuild/) | Shared outline storage helpers and the [project-by-project size audit](font-size-audit.md) |
 | [Specimens](specimens/readme.md) | Build notes for regenerating documents after changing a bundled font |
 
 ## AI disclosure

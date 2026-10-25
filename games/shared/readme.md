@@ -44,3 +44,9 @@ their shared JavaScript file to be served alongside the playground.
 All helpers are original and Apache 2.0 licensed. Font construction and Python
 tests require FontTools; shaping tests additionally require native HarfBuzz and
 `hb-shape`. Controller tests use Node.js and `hb-shape`.
+
+The optional `compact_layout` helper shares repeated extension-tree data within
+bounded Offset16 windows. It keeps the standard header layout, lookup indices
+and records, needs no native repacker, and retains the existing bytes on
+overflow, no-sharing guards, or excessive compression of repetitive clock
+layouts. Callers opt in; Gardner keeps its original defaults.

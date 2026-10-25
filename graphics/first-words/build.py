@@ -157,6 +157,10 @@ def build_font(output=DEFAULT_OUTPUT, *, base=DEFAULT_BASE):
     font['head'].created = font['head'].modified = 3785270400
     output.parent.mkdir(parents=True, exist_ok=True)
     font.save(output)
+    # Brotli compresses the unshared layout better in this webfont. Keep the
+    # desktop font's native layout packing and all original picture outlines.
+    from fontTools.ttLib.tables.otBase import USE_HARFBUZZ_REPACKER
+    font.cfg[USE_HARFBUZZ_REPACKER] = False
     font.flavor = 'woff2'
     web = output.with_suffix('.woff2')
     font.save(web)

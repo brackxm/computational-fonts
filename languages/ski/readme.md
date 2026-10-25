@@ -122,10 +122,13 @@ Both builders prune unreachable GSUB template lookups after allocating the
 complete execution schedule. Contextual helpers remain reachable, and each
 scheduled occurrence retains its own index. Glyph order, input characters,
 GDEF mark sets, outlines and evaluation bounds are preserved. The bundled
-machine font drops from 4,626 to 4,493 lookups and from 335,728 to 335,464 bytes;
-the visible font drops from 7,021 to 6,749 lookups and from 883,416 to 882,872
-bytes. These are size improvements; no shaping speedup is assumed. Pruning
-adds a GSUB serialization/remapping pass to build time.
+machine font contains 4,493 lookups and occupies 267,012 bytes; the visible
+font contains 6,749 lookups and occupies 612,580 bytes. In addition to lookup
+pruning, the visible font shares identical unhinted outlines and exact contour
+runs, preserving every original point and glyph ID. Both fonts
+use the pinned HarfBuzz layout repacker. These are storage improvements; no
+shaping speedup is assumed. Pruning adds a GSUB serialization/remapping pass
+to build time. See the [font storage audit](../../font-size-audit.md).
 
 For an unpruned comparison build, use `--no-optimize` with a separate output:
 

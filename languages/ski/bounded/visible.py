@@ -20,7 +20,7 @@ from .outputs import font_artifacts, overlap, validate_outputs
 from .optimize import prune_lookups
 
 sys.path.insert(0, str(ROOT.parents[1] / 'decoders'))
-from shared.font_metadata import DEFAULT_BASE, load_base_font, mark_modified_font, replace_font_names
+from shared.font_metadata import DEFAULT_BASE, load_base_font, mark_modified_font, replace_font_names, compact_glyphs, compact_contours
 
 
 def _validate_visible_paths(output):
@@ -241,12 +241,15 @@ def build_visible(machine_path, output, *, optimize=True):
                                  10: 'SKI prefix parser, bounded GSUB evaluator and visible output.'})
         font._decoder_base_digest = hashlib.sha256(DEFAULT_BASE.read_bytes()).digest()
         font['OS/2'].fsType = 0
+        compact_glyphs(font)
+        compact_contours(font)
         mark_modified_font(font, 'SKI evaluator', kind='interpreter')
+        compact_contours(font, rounds=8, min_uses=4)
         font.recalcTimestamp = False
         output.parent.mkdir(parents=True, exist_ok=True)
         font.save(output)
         report = {'schema': 'ski-visible-1', 'depth': depth, 'rounds': rounds, 'capacity': n,
-                  'font_bytes': output.stat().st_size, 'glyphs': len(order), 'lookups': gsub.LookupList.LookupCount,
+                  'font_bytes': output.stat().st_size, 'glyphs': len(font.getGlyphOrder()), 'lookups': gsub.LookupList.LookupCount,
                   'font_sha256': hashlib.sha256(output.read_bytes()).hexdigest(),
                   'base_sha256': font._decoder_base_digest.hex(), 'display': display}
         output.with_suffix('.json').write_text(json.dumps(report, indent=2) + '\n')

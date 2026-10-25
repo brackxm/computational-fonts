@@ -273,10 +273,10 @@ class FontTests(unittest.TestCase):
                 result = "result_" + kind
                 layer, = color["COLR"].ColorLayers[result]
                 self.assertEqual(layer.colorID, 0 if kind == "pass" else 1)
-                self.assertEqual(color["glyf"][layer.name].compile(color["glyf"]),
-                                 mono["glyf"][result].compile(mono["glyf"]))
-                self.assertEqual(color["glyf"][result].compile(color["glyf"]),
-                                 mono["glyf"][result].compile(mono["glyf"]))
+                self.assertEqual(color["glyf"][layer.name].getCoordinates(color["glyf"]),
+                                 mono["glyf"][result].getCoordinates(mono["glyf"]))
+                self.assertEqual(color["glyf"][result].getCoordinates(color["glyf"]),
+                                 mono["glyf"][result].getCoordinates(mono["glyf"]))
                 self.assertEqual(color["hmtx"][layer.name], mono["hmtx"][result])
             for name_id in (1, 3, 6):
                 self.assertNotEqual(mono["name"].getDebugName(name_id), color["name"].getDebugName(name_id))

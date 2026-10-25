@@ -60,7 +60,7 @@ No heuristic evaluation, learning, runtime search, external engine, or imported
 strategy data is used. An independent bitboard solver verifies the complete
 graph, every legal move, every value, and every remoteness.
 
-The bundled TTF contains **968 glyphs, 95 GSUB lookups, and 147,856 bytes**.
+The bundled TTF contains **989 glyphs, 95 GSUB lookups, and 138,008 bytes**.
 Seven direct feature stages remove spaces, tokenize four-character moves,
 initialize the cursor, run the exact transition policy, finalize the explicit
 end sentinel, and delete old move/board cursors. The forward cursor architecture

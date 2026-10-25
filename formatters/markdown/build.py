@@ -20,7 +20,7 @@ from fontTools.pens.ttGlyphPen import TTGlyphPen
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "decoders"))
-from shared.font_metadata import load_base_font, mark_modified_font, replace_font_names
+from shared.font_metadata import load_base_font, mark_modified_font, replace_font_names, compact_glyphs
 
 SOURCE_DIR = ROOT / "decoders/shared/fonts/roboto-2"
 SOURCES = {"regular": "Roboto-Regular.ttf", "bold": "Roboto-Bold.ttf",
@@ -252,6 +252,7 @@ def build_font(output_path, family_name=None):
         replace_font_names(font, {1: family, 2: "Regular", 3: "MarkdownFormatter",
                                  4: family + " Regular", 6: (ps_name + "-Regular")[:50],
                                  16: family, 17: "Regular"})
+        compact_glyphs(font)
         mark_modified_font(font, "markdown", kind="formatter")
         output_path = Path(output_path)
         output_path.parent.mkdir(parents=True, exist_ok=True)

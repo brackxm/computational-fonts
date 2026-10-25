@@ -153,6 +153,45 @@ class SimTests(exact_tests.ExactFontTests):
             # One setup pass + eight human moves, followed by tail cleanup and status.
             self.assertEqual(len(feature.LookupListIndex), 23)
 
+    def test_every_color_scene_retains_its_ordered_edges_and_role(self):
+        import re
+        with TTFont(self.font) as font:
+            colr = font['COLR'].table
+            cache = {}
+            def leaves(paint):
+                key = id(paint)
+                if key not in cache:
+                    if paint.Format == 1:
+                        parts = [leaves(part) for part in colr.LayerList.Paint[
+                            paint.FirstLayerIndex:paint.FirstLayerIndex+paint.NumLayers]]
+                        cache[key] = (tuple(leaf for seq, _ in parts for leaf in seq),
+                                      1+max(depth for _, depth in parts))
+                    else:
+                        self.assertEqual(paint.Format, 10)
+                        self.assertEqual(paint.Paint.Format, 2)
+                        self.assertEqual(paint.Paint.Alpha, 1.0)
+                        cache[key] = (((paint.Glyph, paint.Paint.PaletteIndex),), 2)
+                return cache[key]
+            records = colr.BaseGlyphList.BaseGlyphPaintRecord
+            self.assertGreater(len(records), 44000)
+            for record in records:
+                name = record.BaseGlyph
+                if name.startswith('status_'):
+                    # The build colors normal outcomes with palette 1 and errors with 2.
+                    expected = ((name, 1 if name[7:] in ('ready', 'computer_won', 'human_won') else 2),)
+                else:
+                    if name == 'r_header':
+                        board, human = model.INITIAL[0], 0
+                    else:
+                        human, index = map(int, re.search(r'_h([01])_(\d+)$', name).groups())
+                        board = self.policy.nodes[index][0]
+                    expected = tuple((f'edge_{i}_{side}', side)
+                                     for i, power in enumerate(model.POWERS)
+                                     if (side := board//power % 3)) + ((f'role_{human}', 0),)
+                actual, depth = leaves(record.Paint)
+                self.assertEqual(actual, expected, name)
+                self.assertLessEqual(depth, 16, name)
+
     def test_reachable_policy_histories(self):
         rng = random.Random(20261024)
         for mode in 'hb':

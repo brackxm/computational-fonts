@@ -3,6 +3,7 @@
 Layout follows OpenType GSUB types 1, 6 (formats 1 and 2), and 7. Small batches
 share filtering sets and use a common wildcard class for unrelated cells.
 Headers and extension wrappers stay within both levels of Offset16 limits.
+Identical rule sets and definitions share storage within bounded offset windows.
 
 References: Microsoft OpenType specification, GSUB and Common Table Formats.
 """
@@ -40,6 +41,73 @@ def rule_set(rules):
     return u16(len(rules),*block_offsets(rules,2+2*len(rules)))+b''.join(rules)
 
 
+def pack_chained_subtables(subtables):
+    """Share identical blocks across bounded runs of Format 1/2 subtables.
+
+    Rule sets use local class numbers, so otherwise unrelated gates often
+    serialize to identical bytes. Coverage and class definitions can be shared
+    too. Bound windows by their actual headers and distinct blocks, rather
+    than charging repeatedly for shared bytes. The old original-byte windows
+    remain a fallback, so extending sharing never makes the result larger.
+    Every rewritten Offset16 is forward and in range; offsets inside shared
+    blocks remain unchanged.
+
+    Returns the packed bytes and each subtable's new start, in original order.
+    Lookup order, filtering sets, rule priority and glyph IDs are preserved.
+    """
+    subtables=list(subtables)
+    original=_pack_chained_windows(subtables,by_unique=False)
+    shared=_pack_chained_windows(subtables,by_unique=True)
+    return min((original,shared),key=lambda result:len(result[0]))
+
+
+def _pack_chained_windows(subtables,*,by_unique):
+    """Serialize one bounded-window policy without changing any table fields."""
+    output=bytearray();positions=[];pending=[];size=0;known=set()
+
+    def flush():
+        headers=bytearray();parts=[];shared={}
+        at=sum(len(header) for header,_ in pending)
+        for original,blocks in pending:
+            start=len(headers)
+            positions.append(len(output)+start)
+            header=bytearray(original)
+            for field,block in blocks.items():
+                if block not in shared:
+                    shared[block]=at;parts.append(block);at+=len(block)
+                header[field:field+2]=u16(shared[block]-start)
+            headers.extend(header)
+        output.extend(headers)
+        output.extend(b''.join(parts))
+
+    for subtable in subtables:
+        format=int.from_bytes(subtable[:2],'big')
+        if format==1:
+            count=int.from_bytes(subtable[4:6],'big')
+            length=6+2*count
+            fields=[2,*range(6,length,2)]
+        elif format==2:
+            count=int.from_bytes(subtable[10:12],'big')
+            length=12+2*count
+            fields=[2,4,6,8,*range(12,length,2)]
+        else:
+            raise ValueError('Expected chained contextual Format 1 or 2')
+        offsets={field:int.from_bytes(subtable[field:field+2],'big') for field in fields}
+        starts=sorted(set(offsets.values())-{0})
+        ends=dict(zip(starts,[*starts[1:],len(subtable)]))
+        blocks={field:subtable[start:ends[start]] for field,start in offsets.items() if start}
+        distinct=set(blocks.values())
+        cost=length+sum(map(len,distinct-known)) if by_unique else len(subtable)
+        if pending and size+cost>60000:
+            flush();pending=[];size=0;known=set()
+            cost=length+sum(map(len,distinct)) if by_unique else len(subtable)
+        pending.append((subtable[:length],blocks));size+=cost;known.update(distinct)
+    if pending:flush()
+    if len(output)>=sum(map(len,subtables)):
+        return b''.join(subtables),block_offsets(subtables,0)
+    return bytes(output),positions
+
+
 def gate_subtable(group,circuit,gids):
     sources=circuit.wires[group[0]].sources
     rulesets=[]
@@ -65,7 +133,13 @@ def class_definition(mapping):
         if ranges and ranges[-1][1]+1==gid and ranges[-1][2]==value:
             ranges[-1]=(ranges[-1][0],gid,value)
         else:ranges.append((gid,gid,value))
-    return u16(2,len(ranges),*(item for span in ranges for item in span))
+    sparse=u16(2,len(ranges),*(item for span in ranges for item in span))
+    if not mapping:return sparse
+    first,last=min(mapping),max(mapping)
+    # Format 1 is smaller for nearby operand/destination glyph IDs. Missing
+    # entries retain OpenType's default class zero in either representation.
+    if 6+2*(last-first+1)>=len(sparse):return sparse
+    return u16(1,first,last-first+1,*(mapping.get(gid,0) for gid in range(first,last+1)))
 
 
 def truth_suffixes(table):
@@ -122,13 +196,16 @@ def batched_gate_subtable(group,circuit,gids,exposed,*,companions=()):
     groups=[group,*companions]
     destinations=sorted(wire for item in groups for wire in item)
     sources=sorted({source for item in groups for source in circuit.wires[item[0]].sources})
+    # Backtrack class zero is the wildcard, so unrelated glyphs need no
+    # entries. Class one rejects uninitialized operands; initialized bits get
+    # distinct classes starting at two. Input classes are independent.
     back_classes={};source_classes={};next_class=2
     for wire in sources:
         for value in (0,1):
             back_classes[gids[f'w{wire}_{value}']]=next_class
             source_classes[wire,value]=next_class;next_class+=1
         # An uninitialized operand must never match a constrained input bit.
-        if f'w{wire}_u' in gids:back_classes[gids[f'w{wire}_u']]=0
+        if f'w{wire}_u' in gids:back_classes[gids[f'w{wire}_u']]=1
     rules={destination:[] for destination in destinations}
     for item in groups:
         for destination,context,values,result in gate_contexts(item,circuit,exposed):
@@ -139,14 +216,14 @@ def batched_gate_subtable(group,circuit,gids,exposed,*,companions=()):
             # in tape order. Uninitialized operands fail closed.
             for pattern_extra in product((0,1),repeat=len(extra)):
                 all_values={**values,**dict(zip(extra,pattern_extra))}
-                classes=[source_classes[wire,all_values[wire]] if wire in all_values else 1
+                classes=[source_classes[wire,all_values[wire]] if wire in all_values else 0
                          for wire in context]
                 rules[destination].append(u16(len(classes),*classes,1,0,1,0,result))
     # Class zero has no rules; each destination's uninitialized glyph has its
     # own input class. Backtrack classes are independent of input classes.
     blocks=[*(rule_set(rules[wire]) for wire in destinations),
             coverage([gids[f'w{i}_u'] for i in destinations]),
-            wildcard_class_definition(back_classes,len(gids)-1),
+            class_definition(back_classes),
             class_definition({gids[f'w{i}_u']:n+1 for n,i in enumerate(destinations)}),
             class_definition({})]
     *offsets,coverage_at,back_at,input_at,lookahead_at=block_offsets(blocks,12+2*(len(destinations)+1))
@@ -171,7 +248,8 @@ def coalesced_packets(batch,circuit,exposed):
 
     At most three extra operand bits may occur in any rule. A conservative
     serialized-size bound also keeps every subtable's local Offset16 in range.
-    Singleton batches retain Format 1 for the portable coverage-cache workaround.
+    Compatibility exceptions retain singleton Format 1; other singleton
+    representations are compared by their serialized size.
     """
     packets=[];index=0
     while index<len(batch):
@@ -200,6 +278,11 @@ def lookup_layout(counts):
     return positions,extensions,at
 
 
+def coverage_cache_exception(group,gids):
+    """Groups requiring Format 1 for the portable HarfBuzz cache workaround."""
+    return any(0x7f00<=gids[f'w{wire}_u']<=0x7fff for wire in group)
+
+
 def gate_batches(groups,size,gids):
     """Keep batches in dependency order, with portable singleton exceptions.
 
@@ -210,7 +293,7 @@ def gate_batches(groups,size,gids):
     """
     batches=[];pending=[]
     for group in groups:
-        if any(0x7f00<=gids[f'w{wire}_u']<=0x7fff for wire in group):
+        if coverage_cache_exception(group,gids):
             if pending:batches.append(pending);pending=[]
             batches.append([group])
         else:
@@ -235,39 +318,70 @@ def attach_tables(font,circuit,live,names,*,batch_size=None,coalesce=None):
     if batch_size is not None and (type(batch_size) is not int or not 1<=batch_size<=MAX_LOOKUP_BATCH_SIZE):
         raise ValueError(f'lookup batch size must be an integer from 1 to {MAX_LOOKUP_BATCH_SIZE}')
     candidates=range(1,MAX_LOOKUP_BATCH_SIZE+1) if batch_size is None else (batch_size,)
-    # Preserve compact existing layouts; coalescing is a second capacity tier.
     if coalesce is not None and type(coalesce) is not bool:
         raise ValueError('lookup coalescing must be True, False, or None (automatic)')
-    for merged,chosen in product((False,True) if coalesce is None else (coalesce,),candidates):
-        batches=gate_batches(groups,chosen,gids)
-        exposed_batches=[sorted({wire for group in batch for wire in (*circuit.wires[group[0]].sources,*group)})
-                         for batch in batches]
-        packets=[coalesced_packets(batch,circuit,exposed) if merged else [[group] for group in batch]
-                 for batch,exposed in zip(batches,exposed_batches)]
-        layout=lookup_layout([1,1]+[len(items) for items in packets])
-        if layout is not None:break
-    else:
+    # Compare the smallest feasible batch in each policy. Coalescing can fit
+    # much narrower batches, avoiding the long wildcard contexts of wide ones.
+    # Explicit options keep their requested policy and batch size.
+    best=None
+    for merged in (False,True) if coalesce is None else (coalesce,):
+        for chosen in candidates:
+            batches=gate_batches(groups,chosen,gids)
+            exposed_batches=[sorted({wire for group in batch for wire in (*circuit.wires[group[0]].sources,*group)})
+                             for batch in batches]
+            packets=[coalesced_packets(batch,circuit,exposed) if merged else [[group] for group in batch]
+                     for batch,exposed in zip(batches,exposed_batches)]
+            layout=lookup_layout([1,1]+[len(items) for items in packets])
+            if layout is not None:break
+        else:continue
+        has_class_singletons=any(len(batch)==1 and not coverage_cache_exception(batch[0],gids)
+                                 for batch in batches)
+        # Singleton groups can also use local classes and shared truth rules.
+        # Compare both encodings: very small circuits may prefer Format 1.
+        for class_singletons in (False,True) if has_class_singletons else (False,):
+            metrics=_attach_layout(font,circuit,gates,names,gids,groups,batches,
+                                   exposed_batches,packets,layout,chosen,class_singletons=class_singletons)
+            # Other font tables and the ABI do not depend on this layout choice.
+            size=sum((len(font.getTableData(tag))+3)&~3 for tag in ('GSUB','GDEF'))
+            if best is None or size<best[0]:
+                best=(size,font['GSUB'],font['GDEF'],metrics)
+        # Both policies serialize singleton batches identically.
+        if chosen==1:break
+    if best is None:
         from .circuit import ResourceLimit
         raise ResourceLimit('GSUB lookup layout capacity exceeded; reduce the circuit or compilation bounds')
+    _,font['GSUB'],font['GDEF'],metrics=best
+    return metrics
+
+
+def _attach_layout(font,circuit,gates,names,gids,groups,batches,exposed_batches,packets,layout,chosen,
+                   class_singletons=False):
+    """Serialize a feasible layout; callers may compare alternative policies."""
     # Shared SingleSubstFormat1 lookups: all scratch glyphs are ordered 0,1,u.
     scratch=[gids[f'w{i}_u'] for i in gates]
-    payloads=[[struct.pack('>HHh',1,6,delta)+coverage(scratch)] for delta in (-2,-1)]
-    payloads += [[gate_subtable(packet[0],circuit,gids) if len(batch)==1 else
+    scratch_coverage=coverage(scratch)
+    # Both write lookups cover the same scratch cells. Their six-byte headers
+    # point forward to one shared coverage after the two headers.
+    payloads=[[struct.pack('>HHh',1,offset,delta)] for offset,delta in ((12,-2),(6,-1))]
+    payloads += [[gate_subtable(packet[0],circuit,gids)
+                  if len(batch)==1 and (not class_singletons or coverage_cache_exception(packet[0],gids)) else
                   batched_gate_subtable(packet[0],circuit,gids,exposed,companions=packet[1:])
                   for packet in items] for batch,exposed,items in zip(batches,exposed_batches,packets)]
     count=len(payloads)
     positions,extensions,payload_start=layout
     prefix=bytearray(payload_start)
     prefix[:2+2*count]=u16(count,*positions)
-    payload_parts=[];at=payload_start
+    packed,offsets=pack_chained_subtables(payload for subtables in payloads[2:] for payload in subtables)
+    zero,one=payloads[0][0],payloads[1][0]
+    gate_start=payload_start+len(zero)+len(one)+len(scratch_coverage)
+    targets=iter([payload_start,payload_start+len(zero),*(gate_start+offset for offset in offsets)])
     for i,subtables in enumerate(payloads):
         header=u16(7,0 if i<2 else 0x10,len(subtables),*(pos-positions[i] for pos in extensions[i]))
         if i>=2:header+=u16(i-2)
         prefix[positions[i]:positions[i]+len(header)]=header
-        for extension_pos,payload in zip(extensions[i],subtables):
-            prefix[extension_pos:extension_pos+8]=struct.pack('>HHI',1,1 if i<2 else 6,at-extension_pos)
-            payload_parts.append(payload);at+=len(payload)
-    lookup_list=bytes(prefix)+b''.join(payload_parts)
+        for extension_pos in extensions[i]:
+            prefix[extension_pos:extension_pos+8]=struct.pack('>HHI',1,1 if i<2 else 6,next(targets)-extension_pos)
+    lookup_list=bytes(prefix)+zero+one+scratch_coverage+packed
     script_list=u16(1)+b'DFLT'+u16(8)+u16(4,0)+u16(0,0xffff,1,0)
     feature_list=u16(1)+b'calt'+u16(8)+u16(0,len(batches),*range(2,count))
     raw=struct.pack('>IHHH',0x00010000,10,10+len(script_list),10+len(script_list)+len(feature_list))
@@ -290,5 +404,7 @@ def attach_tables(font,circuit,live,names,*,batch_size=None,coalesce=None):
     gdef.table.MarkGlyphSetsDef=sets;font['GDEF']=gdef
     return len(gates),count,{'gate_groups':len(groups),'lookup_batch_size':chosen,
                             'unpacked_gate_groups':sum(len(batch)==1 for batch in batches),
+                            'class_singleton_groups':sum(1 for batch in batches if
+                                class_singletons and len(batch)==1 and not coverage_cache_exception(batch[0],gids)),
                             'gate_subtables':sum(map(len,packets)),
                             'coalesced_gate_groups':sum(len(packet) for items in packets for packet in items if len(packet)>1)}

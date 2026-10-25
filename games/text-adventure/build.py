@@ -9,6 +9,7 @@ import string
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]/'shared'))
 from game_text import NAME_RECORDS, lettering, text_width
+from fontgame import compact_contours, compact_glyphs
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
 from fontTools.fontBuilder import FontBuilder
@@ -273,9 +274,13 @@ def build_font(output):
     lookups.LookupCount = len(lookups.Lookup)
     output = Path(output)
     output.parent.mkdir(parents=True, exist_ok=True)
+    compact_contours(fb.font)
+    compact_contours(fb.font, rounds=8, min_uses=4)
+    compact_glyphs(fb.font)
     fb.font.save(output)
+    glyph_count = len(fb.font.getGlyphOrder())
     fb.font.close()
-    print(f"Saved {output}: {len(states)} worlds, {MAX_COMMANDS} commands, {len(order)} glyphs")
+    print(f"Saved {output}: {len(states)} worlds, {MAX_COMMANDS} commands, {glyph_count} glyphs")
 
 
 def main():

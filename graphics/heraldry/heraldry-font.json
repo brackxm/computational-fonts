@@ -47,9 +47,9 @@
   "color_glyphs": 498,
   "unique_layer_glyphs": 51,
   "combinations": 51800,
-  "ttf_bytes": 734928,
-  "woff2_bytes": 182824,
-  "sha256": "9af4214f31a5209a8b3534347712ba22980bc830bfd5ff95d8843d8a3ba7ab6b",
+  "ttf_bytes": 601576,
+  "woff2_bytes": 182460,
+  "sha256": "75b899a2a11beb6f2a7fe474c3eaef5cd0497ef19cec64f402285f018feed870",
   "font_license": "Apache-2.0",
   "artwork_license": "Apache-2.0"
 }

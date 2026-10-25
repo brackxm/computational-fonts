@@ -4674,9 +4674,9 @@
       "r_p_h7"
     ]
   ],
-  "ttf_bytes": 5159328,
-  "woff2_bytes": 1311492,
+  "ttf_bytes": 4653232,
+  "woff2_bytes": 1310896,
   "certificate_sha256": "1d0e117ab5417e6a8abdb0105661dee23a2be32ad198071132d28bbc3b8de995",
   "controller_sha256": "a72e1dca6b12e290d34f57e93bd1d651a3ef9b1b7b8bc68ec7cf923b136e93bd",
-  "font_sha256": "eef61dd080003bf70b24cb64d32d810548b2bde08c8606f20c19539b5209c77d"
+  "font_sha256": "75ef09b90ff8e00726eeb8a1bdd87f55663bb8212b2b398cf08ef447ff55c6b0"
 }

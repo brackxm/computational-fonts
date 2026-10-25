@@ -8,6 +8,8 @@ import random
 import sys
 import unittest
 
+from fontTools.misc.xmlWriter import XMLWriter
+
 from fontTools.ttLib import TTFont
 from shaping import Shaper
 
@@ -94,8 +96,21 @@ class FontTests(unittest.TestCase):
             self.assertNotIn('GPL', font['name'].getDebugName(13))
             self.assertNotIn('Google', font['name'].getDebugName(0))
             self.assertIn('Game Sans', font['name'].getDebugName(10))
-            for tag in ('GSUB', 'GDEF', 'cmap', 'hmtx', 'glyf', 'COLR', 'CPAL'):
+            for tag in ('GDEF', 'cmap', 'hmtx', 'glyf', 'COLR', 'CPAL'):
                 self.assertEqual(font.reader[tag], web.reader[tag], tag)
+            # Desktop and web use different physical packing, but every layout
+            # field (including record order and lookup indices) stays identical.
+            class Digest:
+                def __init__(self):
+                    self.hash = hashlib.sha256()
+                def write(self, data):
+                    self.hash.update(data.encode() if isinstance(data, str) else data)
+                def flush(self):
+                    pass
+            a, b = Digest(), Digest()
+            font['GSUB'].toXML(XMLWriter(a), font)
+            web['GSUB'].toXML(XMLWriter(b), web)
+            self.assertEqual(a.hash.digest(), b.hash.digest(), 'logical GSUB')
 
     def test_invalid_full_and_terminal_histories(self):
         witness = self.proof['longest_human_history']

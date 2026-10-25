@@ -23,7 +23,7 @@ from fontTools.ttLib.tables import otTables
 
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
-from decoders.shared.font_metadata import DEFAULT_BASE, load_base_font, replace_font_names
+from decoders.shared.font_metadata import DEFAULT_BASE, load_base_font, replace_font_names, compact_glyphs
 
 HERE = Path(__file__).resolve().parent
 DEFAULT_OUTPUT = HERE / "validator-font.ttf"
@@ -569,6 +569,7 @@ def build_font(output=DEFAULT_OUTPUT, base=DEFAULT_BASE, *, color=False):
         font["COLR"] = buildCOLR(layers, version=0, glyphMap=font.getReverseGlyphMap())
         font["CPAL"] = buildCPAL([[(22 / 255, 163 / 255, 74 / 255, 1),
                                    (220 / 255, 38 / 255, 38 / 255, 1)]])
+    compact_glyphs(font)
     identity = font_identity(font, font._decoder_base_digest)
     family = "Computational Validator" + (" Color" if color else "")
     replace_font_names(font, {1: family, 2: "Regular",

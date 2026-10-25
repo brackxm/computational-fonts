@@ -1,4 +1,4 @@
-# Cram: a perfect opponent in a 118 KB font
+# Cram: a perfect opponent in a 94 KB font
 
 [Play in your browser](playground.html). This is complete normal-play **6×5
 Cram** from the empty board, with the font as first player. Both players can
@@ -61,7 +61,7 @@ another phase writes both halves. The font then mirrors, validates, and draws
 its own reply. An endgame lookup tests **all 49 adjacent pairs** for a remaining
 legal placement, including boards with isolated holes.
 
-The bundled font contains **528 glyphs, 166 GSUB lookups, and 118,100 bytes**.
+The bundled font contains **633 glyphs, 166 GSUB lookups, and 94,204 bytes**.
 There is no search or full-board state table. Nine shaping passes cover the
 opening and at most seven human turns, including explicit end validation.
 

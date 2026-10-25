@@ -65,7 +65,8 @@ class BuildTests(BuilderOptionsTests, FontFixture, unittest.TestCase):
             # Solid RGB colors must all have layers, including full-red colors.
             # Monochrome primaries use all channels when choosing their dither.
             for rgb, contours in (((3, 0, 0), 11), ((0, 3, 0), 7), ((0, 0, 3), 14)):
-                self.assertEqual(font["glyf"]["rgb_%d_%d_%d_cell" % rgb].numberOfContours, contours)
+                glyph = font["glyf"]["rgb_%d_%d_%d_cell" % rgb]
+                self.assertEqual(len(glyph.getCoordinates(font["glyf"])[1]), contours)
             for prefix in ("pixel", "end", "draw", "index"):
                 self.assertEqual(sum(g.startswith(prefix + "_") for g in font.getGlyphOrder()), 4096)
             self.assertEqual(len(font["GPOS"].table.LookupList.Lookup[0].SubTable), 64)
