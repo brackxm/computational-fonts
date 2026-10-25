@@ -99,6 +99,16 @@ Old MIT license. Both notices are retained in
 [`languages/shared/vendor/harfbuzzjs`](languages/shared/vendor/harfbuzzjs/), with
 upstream sources and checksums in its readme.
 
+## Heraldry font
+
+`graphics/heraldry/heraldry-font.ttf` and its WOFF2 use the pinned Roboto 2
+Regular text outlines described above, with the new family name **Heraldry**.
+Google's copyright, trademark and Apache-2.0 license metadata are retained.
+Michael Brackx's modifications add a bounded blazon parser and original shield,
+division, ordinary and charge geometry, composed with COLRv0 colour layers.
+The font, original artwork and builder are Apache-2.0. The references linked
+in its readme inform heraldic terminology; no reference artwork is imported.
+
 ## First Words Pictures font
 
 `graphics/first-words/first-words-font.ttf` and its WOFF2 retain the pinned

@@ -4,7 +4,7 @@ Fonts that play games, run programs, draw pictures, decode messages and format
 text. The computation happens during OpenType shaping, using substitutions,
 ligatures and glyph composition.
 
-**[Explore the 42 interactive demos](https://brackxm.github.io/computational-fonts/)**
+**[Explore the 43 interactive demos](https://brackxm.github.io/computational-fonts/)**
 in your browser, with no installation needed.
 
 ## Try the fonts
@@ -108,6 +108,7 @@ syntax and execution bounds.
 | Project | What the font draws | Try it |
 | --- | --- | --- |
 | [First Words Pictures](graphics/first-words/) | 622 familiar word labels mapped to 200 original colour vector drawings | [Demo](graphics/first-words/playground.html) |
+| [Heraldry](graphics/heraldry/) | Bracketed blazons composed into colour shields; seven tinctures, divisions, ordinaries and charges | [Demo](graphics/heraldry/playground.html) |
 | [Turtle graphics](graphics/turtle/) | Movement, pen and colour commands interpreted as a drawing | [Demo](graphics/turtle/playground.html) · [ODT](graphics/turtle/turtle.odt) |
 | [SMILES diagrams](graphics/smiles/) | Molecular connectivity from bounded SMILES with atoms, bonds, branches and rings | [Demo](graphics/smiles/playground.html) · [ODT](graphics/smiles/smiles.odt) |
 | [PPM image renderer](graphics/ppm/) | Plain PPM (`P3`) RGB images | [Demo](graphics/ppm/playground.html) · [ODT](graphics/ppm/ppm.odt) |
