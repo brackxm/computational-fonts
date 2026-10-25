@@ -2,20 +2,22 @@
 
 Master keeps the generator, runtime, tests, manifest and certification evidence.
 The generated research font and binary build inputs are excluded from master and
-ignored locally. Only the latest accepted F09/F16 font and its binary inputs are
+ignored locally. Only the latest committed F09/F16 font and its binary inputs are
 kept on the branch `codex/gardner-research-artifacts-20261024`, based
 on the source-only master. Earlier large-font versions are excluded from that
 branch too. An ordinary clone fetches the artifacts under
 `origin/codex/gardner-research-artifacts-20261024`; it does not check them out.
 A master-only clone excludes the strategy corpus; fetch that branch explicitly
-to reproduce this variant. Source and artifact updates must match: an older
-artifact ref is rejected by the manifest. Local unpublished updates restore from
-the local artifact branch; fetching cannot retrieve an unpublished variant.
+to reproduce this variant. Binary inputs must match the manifest; mismatched
+inputs are rejected. This compiler-only size reduction reuses the unchanged
+inputs from the prior artifact ref. The artifact branch keeps only the latest
+font, based on the matching source commit. Local unpublished updates restore
+from that local branch; fetching cannot retrieve unpublished changes.
 
 After restoring and building below, [open the research playground](playground.html),
 or use the always-bundled [lightweight default opponent](../playground.html).
 
-The optional **42,155,688-byte font** extends the retained certified policy with
+The optional **41,757,140-byte font** extends the retained certified policy with
 F02, F03, F04, F05, F12, F13, F14, F15, F18 and F19, alongside the earlier
 F20, F23, F22, F00 and F01 continuations. It now also includes **F08 and the
 11-piece …Ke5 continuation**, both certified at quiet clock zero. This is stronger
@@ -80,9 +82,10 @@ node games/gardner/test_controls.cjs
 ```
 
 `restore_inputs.py` first tries the local artifact branch, then its fetched
-`origin` ref. It reads only local Git objects and checks each binary input
-against the manifest before atomic replacement. It does not download data or
-run proof searches. An explicit `--ref` selects exactly that local ref or commit,
+`origin` ref. It reads only local Git objects and verifies all binary inputs in
+a staging directory before replacing local inputs. Missing or corrupt blobs
+preserve the previous input set; each replacement is atomic. It does not download
+data or run proof searches. An explicit `--ref` selects exactly that local ref or commit,
 without fallback. If no artifact ref exists (for example, after a master-only
 clone), fetch it yourself before restoring:
 
@@ -105,15 +108,19 @@ before atomically replacing the output TTF; failure preserves any existing font.
 preservation, cleanup and byte-exact success using
 the real serialized font. The build must reproduce this exact archived font:
 
-`9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97`
+`dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c`
 
 The 35,754,632-byte `inputs/policy.tree.xz` freezes a shared binary classifier
 with 8,905,648 nodes and maximum depth 45. It uses six-bit XY coordinates for
 32 piece-location registers and reflects positions only at five pieces or fewer.
 The compiler keeps 48,000-slot low banks, partitions banks twice by child-bank
-IDs, and shares reused outputs while retaining explicit maps elsewhere.
+IDs, and shares reused outputs while retaining explicit maps elsewhere. It
+reserves 96 shared leaf slots (minimum reuse 128) and 128 shared high-bank
+slots (minimum reuse 96). [Size-reduction evidence](evidence/size-reduction.json)
+records the 398,548-byte saving with the exact same classifier and strategy.
 Temporary dictionary IDs overlap existing glyph IDs and are consumed immediately
-in nested lookups with LookupFlag 0. The compiler and game runtime are unchanged.
+in nested lookups with LookupFlag 0. The game runtime is unchanged; only the
+compiler’s sharing thresholds changed.
 
 The separately restored `inputs/game-base.ttf` and `.gamepack` freeze the
 legal-move shell and linker layout independently of the lightweight generator.
@@ -160,9 +167,13 @@ including the new roots and every first Black reply at quiet clocks 0, 98, 99,
 100, 149 and 150. They compare cells, last move and status against Python legality
 and the frozen policy, including underpromotions, reflection, malformed source,
 stalemates and stopped openings. All **17,811,296 binary-node/input pairs** run
-through the actual TTF lookups. HarfBuzz additionally executes **38,472 dictionary
-checks** and **29,040 route-class checks**, including `.notdef` and GDEF overlaps.
-Four corrupt classifiers check early rejection of invalid structure.
+through the actual TTF lookups. HarfBuzz additionally executes **52,886 dictionary
+checks** and **22,686 route-class checks**, including `.notdef` and GDEF overlaps.
+Four corrupt classifiers check early rejection of invalid structure. The
+[original F09/F16 proof report](evidence/f09-f16.json) retains its original font
+identity. Its mathematical certificate still applies: the current classifier
+and every move/clock label are byte-identical; the fresh transition checks
+verify the new serialization against that classifier.
 
 ## Size and performance limits
 
@@ -172,14 +183,14 @@ locally; the [browser benchmark](benchmark.html) measures load and complete repl
 
 | Gate | Accepted measurement | Limit |
 | --- | ---: | ---: |
-| TTF size | 42,155,688 bytes | 50,000,000 bytes |
+| TTF size | 41,757,140 bytes | 50,000,000 bytes |
 | Glyphs | 57,011 | 65,535 |
-| Browser load + first shape | 119.7 ms | 2,000 ms |
-| Renderer RSS growth | 333.30 MiB | 512 MiB |
-| Browser reply p95 | 27.8 ms | 250 ms |
-| Browser 150-live-ply maximum | 89.2 ms | 1,000 ms |
-| Native reply p95 | 29.13 ms | 250 ms |
-| Native 150-live-ply maximum | 96.88 ms | 1,000 ms |
+| Browser load + first shape | 147.2 ms | 2,000 ms |
+| Renderer RSS growth | 321.03 MiB | 512 MiB |
+| Browser reply p95 | 201.6 ms first; 27.0 ms repeat | 250 ms |
+| Browser 150-live-ply maximum | 604.0 ms first; 91.8 ms repeat | 1,000 ms |
+| Native reply p95 | 28.61 ms | 250 ms |
+| Native 150-live-ply maximum | 92.97 ms | 1,000 ms |
 
 The benchmark keeps each result, including load errors and failed timings, in
 a per-document trial history. A successful rerun preserves earlier failures;
@@ -189,15 +200,23 @@ retries; open a fresh document for cold-load measurements. Failure-injection
 checks run with `test_benchmark.cjs`; the [historical workflow evidence](evidence/benchmark-history.json)
 preserves D's injected failure and recovery tests. Current F09/F16 measurements
 are in [browser.json](evidence/browser.json) and [memory.json](evidence/memory.json);
-the unchanged failure-injection checks run against the current benchmark.
+the failure-injection checks run against the current benchmark. Both current
+browser trials passed. The first was slower for an unexplained reason; the
+repeat used fresh timed inputs and matched a separate accepted-font control
+(28.3 ms reply p95; 90.4 ms live maximum). [All trials](evidence/browser-trials.json)
+retain the slower results. This is not a claim to have fixed timing variance.
 
 The first fresh-document F09/F16 browser trial passed. It checks 77 complete-history
 prefixes, a longest live history of 153 plies, and 150 executed plies after the
-opening while still live. Twenty inert-padding suffixes prevent cached text
-runs. Memory sums positive RSS growth over all host renderers across 240 samples,
+opening while still live. Timed runs use inert-padding suffixes from a distinct
+40-nonce range for each replay attempt, including failed attempts, so reruns in
+the same document cannot reuse an earlier timed input. The current compact-font
+trials use this retry fix; earlier archived
+measurements retain their historical benchmark version.
+Memory sums positive RSS growth over all host renderers across 240 samples,
 counting new renderers in full.
 
-There are **7,844,312 bytes and 8,524 glyphs of headroom**. Future additions must
+There are **8,242,860 bytes and 8,524 glyphs of headroom**. Future additions must
 pass every gate again. The independent proof archive preserves the earlier F02
 font's failed timing trial and passing isolated retry, the scratch-artifact guard
 stop and recovery, and the corrected archive/replay packaging issues.

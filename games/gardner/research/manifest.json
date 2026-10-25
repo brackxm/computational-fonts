@@ -5,8 +5,8 @@
   "proof_searches": 0,
   "font_family": "Gardner F09 F16 Research 20261024",
   "font_file": "gardner-research.ttf",
-  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
-  "font_bytes": 42155688,
+  "font_sha256": "dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c",
+  "font_bytes": 41757140,
   "head_timestamps": [
     3875584786,
     3875591863
@@ -181,5 +181,15 @@
     "board": "RNBQK..P.PP...pp.p..rnbqk",
     "safe_entry_clock": 0,
     "evidence": "evidence/f09-f16.json"
+  },
+  "encoding": {
+    "revision": "20261025-compact-f09-f16",
+    "leaf_slots": 96,
+    "leaf_minimum_frequency": 128,
+    "high_slots": 128,
+    "high_minimum_frequency": 96,
+    "baseline_font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+    "saved_bytes": 398548,
+    "evidence": "evidence/size-reduction.json"
   }
 }

@@ -1,6 +1,6 @@
 {
   "status": "pass",
-  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+  "font_sha256": "dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c",
   "history_checks": 162,
   "boundary_checks": 1260,
   "bad_tree_checks": 4,
@@ -11,21 +11,21 @@
   },
   "dictionary": {
     "status": "pass",
-    "temporary_dictionary_glyphs": 19236,
-    "checks": 38472,
-    "route_class_checks": 29040,
+    "temporary_dictionary_glyphs": 26443,
+    "checks": 52886,
+    "route_class_checks": 22686,
     "includes_notdef": true,
     "scope": "Actual HarfBuzz dispatcher, both bits for every temporary dictionary glyph and one representative per bank/bit route class; test-only cmap and top-level feature; nested GSUB and GDEF unchanged."
   },
   "live150": {
-    "median_ms": 93.42531249421882,
-    "p95_ms": 96.88491599808913,
-    "max_ms": 96.88491599808913
+    "median_ms": 88.63364599528722,
+    "p95_ms": 92.97445899574086,
+    "max_ms": 92.97445899574086
   },
   "twenty_reply": {
-    "median_ms": 28.48383300442947,
-    "p95_ms": 29.128042006050237,
-    "max_ms": 29.128042006050237
+    "median_ms": 27.81452101044124,
+    "p95_ms": 28.610417008167133,
+    "max_ms": 28.610417008167133
   },
   "proof_searches": 0
 }

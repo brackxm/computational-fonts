@@ -1,7 +1,8 @@
 {
   "status": "pass",
-  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
-  "normal_builder_unchanged": true,
+  "font_sha256": "dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c",
   "byte_exact": true,
+  "final_simplified_compiler_matches_trial_tables": true,
+  "unchanged_frozen_inputs": true,
   "proof_searches": 0
 }

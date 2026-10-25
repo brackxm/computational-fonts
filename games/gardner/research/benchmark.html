@@ -30,14 +30,14 @@ get('load').onclick=async()=>{let face;loadAttempt++;ctx=null;bytes=sha=loadMs=l
   ctx=document.createElement('canvas').getContext('2d');ctx.font='1000px FinalGardner';ctx.fontKerning='none';
   if(Math.round(ctx.measureText(encode('b')).width)!==1801)throw Error('Initial position failed');
   const shaped=performance.now();loadMs=shaped-before;loadPhases={fetchMs:fetched-before,fontLoadMs:loaded-fetched,firstShapeMs:shaped-loaded};sha=Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256',data)),b=>b.toString(16).padStart(2,'0')).join('');
-  if(sha!=='9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97')throw Error('Font hash mismatch');
+  if(sha!=='dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c')throw Error('Font hash mismatch');
   get('drawing').textContent=encode('b');get('result').textContent='Font loaded. '+bytes+' bytes. Standard starting position.';get('run').disabled=false;
 }catch(e){
   if(face&&document.fonts)document.fonts.delete(face);ctx=null;get('drawing').textContent='';
   recordFailure(e,'load');get('load').disabled=false;
 }};
 get('run').onclick=async()=>{replayAttempt++;get('run').disabled=true;try{
-  const prefixes=[],full=[],twenty=[],target=cases.positions[cases.benchmarkIndex];
+  const prefixes=[],full=[],twenty=[],target=cases.positions[cases.benchmarkIndex],nonceBase=40*(replayAttempt-1);
   if(cases.benchmarkIndex!==75||target.livePlies!==151||target.status!==1)throw Error('Invalid live fixture');
   for(let i=0;i<cases.positions.length;i++){
     const step=cases.positions[i],before=performance.now(),width=ctx.measureText(encode(step.source)).width;
@@ -45,12 +45,12 @@ get('run').onclick=async()=>{replayAttempt++;get('run').disabled=true;try{
     if(i%10===9){get('result').textContent='Checked '+(i+1)+' complete-history prefixes…';await new Promise(requestAnimationFrame);}
   }
   for(let i=0;i<20;i++){
-    // Unique inert padding forces a new text run instead of a cached width.
-    const before=performance.now(),width=ctx.measureText(encode(target.source,i+1)).width;full.push(performance.now()-before);
+    // Reserve a fresh nonce range for every attempt, including failed trials.
+    const before=performance.now(),width=ctx.measureText(encode(target.source,nonceBase+i+1)).width;full.push(performance.now()-before);
     if(Math.round(width)!==1801)throw Error('150-ply replay mismatch '+i+' / '+width);await new Promise(requestAnimationFrame);
   }
-  for(let i=0;i<20;i++){const step=cases.positions[20],before=performance.now(),width=ctx.measureText(encode(step.source,100+i)).width;twenty.push(performance.now()-before);if(Math.round(width)!==1800+step.status)throw Error('20-reply mismatch '+i);await new Promise(requestAnimationFrame);}
-  const result={status:bytes<=50000000&&loadMs<=2000&&Math.max(...full)<1000&&Math.max(...twenty)<250?'pass':'fail',proofSearches:0,fontBytes:bytes,fontSHA256:sha,loadAndFirstShapeMs:loadMs,loadPhases,prefixChecks:prefixes.length,longestLivePlies:cases.positions.at(-1).livePlies,live150PlyTested:true,livePliesAfterOpening:150,totalLivePliesInBenchmark:151,benchmarkStatus:target.status,allPrefixes:stats(prefixes),live150Ply:stats(full),twentyReply:stats(twenty),cacheAvoidance:'20 unique text runs using 1..20 extra inert padding characters',scope:'Retained certified corpus plus F20/F23/F22/F00/F01/F02/F03/F04/F05/F12/F13/F14/F15/F18/F19/F08/Ke5/F09/F16; two drawing openings remain unproved; standard start; complete histories; timings include transport encoding, input construction and shaping. Native checks independently compare every cell, last move and status.'};
+  for(let i=0;i<20;i++){const step=cases.positions[20],before=performance.now(),width=ctx.measureText(encode(step.source,nonceBase+21+i)).width;twenty.push(performance.now()-before);if(Math.round(width)!==1800+step.status)throw Error('20-reply mismatch '+i);await new Promise(requestAnimationFrame);}
+  const result={status:bytes<=50000000&&loadMs<=2000&&Math.max(...full)<1000&&Math.max(...twenty)<250?'pass':'fail',proofSearches:0,fontBytes:bytes,fontSHA256:sha,loadAndFirstShapeMs:loadMs,loadPhases,prefixChecks:prefixes.length,longestLivePlies:cases.positions.at(-1).livePlies,live150PlyTested:true,livePliesAfterOpening:150,totalLivePliesInBenchmark:151,benchmarkStatus:target.status,allPrefixes:stats(prefixes),live150Ply:stats(full),twentyReply:stats(twenty),cacheAvoidance:'40 distinct timed text runs per trial; nonce ranges never reused within this document',scope:'Retained certified corpus plus F20/F23/F22/F00/F01/F02/F03/F04/F05/F12/F13/F14/F15/F18/F19/F08/Ke5/F09/F16; two drawing openings remain unproved; standard start; complete histories; timings include transport encoding, input construction and shaping. Native checks independently compare every cell, last move and status.'};
   recordTrial(result,'replay');get('drawing').textContent=encode(target.source);get('record').value=target.source;
   get('caption').textContent='150 live plies after the opening (151 total). Game still live. No ignored terminal input.';
   get('result').textContent=result.status.toUpperCase()+' · 150 live plies after opening · '+prefixes.length+' full-history prefix checks\n150-ply p95: '+result.live150Ply.p95Ms.toFixed(1)+' ms · max: '+result.live150Ply.maxMs.toFixed(1)+' ms · limit: 1000 ms\nFont: '+(bytes/1e6).toFixed(2)+' MB · load + first shape: '+loadMs.toFixed(1)+' ms\nLongest tested history: '+result.longestLivePlies+' live plies. The two drawing openings remain unproved.';

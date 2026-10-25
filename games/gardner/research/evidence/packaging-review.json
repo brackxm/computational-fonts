@@ -1,31 +1,20 @@
 {
   "status": "pass",
-  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+  "font_sha256": "dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c",
   "remaining_actionable_issues": 0,
-  "rounds": [
-    {
-      "scope": "Exact archived pair and unchanged retained policies; fresh actual joint replay from original basis93 with every encoded guard zero",
-      "remaining_actionable_issues": 0
-    },
-    {
-      "scope": "Normal byte-exact rebuild, full native replay and actual dispatcher/dictionary checks, original artwork and default isolation",
-      "remaining_actionable_issues": 0
-    },
-    {
-      "scope": "First isolated browser trial, full renderer-growth sampling, fetched-ref restore, failure controls and output preservation",
-      "remaining_actionable_issues": 0
-    },
-    {
-      "scope": "Source-only master and latest-only artifact layout, cache identity, current/historical evidence and honest opening limitations",
-      "remaining_actionable_issues": 0
-    }
+  "checks": [
+    "All24,526,808 policy rows remain represented by byte-identical classifier and frozen inputs; mathematical certificate unchanged.",
+    "Every17,811,296 actual TTF node/bit transition independently checked plus native replay/clock boundaries/dictionary classes.",
+    "Final simplified compiler reproduces the measured tables and exact font bytes; original6404 artwork/metric glyphs identical.",
+    "Both browser trials and memory pass; slower trial and baseline control preserved without cherry-picking.",
+    "Earlier benchmark-cache and staged-restoration fixes preserved; controllers and build failure protection pass.",
+    "Historical proof/font identities are retained and clearly scoped; no new proof or full-perfect claim."
   ],
   "limitations": [
-    "F11 and F21 remain unproved named frontiers; both stopped opening prefixes still need complete coverage.",
-    "These nonloss guarantees are not exact draw/win or full-perfect classifications.",
-    "Earlier separate F02 timing failure and isolated retry remain archived; this font passed its first isolated trial, not a claim that underlying variance was fixed.",
-    "Performance measurements apply to this validation host.",
-    "Master stores source and evidence; a matching local artifact ref is required for binary restoration."
+    "F11/F21 and both opening prefixes remain unproved.",
+    "Unexplained browser timing variance: first trial201.6ms replyp95/604ms live maximum; fresh-input repeat27ms/91.8ms. Both pass.",
+    "Performance observations apply to this host.",
+    "No new mathematical proof search or basis admission."
   ],
   "proof_searches": 0
 }

@@ -223,21 +223,24 @@ int main(int argc, char **argv) try {
     build.import(oldgsub, game_count);
   }
   std::vector<std::vector<U>> game_filter_sets;
-  constexpr int leaf_defaults = 32, high_defaults = 128;
+  // Extra route classes have a byte cost too; these reuse thresholds were
+  // measured on the frozen classifier without changing any policy edge.
+  constexpr int leaf_defaults = 96, high_defaults = 128;
+  constexpr int leaf_minimum = 128, high_minimum = 96;
   constexpr int leaf_begin = 2, high_begin = leaf_begin + leaf_defaults;
   constexpr int kinds = high_begin + high_defaults;
   static_assert(kinds <= 256, "route categories must fit in one byte");
   std::vector<std::array<std::array<int, high_defaults>, 2>> common_high(banks.size());
   std::vector<std::array<std::array<int, leaf_defaults>, 2>> common_leaf(banks.size());
   uint64_t rare_edges = 0;
-  auto select_common = [](const std::map<int, int> &frequencies, auto &selected) {
+  auto select_common = [](const std::map<int, int> &frequencies, auto &selected, int minimum) {
     std::vector<std::pair<int, int>> ranked(frequencies.begin(), frequencies.end());
     std::sort(ranked.begin(), ranked.end(), [](auto a, auto b) {
       return a.second != b.second ? a.second > b.second : a.first < b.first;
     });
     selected.fill(MISS);
     for (size_t rank = 0; rank < std::min(selected.size(), ranked.size()); ++rank)
-      if (ranked[rank].second >= 64)
+      if (ranked[rank].second >= minimum)
         selected[rank] = ranked[rank].first;
   };
   for (size_t bank = 0; bank < banks.size(); ++bank)
@@ -250,8 +253,8 @@ int main(int argc, char **argv) try {
         else if (child != MISS)
           ++leaves[child];
       }
-      select_common(highs, common_high[bank][v]);
-      select_common(leaves, common_leaf[bank][v]);
+      select_common(highs, common_high[bank][v], high_minimum);
+      select_common(leaves, common_leaf[bank][v], leaf_minimum);
     }
   // Routes: mapped leaf (0), explicit high pair (1), shared leaves, shared high banks.
   // Classify once; sorting and serialization must use the same partition.
@@ -920,8 +923,10 @@ int main(int argc, char **argv) try {
        << ",\"nonloss_enabled\":" << (nonloss ? "true" : "false")
        << ",\"capacity_probe\":" << "false" << ",\"low_count\":" << BASE
        << ",\"shared_high_count\":" << high_defaults
+       << ",\"shared_high_minimum\":" << high_minimum
        << ",\"shared_high_edges\":" << inner_edges - rare_edges
        << ",\"shared_leaf_count\":" << leaf_defaults
+       << ",\"shared_leaf_minimum\":" << leaf_minimum
        << ",\"shared_leaf_edges\":" << 2ull * count - mapped
        << ",\"split_bit_routes\":true"
        << ",\"label_alias\":" << (alias ? "true" : "false") << ",\"mode\":\""

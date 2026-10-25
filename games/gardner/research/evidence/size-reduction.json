@@ -1,0 +1,166 @@
+{
+  "status": "pass",
+  "font_sha256": "dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c",
+  "baseline_font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+  "before_bytes": 42155688,
+  "after_bytes": 41757140,
+  "saved_bytes": 398548,
+  "saved_percent": 0.9454192753300574,
+  "before_glyphs": 57011,
+  "after_glyphs": 57011,
+  "byte_headroom": 8242860,
+  "glyph_headroom": 8524,
+  "parameters": {
+    "revision": "20261025-compact-f09-f16",
+    "leaf_slots": 96,
+    "leaf_minimum_frequency": 128,
+    "high_slots": 128,
+    "high_minimum_frequency": 96,
+    "baseline_font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+    "saved_bytes": 398548,
+    "evidence": "evidence/size-reduction.json"
+  },
+  "policy_tree_sha256": "9c1bcc619b715fc3727ab1b1ca19ecb03d8b323f321275e8e8866092d82fedad",
+  "independent_certificate_sha256": "389ceb15dad0b143777fa516b07556b88bfe5e4f31bf9aa914ce403316853962",
+  "source_proof_archive": {
+    "path": "/Users/michael/.codex/visualizations/2026/10/06/01a112f8-5f55-7ae0-b244-b3bcb1d5fa8c/gardner-research-2026-10-20/resumed-2026-10-20/F09-F16-validated-20261024T211843Z",
+    "inventory_sha256": "113a35880f1a7c2899d099d80a044d0d0af2d977d9c096c5ea7e985a5ace0416",
+    "files": 621,
+    "bytes": 97991868,
+    "verified": true,
+    "sealed_utc": "2026-10-24T21:44:14.674776+00:00"
+  },
+  "unchanged_policy_rows": 24526808,
+  "all_font_gates_pass": true,
+  "native_transition_checks": 17811296,
+  "trial_count": 27,
+  "discarded_approaches": "Whole inner-transition sharing was larger; generic payload interning saved only4KB and was dropped. Kept only the simpler measured leaf/frequency tuning.",
+  "variance": {
+    "first_trial": {
+      "status": "pass",
+      "proofSearches": 0,
+      "fontBytes": 41757140,
+      "fontSHA256": "dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c",
+      "loadAndFirstShapeMs": 147.20000000298023,
+      "loadPhases": {
+        "fetchMs": 83.70000000298023,
+        "fontLoadMs": 38.70000000298023,
+        "firstShapeMs": 24.799999997019768
+      },
+      "prefixChecks": 77,
+      "longestLivePlies": 153,
+      "live150PlyTested": true,
+      "livePliesAfterOpening": 150,
+      "totalLivePliesInBenchmark": 151,
+      "benchmarkStatus": 1,
+      "allPrefixes": {
+        "count": 77,
+        "medianMs": 74.8999999910593,
+        "p95Ms": 414.79999999701977,
+        "maxMs": 476.8999999910593
+      },
+      "live150Ply": {
+        "count": 20,
+        "medianMs": 488.30000000447035,
+        "p95Ms": 604,
+        "maxMs": 604
+      },
+      "twentyReply": {
+        "count": 20,
+        "medianMs": 150.79999999701977,
+        "p95Ms": 201.59999999403954,
+        "maxMs": 201.59999999403954
+      },
+      "cacheAvoidance": "40 distinct timed text runs per trial; nonce ranges never reused within this document",
+      "scope": "Retained certified corpus plus F20/F23/F22/F00/F01/F02/F03/F04/F05/F12/F13/F14/F15/F18/F19/F08/Ke5/F09/F16; two drawing openings remain unproved; standard start; complete histories; timings include transport encoding, input construction and shaping. Native checks independently compare every cell, last move and status.",
+      "phase": "replay",
+      "loadAttempt": 1,
+      "replayAttempt": 1
+    },
+    "fresh_input_repeat": {
+      "status": "pass",
+      "proofSearches": 0,
+      "fontBytes": 41757140,
+      "fontSHA256": "dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c",
+      "loadAndFirstShapeMs": 147.20000000298023,
+      "loadPhases": {
+        "fetchMs": 83.70000000298023,
+        "fontLoadMs": 38.70000000298023,
+        "firstShapeMs": 24.799999997019768
+      },
+      "prefixChecks": 77,
+      "longestLivePlies": 153,
+      "live150PlyTested": true,
+      "livePliesAfterOpening": 150,
+      "totalLivePliesInBenchmark": 151,
+      "benchmarkStatus": 1,
+      "allPrefixes": {
+        "count": 77,
+        "medianMs": 61.20000000298023,
+        "p95Ms": 132.80000001192093,
+        "maxMs": 163.09999999403954
+      },
+      "live150Ply": {
+        "count": 20,
+        "medianMs": 87.65000000596046,
+        "p95Ms": 91.79999999701977,
+        "maxMs": 91.79999999701977
+      },
+      "twentyReply": {
+        "count": 20,
+        "medianMs": 26.899999991059303,
+        "p95Ms": 27,
+        "maxMs": 27
+      },
+      "cacheAvoidance": "40 distinct timed text runs per trial; nonce ranges never reused within this document",
+      "scope": "Retained certified corpus plus F20/F23/F22/F00/F01/F02/F03/F04/F05/F12/F13/F14/F15/F18/F19/F08/Ke5/F09/F16; two drawing openings remain unproved; standard start; complete histories; timings include transport encoding, input construction and shaping. Native checks independently compare every cell, last move and status.",
+      "phase": "replay",
+      "loadAttempt": 1,
+      "replayAttempt": 2
+    },
+    "accepted_font_control": {
+      "status": "pass",
+      "proofSearches": 0,
+      "fontBytes": 42155688,
+      "fontSHA256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+      "loadAndFirstShapeMs": 108.5,
+      "loadPhases": {
+        "fetchMs": 86.09999999403954,
+        "fontLoadMs": 16.200000002980232,
+        "firstShapeMs": 6.200000002980232
+      },
+      "prefixChecks": 77,
+      "longestLivePlies": 153,
+      "live150PlyTested": true,
+      "livePliesAfterOpening": 150,
+      "totalLivePliesInBenchmark": 151,
+      "benchmarkStatus": 1,
+      "allPrefixes": {
+        "count": 77,
+        "medianMs": 48.8999999910593,
+        "p95Ms": 84.59999999403954,
+        "maxMs": 93.40000000596046
+      },
+      "live150Ply": {
+        "count": 20,
+        "medianMs": 87.25,
+        "p95Ms": 90.3999999910593,
+        "maxMs": 90.3999999910593
+      },
+      "twentyReply": {
+        "count": 20,
+        "medianMs": 26.799999997019768,
+        "p95Ms": 28.299999997019768,
+        "maxMs": 28.299999997019768
+      },
+      "cacheAvoidance": "40 distinct timed text runs per trial; nonce ranges never reused within this document",
+      "scope": "Retained certified corpus plus F20/F23/F22/F00/F01/F02/F03/F04/F05/F12/F13/F14/F15/F18/F19/F08/Ke5/F09/F16; two drawing openings remain unproved; standard start; complete histories; timings include transport encoding, input construction and shaping. Native checks independently compare every cell, last move and status.",
+      "phase": "replay",
+      "loadAttempt": 1,
+      "replayAttempt": 1
+    },
+    "scope": "Both candidate trials passed every unchanged limit. The second trial uses disjoint nonce ranges, not repeated timed text. It matches the accepted-font control. The first-trial slowdown is unexplained and retained; no claim that the cause was fixed. Earlier F02 variance remains preserved in predecessor archives."
+  },
+  "proof_searches": 0,
+  "perfect_opponent": false
+}

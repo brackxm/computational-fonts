@@ -40,12 +40,12 @@ def resolve_ref(repo, ref):
 
 def restore(repo, target, ref, inputs):
     commit = resolve_ref(repo, ref)
-    for name in EXTERNAL_INPUTS:
-        expected = inputs[name]
-        destination = target / name
-        destination.parent.mkdir(parents=True, exist_ok=True)
-        with tempfile.TemporaryDirectory(prefix='.restore-', dir=destination.parent) as directory:
-            draft = Path(directory) / 'input'
+    target.mkdir(parents=True, exist_ok=True)
+    with tempfile.TemporaryDirectory(prefix='.restore-', dir=target) as directory:
+        staged = []
+        for index, name in enumerate(EXTERNAL_INPUTS):
+            expected = inputs[name]
+            draft = Path(directory) / str(index)
             with draft.open('wb') as stream:
                 result = subprocess.run(
                     ['git', 'cat-file', 'blob', f'{commit}:games/gardner/research/{name}'],
@@ -56,8 +56,13 @@ def restore(repo, target, ref, inputs):
                 digest = hashlib.file_digest(stream, 'sha256').hexdigest()
             if draft.stat().st_size != expected['bytes'] or digest != expected['sha256']:
                 raise ValueError(f'Frozen input mismatch: {name}')
+            staged.append((name, draft))
+        # A later missing/corrupt blob must not leave a partially restored set.
+        for name, draft in staged:
+            destination = target / name
+            destination.parent.mkdir(parents=True, exist_ok=True)
             draft.replace(destination)
-        print('Restored verified input:', name, flush=True)
+            print('Restored verified input:', name, flush=True)
 
 
 def main():

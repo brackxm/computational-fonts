@@ -57,26 +57,30 @@ class RestoreTests(unittest.TestCase):
             git('update-ref', '-d', local)
             self.assertEqual(resolve_ref(repo, None), commit)
 
-            first = EXTERNAL_INPUTS[0]
-            previous = b'previous verified input'
-            (output / first).write_bytes(previous)
-            bad = dict(inputs, **{first: dict(inputs[first], sha256='0' * 64)})
-            with self.assertRaisesRegex(ValueError, 'Frozen input mismatch'):
-                restore(repo, output, commit, bad)
-            self.assertEqual((output / first).read_bytes(), previous)
-            self.assertFalse(list(output.rglob('.restore-*')))
+            previous = {name: ('previous ' + name).encode() for name in EXTERNAL_INPUTS}
+            for name, data in previous.items():
+                (output / name).write_bytes(data)
+            for broken in [EXTERNAL_INPUTS[0], EXTERNAL_INPUTS[-1]]:
+                bad = dict(inputs, **{broken: dict(inputs[broken], sha256='0' * 64)})
+                with self.assertRaisesRegex(ValueError, 'Frozen input mismatch'):
+                    restore(repo, output, commit, bad)
+                for name, data in previous.items():
+                    self.assertEqual((output / name).read_bytes(), data)
+                self.assertFalse(list(output.rglob('.restore-*')))
             with self.assertRaisesRegex(ValueError, 'Artifact ref unavailable locally') as missing:
                 restore(repo, output, 'absent-ref', inputs)
             self.assertIn('Use --ref', str(missing.exception))
             self.assertNotIn('git fetch', str(missing.exception))
-            self.assertEqual((output / first).read_bytes(), previous)
+            for name, data in previous.items():
+                self.assertEqual((output / name).read_bytes(), data)
 
-            git('rm', 'games/gardner/research/' + first)
+            git('rm', 'games/gardner/research/' + EXTERNAL_INPUTS[-1])
             git('-c', 'user.name=Test', '-c', 'user.email=test@example.invalid',
                 '-c', 'commit.gpgsign=false', 'commit', '-qm', 'Missing test input')
             with self.assertRaisesRegex(ValueError, 'Artifact ref lacks'):
                 restore(repo, output, 'HEAD', inputs)
-            self.assertEqual((output / first).read_bytes(), previous)
+            for name, data in previous.items():
+                self.assertEqual((output / name).read_bytes(), data)
             self.assertFalse(list(output.rglob('.restore-*')))
 
 

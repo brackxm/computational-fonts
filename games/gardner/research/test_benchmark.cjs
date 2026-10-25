@@ -12,9 +12,16 @@ const fixture=JSON.parse(fs.readFileSync(path.join(__dirname,'inputs/replay.json
 const elements=Object.fromEntries(['load','run','result','drawing','record','caption','raw','history'].map(id=>[id,{disabled:id==='run',textContent:'',value:''}]));
 const fonts=new Set();
 const statuses=new Map(fixture.positions.map(p=>[p.source,p.status]));
+const timedInputs=new Set();
 function measureText(encoded){
-  const source=Array.from(encoded).slice(1,-1).map(c=>String.fromCharCode(c.codePointAt(0)-0xe100)).join('').trimEnd();
+  const decoded=Array.from(encoded).slice(1,-1).map(c=>String.fromCharCode(c.codePointAt(0)-0xe100)).join('');
+  const source=decoded.trimEnd();
   assert.ok(statuses.has(source),'Unknown benchmark fixture');
+  const nonce=decoded.length-source.length-256*(source.length+1);
+  if(nonce>0){
+    assert.ok(!timedInputs.has(encoded),'Timed shaping input reused across trials');
+    timedInputs.add(encoded);
+  }
   return {width:badWidth?1800:1800+statuses.get(source)};
 }
 let offline=true,wrongHash=false,badWidth=false,step=1,now=0;
@@ -64,6 +71,7 @@ const latest=()=>JSON.parse(elements.raw.textContent);
   assert.equal(latest().status,'pass');assert.equal(latest().twentyReply.p95Ms,1);
   assert.equal(latest().loadAttempt,3);assert.equal(latest().replayAttempt,3);
   const trials=history();assert.equal(trials.length,5);
+  assert.equal(timedInputs.size,80,'Both completed trials must use distinct timed inputs');
   assert.deepEqual(trials.map(t=>t.status),['fail','fail','fail','fail','pass']);
   assert.equal(trials[3].twentyReply.p95Ms,300,'Passing rerun overwrote failed timing');
   console.log('Benchmark failure, retry and trial-retention checks passed.');

@@ -1,101 +1,66 @@
 {
-  "format": "gardner-research-integration-v1",
+  "format": "gardner-research-integration-v2",
   "status": "pass",
-  "variant": "F09/F16",
-  "recorded_utc": "2026-10-24T21:43:22.372812+00:00",
-  "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
-  "font_bytes": 42155688,
+  "variant": "F09/F16 compact serialization",
+  "font_sha256": "dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c",
+  "font_bytes": 41757140,
   "glyphs": 57011,
   "policy_rows": 24526808,
-  "added_rows": 7880,
-  "added_font_bytes": 16616,
-  "added_glyphs": 0,
-  "source_audit": {
-    "path": "/Users/michael/.codex/visualizations/2026/10/06/01a112f8-5f55-7ae0-b244-b3bcb1d5fa8c/gardner-research-2026-10-20/resumed-2026-10-20/post-F08-gap-audit-20261024T202847Z",
-    "files": 379,
-    "bytes": 101674977,
-    "inventory_sha256": "127f94e45bf27b58c4f3465b467cd6f9f250e2b2fa28c33e399b68cadfb32b4a",
+  "representation_only": true,
+  "source_proof_archive": {
+    "path": "/Users/michael/.codex/visualizations/2026/10/06/01a112f8-5f55-7ae0-b244-b3bcb1d5fa8c/gardner-research-2026-10-20/resumed-2026-10-20/F09-F16-validated-20261024T211843Z",
+    "inventory_sha256": "113a35880f1a7c2899d099d80a044d0d0af2d977d9c096c5ea7e985a5ace0416",
+    "files": 621,
+    "bytes": 97991868,
     "verified": true,
-    "sealed_utc": "2026-10-24T21:12:51.851672+00:00"
+    "sealed_utc": "2026-10-24T21:44:14.674776+00:00"
   },
-  "parent_font_archive": {
-    "path": "/Users/michael/.codex/visualizations/2026/10/06/01a112f8-5f55-7ae0-b244-b3bcb1d5fa8c/gardner-research-2026-10-20/resumed-2026-10-20/Ke5-F08-validated-20261024T185818Z",
-    "inventory_sha256": "3d84b96cd1b2435b7a275ed014bbaa08dce00ccc9cbc1897d489d0346c287b37",
-    "files": 791,
-    "bytes": 148717433,
-    "verified": true,
-    "sealed_utc": "2026-10-24T20:01:14.422343+00:00"
-  },
-  "exact_frozen_rebuild": true,
-  "all_frozen_inputs_verified": true,
-  "all_retained_policy_rows_unchanged": true,
-  "compiler_and_runtime_unchanged": true,
-  "original_artwork_preserved_glyphs": 6404,
+  "mathematical_evidence": "f09-f16.json",
+  "mathematical_scope": "Historical independent exact-clock14-root replay against basis93 remains valid because the classifier, all moves/guards and frozen inputs are byte-identical. Fresh exhaustive actual TTF transition checks establish this serialization. No new mathematical replay or proof search was run.",
+  "size_evidence": "size-reduction.json",
   "default_variant_preserved": true,
-  "no_default_files_modified_by_this_integration": true,
-  "external_default_update": {
-    "initial_head": "56115f1fc2dbcd49f129aa3b2515dcab894f263c",
-    "current_head": "29b2af0ea33b836d06520f72809ba59719b9e98c",
-    "changed_files": [
-      "games/gardner/gardner-font.ttf",
-      "games/gardner/playground.html",
-      "games/gardner/readme.md",
-      "games/gardner/test_font.py",
-      "games/shared/exact_tests.py",
-      "games/shared/game_text.py",
-      "games/shared/readme.md",
-      "games/shared/test_game_text.py"
-    ],
-    "initial_default_font_sha256": "bd8a43df4b228cf6d1ede6e7b5474a283eb7335e25580cc1ab1a1696d3a039f0",
-    "current_default_font_sha256": "1be555acac58ec5f7016644fe8de5062a9e9ef9f1e8ce0a7325a67987e09e74e",
-    "current_default_font_bytes": 4485684,
-    "scope": "Separate committed Game Sans lettering update; preserved. The lightweight opponent remains the default; this integration made no default-file edits."
-  },
-  "source_syntax_checks": "pass",
-  "operational_tests": {
-    "status": "pass",
-    "research_controls": true,
-    "benchmark_failure_retry_and_history": true,
-    "default_controls": true,
-    "restore_regression": true,
-    "fresh_clone_restore": {
+  "default_font_sha256": "1be555acac58ec5f7016644fe8de5062a9e9ef9f1e8ce0a7325a67987e09e74e",
+  "previous_review_fixes_preserved": [
+    "Distinct timed input ranges per replay attempt",
+    "Validate all restoration inputs before any replacement"
+  ],
+  "checks": {
+    "native": "native.json",
+    "browser": "browser.json",
+    "all_browser_trials": "browser-trials.json",
+    "memory": "memory.json",
+    "byte_exact_rebuild": "reproducibility.json",
+    "failure_preservation": "build-safety.json",
+    "controllers": {
+      "build_safety": "pass",
+      "restore": "pass",
+      "benchmark": "pass",
+      "research_controller": "pass",
+      "default_controller": "pass",
       "status": "pass",
-      "ordinary_fresh_clone": true,
-      "source_only_master": true,
-      "fetched_ref_only": true,
-      "no_local_artifact_branch": true,
-      "all_restored_inputs_verified": true,
-      "font_blob_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
-      "inputs": {
-        "inputs/boundaries.records29": {
-          "bytes": 6090,
-          "sha256": "77158a3c90ebf07e88faa043a9e1d2ef6d975d9c2387ea4c831f39e393fb6d2e"
-        },
-        "inputs/game-base.gamepack": {
-          "bytes": 21636,
-          "sha256": "501f56b676b34332906ce2600b2ea6e4c4fc2f8597a935c4c4ee3c61b08efd26"
-        },
-        "inputs/game-base.ttf": {
-          "bytes": 2394100,
-          "sha256": "9d77c6304abf4c1f4cd05d29380c549c313fbe0792af48ca3b0735894b2bd17c"
-        },
-        "inputs/games.json": {
-          "bytes": 11658,
-          "sha256": "569d434d85536388cd12cf5d8636af77fede0c9937852dd25c6f2693434700ab"
-        },
-        "inputs/replay.json": {
-          "bytes": 27338,
-          "sha256": "ef4cabe5ad5cdd22e01312ea6e253ca472d302e3bfef30e305e48a23b6feeea0"
-        },
-        "inputs/policy.tree.xz": {
-          "bytes": 35754632,
-          "sha256": "0b2b562e76cc5c079c1b9d05adc1e32159b3ec092ec7e1888ff8bbbd3f7799b8"
-        }
-      },
       "proof_searches": 0
-    },
-    "proof_searches": 0
+    }
   },
+  "artifact_layout": {
+    "source_only_master": true,
+    "branch": "codex/gardner-research-artifacts-20261024",
+    "publication": "Local commits only; no pushing. Artifact branch retains only the compact font and unchanged binary inputs, directly based on the matching source commit.",
+    "latest_only_tip_on_source_master": true
+  },
+  "remaining_named_frontiers": [
+    "F11",
+    "F21"
+  ],
+  "unproved_openings": [
+    "B4A3",
+    "B4B3"
+  ],
+  "perfect_opponent": false,
+  "proof_searches": 0,
+  "committed": true,
+  "pushed": false,
+  "remaining_actionable_issues": 0,
+  "recorded_utc": "2026-10-24T22:41:21.778785+00:00",
   "fresh_clone_restore": {
     "status": "pass",
     "ordinary_fresh_clone": true,
@@ -103,7 +68,7 @@
     "fetched_ref_only": true,
     "no_local_artifact_branch": true,
     "all_restored_inputs_verified": true,
-    "font_blob_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
+    "font_blob_sha256": "dee0a1f638c5c6d9a7f8bbfe617069b0f21eb5ca4f556d316cf2c08932d8126c",
     "inputs": {
       "inputs/boundaries.records29": {
         "bytes": 6090,
@@ -132,106 +97,22 @@
     },
     "proof_searches": 0
   },
-  "native_repository_replay": {
-    "status": "pass",
-    "font_sha256": "9847e63e7d1efe5389aa34d789db3a61fe441ac7dc3954c7e0494487e36a2e97",
-    "history_checks": 162,
-    "boundary_checks": 1260,
-    "bad_tree_checks": 4,
-    "dispatch": {
-      "status": "pass",
-      "node_value_pairs": 17811296,
-      "scope": "Every binary node and input bit independently executed through the actual TTF Context2, SingleSubst and deletion tables; exact state/leaf match"
-    },
-    "dictionary": {
-      "status": "pass",
-      "temporary_dictionary_glyphs": 19236,
-      "checks": 38472,
-      "route_class_checks": 29040,
-      "includes_notdef": true,
-      "scope": "Actual HarfBuzz dispatcher, both bits for every temporary dictionary glyph and one representative per bank/bit route class; test-only cmap and top-level feature; nested GSUB and GDEF unchanged."
-    },
-    "live150": {
-      "median_ms": 93.42531249421882,
-      "p95_ms": 96.88491599808913,
-      "max_ms": 96.88491599808913
-    },
-    "twenty_reply": {
-      "median_ms": 28.48383300442947,
-      "p95_ms": 29.128042006050237,
-      "max_ms": 29.128042006050237
-    },
-    "proof_searches": 0
-  },
-  "mathematical_replay": {
-    "status": "pass",
-    "verification_only": true,
-    "fresh_process": true,
-    "fresh_queue": true,
-    "original_basis93": true,
-    "rows": 2488366,
-    "roots": 14,
-    "all_encoded_guards_zero": true,
-    "runtime_certificate_sha256": "389ceb15dad0b143777fa516b07556b88bfe5e4f31bf9aa914ce403316853962",
-    "evidence": "f09-f16.json"
-  },
-  "browser_and_memory": {
-    "status": "pass",
-    "scope": "First isolated trial of these exact integrated font bytes. All failures and trial history retained; no retry needed.",
-    "browser_evidence": "browser.json",
-    "memory_evidence": "memory.json",
-    "historical_F02_variance": "Separate earlier F02 font failed timing once and passed one isolated retry; this release does not claim to explain or fix that variance."
-  },
-  "artifact_layout": {
-    "source_only_master": true,
-    "branch": "codex/gardner-research-artifacts-20261024",
-    "latest_only_tip_on_source_master": true,
-    "publication": "Local commits only; no push authorized."
-  },
-  "review_rounds": [
-    {
-      "scope": "Exact archived pair and unchanged retained policies; fresh actual joint replay from original basis93 with every encoded guard zero",
-      "remaining_actionable_issues": 0
-    },
-    {
-      "scope": "Normal byte-exact rebuild, full native replay and actual dispatcher/dictionary checks, original artwork and default isolation",
-      "remaining_actionable_issues": 0
-    },
-    {
-      "scope": "First isolated browser trial, full renderer-growth sampling, fetched-ref restore, failure controls and output preservation",
-      "remaining_actionable_issues": 0
-    },
-    {
-      "scope": "Source-only master and latest-only artifact layout, cache identity, current/historical evidence and honest opening limitations",
-      "remaining_actionable_issues": 0
-    }
-  ],
-  "review_fixes": [
-    "Replace stale release identities, root counts, size, performance and current integration evidence; keep older reports identified as historical.",
-    "Preserve the concurrent committed Game Sans default update and correct the lightweight size label; retain the frozen research base.",
-    "Reuse unchanged compiler, runtime and shared tests; add both new certified continuations to the existing root fixtures."
-  ],
-  "remaining_actionable_issues": 0,
-  "integrated": true,
-  "proof_searches_during_integration": 0,
-  "proof_searches_currently_stopped": true,
-  "remaining_named_frontiers": [
-    "F11",
-    "F21"
-  ],
-  "unproved_openings": [
-    "B4A3",
-    "B4B3"
-  ],
-  "opening_coverage_caveat": "Historical opening scaffolds have earlier uncovered routes; resolving F11 alone is not known to complete either opening.",
-  "perfect_opponent": false,
+  "normal_repository_rebuild_byte_exact": true,
   "validated_release_archive": {
-    "path": "/Users/michael/.codex/visualizations/2026/10/06/01a112f8-5f55-7ae0-b244-b3bcb1d5fa8c/gardner-research-2026-10-20/resumed-2026-10-20/F09-F16-validated-20261024T211843Z",
-    "inventory_sha256": "113a35880f1a7c2899d099d80a044d0d0af2d977d9c096c5ea7e985a5ace0416",
-    "files": 621,
-    "bytes": 97991868,
+    "path": "/Users/michael/.codex/visualizations/2026/10/06/01a112f8-5f55-7ae0-b244-b3bcb1d5fa8c/gardner-research-2026-10-20/resumed-2026-10-20/F09-F16-compact-validated-20261025T222300Z",
+    "inventory_sha256": "30cfa8cd0b814446f9f8f961768c445bbbbc7ec38362c7df927a9e6385107b39",
+    "files": 291,
+    "bytes": 87606794,
     "verified": true,
-    "sealed_utc": "2026-10-24T21:44:14.674776+00:00"
+    "sealed_utc": "2026-10-24T22:48:21.498644+00:00"
   },
-  "archive_scope": "Immutable precommit snapshot contains exact final font, frozen inputs, proof certificates and all gate results. This repository report adds its inventory identity; commit records are recorded separately."
+  "archive_scope": "Sealed pre-commit working-tree package, exact font, frozen inputs, trial history and tests. The repository report adds this inventory identity after sealing; sealed archive remains unchanged.",
+  "commit_review": {
+    "remaining_actionable_issues_found": 0,
+    "compiler_scope": "Measured sharing thresholds only; no extra routes or tuning machinery.",
+    "regressions": "Restoration failure preservation, disjoint benchmark inputs, both controllers and real serialization safety pass.",
+    "font_gates": "Previously validated exact bytes; no font or policy change during commit review.",
+    "historical_trials_preserved": true,
+    "proof_searches_stopped": true
+  }
 }
