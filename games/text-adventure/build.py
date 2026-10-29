@@ -277,6 +277,8 @@ def build_font(output):
     compact_contours(fb.font)
     compact_contours(fb.font, rounds=8, min_uses=4)
     compact_glyphs(fb.font)
+    compact_contours(fb.font, rounds=8, min_uses=2)
+    compact_glyphs(fb.font, min_uses=8)
     fb.font.save(output)
     glyph_count = len(fb.font.getGlyphOrder())
     fb.font.close()

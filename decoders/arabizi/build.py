@@ -15,11 +15,13 @@ import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 try:
-    from fontbuild import compact_glyphs
+    from fontbuild import compact_glyphs, compact_contours
 except ModuleNotFoundError as exc:
     if exc.name != 'fontbuild':
         raise
-    def compact_glyphs(font):
+    def compact_glyphs(font, **kwargs):
+        pass
+    def compact_contours(font, **kwargs):
         pass
 
 from fontTools.feaLib.builder import addOpenTypeFeaturesFromString
@@ -304,6 +306,8 @@ def build_font(output=HERE / 'arabizi-font.ttf'):
     addOpenTypeFeaturesFromString(fb.font, '\n'.join(fea))
     compact_annotations(fb.font, source_widths)
     compact_glyphs(fb.font)
+    compact_contours(fb.font, rounds=8, min_uses=2)
+    compact_glyphs(fb.font, min_uses=8)
     output.parent.mkdir(parents=True, exist_ok=True)
     fb.font.save(output, reorderTables=False)
     base.close()

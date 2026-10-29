@@ -1,6 +1,6 @@
 {
   "summary": {
-    "date": "2026-10-25",
+    "date": "2026-10-29",
     "excluded": [
       "games/gardner",
       "games/gardner/research"
@@ -8,26 +8,45 @@
     "projects": 42,
     "font_files": 108,
     "before": 176597152,
-    "after": 89410136,
-    "saved": 87187016,
-    "saved_this_pass": 5924,
+    "after": 89205172,
+    "saved": 87391980,
+    "saved_this_pass": 44224,
     "manifests_verified": 62,
     "files_reduced": 95,
-    "files_reduced_this_pass": 10,
+    "files_reduced_this_pass": 1,
     "files_increased": 0,
-    "base_commit_this_pass": "da9bd16",
-    "baseline_this_pass": "Working tree checkpoint font-size-round-eight"
+    "base_commit_this_pass": "89ce29f94a9e45156afb0a1d625d9b78a16f57b7",
+    "baseline_this_pass": "Working tree after the 83,520-byte component-pair review of 2026-10-29",
+    "saved_since_base_commit": 204964
   },
   "projects": [
     {
       "project": "decoders/arabizi",
       "font_files": 1,
       "before": 451000,
-      "after": 369844,
-      "saved": 81156,
+      "after": 362772,
+      "saved": 88228,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "decoders/arabizi",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 6.34
+      }
     },
     {
       "project": "decoders/enigma-dynamic",
@@ -37,7 +56,25 @@
       "saved": 33332,
       "status": "Passed",
       "validation": "All 49 shared decoder regressions passed; shipped configuration retained and complete logical GSUB/non-layout data identical; 4 real Chrome before/after pixel comparisons passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "decoders/shared",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 62.11
+      }
     },
     {
       "project": "decoders/enigma-static",
@@ -47,7 +84,25 @@
       "saved": 8704,
       "status": "Passed",
       "validation": "All 49 shared decoder regressions passed; shipped configuration retained and complete logical GSUB/non-layout data identical; 4 real Chrome before/after pixel comparisons passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "decoders/shared",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 62.11
+      }
     },
     {
       "project": "decoders/lorenz-static",
@@ -57,7 +112,25 @@
       "saved": 0,
       "status": "Passed",
       "validation": "Shared decoder regression suite: 49 tests passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "decoders/shared",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 62.11
+      }
     },
     {
       "project": "decoders/morse",
@@ -67,7 +140,25 @@
       "saved": 0,
       "status": "Passed",
       "validation": "Shared decoder regression suite: 49 tests passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "decoders/shared",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 62.11
+      }
     },
     {
       "project": "decoders/playfair-static",
@@ -77,7 +168,25 @@
       "saved": 0,
       "status": "Passed",
       "validation": "Shared decoder regression suite: 49 tests passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "decoders/shared",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 62.11
+      }
     },
     {
       "project": "decoders/vigenere-dynamic",
@@ -87,7 +196,25 @@
       "saved": 100224,
       "status": "Passed",
       "validation": "All 49 shared decoder regressions passed; shipped configuration retained and complete logical GSUB/non-layout data identical; 4 real Chrome before/after pixel comparisons passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "decoders/shared",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 62.11
+      }
     },
     {
       "project": "decoders/vigenere-static",
@@ -97,7 +224,25 @@
       "saved": 0,
       "status": "Passed",
       "validation": "Shared decoder regression suite: 49 tests passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "decoders/shared",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 62.11
+      }
     },
     {
       "project": "formatters/json",
@@ -107,7 +252,25 @@
       "saved": 0,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "formatters/json",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 17.82
+      }
     },
     {
       "project": "formatters/markdown",
@@ -117,37 +280,109 @@
       "saved": 1772,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "formatters/markdown",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 5.52
+      }
     },
     {
       "project": "games/achi",
       "font_files": 1,
       "before": 499292,
-      "after": 369128,
-      "saved": 130164,
+      "after": 361576,
+      "saved": 137716,
       "status": "Passed",
       "validation": "8 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 144
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/achi",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 2.57
+      }
     },
     {
       "project": "games/backgammon",
       "font_files": 1,
       "before": 1232224,
-      "after": 778144,
-      "saved": 454080,
+      "after": 777252,
+      "saved": 454972,
       "status": "Passed",
       "validation": "13 full regressions and controller checks passed; prior font retained byte-for-byte because the new sanitizer-work guard rejects excessive sharing; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 844
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/backgammon",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 124.78
+      }
     },
     {
       "project": "games/chomp",
       "font_files": 1,
       "before": 123256,
-      "after": 97280,
-      "saved": 25976,
+      "after": 95496,
+      "saved": 27760,
       "status": "Passed",
       "validation": "7 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/chomp",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 1.73
+      }
     },
     {
       "project": "games/connect-four",
@@ -157,7 +392,25 @@
       "saved": 506692,
       "status": "Passed",
       "validation": "6 distribution tests; all 621,348 dispatch and 1,585,374 priority entries; 3,286 histories and 500 complete games passed; Chrome TTF/WOFF2 pixels identical; fresh artifacts reproduce exactly; 17 storage regressions, 6 Connect Four distribution tests and 8 real Chrome before/after pixel comparisons passed; both changed webfonts retain their complete decoded streams",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/connect-four",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 28.89
+      }
     },
     {
       "project": "games/cram",
@@ -167,97 +420,277 @@
       "saved": 33840,
       "status": "Passed",
       "validation": "4 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 92
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/cram",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 28.7
+      }
     },
     {
       "project": "games/dodgem",
       "font_files": 1,
       "before": 405392,
-      "after": 301612,
-      "saved": 103780,
+      "after": 293572,
+      "saved": 111820,
       "status": "Passed",
       "validation": "8 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 240
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/dodgem",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 4.73
+      }
     },
     {
       "project": "games/domineering",
       "font_files": 1,
       "before": 200916,
-      "after": 168388,
-      "saved": 32528,
+      "after": 167876,
+      "saved": 33040,
       "status": "Passed",
       "validation": "7 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/domineering",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 1.82
+      }
     },
     {
       "project": "games/dots-and-boxes",
       "font_files": 1,
       "before": 469656,
-      "after": 383796,
-      "saved": 85860,
+      "after": 378348,
+      "saved": 91308,
       "status": "Passed",
       "validation": "8 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/dots-and-boxes",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 4.93
+      }
     },
     {
       "project": "games/hexapawn",
       "font_files": 1,
       "before": 147856,
-      "after": 130304,
-      "saved": 17552,
+      "after": 124208,
+      "saved": 23648,
       "status": "Passed",
       "validation": "5 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/hexapawn",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 1.3
+      }
     },
     {
       "project": "games/kayles",
       "font_files": 1,
       "before": 519064,
-      "after": 465768,
-      "saved": 53296,
+      "after": 464356,
+      "saved": 54708,
       "status": "Passed",
       "validation": "7 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/kayles",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 7.91
+      }
     },
     {
       "project": "games/mu-torere",
       "font_files": 1,
       "before": 535348,
-      "after": 462752,
-      "saved": 72596,
+      "after": 460588,
+      "saved": 74760,
       "status": "Passed",
       "validation": "6 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 400
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/mu-torere",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 9.91
+      }
     },
     {
       "project": "games/nim",
       "font_files": 1,
       "before": 471240,
-      "after": 206556,
-      "saved": 264684,
+      "after": 200708,
+      "saved": 270532,
       "status": "Passed",
       "validation": "7 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 14 Chrome pixel comparisons passed; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 104
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/nim",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 187.95
+      }
     },
     {
       "project": "games/notakto",
       "font_files": 1,
       "before": 1243792,
-      "after": 197592,
-      "saved": 1046200,
+      "after": 196676,
+      "saved": 1047116,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/notakto",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 67.67
+      }
     },
     {
       "project": "games/sim",
       "font_files": 1,
       "before": 8565276,
-      "after": 4708068,
-      "saved": 3857208,
+      "after": 4677768,
+      "saved": 3887508,
       "status": "Passed",
       "validation": "9 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; all 44,371 ordered color scenes verified; 22 Chrome pixel comparisons passed; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 528
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv450/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/sim",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 20.62
+      }
     },
     {
       "project": "games/snake-dynamic",
@@ -267,7 +700,25 @@
       "saved": 65264,
       "status": "Passed",
       "validation": "4 native/project regressions and controller checks passed; complete logical GSUB and every non-layout payload retained; ODT refreshed; 4 real Chrome before/after pixel comparisons passed; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 252
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/snake-dynamic",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 12.99
+      }
     },
     {
       "project": "games/snake-fixed",
@@ -277,37 +728,109 @@
       "saved": 26412,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/snake-fixed",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 26.04
+      }
     },
     {
       "project": "games/text-adventure",
       "font_files": 1,
       "before": 525152,
-      "after": 474964,
-      "saved": 50188,
+      "after": 443732,
+      "saved": 81420,
       "status": "Passed",
       "validation": "6 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 100
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/text-adventure",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 12.46
+      }
     },
     {
       "project": "games/tic-tac-toe",
       "font_files": 1,
       "before": 149080,
-      "after": 140580,
-      "saved": 8500,
+      "after": 139992,
+      "saved": 9088,
       "status": "Passed",
       "validation": "5 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/tic-tac-toe",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 3.5
+      }
     },
     {
       "project": "games/wythoff",
       "font_files": 1,
       "before": 674032,
-      "after": 275912,
-      "saved": 398120,
+      "after": 273132,
+      "saved": 400900,
       "status": "Passed",
       "validation": "6 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 14 Chrome pixel comparisons passed; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun; 18 shared storage regressions; exact outline/metric/hint checks on every existing glyph, unchanged layout/color data, ten game regression suites and 40 Chrome pixel comparisons",
-      "saved_this_pass": 3220
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "games/wythoff",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 32.08
+      }
     },
     {
       "project": "graphics/first-words",
@@ -317,7 +840,25 @@
       "saved": 22572,
       "status": "Passed",
       "validation": "14 regressions and real Chrome tests of 391 picture variants / 977 spellings passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "graphics/first-words",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 55.2
+      }
     },
     {
       "project": "graphics/heraldry",
@@ -327,7 +868,25 @@
       "saved": 133716,
       "status": "Passed",
       "validation": "9 regressions, all 51,800 compositions, and Chrome grammar/color/control checks passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "graphics/heraldry",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 10.74
+      }
     },
     {
       "project": "graphics/pbm",
@@ -337,7 +896,25 @@
       "saved": 387760,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "graphics/pbm",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 203.54
+      }
     },
     {
       "project": "graphics/pgm",
@@ -347,7 +924,25 @@
       "saved": 387752,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "graphics/pgm",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 221.23
+      }
     },
     {
       "project": "graphics/ppm",
@@ -357,17 +952,53 @@
       "saved": 391504,
       "status": "Passed",
       "validation": "All shaping cases passed; the exact dither-contour check passed after accepting equivalent composites",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "graphics/ppm",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 278.99
+      }
     },
     {
       "project": "graphics/smiles",
       "font_files": 1,
       "before": 6606788,
-      "after": 6069724,
-      "saved": 537064,
+      "after": 6065592,
+      "saved": 541196,
       "status": "Passed",
       "validation": "18 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "graphics/smiles",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 246.08
+      }
     },
     {
       "project": "graphics/turtle",
@@ -377,7 +1008,25 @@
       "saved": 66860,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "graphics/turtle",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 20.72
+      }
     },
     {
       "project": "languages/mini-basic",
@@ -387,17 +1036,49 @@
       "saved": 0,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "languages/mini-basic",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 316.19
+      }
     },
     {
       "project": "languages/ski",
       "font_files": 2,
       "before": 1218336,
-      "after": 871628,
-      "saved": 346708,
+      "after": 870596,
+      "saved": 347740,
       "status": "Passed",
       "validation": "43 project tests passed; all original glyph IDs, exact outlines/flags/order, metrics and hint programs verified; 262 subtests passed and both fonts rebuild reproducibly; 18 shared storage regressions; all existing glyph points/flags, IDs, metrics, hints, layout and colors retained; 16 project suites and 64 Chrome pixel comparisons, with repaired build-identity checks rerun",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv460/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "languages/ski"
+        ],
+        "returncode": 0,
+        "seconds": 639.79
+      }
     },
     {
       "project": "languages/verilog",
@@ -407,7 +1088,21 @@
       "saved": 137292,
       "status": "Passed",
       "validation": "311 native/frontend tests, 18 browser tests and all 13 bundled native invocations passed; original glyph/non-layout data, ABI and execution layout retained; 216 optional Icarus comparisons skipped",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "languages/verilog/tests"
+        ],
+        "returncode": 0,
+        "seconds": 39.89
+      }
     },
     {
       "project": "languages/wasm",
@@ -417,17 +1112,51 @@
       "saved": 76706216,
       "status": "Passed",
       "validation": "156 native/compiler/capacity tests, 47 browser tests and all 43 bundled V8 comparisons passed; original glyph/non-layout data, ABI and execution layout retained; one optional Clang rebuild skipped",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "pytest",
+          "-q",
+          "languages/wasm/tests/test_font_capacity.py",
+          "languages/wasm/tests/test_harfbuzz.py",
+          "languages/wasm/tests/test_harfbuzz_library.py",
+          "languages/wasm/tests/test_compiler.py"
+        ],
+        "returncode": 0,
+        "seconds": 183.82
+      }
     },
     {
       "project": "literature/poem-oracle",
       "font_files": 2,
       "before": 9790688,
-      "after": 9211496,
-      "saved": 579192,
+      "after": 9124332,
+      "saved": 666356,
       "status": "Passed",
       "validation": "Every original glyph outline/flag/metric retained; WOFF2 byte-identical; all 2,876 poems reached by 8 browser-runtime tests; fresh-build/native/corpus suite passed; 17 storage regressions, 6 Connect Four distribution tests and 8 real Chrome before/after pixel comparisons passed; both changed webfonts retain their complete decoded streams",
-      "saved_this_pass": 0
+      "saved_this_pass": 44224,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "5 full corpus/native/rebuild tests and 8 browser-runtime tests passed; 8 Chrome pixel comparisons on four modified poems; complete original glyph geometry/metrics/hints and layout/name/color payloads preserved",
+      "check_this_pass": {
+        "rerun": true,
+        "command": [
+          "python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "literature/poem-oracle",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0
+      }
     },
     {
       "project": "validators/multi-format",
@@ -437,7 +1166,25 @@
       "saved": 32252,
       "status": "Passed",
       "validation": "Project regression suite passed",
-      "saved_this_pass": 0
+      "saved_this_pass": 0,
+      "reviewed_on": "2026-10-29",
+      "validation_this_pass": "All fonts byte-identical; preceding project regression results retained",
+      "check_this_pass": {
+        "rerun": false,
+        "command": [
+          "/private/tmp/font-size-review-20261029/venv463/bin/python",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "validators/multi-format",
+          "-p",
+          "test*.py",
+          "-q"
+        ],
+        "returncode": 0,
+        "seconds": 47.01
+      }
     }
   ],
   "fonts": [
@@ -445,12 +1192,12 @@
       "path": "decoders/arabizi/arabizi-font.ttf",
       "project": "decoders/arabizi",
       "before": 451000,
-      "before_this_pass": 369844,
-      "after": 369844,
-      "saved": 81156,
+      "before_this_pass": 362772,
+      "after": 362772,
+      "saved": 88228,
       "saved_this_pass": 0,
-      "sha256": "6c5e538ae83e46de80b93db0caa1103af4bc65a6ecdea53379d60732ffa8eecd",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "2ecd59a169f910c4b57a56950c8c6635c91ed7fcab8ac2ea0240358a9e5b6b81",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
@@ -625,36 +1372,36 @@
       "path": "games/achi/achi-font.ttf",
       "project": "games/achi",
       "before": 499292,
-      "before_this_pass": 369272,
-      "after": 369128,
-      "saved": 130164,
-      "saved_this_pass": 144,
-      "sha256": "b78a2437edf7d9ed6323be5f3d7cea3cab30b4c6f1e9f622dc4c5ed9ec019959",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "before_this_pass": 361576,
+      "after": 361576,
+      "saved": 137716,
+      "saved_this_pass": 0,
+      "sha256": "ac435180af43b591ce350ab736810ac5b8e0656e62edfee56dc72cd23e3a9bfd",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/backgammon/backgammon-font.ttf",
       "project": "games/backgammon",
       "before": 1232224,
-      "before_this_pass": 778988,
-      "after": 778144,
-      "saved": 454080,
-      "saved_this_pass": 844,
-      "sha256": "4dfd6c15a7d51abf5c68514eb689057b7b62dccf54ae2b0d44306125f88d9169",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "before_this_pass": 777252,
+      "after": 777252,
+      "saved": 454972,
+      "saved_this_pass": 0,
+      "sha256": "32f457df325bea26031fbba20ca4a0d165976f02347fd0ee1fad9e65331b23d6",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/chomp/chomp-font.ttf",
       "project": "games/chomp",
       "before": 123256,
-      "before_this_pass": 97280,
-      "after": 97280,
-      "saved": 25976,
+      "before_this_pass": 95496,
+      "after": 95496,
+      "saved": 27760,
       "saved_this_pass": 0,
-      "sha256": "37bb553873f16c10a1a7f5fb1d9fce445c331067247ea155ba2ce8e13161419e",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "83f473af13794f627c77fc6625290b42acb065dbbf6b4475e5437a7060f70d97",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
@@ -685,108 +1432,108 @@
       "path": "games/cram/cram-font.ttf",
       "project": "games/cram",
       "before": 118100,
-      "before_this_pass": 84352,
+      "before_this_pass": 84260,
       "after": 84260,
       "saved": 33840,
-      "saved_this_pass": 92,
+      "saved_this_pass": 0,
       "sha256": "710a8f49ce5648b2eb0419dca36a08c695e4b993c39ddaf86d5ab7694527dbe4",
       "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/dodgem/dodgem-font.ttf",
       "project": "games/dodgem",
       "before": 405392,
-      "before_this_pass": 301852,
-      "after": 301612,
-      "saved": 103780,
-      "saved_this_pass": 240,
-      "sha256": "ebbcf97b5b735462934013a8f02ea943fbe863f9adbc62de447d5e80e495b80f",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "before_this_pass": 293572,
+      "after": 293572,
+      "saved": 111820,
+      "saved_this_pass": 0,
+      "sha256": "d2a4524f0409a9ba71a022afce79eb7ff6478102833fe68f84ed6b76fec4cb99",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/domineering/domineering-font.ttf",
       "project": "games/domineering",
       "before": 200916,
-      "before_this_pass": 168388,
-      "after": 168388,
-      "saved": 32528,
+      "before_this_pass": 167876,
+      "after": 167876,
+      "saved": 33040,
       "saved_this_pass": 0,
-      "sha256": "b44387b0ddd27cf51e882c1cc66938360fc769747b5d033c4a963602a93ad93a",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "8528631128fca4c442727f34c1b86d23967d1f0544ac28e398fb480ced3a5998",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/dots-and-boxes/dots-and-boxes-font.ttf",
       "project": "games/dots-and-boxes",
       "before": 469656,
-      "before_this_pass": 383796,
-      "after": 383796,
-      "saved": 85860,
+      "before_this_pass": 378348,
+      "after": 378348,
+      "saved": 91308,
       "saved_this_pass": 0,
-      "sha256": "bace38d843c6ae84db82fb65c1825a72762829cf4e56c7e6a384efd50d81e0ca",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "3e06a5d13bc751fe664938fe9563464c8cde7b5572345cb77f04eae37169dabf",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/hexapawn/hexapawn-font.ttf",
       "project": "games/hexapawn",
       "before": 147856,
-      "before_this_pass": 130304,
-      "after": 130304,
-      "saved": 17552,
+      "before_this_pass": 124208,
+      "after": 124208,
+      "saved": 23648,
       "saved_this_pass": 0,
-      "sha256": "2e505a531c2c7790ded28f6010453c454cd8c0d65ba4ad7129436ac0e7a5e348",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "ea78d67fcdd8b48d6bcf535d6b1619cdbe12d64e2577edb87d4b24db817f9199",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/kayles/kayles-font.ttf",
       "project": "games/kayles",
       "before": 519064,
-      "before_this_pass": 465768,
-      "after": 465768,
-      "saved": 53296,
+      "before_this_pass": 464356,
+      "after": 464356,
+      "saved": 54708,
       "saved_this_pass": 0,
-      "sha256": "aee3c17f0599d9c7e5ec22421da5dff2077110e1b6506fdc659357cbdde72a0f",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "e96f50ce6f2714e9e4e8671a3dd323ae0b73bed1dfd0067eac9a50b73df7fb85",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/mu-torere/mu-torere-font.ttf",
       "project": "games/mu-torere",
       "before": 535348,
-      "before_this_pass": 463152,
-      "after": 462752,
-      "saved": 72596,
-      "saved_this_pass": 400,
-      "sha256": "4f2edb69d970ef9e93a803437422247d8529fd0f2fb1daa321ab27c908ee1bfd",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "before_this_pass": 460588,
+      "after": 460588,
+      "saved": 74760,
+      "saved_this_pass": 0,
+      "sha256": "000c3829fb54444d2098390cf157448d29463fa7e54250810b0032a988de6c43",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/nim/nim-font.ttf",
       "project": "games/nim",
       "before": 471240,
-      "before_this_pass": 206660,
-      "after": 206556,
-      "saved": 264684,
-      "saved_this_pass": 104,
-      "sha256": "ae1ff32209055ef7c8b5cc2d41ef12ea98c7fa29c4728b8166edc939ae4d8e04",
-      "verification": "Identical bytes",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "before_this_pass": 200708,
+      "after": 200708,
+      "saved": 270532,
+      "saved_this_pass": 0,
+      "sha256": "84daaf2ef18bb7bd9611e62351a6c04977910e645249e0b88233b71533336d79",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/notakto/notakto-font.ttf",
       "project": "games/notakto",
       "before": 1243792,
-      "before_this_pass": 197592,
-      "after": 197592,
-      "saved": 1046200,
+      "before_this_pass": 196676,
+      "after": 196676,
+      "saved": 1047116,
       "saved_this_pass": 0,
-      "sha256": "460e6c544c848df993f01ee53467b122433c9bad5cc3a337dd2563c5594e0576",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "6727ea4e13e3bbb101bd1eacb7fe145b9758a5cfa3c87b3db49fa1b66c586a57",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
@@ -817,25 +1564,25 @@
       "path": "games/sim/sim-font.ttf",
       "project": "games/sim",
       "before": 8565276,
-      "before_this_pass": 4708596,
-      "after": 4708068,
-      "saved": 3857208,
-      "saved_this_pass": 528,
-      "sha256": "ac674d1f0c543122cfc45e77fc8608d5c4bf1c3ac1586eabfbd241c5c6e2e7eb",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "before_this_pass": 4677768,
+      "after": 4677768,
+      "saved": 3887508,
+      "saved_this_pass": 0,
+      "sha256": "b07d70e1028c49ef5191546a78ed6ab4566d40d82ee6466ffa6f081a1f8b13d8",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/snake-dynamic/snake-dynamic-font.ttf",
       "project": "games/snake-dynamic",
       "before": 281696,
-      "before_this_pass": 216684,
+      "before_this_pass": 216432,
       "after": 216432,
       "saved": 65264,
-      "saved_this_pass": 252,
+      "saved_this_pass": 0,
       "sha256": "9e9a9d7636cfafe5e12c3e4b8e817c443dd1c2cc8ba9c996803632fb50675fb6",
       "verification": "Identical bytes",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/snake-fixed/snake-fixed-font.ttf",
@@ -853,37 +1600,37 @@
       "path": "games/text-adventure/text-adventure-font.ttf",
       "project": "games/text-adventure",
       "before": 525152,
-      "before_this_pass": 475064,
-      "after": 474964,
-      "saved": 50188,
-      "saved_this_pass": 100,
-      "sha256": "2bda77d877b45161b6e447a0ab21791a5b13ed94bcee6fe5bfb4d8f7e8423cc1",
-      "verification": "Identical bytes",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "before_this_pass": 443732,
+      "after": 443732,
+      "saved": 81420,
+      "saved_this_pass": 0,
+      "sha256": "3754637bb80123cd81db0d95c2d8cdd54e0f978ce1c0c139e89e79052dc377be",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/tic-tac-toe/tic-tac-toe-font.ttf",
       "project": "games/tic-tac-toe",
       "before": 149080,
-      "before_this_pass": 140580,
-      "after": 140580,
-      "saved": 8500,
+      "before_this_pass": 139992,
+      "after": 139992,
+      "saved": 9088,
       "saved_this_pass": 0,
-      "sha256": "91cbd019b7bf2e995c7354d9229b59d113ac5f899863d49f183a1f2bc746910c",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "660d5dbedc8e1f943f2414a94943e2ebb742c165d544c001d31bfc39c082abf8",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "games/wythoff/wythoff-font.ttf",
       "project": "games/wythoff",
       "before": 674032,
-      "before_this_pass": 279132,
-      "after": 275912,
-      "saved": 398120,
-      "saved_this_pass": 3220,
-      "sha256": "8f75ed22ac41117484b544305c94c13a95a6a0ac37de07f95b60548090fe67e4",
-      "verification": "Identical bytes",
-      "verification_this_pass": "Every existing glyph ID/name, exact ordered points/flags, metrics, hints, layout, color and metadata retained"
+      "before_this_pass": 273132,
+      "after": 273132,
+      "saved": 400900,
+      "saved_this_pass": 0,
+      "sha256": "3fc19d9a12596f5f75e4472682e7642500a8177dfd988cebc872471c4fe158c4",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
+      "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
       "path": "graphics/first-words/first-words-font.ttf",
@@ -973,12 +1720,12 @@
       "path": "graphics/smiles/smiles-font.ttf",
       "project": "graphics/smiles",
       "before": 6606788,
-      "before_this_pass": 6069724,
-      "after": 6069724,
-      "saved": 537064,
+      "before_this_pass": 6065592,
+      "after": 6065592,
+      "saved": 541196,
       "saved_this_pass": 0,
-      "sha256": "1aeaefe9e06a9b62782d499db1976458f5bf6de5dc481f1d1e1d23f7ec845791",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "915c3715c5c9ef109718a1fed3d018bfd73b250238478e1bd665f6f4781c6c6a",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
@@ -1009,12 +1756,12 @@
       "path": "languages/ski/ski-font.ttf",
       "project": "languages/ski",
       "before": 882872,
-      "before_this_pass": 604616,
-      "after": 604616,
-      "saved": 278256,
+      "before_this_pass": 603584,
+      "after": 603584,
+      "saved": 279288,
       "saved_this_pass": 0,
-      "sha256": "7c760adcd3d564e57e453f1a970140049ece73e087921ff8e8519d849bcc897d",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
+      "sha256": "8116422e0169dc5ce41ea4ff168855df0f0164b5b01e1b050063272aafcb74e0",
+      "verification": "All existing glyph IDs/names, ordered points/flags, advances, bearings and hints retained; name, cmap, OS/2, layout and color payloads byte-identical",
       "verification_this_pass": "Byte-identical; reviewed and retained"
     },
     {
@@ -1705,13 +2452,13 @@
       "path": "literature/poem-oracle/poem-oracle.ttf",
       "project": "literature/poem-oracle",
       "before": 8248064,
-      "before_this_pass": 7681928,
-      "after": 7681928,
-      "saved": 566136,
-      "saved_this_pass": 0,
-      "sha256": "9f4aa3c1cd9cce085687c40826e392032c48021949cdf1ecbaaf83a42d7a9d30",
-      "verification": "All original glyph IDs, Unicode mappings, outlines, metrics and hint programs verified",
-      "verification_this_pass": "Byte-identical; reviewed and retained"
+      "before_this_pass": 7638988,
+      "after": 7594764,
+      "saved": 653300,
+      "saved_this_pass": 44224,
+      "sha256": "d763b071305b513428ca20f003183978902e8950e2ac9a31b54c9dc38c9cc9e3",
+      "verification": "All existing glyph IDs/names, ordered outline points/flags, metrics and hints retained; name, cmap, OS/2, layout and color payloads unchanged",
+      "verification_this_pass": "All existing glyph IDs/names, ordered outline points/flags, metrics and hints retained; name, cmap, OS/2, layout and color payloads unchanged"
     },
     {
       "path": "literature/poem-oracle/poem-oracle.woff2",
@@ -1814,9 +2561,219 @@
         "all_font_files_verified": 108,
         "fresh_sim_build": "All font table payloads reproduce exactly; original export timestamps retained"
       }
+    },
+    {
+      "date": "2026-10-29",
+      "description": "Project-by-project review; profitable contour runs used twice",
+      "before": 89410136,
+      "after": 89332916,
+      "saved": 77220,
+      "projects_checked": 42,
+      "font_files_checked": 108,
+      "files_reduced": 17,
+      "excluded": [
+        "games/gardner",
+        "games/gardner/research"
+      ],
+      "checks": {
+        "shared_storage_tests": 19,
+        "shared_storage_and_language_packing_tests": 34,
+        "chrome_pixel_comparisons": 68,
+        "native_language_assets": 56,
+        "v8_comparisons": 43,
+        "odt_specimens": 20,
+        "download_bundles": 2,
+        "all_project_regressions_passed": true,
+        "node_runtime_summary": [
+          "tests 75",
+          "pass 75",
+          "fail 0",
+          "skipped 0"
+        ]
+      }
+    },
+    {
+      "date": "2026-10-29",
+      "description": "Costed eight-use component sharing after the contour passes",
+      "before": 89332916,
+      "after": 89249396,
+      "saved": 83520,
+      "projects_checked": 42,
+      "font_files_checked": 108,
+      "files_reduced": 19,
+      "excluded": [
+        "games/gardner",
+        "games/gardner/research"
+      ],
+      "checks": {
+        "shared_storage_and_language_packing_tests": 36,
+        "project_suites_rerun": 20,
+        "unchanged_project_suites_retained": 22,
+        "chrome_pixel_comparisons": 76,
+        "runtime_controller_tests": 10,
+        "unchanged_native_language_assets": 56,
+        "unchanged_language_runtime_checks": 65,
+        "unchanged_v8_comparisons": 43,
+        "odt_specimens": 20,
+        "download_bundles": 2,
+        "all_project_checks_passed": true,
+        "fonttools450_storage_tests": 12,
+        "fresh_sim_table_payloads_identical": true
+      },
+      "trials": {
+        "coordinate_encoder": {
+          "files_reviewed": 108,
+          "potential_bytes_saved": 716,
+          "adopted": false
+        }
+      }
+    },
+    {
+      "date": "2026-10-29",
+      "description": "Top-level component-run sharing in Poem Oracle TTF",
+      "before": 89249396,
+      "after": 89205172,
+      "saved": 44224,
+      "projects_checked": 42,
+      "font_files_checked": 108,
+      "files_reduced": 1,
+      "excluded": [
+        "games/gardner",
+        "games/gardner/research"
+      ],
+      "checks": {
+        "shared_storage_and_language_packing_tests": 48,
+        "poem_full_tests": 5,
+        "browser_runtime_tests": 8,
+        "chrome_pixel_comparisons": 8,
+        "modified_poem_panels": 2088,
+        "unchanged_project_suites_retained": 41,
+        "odt_specimens": 20,
+        "download_bundles": 2,
+        "all_project_checks_passed": true
+      },
+      "storage": {
+        "helpers": 1342,
+        "run_uses": 4491,
+        "root_only": true,
+        "maximum_component_depth": 16
+      },
+      "trials": {
+        "other_fonts": {
+          "files_reviewed": 107,
+          "prototype_savings": 448,
+          "adopted": false
+        }
+      }
     }
   ],
-  "recent_three_rounds": {
+  "reviews": [
+    {
+      "date": "2026-10-29",
+      "description": "Project-by-project review; profitable contour runs used twice",
+      "before": 89410136,
+      "after": 89332916,
+      "saved": 77220,
+      "projects_checked": 42,
+      "font_files_checked": 108,
+      "files_reduced": 17,
+      "excluded": [
+        "games/gardner",
+        "games/gardner/research"
+      ],
+      "checks": {
+        "shared_storage_tests": 19,
+        "shared_storage_and_language_packing_tests": 34,
+        "chrome_pixel_comparisons": 68,
+        "native_language_assets": 56,
+        "v8_comparisons": 43,
+        "odt_specimens": 20,
+        "download_bundles": 2,
+        "all_project_regressions_passed": true,
+        "node_runtime_summary": [
+          "tests 75",
+          "pass 75",
+          "fail 0",
+          "skipped 0"
+        ]
+      }
+    },
+    {
+      "date": "2026-10-29",
+      "description": "Costed eight-use component sharing after the contour passes",
+      "before": 89332916,
+      "after": 89249396,
+      "saved": 83520,
+      "projects_checked": 42,
+      "font_files_checked": 108,
+      "files_reduced": 19,
+      "excluded": [
+        "games/gardner",
+        "games/gardner/research"
+      ],
+      "checks": {
+        "shared_storage_and_language_packing_tests": 36,
+        "project_suites_rerun": 20,
+        "unchanged_project_suites_retained": 22,
+        "chrome_pixel_comparisons": 76,
+        "runtime_controller_tests": 10,
+        "unchanged_native_language_assets": 56,
+        "unchanged_language_runtime_checks": 65,
+        "unchanged_v8_comparisons": 43,
+        "odt_specimens": 20,
+        "download_bundles": 2,
+        "all_project_checks_passed": true,
+        "fonttools450_storage_tests": 12,
+        "fresh_sim_table_payloads_identical": true
+      },
+      "trials": {
+        "coordinate_encoder": {
+          "files_reviewed": 108,
+          "potential_bytes_saved": 716,
+          "adopted": false
+        }
+      }
+    },
+    {
+      "date": "2026-10-29",
+      "description": "Top-level component-run sharing in Poem Oracle TTF",
+      "before": 89249396,
+      "after": 89205172,
+      "saved": 44224,
+      "projects_checked": 42,
+      "font_files_checked": 108,
+      "files_reduced": 1,
+      "excluded": [
+        "games/gardner",
+        "games/gardner/research"
+      ],
+      "checks": {
+        "shared_storage_and_language_packing_tests": 48,
+        "poem_full_tests": 5,
+        "browser_runtime_tests": 8,
+        "chrome_pixel_comparisons": 8,
+        "modified_poem_panels": 2088,
+        "unchanged_project_suites_retained": 41,
+        "odt_specimens": 20,
+        "download_bundles": 2,
+        "all_project_checks_passed": true
+      },
+      "storage": {
+        "helpers": 1342,
+        "run_uses": 4491,
+        "root_only": true,
+        "maximum_component_depth": 16
+      },
+      "trials": {
+        "other_fonts": {
+          "files_reviewed": 107,
+          "prototype_savings": 448,
+          "adopted": false
+        }
+      }
+    }
+  ],
+  "three_rounds_completed_20261025": {
     "saved": 262424,
     "before": 89672560,
     "after": 89410136,

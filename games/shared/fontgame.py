@@ -11,7 +11,7 @@ except ModuleNotFoundError as exc:
     if exc.name != 'fontbuild':
         raise
     # A copied games directory keeps its original build dependencies.
-    def compact_glyphs(font):
+    def compact_glyphs(font, **kwargs):
         pass
     def compact_contours(font, **kwargs):
         pass
@@ -209,6 +209,10 @@ class GameFont:
             compact_contours(font, rounds=8, min_uses=4)
         if compact or share_contours:
             compact_glyphs(font)
+        if share_contours:
+            compact_contours(font, rounds=8, min_uses=2)
+        if compact or share_contours:
+            compact_glyphs(font, min_uses=8)
         output=Path(output); output.parent.mkdir(parents=True,exist_ok=True)
         font.save(output)
         stats=(len(font.getGlyphOrder()),lookups.LookupCount,output.stat().st_size)

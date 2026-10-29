@@ -6,6 +6,7 @@ from array import array
 
 from .layout import compact_layout
 from .web import compact_woff2
+from .runs import compact_runs
 
 from fontTools.ttLib.tables._g_l_y_f import (
     Glyph, GlyphCoordinates, GlyphComponent, USE_MY_METRICS, OVERLAP_COMPOUND, flagOverlapSimple,
@@ -33,7 +34,7 @@ def _composite(components):
     return glyph
 
 
-def compact_glyphs(font, *, rounds=4, positioned=False):
+def compact_glyphs(font, *, rounds=4, positioned=False, min_uses=16):
     """Share duplicate unhinted outlines and exact component pairs.
 
     Existing glyph names, IDs, metrics, cmap, instructions and layout tables
@@ -43,6 +44,7 @@ def compact_glyphs(font, *, rounds=4, positioned=False):
     their coordinates and flags stay inside the helper, whose parent is still
     at the origin. No offsets are normalized or split across parent and child.
     Variable fonts are excluded because their glyph deltas would need remapping.
+    Lower repetition thresholds also charge each helper's storage overhead.
     """
     if 'glyf' not in font or any(tag in font for tag in ('gvar', 'fvar', 'VARC', 'HVAR', 'VVAR')):
         return {'aliases': 0, 'pairs': 0}
@@ -89,7 +91,7 @@ def compact_glyphs(font, *, rounds=4, positioned=False):
         streams = {name: [(part.glyphName, part.x, part.y) for part in glyf[name].components]
                    for name in originals if eligible(glyf[name])}
         counts = Counter(pair for stream in streams.values() for pair in zip(stream, stream[1:]))
-        candidates = {pair for pair, count in counts.items() if count >= 16}
+        candidates = {pair for pair, count in counts.items() if count >= min_uses}
         if not candidates:
             break
         plans = {}
@@ -109,12 +111,19 @@ def compact_glyphs(font, *, rounds=4, positioned=False):
             plans[name] = plan
         helpers = {}
         for pair, count in sorted(uses.items(), key=lambda item: (-item[1], item[0])):
-            if count < 16 or len(order) >= 65534:
+            if count < min_uses or len(order) >= 65534:
                 continue
             name = f'_share{pairs}'
             while name in glyf:
                 name = '_' + name
             helper = _composite([_component(*part) for part in pair])
+            if min_uses < 16:
+                # Each replaced pair saves six component bytes. Charge a long
+                # loca offset, a full metric, a format-2 post name/index, and
+                # table alignment before accepting less frequent helpers.
+                overhead = len(helper.compile(glyf))+8+3+len(name)+4
+                if count*6 <= overhead:
+                    continue
             glyf[name] = helper
             helper.recalcBounds(glyf)
             font['hmtx'].metrics[name] = (0, helper.xMin)

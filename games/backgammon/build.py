@@ -405,6 +405,8 @@ def build_font(output):
     compact_contours(font, rounds=8, min_uses=4)
     compact_glyphs(font)
     compact_layout(font)
+    compact_contours(font, rounds=8, min_uses=2)
+    compact_glyphs(font, min_uses=8)
     font.save(output)
     font.close()
     print(f"Saved {output}: {MAX_TURNS} turns, {CLOCK_PASSES} shared shaping passes")

@@ -245,6 +245,8 @@ def build_visible(machine_path, output, *, optimize=True):
         compact_contours(font)
         mark_modified_font(font, 'SKI evaluator', kind='interpreter')
         compact_contours(font, rounds=8, min_uses=4)
+        compact_contours(font, rounds=8, min_uses=2)
+        compact_glyphs(font, min_uses=8)
         font.recalcTimestamp = False
         output.parent.mkdir(parents=True, exist_ok=True)
         font.save(output)

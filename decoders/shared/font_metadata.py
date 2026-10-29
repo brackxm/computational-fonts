@@ -31,7 +31,7 @@ except ModuleNotFoundError as exc:
     if exc.name != 'fontbuild':
         raise
     # Decoder distributions can copy this shared directory without the repo.
-    def compact_glyphs(font):
+    def compact_glyphs(font, **kwargs):
         pass
     def compact_contours(font, **kwargs):
         pass

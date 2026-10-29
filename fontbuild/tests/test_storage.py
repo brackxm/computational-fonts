@@ -22,13 +22,13 @@ def rectangle(x):
     return pen.glyph()
 
 
-def fixture():
+def fixture(state_count=40):
     glyphs = {'.notdef': TTGlyphPen(None).glyph(), 'a': rectangle(0),
               'b': rectangle(40), 'duplicate': rectangle(0), 'hinted': rectangle(0)}
     program = Program()
     program.fromBytecode(b'\x00')
     glyphs['hinted'].program = program
-    for i in range(40):
+    for i in range(state_count):
         name = f'c{i}'
         glyphs[name] = rectangle(100+i)
         pen = TTGlyphPen(glyphs)
@@ -229,3 +229,71 @@ def test_refining_contour_helpers_preserves_the_checkpoint_and_original_glyphs()
         assert old['glyf'][name].getCoordinates(old['glyf']) == new['glyf'][name].getCoordinates(new['glyf'])
     assert new['glyf']['scene40'].program.getBytecode() == b'\x00'
     assert new['glyf']['scene41'].flags[0] & flagOverlapSimple
+
+
+def test_two_uses_can_share_long_runs_without_changing_either_glyph():
+    from fontbuild import compact_contours
+    font = fixture()
+    original_order = font.getGlyphOrder().copy()
+    names = []
+    for index in range(2):
+        pen = TTGlyphPen(None)
+        for i in range(24):
+            x = i*40
+            pen.moveTo((x, 0))
+            pen.lineTo((x+20, 0))
+            pen.lineTo((x+20, 20))
+            pen.lineTo((x, 20))
+            pen.closePath()
+        pen.moveTo((index, 40))
+        pen.lineTo((index+20, 40))
+        pen.lineTo((index+20, 60))
+        pen.closePath()
+        name = f'rare{index}'
+        font['glyf'][name] = pen.glyph()
+        font['hmtx'][name] = (1100+index, 0)
+        names.append(name)
+    font.setGlyphOrder(original_order+names)
+    font['glyf'].setGlyphOrder(font.getGlyphOrder())
+    before = serialized(font)
+    old = TTFont(BytesIO(before))
+    assert compact_contours(font)['helpers'] == 0
+    assert compact_contours(font, rounds=8, min_uses=2)['helpers'] > 0
+    after = serialized(font)
+    assert len(after) < len(before)
+    new = TTFont(BytesIO(after))
+    order = old.getGlyphOrder()
+    assert new.getGlyphOrder()[:len(order)] == order
+    for name in order:
+        assert new['hmtx'][name] == old['hmtx'][name]
+        assert new['glyf'][name].getCoordinates(new['glyf']) == old['glyf'][name].getCoordinates(old['glyf'])
+
+
+def test_eight_use_pairs_pay_for_their_helper_and_keep_the_original_glyphs():
+    font = fixture(8)
+    assert compact_glyphs(font)['pairs'] == 0
+    before = serialized(font)
+    old = TTFont(BytesIO(before))
+    assert compact_glyphs(font, min_uses=8)['pairs'] > 0
+    after = serialized(font)
+    assert len(after) < len(before)
+    new = TTFont(BytesIO(after))
+    order = old.getGlyphOrder()
+    assert new.getGlyphOrder()[:len(order)] == order
+    for name in order:
+        assert new['hmtx'][name] == old['hmtx'][name]
+        assert new['glyf'][name].getCoordinates(new['glyf']) == old['glyf'][name].getCoordinates(old['glyf'])
+
+
+def test_eight_use_pairs_retain_the_existing_encoding_when_helper_names_are_costly():
+    font = fixture(8)
+    order = font.getGlyphOrder().copy()
+    for depth in range(1, 41):
+        name = '_'*depth+'share0'
+        font['glyf'][name] = TTGlyphPen(None).glyph()
+        font['hmtx'][name] = (0, 0)
+        order.append(name)
+    font.setGlyphOrder(order)
+    font['glyf'].setGlyphOrder(order)
+    assert compact_glyphs(font, min_uses=8)['pairs'] == 0
+    assert font.getGlyphOrder() == order

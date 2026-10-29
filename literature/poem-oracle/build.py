@@ -22,7 +22,7 @@ from model import CHARACTERS, MAX_INPUT, MULTIPLIER, SEEDS
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT.parents[1]))
-from fontbuild import compact_glyphs, compact_woff2
+from fontbuild import compact_glyphs, compact_contours, compact_runs, compact_woff2
 SOURCE = ROOT.parents[1]/'decoders/shared/fonts/roboto-2'
 PADDING, BODY_CAP, LINE_STEP = 240, 160, 260
 
@@ -185,6 +185,9 @@ def build(output):
     builder.font.recalcTimestamp = False
     output.parent.mkdir(parents=True, exist_ok=True)
     compact_glyphs(builder.font, positioned=True)
+    compact_contours(builder.font, rounds=8, min_uses=2)
+    compact_glyphs(builder.font, positioned=True, min_uses=8)
+    compact_runs(builder.font, positioned=True)
     builder.font.save(output)
     font_bytes = output.read_bytes()
     # WOFF2 compresses the original flat letter sequences more effectively.

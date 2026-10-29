@@ -520,6 +520,8 @@ def build_font(output):
     compact_contours(font)
     mark_modified_font(font, 'SMILES diagrams', kind='molecular diagram')
     compact_contours(font, rounds=8, min_uses=4)
+    compact_contours(font, rounds=8, min_uses=2)
+    compact_glyphs(font, min_uses=8)
     font['head'].created = font['head'].modified = 3849984000
     font.recalcTimestamp = False
     output.parent.mkdir(parents=True, exist_ok=True)
