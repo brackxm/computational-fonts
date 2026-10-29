@@ -1,6 +1,6 @@
 # Shared font circuits and shaping runtimes
 
-WebAssembly and Verilog compile to the same Boolean circuits and OpenType
+WebAssembly, Verilog and LLVM IR compile to the same Boolean circuits and OpenType
 glyph-register format. This folder contains their common implementation:
 
 ```text
@@ -19,7 +19,7 @@ languages/shared/
 
 The language packages expose `languages/shared` on Python's import path when
 loaded, so their existing repository-local build and run commands work from any
-working directory. Both frontends import `fontcircuit` directly. Standalone
+working directory. All three frontends import `fontcircuit` directly. Standalone
 callers can set `PYTHONPATH=languages/shared` from the repository root:
 
 ```sh

@@ -1,0 +1,1342 @@
+{
+  "platform": "macOS-15.8.1-arm64-arm-64bit",
+  "python": "3.12.15",
+  "llvm_version": [
+    20,
+    1,
+    8
+  ],
+  "harfbuzz_version": "15.0.0",
+  "benchmarks": [
+    {
+      "name": "max",
+      "source": "max.ll",
+      "function": "max",
+      "inputs": [
+        7,
+        -3
+      ],
+      "result": 7,
+      "compile_seconds": 0.021000790991820395,
+      "harfbuzz_median_seconds": 0.0001034580054692924,
+      "invoke_median_seconds": 0.0002625630149850622,
+      "iterations": 20,
+      "metrics": {
+        "wires": 163,
+        "gates": 98,
+        "glyphs": 426,
+        "lookups": 99,
+        "font_bytes": 18024,
+        "gate_groups": 97,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 97,
+        "class_singleton_groups": 97,
+        "gate_subtables": 97,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "loop",
+      "source": "loop.ll",
+      "function": "sum",
+      "inputs": [
+        5
+      ],
+      "result": 10,
+      "compile_seconds": 0.2703646669979207,
+      "harfbuzz_median_seconds": 0.004241624497808516,
+      "invoke_median_seconds": 0.0060570205096155405,
+      "iterations": 20,
+      "metrics": {
+        "wires": 1777,
+        "gates": 1744,
+        "glyphs": 5300,
+        "lookups": 1568,
+        "font_bytes": 268500,
+        "gate_groups": 1566,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 1566,
+        "class_singleton_groups": 1566,
+        "gate_subtables": 1566,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "memory",
+      "source": "memory.ll",
+      "function": "memory",
+      "inputs": [
+        3,
+        4276993775
+      ],
+      "result": 4276993775,
+      "compile_seconds": 0.11064162498223595,
+      "harfbuzz_median_seconds": 0.0005575834802584723,
+      "invoke_median_seconds": 0.0010056665050797164,
+      "iterations": 20,
+      "metrics": {
+        "wires": 449,
+        "gates": 384,
+        "glyphs": 1284,
+        "lookups": 384,
+        "font_bytes": 62948,
+        "gate_groups": 382,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 382,
+        "class_singleton_groups": 382,
+        "gate_subtables": 382,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_max",
+      "source": "clang.ll",
+      "function": "max",
+      "inputs": [
+        -5,
+        -2
+      ],
+      "result": 4294967294,
+      "compile_seconds": 0.03804874999332242,
+      "harfbuzz_median_seconds": 0.0002755215100478381,
+      "invoke_median_seconds": 0.0005662505136569962,
+      "iterations": 20,
+      "metrics": {
+        "wires": 299,
+        "gates": 234,
+        "glyphs": 834,
+        "lookups": 234,
+        "font_bytes": 39036,
+        "gate_groups": 232,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 232,
+        "class_singleton_groups": 232,
+        "gate_subtables": 232,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_mix",
+      "source": "clang.ll",
+      "function": "mix",
+      "inputs": [
+        4294967280,
+        25
+      ],
+      "result": 1610612709,
+      "compile_seconds": 0.03623583397711627,
+      "harfbuzz_median_seconds": 0.00023008299467619509,
+      "invoke_median_seconds": 0.00047745800111442804,
+      "iterations": 20,
+      "metrics": {
+        "wires": 254,
+        "gates": 189,
+        "glyphs": 699,
+        "lookups": 128,
+        "font_bytes": 26164,
+        "gate_groups": 126,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 126,
+        "class_singleton_groups": 126,
+        "gate_subtables": 126,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_indexed",
+      "source": "clang.ll",
+      "function": "indexed",
+      "inputs": [
+        2,
+        100
+      ],
+      "result": 111,
+      "compile_seconds": 0.5887491249886807,
+      "harfbuzz_median_seconds": 0.00073458299448248,
+      "invoke_median_seconds": 0.0012916454870719463,
+      "iterations": 20,
+      "metrics": {
+        "wires": 579,
+        "gates": 514,
+        "glyphs": 1674,
+        "lookups": 483,
+        "font_bytes": 82808,
+        "gate_groups": 481,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 481,
+        "class_singleton_groups": 481,
+        "gate_subtables": 481,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_loop",
+      "source": "clang.ll",
+      "function": "sum_loop",
+      "inputs": [
+        5
+      ],
+      "result": 10,
+      "compile_seconds": 0.16865345899714157,
+      "harfbuzz_median_seconds": 0.0013229374890215695,
+      "invoke_median_seconds": 0.002046249996055849,
+      "iterations": 20,
+      "metrics": {
+        "wires": 755,
+        "gates": 722,
+        "glyphs": 2234,
+        "lookups": 640,
+        "font_bytes": 107396,
+        "gate_groups": 638,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 638,
+        "class_singleton_groups": 638,
+        "gate_subtables": 638,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_max",
+      "source": "rust.ll",
+      "function": "rust_max",
+      "inputs": [
+        -7,
+        4
+      ],
+      "result": 4,
+      "compile_seconds": 0.017406625003786758,
+      "harfbuzz_median_seconds": 6.112499977461994e-05,
+      "invoke_median_seconds": 0.00022591650485992432,
+      "iterations": 20,
+      "metrics": {
+        "wires": 165,
+        "gates": 100,
+        "glyphs": 432,
+        "lookups": 101,
+        "font_bytes": 18292,
+        "gate_groups": 99,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 99,
+        "class_singleton_groups": 99,
+        "gate_subtables": 99,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_mix",
+      "source": "rust.ll",
+      "function": "rust_mix",
+      "inputs": [
+        2,
+        3
+      ],
+      "result": 643,
+      "compile_seconds": 0.03798166598426178,
+      "harfbuzz_median_seconds": 0.00030499999411404133,
+      "invoke_median_seconds": 0.0006828749901615083,
+      "iterations": 20,
+      "metrics": {
+        "wires": 387,
+        "gates": 258,
+        "glyphs": 1034,
+        "lookups": 196,
+        "font_bytes": 36916,
+        "gate_groups": 194,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 194,
+        "class_singleton_groups": 194,
+        "gate_subtables": 194,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_lookup",
+      "source": "clang-intrinsics.ll",
+      "function": "constant_lookup",
+      "inputs": [
+        2
+      ],
+      "result": 7,
+      "compile_seconds": 0.06047437500092201,
+      "harfbuzz_median_seconds": 2.5958986952900887e-05,
+      "invoke_median_seconds": 0.00011420850933063775,
+      "iterations": 20,
+      "metrics": {
+        "wires": 88,
+        "gates": 55,
+        "glyphs": 233,
+        "lookups": 40,
+        "font_bytes": 7992,
+        "gate_groups": 38,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 38,
+        "class_singleton_groups": 38,
+        "gate_subtables": 38,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_copied",
+      "source": "clang-intrinsics.ll",
+      "function": "copied_array",
+      "inputs": [
+        2,
+        100
+      ],
+      "result": 110,
+      "compile_seconds": 0.27541141700930893,
+      "harfbuzz_median_seconds": 0.0004702915030065924,
+      "invoke_median_seconds": 0.0009207085095113143,
+      "iterations": 20,
+      "metrics": {
+        "wires": 460,
+        "gates": 395,
+        "glyphs": 1317,
+        "lookups": 362,
+        "font_bytes": 61920,
+        "gate_groups": 360,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 360,
+        "class_singleton_groups": 360,
+        "gate_subtables": 360,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_checked_add",
+      "source": "clang-intrinsics.ll",
+      "function": "checked_add",
+      "inputs": [
+        4294967295,
+        1
+      ],
+      "result": 4294967296,
+      "compile_seconds": 0.021358500001952052,
+      "harfbuzz_median_seconds": 0.00014810448919888586,
+      "invoke_median_seconds": 0.0003595830057747662,
+      "iterations": 20,
+      "metrics": {
+        "wires": 198,
+        "gates": 133,
+        "glyphs": 531,
+        "lookups": 86,
+        "font_bytes": 17608,
+        "gate_groups": 84,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 84,
+        "class_singleton_groups": 84,
+        "gate_subtables": 84,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_checked_mul",
+      "source": "clang-intrinsics.ll",
+      "function": "checked_multiply",
+      "inputs": [
+        2147483647,
+        2
+      ],
+      "result": 8589934590,
+      "compile_seconds": 0.7702642919903155,
+      "harfbuzz_median_seconds": 0.03827620850643143,
+      "invoke_median_seconds": 0.0423221039964119,
+      "iterations": 20,
+      "metrics": {
+        "wires": 4198,
+        "gates": 4133,
+        "glyphs": 12531,
+        "lookups": 2165,
+        "font_bytes": 523012,
+        "gate_groups": 2163,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 2163,
+        "class_singleton_groups": 2163,
+        "gate_subtables": 2163,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_lookup",
+      "source": "rust-intrinsics.ll",
+      "function": "rust_lookup",
+      "inputs": [
+        2
+      ],
+      "result": 7,
+      "compile_seconds": 0.037847958999918774,
+      "harfbuzz_median_seconds": 2.6770489057525992e-05,
+      "invoke_median_seconds": 0.00011729149264283478,
+      "iterations": 20,
+      "metrics": {
+        "wires": 88,
+        "gates": 55,
+        "glyphs": 233,
+        "lookups": 40,
+        "font_bytes": 7992,
+        "gate_groups": 38,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 38,
+        "class_singleton_groups": 38,
+        "gate_subtables": 38,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_checked_add",
+      "source": "rust-intrinsics.ll",
+      "function": "rust_checked_add",
+      "inputs": [
+        4294967295,
+        1
+      ],
+      "result": 4294967296,
+      "compile_seconds": 0.02811516699148342,
+      "harfbuzz_median_seconds": 0.0001385000068694353,
+      "invoke_median_seconds": 0.0003333959903102368,
+      "iterations": 20,
+      "metrics": {
+        "wires": 198,
+        "gates": 133,
+        "glyphs": 531,
+        "lookups": 86,
+        "font_bytes": 17608,
+        "gate_groups": 84,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 84,
+        "class_singleton_groups": 84,
+        "gate_subtables": 84,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_checked_mul",
+      "source": "rust-intrinsics.ll",
+      "function": "rust_checked_multiply",
+      "inputs": [
+        2147483647,
+        2
+      ],
+      "result": 8589934590,
+      "compile_seconds": 0.7676520000095479,
+      "harfbuzz_median_seconds": 0.0384361874894239,
+      "invoke_median_seconds": 0.04272508298163302,
+      "iterations": 20,
+      "metrics": {
+        "wires": 4198,
+        "gates": 4133,
+        "glyphs": 12531,
+        "lookups": 2165,
+        "font_bytes": 523012,
+        "gate_groups": 2163,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 2163,
+        "class_singleton_groups": 2163,
+        "gate_subtables": 2163,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_sat_add",
+      "source": "clang-state.ll",
+      "function": "saturating_add",
+      "inputs": [
+        4294967295,
+        1
+      ],
+      "result": 4294967295,
+      "compile_seconds": 0.021280125016346574,
+      "harfbuzz_median_seconds": 0.00012685400724876672,
+      "invoke_median_seconds": 0.00032177047978620976,
+      "iterations": 20,
+      "metrics": {
+        "wires": 198,
+        "gates": 133,
+        "glyphs": 531,
+        "lookups": 102,
+        "font_bytes": 19976,
+        "gate_groups": 100,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 100,
+        "class_singleton_groups": 100,
+        "gate_subtables": 100,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_sat_sub",
+      "source": "clang-state.ll",
+      "function": "saturating_sub",
+      "inputs": [
+        -2147483648,
+        1
+      ],
+      "result": 2147483648,
+      "compile_seconds": 0.028576749988133088,
+      "harfbuzz_median_seconds": 9.620850323699415e-05,
+      "invoke_median_seconds": 0.000294083496555686,
+      "iterations": 20,
+      "metrics": {
+        "wires": 201,
+        "gates": 136,
+        "glyphs": 540,
+        "lookups": 105,
+        "font_bytes": 21296,
+        "gate_groups": 103,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 103,
+        "class_singleton_groups": 103,
+        "gate_subtables": 103,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_global_calls",
+      "source": "clang-state.ll",
+      "function": "global_calls",
+      "inputs": [
+        1,
+        100
+      ],
+      "result": 108,
+      "compile_seconds": 0.029808167018927634,
+      "harfbuzz_median_seconds": 0.0001484374952269718,
+      "invoke_median_seconds": 0.00039677148743066937,
+      "iterations": 20,
+      "metrics": {
+        "wires": 258,
+        "gates": 193,
+        "glyphs": 711,
+        "lookups": 132,
+        "font_bytes": 26376,
+        "gate_groups": 130,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 130,
+        "class_singleton_groups": 130,
+        "gate_subtables": 130,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_pointer_table",
+      "source": "clang-state.ll",
+      "function": "pointer_table",
+      "inputs": [
+        1,
+        100
+      ],
+      "result": 111,
+      "compile_seconds": 0.13066483300644904,
+      "harfbuzz_median_seconds": 5.549998604692519e-05,
+      "invoke_median_seconds": 0.0002220210008090362,
+      "iterations": 20,
+      "metrics": {
+        "wires": 171,
+        "gates": 106,
+        "glyphs": 450,
+        "lookups": 77,
+        "font_bytes": 15068,
+        "gate_groups": 75,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 75,
+        "class_singleton_groups": 75,
+        "gate_subtables": 75,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_pointer_copy",
+      "source": "clang-state.ll",
+      "function": "pointer_copy",
+      "inputs": [
+        1,
+        100
+      ],
+      "result": 101,
+      "compile_seconds": 0.2546033749822527,
+      "harfbuzz_median_seconds": 0.00013368749932851642,
+      "invoke_median_seconds": 0.0003901665040757507,
+      "iterations": 20,
+      "metrics": {
+        "wires": 260,
+        "gates": 195,
+        "glyphs": 717,
+        "lookups": 165,
+        "font_bytes": 29080,
+        "gate_groups": 163,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 163,
+        "class_singleton_groups": 163,
+        "gate_subtables": 163,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_sat_add",
+      "source": "rust-state.ll",
+      "function": "rust_saturating_add",
+      "inputs": [
+        4294967295,
+        1
+      ],
+      "result": 4294967295,
+      "compile_seconds": 0.020025000005261973,
+      "harfbuzz_median_seconds": 0.00012704198888968676,
+      "invoke_median_seconds": 0.00032227048359345645,
+      "iterations": 20,
+      "metrics": {
+        "wires": 198,
+        "gates": 133,
+        "glyphs": 531,
+        "lookups": 102,
+        "font_bytes": 19976,
+        "gate_groups": 100,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 100,
+        "class_singleton_groups": 100,
+        "gate_subtables": 100,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_sat_sub",
+      "source": "rust-state.ll",
+      "function": "rust_saturating_sub",
+      "inputs": [
+        -2147483648,
+        1
+      ],
+      "result": 2147483648,
+      "compile_seconds": 0.022048458020435646,
+      "harfbuzz_median_seconds": 0.000102625010185875,
+      "invoke_median_seconds": 0.0003142289933748543,
+      "iterations": 20,
+      "metrics": {
+        "wires": 201,
+        "gates": 136,
+        "glyphs": 540,
+        "lookups": 105,
+        "font_bytes": 21296,
+        "gate_groups": 103,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 103,
+        "class_singleton_groups": 103,
+        "gate_subtables": 103,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_global_calls",
+      "source": "rust-state.ll",
+      "function": "rust_global_calls",
+      "inputs": [
+        1,
+        100
+      ],
+      "result": 108,
+      "compile_seconds": 0.030861665989505127,
+      "harfbuzz_median_seconds": 0.00014506200386676937,
+      "invoke_median_seconds": 0.0003924584889318794,
+      "iterations": 20,
+      "metrics": {
+        "wires": 258,
+        "gates": 193,
+        "glyphs": 711,
+        "lookups": 132,
+        "font_bytes": 26376,
+        "gate_groups": 130,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 130,
+        "class_singleton_groups": 130,
+        "gate_subtables": 130,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_pointer_table",
+      "source": "rust-state.ll",
+      "function": "rust_pointer_table",
+      "inputs": [
+        1,
+        100
+      ],
+      "result": 111,
+      "compile_seconds": 0.10348379099741578,
+      "harfbuzz_median_seconds": 0.00012314550986047834,
+      "invoke_median_seconds": 0.0003598540060920641,
+      "iterations": 20,
+      "metrics": {
+        "wires": 241,
+        "gates": 176,
+        "glyphs": 660,
+        "lookups": 144,
+        "font_bytes": 26352,
+        "gate_groups": 142,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 142,
+        "class_singleton_groups": 142,
+        "gate_subtables": 142,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_pointer_copy",
+      "source": "rust-state.ll",
+      "function": "rust_pointer_copy",
+      "inputs": [
+        1,
+        100
+      ],
+      "result": 101,
+      "compile_seconds": 0.29766554199159145,
+      "harfbuzz_median_seconds": 0.0001472289877710864,
+      "invoke_median_seconds": 0.0004140624951105565,
+      "iterations": 20,
+      "metrics": {
+        "wires": 274,
+        "gates": 209,
+        "glyphs": 759,
+        "lookups": 177,
+        "font_bytes": 31096,
+        "gate_groups": 175,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 175,
+        "class_singleton_groups": 175,
+        "gate_subtables": 175,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_dispatch",
+      "source": "clang-dispatch.ll",
+      "function": "dispatch",
+      "inputs": [
+        2,
+        10,
+        3
+      ],
+      "result": 31,
+      "compile_seconds": 0.1835965420177672,
+      "harfbuzz_median_seconds": 0.0014001875097164884,
+      "invoke_median_seconds": 0.002231104503152892,
+      "iterations": 20,
+      "metrics": {
+        "wires": 862,
+        "gates": 765,
+        "glyphs": 2491,
+        "lookups": 584,
+        "font_bytes": 105932,
+        "gate_groups": 582,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 582,
+        "class_singleton_groups": 582,
+        "gate_subtables": 582,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_dispatch_twice",
+      "source": "clang-dispatch.ll",
+      "function": "dispatch_twice",
+      "inputs": [
+        3,
+        10,
+        3
+      ],
+      "result": 14,
+      "compile_seconds": 0.27953950001392514,
+      "harfbuzz_median_seconds": 0.004613645491190255,
+      "invoke_median_seconds": 0.006094687996665016,
+      "iterations": 20,
+      "metrics": {
+        "wires": 1525,
+        "gates": 1428,
+        "glyphs": 4480,
+        "lookups": 1093,
+        "font_bytes": 201544,
+        "gate_groups": 1091,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 1091,
+        "class_singleton_groups": 1091,
+        "gate_subtables": 1091,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_copied_dispatch",
+      "source": "clang-dispatch.ll",
+      "function": "copied_dispatch",
+      "inputs": [
+        1,
+        10,
+        3
+      ],
+      "result": 29,
+      "compile_seconds": 0.33497787499800324,
+      "harfbuzz_median_seconds": 0.0014351249992614612,
+      "invoke_median_seconds": 0.0022793540119891986,
+      "iterations": 20,
+      "metrics": {
+        "wires": 839,
+        "gates": 742,
+        "glyphs": 2422,
+        "lookups": 562,
+        "font_bytes": 102704,
+        "gate_groups": 560,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 560,
+        "class_singleton_groups": 560,
+        "gate_subtables": 560,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_ctor_callback",
+      "source": "clang-dispatch.ll",
+      "function": "constructor_dispatch",
+      "inputs": [
+        10,
+        3
+      ],
+      "result": 31,
+      "compile_seconds": 0.016408916999353096,
+      "harfbuzz_median_seconds": 4.552101017907262e-05,
+      "invoke_median_seconds": 0.00018283299868926406,
+      "iterations": 20,
+      "metrics": {
+        "wires": 137,
+        "gates": 72,
+        "glyphs": 348,
+        "lookups": 72,
+        "font_bytes": 12408,
+        "gate_groups": 70,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 70,
+        "class_singleton_groups": 70,
+        "gate_subtables": 70,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_constructors",
+      "source": "clang-constructors.ll",
+      "function": "initialized",
+      "inputs": [
+        5
+      ],
+      "result": 27,
+      "compile_seconds": 0.01877354198950343,
+      "harfbuzz_median_seconds": 4.7458510380238295e-05,
+      "invoke_median_seconds": 0.00018489598005544394,
+      "iterations": 20,
+      "metrics": {
+        "wires": 129,
+        "gates": 96,
+        "glyphs": 356,
+        "lookups": 67,
+        "font_bytes": 12844,
+        "gate_groups": 65,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 65,
+        "class_singleton_groups": 65,
+        "gate_subtables": 65,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_dispatch",
+      "source": "rust-dispatch.ll",
+      "function": "rust_dispatch",
+      "inputs": [
+        2,
+        10,
+        3
+      ],
+      "result": 31,
+      "compile_seconds": 0.16042720898985863,
+      "harfbuzz_median_seconds": 0.0014006870042067021,
+      "invoke_median_seconds": 0.0022423955088015646,
+      "iterations": 20,
+      "metrics": {
+        "wires": 863,
+        "gates": 766,
+        "glyphs": 2494,
+        "lookups": 586,
+        "font_bytes": 106168,
+        "gate_groups": 584,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 584,
+        "class_singleton_groups": 584,
+        "gate_subtables": 584,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_dispatch_twice",
+      "source": "rust-dispatch.ll",
+      "function": "rust_dispatch_twice",
+      "inputs": [
+        3,
+        10,
+        3
+      ],
+      "result": 14,
+      "compile_seconds": 0.2590245410101488,
+      "harfbuzz_median_seconds": 0.004516271001193672,
+      "invoke_median_seconds": 0.005990958510665223,
+      "iterations": 20,
+      "metrics": {
+        "wires": 1526,
+        "gates": 1429,
+        "glyphs": 4483,
+        "lookups": 1095,
+        "font_bytes": 201348,
+        "gate_groups": 1093,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 1093,
+        "class_singleton_groups": 1093,
+        "gate_subtables": 1093,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_copied_dispatch",
+      "source": "rust-dispatch.ll",
+      "function": "rust_copied_dispatch",
+      "inputs": [
+        1,
+        10,
+        3
+      ],
+      "result": 29,
+      "compile_seconds": 0.29249829100444913,
+      "harfbuzz_median_seconds": 0.0008480414981022477,
+      "invoke_median_seconds": 0.0014792499860050157,
+      "iterations": 20,
+      "metrics": {
+        "wires": 654,
+        "gates": 557,
+        "glyphs": 1867,
+        "lookups": 436,
+        "font_bytes": 78840,
+        "gate_groups": 434,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 434,
+        "class_singleton_groups": 434,
+        "gate_subtables": 434,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_ctor_callback",
+      "source": "rust-dispatch.ll",
+      "function": "rust_constructor_dispatch",
+      "inputs": [
+        10,
+        3
+      ],
+      "result": 31,
+      "compile_seconds": 0.023627417016541585,
+      "harfbuzz_median_seconds": 4.700000863522291e-05,
+      "invoke_median_seconds": 0.00018812500638887286,
+      "iterations": 20,
+      "metrics": {
+        "wires": 138,
+        "gates": 73,
+        "glyphs": 351,
+        "lookups": 72,
+        "font_bytes": 12460,
+        "gate_groups": 70,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 70,
+        "class_singleton_groups": 70,
+        "gate_subtables": 70,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "alias_table",
+      "source": "aliases.ll",
+      "function": "alias_table",
+      "inputs": [
+        1,
+        50
+      ],
+      "result": 37,
+      "compile_seconds": 0.10219466697890311,
+      "harfbuzz_median_seconds": 0.00032941700192168355,
+      "invoke_median_seconds": 0.000703333513229154,
+      "iterations": 20,
+      "metrics": {
+        "wires": 354,
+        "gates": 320,
+        "glyphs": 1030,
+        "lookups": 260,
+        "font_bytes": 44676,
+        "gate_groups": 258,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 258,
+        "class_singleton_groups": 258,
+        "gate_subtables": 258,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_aliases",
+      "source": "rust-aliases.ll",
+      "function": "alias_dispatch",
+      "inputs": [
+        1,
+        4294967295
+      ],
+      "result": 6,
+      "compile_seconds": 0.0378141250112094,
+      "harfbuzz_median_seconds": 0.00021497950365301222,
+      "invoke_median_seconds": 0.0005103544826852158,
+      "iterations": 20,
+      "metrics": {
+        "wires": 298,
+        "gates": 233,
+        "glyphs": 831,
+        "lookups": 204,
+        "font_bytes": 35612,
+        "gate_groups": 202,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 202,
+        "class_singleton_groups": 202,
+        "gate_subtables": 202,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_merged_aliases",
+      "source": "rust-merged-aliases.ll",
+      "function": "alias_dispatch",
+      "inputs": [
+        0,
+        35
+      ],
+      "result": 42,
+      "compile_seconds": 0.01595395797630772,
+      "harfbuzz_median_seconds": 4.995899507775903e-05,
+      "invoke_median_seconds": 0.00020922950352542102,
+      "iterations": 20,
+      "metrics": {
+        "wires": 163,
+        "gates": 98,
+        "glyphs": 426,
+        "lookups": 68,
+        "font_bytes": 13912,
+        "gate_groups": 66,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 66,
+        "class_singleton_groups": 66,
+        "gate_subtables": 66,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_alias_entry",
+      "source": "rust-merged-aliases.ll",
+      "function": "original",
+      "inputs": [
+        35
+      ],
+      "result": 42,
+      "compile_seconds": 0.013302540988661349,
+      "harfbuzz_median_seconds": 4.566700954455882e-05,
+      "invoke_median_seconds": 0.00017264547932427377,
+      "iterations": 20,
+      "metrics": {
+        "wires": 130,
+        "gates": 97,
+        "glyphs": 359,
+        "lookups": 68,
+        "font_bytes": 12988,
+        "gate_groups": 66,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 66,
+        "class_singleton_groups": 66,
+        "gate_subtables": 66,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_triple",
+      "source": "clang-abi.ll",
+      "function": "make_triple",
+      "inputs": [
+        10,
+        3
+      ],
+      "result": [
+        13,
+        9,
+        7
+      ],
+      "compile_seconds": 0.1270231250091456,
+      "harfbuzz_median_seconds": 0.001035937006236054,
+      "invoke_median_seconds": 0.001667895499849692,
+      "iterations": 20,
+      "metrics": {
+        "wires": 641,
+        "gates": 512,
+        "glyphs": 1796,
+        "lookups": 386,
+        "font_bytes": 66496,
+        "gate_groups": 384,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 384,
+        "class_singleton_groups": 384,
+        "gate_subtables": 384,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_triple_callback",
+      "source": "clang-abi.ll",
+      "function": "choose_triple",
+      "inputs": [
+        1,
+        10,
+        3
+      ],
+      "result": [
+        13,
+        9,
+        18446744073709551609
+      ],
+      "compile_seconds": 0.32766704200184904,
+      "harfbuzz_median_seconds": 0.00363589650078211,
+      "invoke_median_seconds": 0.0048522290016990155,
+      "iterations": 20,
+      "metrics": {
+        "wires": 1216,
+        "gates": 1055,
+        "glyphs": 3489,
+        "lookups": 865,
+        "font_bytes": 151248,
+        "gate_groups": 863,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 863,
+        "class_singleton_groups": 863,
+        "gate_subtables": 863,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_triple_calls",
+      "source": "clang-abi.ll",
+      "function": "call_triple",
+      "inputs": [
+        10,
+        3
+      ],
+      "result": 26,
+      "compile_seconds": 0.1916241250000894,
+      "harfbuzz_median_seconds": 0.001250749992323108,
+      "invoke_median_seconds": 0.002042395484750159,
+      "iterations": 20,
+      "metrics": {
+        "wires": 765,
+        "gates": 636,
+        "glyphs": 2168,
+        "lookups": 449,
+        "font_bytes": 83808,
+        "gate_groups": 447,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 447,
+        "class_singleton_groups": 447,
+        "gate_subtables": 447,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_byval",
+      "source": "clang-byval.ll",
+      "function": "use_triple",
+      "inputs": [
+        13,
+        9,
+        7
+      ],
+      "result": 26,
+      "compile_seconds": 0.1013147080084309,
+      "harfbuzz_median_seconds": 0.0004897080070804805,
+      "invoke_median_seconds": 0.0010124794935109094,
+      "iterations": 20,
+      "metrics": {
+        "wires": 515,
+        "gates": 322,
+        "glyphs": 1354,
+        "lookups": 260,
+        "font_bytes": 46808,
+        "gate_groups": 258,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 258,
+        "class_singleton_groups": 258,
+        "gate_subtables": 258,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "clang_byval_calls",
+      "source": "clang-byval.ll",
+      "function": "call_triple",
+      "inputs": [
+        10,
+        3
+      ],
+      "result": 26,
+      "compile_seconds": 0.41653816698817536,
+      "harfbuzz_median_seconds": 0.0012112289987271652,
+      "invoke_median_seconds": 0.0019764585013035685,
+      "iterations": 20,
+      "metrics": {
+        "wires": 766,
+        "gates": 637,
+        "glyphs": 2171,
+        "lookups": 450,
+        "font_bytes": 83916,
+        "gate_groups": 448,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 448,
+        "class_singleton_groups": 448,
+        "gate_subtables": 448,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_triple",
+      "source": "rust-abi.ll",
+      "function": "rust_triple",
+      "inputs": [
+        10,
+        3
+      ],
+      "result": [
+        13,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        7,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "compile_seconds": 0.12123625000822358,
+      "harfbuzz_median_seconds": 0.001038478992995806,
+      "invoke_median_seconds": 0.001678083004662767,
+      "iterations": 20,
+      "metrics": {
+        "wires": 641,
+        "gates": 512,
+        "glyphs": 1796,
+        "lookups": 386,
+        "font_bytes": 66496,
+        "gate_groups": 384,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 384,
+        "class_singleton_groups": 384,
+        "gate_subtables": 384,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_triple_calls",
+      "source": "rust-abi.ll",
+      "function": "rust_call_triple",
+      "inputs": [
+        10,
+        3
+      ],
+      "result": 26,
+      "compile_seconds": 0.19444166700122878,
+      "harfbuzz_median_seconds": 0.0012029169884044677,
+      "invoke_median_seconds": 0.001977333493414335,
+      "iterations": 20,
+      "metrics": {
+        "wires": 765,
+        "gates": 636,
+        "glyphs": 2168,
+        "lookups": 449,
+        "font_bytes": 83808,
+        "gate_groups": 447,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 447,
+        "class_singleton_groups": 447,
+        "gate_subtables": 447,
+        "coalesced_gate_groups": 0
+      }
+    },
+    {
+      "name": "rust_triple_callback",
+      "source": "rust-abi.ll",
+      "function": "rust_choose_triple",
+      "inputs": [
+        1,
+        10,
+        3
+      ],
+      "result": [
+        13,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        9,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        249,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255,
+        255
+      ],
+      "compile_seconds": 0.3031690420175437,
+      "harfbuzz_median_seconds": 0.003859583492157981,
+      "invoke_median_seconds": 0.005059062517830171,
+      "iterations": 20,
+      "metrics": {
+        "wires": 1223,
+        "gates": 1062,
+        "glyphs": 3510,
+        "lookups": 871,
+        "font_bytes": 152296,
+        "gate_groups": 869,
+        "lookup_batch_size": 1,
+        "unpacked_gate_groups": 869,
+        "class_singleton_groups": 869,
+        "gate_subtables": 869,
+        "coalesced_gate_groups": 0
+      }
+    }
+  ]
+}

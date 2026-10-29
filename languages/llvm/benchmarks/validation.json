@@ -1,0 +1,92 @@
+{
+  "recorded_on": "2026-10-29",
+  "checks": [
+    {
+      "command": "PYTHONHASHSEED=1 python -m pytest languages/llvm/tests -q -x --junitxml=languages/llvm/benchmarks/junit.xml",
+      "passed": 315,
+      "skipped": 0,
+      "seconds": 192.72,
+      "notes": "Rust 1.90.0 via RUSTC; PYTHONHASHSEED=1. Native LLVM/Clang/Rust comparisons through .ll and .bc, including integer, intrinsic, control-flow, memory, global, alias, constructor, indirect dispatch and aggregate ABI checks. Includes 31 symbol/store-span regressions, 23 startup/resource-boundary regressions and reproduction of all forty-seven bundled fonts/manifests. Aliased and quoted-name constructor startup use a native linked loader. Custom-layout memory is normalized under its original layout; host code generation is used only after memory/layout-dependent instructions and calls have been eliminated."
+    },
+    {
+      "command": "python -m pytest languages/shared/tests languages/verilog/tests -q -x",
+      "passed": 328,
+      "skipped": 216,
+      "seconds": 33.46
+    },
+    {
+      "command": "node --test languages/llvm/tests/test_harfbuzzjs.mjs",
+      "passed": 47,
+      "skipped": 0,
+      "seconds": 0.458
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed"
+    }
+  ],
+  "prior_checks": [
+    {
+      "command": "python -m pytest languages/shared/tests languages/verilog/tests languages/wasm/tests -q -x",
+      "passed": 2097,
+      "skipped": 217,
+      "subtests_passed": 20,
+      "seconds": 1022.13
+    },
+    {
+      "command": "python -m pytest fontbuild/tests -q -x",
+      "passed": 33,
+      "seconds": 43.08,
+      "notes": "Installed fontbuild/requirements.txt in the temporary environment, including Brotli for WOFF2 checks."
+    },
+    {
+      "command": "node --test languages/wasm/tests/test_playground.mjs languages/verilog/tests/test_playground.mjs",
+      "passed": 65,
+      "seconds": 210.626
+    }
+  ],
+  "prior_checks_note": "Retained from the earlier implementation validation; full Wasm/browser/fontbuild suites were not rerun for these frontend-only expansions.",
+  "review": {
+    "status": "reviewed",
+    "scope": "LLVM frontend, CLIs, generated examples/fonts/manifests, tests and documentation. Shared executable backend unchanged.",
+    "fixes": [
+      "Read canonical 64-bit array lengths instead of the truncating llvmlite accessor, and check bounds before expansion.",
+      "Sort overflow flags so Python hash randomization cannot change font serialization.",
+      "Close LLVM modules and contexts in order on parsing and verification failures.",
+      "Distinguish quoted identifiers and string data from instruction modifiers, ABI attributes and callees.",
+      "Resolve lifetime roots iteratively and cache parsed source types.",
+      "Honor RUSTC consistently and ignore temporary CLI font/manifest outputs while retaining bundled assets.",
+      "Use canonical symbol keys for numbered and quoted global/function/alias identities across lookups, caches, dispatch and metadata.",
+      "Separate LLVM store spans from allocation/GEP stride, preserve global allocation padding, and exclude padding from scalar/pointer loads.",
+      "Parse section attributes outside quoted global names and initializer data so constructor tables cannot be silently skipped.",
+      "Reject unsupported Mach-O startup/finalizer type flags instead of ignoring initializer sections.",
+      "Bound source-file reads before parsing and check entry input-bit capacity during scalar/byval argument lowering."
+    ],
+    "issues": [
+      {
+        "priority": "P1",
+        "title": "Unnamed LLVM symbols overwrote each other",
+        "status": "fixed",
+        "regression_suite": "tests/test_symbols_layout.py"
+      },
+      {
+        "priority": "P1",
+        "title": "Scalar accesses included allocation padding",
+        "status": "fixed",
+        "regression_suite": "tests/test_symbols_layout.py"
+      },
+      {
+        "priority": "P1",
+        "title": "Quoted global names could hide initializer sections",
+        "status": "fixed",
+        "regression_suite": "tests/test_startup_limits.py"
+      },
+      {
+        "priority": "P2",
+        "title": "Input resource limits were applied after large host allocations",
+        "status": "fixed",
+        "regression_suite": "tests/test_startup_limits.py"
+      }
+    ]
+  }
+}

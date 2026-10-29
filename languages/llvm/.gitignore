@@ -1,0 +1,8 @@
+# Keep CLI outputs out of the source tree; bundled demos are intentional.
+*.ttf
+*.otf
+*.woff
+*.woff2
+/*.json
+/examples/*.json
+!fonts/*.ttf

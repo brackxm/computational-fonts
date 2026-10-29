@@ -96,8 +96,9 @@ and latest dice. Replay completion does not establish move legality. See its
 | [SKI evaluator](languages/ski/) | Combinatory logic with `S`, `K`, `I`, lowercase atoms and application | [Demo](languages/ski/playground.html) · [ODT](languages/ski/ski.odt) |
 | [WebAssembly](languages/wasm/) | Bounded integer programs compiled from `.wat` or `.wasm` into glyph registers | [Demo](languages/wasm/playground.html) |
 | [Verilog](languages/verilog/) | Bounded two-state combinational `.v` modules compiled into GSUB gates | [Demo](languages/verilog/playground.html) |
+| [LLVM IR](languages/llvm/) | Verified `.ll`/`.bc` integer programs, bounded control flow, calls and local memory compiled into GSUB | [CLI and fonts](languages/llvm/readme.md) |
 
-WebAssembly and Verilog share a [circuit backend and shaping runtimes](languages/shared/).
+WebAssembly, Verilog and LLVM IR share a [circuit backend and shaping runtimes](languages/shared/).
 Their playgrounds include compiled examples with matching ABI manifests.
 SKI also includes a machine font and CLI for inspecting results and its
 internal tree tape. Each project's documentation describes its supported
@@ -192,6 +193,7 @@ Additional dependencies and coverage are documented with each suite:
 | [SKI](languages/ski/readme.md#tests) | Protocol, reproducibility, differential and depth-six regression gate |
 | [WebAssembly](languages/wasm/readme.md#validation) | pytest and system HarfBuzz, with Node.js as an independent WebAssembly validator and oracle |
 | [Verilog](languages/verilog/readme.md#tests) | System and browser runtimes, width propagation, exhaustive small multipliers and malformed source |
+| [LLVM IR](languages/llvm/readme.md#validation) | Exhaustive 8-bit circuits, LLVM JIT and Clang native differential checks, actual HarfBuzz execution, bounded control flow and memory |
 | [Connect Four](games/connect-four/readme.md#build-and-validation) | Exhaustive strategy proof, binary policy readback and complete games through real shaping |
 
 ### Shared code and specimens
@@ -201,7 +203,7 @@ Additional dependencies and coverage are documented with each suite:
 | [Decoder helpers](decoders/shared/) | Shared generation, typography and decoder test utilities |
 | [Graphics helpers](graphics/shared/) | Shared PBM, PGM and PPM font renderer |
 | [Game helpers](games/shared/) | Shared game font, text and playground utilities |
-| [Circuit backend](languages/shared/) | Glyph-register backend and shaping runtimes for WebAssembly and Verilog |
+| [Circuit backend](languages/shared/) | Glyph-register backend and shaping runtimes for WebAssembly, Verilog and LLVM IR |
 | [Font storage](fontbuild/) | Shared outline storage helpers and the [project-by-project size audit](font-size-audit.md) |
 | [Specimens](specimens/readme.md) | Build notes for regenerating documents after changing a bundled font |
 

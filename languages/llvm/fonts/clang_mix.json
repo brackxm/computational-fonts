@@ -1,0 +1,1869 @@
+{
+  "abi": "wasm-gsub-registers-v1",
+  "parameter_types": [
+    "i32",
+    "i32"
+  ],
+  "result_types": [
+    "i32"
+  ],
+  "tape": [
+    {
+      "wire": 0,
+      "kind": "constant",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 2,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 0,
+      "constant": 0
+    },
+    {
+      "wire": 3,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 1,
+      "constant": 0
+    },
+    {
+      "wire": 4,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 2,
+      "constant": 0
+    },
+    {
+      "wire": 5,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 3,
+      "constant": 0
+    },
+    {
+      "wire": 6,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 4,
+      "constant": 0
+    },
+    {
+      "wire": 7,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 5,
+      "constant": 0
+    },
+    {
+      "wire": 8,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 6,
+      "constant": 0
+    },
+    {
+      "wire": 9,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 7,
+      "constant": 0
+    },
+    {
+      "wire": 10,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 8,
+      "constant": 0
+    },
+    {
+      "wire": 11,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 9,
+      "constant": 0
+    },
+    {
+      "wire": 12,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 10,
+      "constant": 0
+    },
+    {
+      "wire": 13,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 11,
+      "constant": 0
+    },
+    {
+      "wire": 14,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 12,
+      "constant": 0
+    },
+    {
+      "wire": 15,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 13,
+      "constant": 0
+    },
+    {
+      "wire": 16,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 14,
+      "constant": 0
+    },
+    {
+      "wire": 17,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 15,
+      "constant": 0
+    },
+    {
+      "wire": 18,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 16,
+      "constant": 0
+    },
+    {
+      "wire": 19,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 17,
+      "constant": 0
+    },
+    {
+      "wire": 20,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 18,
+      "constant": 0
+    },
+    {
+      "wire": 21,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 19,
+      "constant": 0
+    },
+    {
+      "wire": 22,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 20,
+      "constant": 0
+    },
+    {
+      "wire": 23,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 21,
+      "constant": 0
+    },
+    {
+      "wire": 24,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 22,
+      "constant": 0
+    },
+    {
+      "wire": 25,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 23,
+      "constant": 0
+    },
+    {
+      "wire": 26,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 24,
+      "constant": 0
+    },
+    {
+      "wire": 27,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 25,
+      "constant": 0
+    },
+    {
+      "wire": 28,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 26,
+      "constant": 0
+    },
+    {
+      "wire": 29,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 27,
+      "constant": 0
+    },
+    {
+      "wire": 30,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 28,
+      "constant": 0
+    },
+    {
+      "wire": 31,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 29,
+      "constant": 0
+    },
+    {
+      "wire": 32,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 30,
+      "constant": 0
+    },
+    {
+      "wire": 33,
+      "kind": "argument",
+      "argument": 0,
+      "bit": 31,
+      "constant": 0
+    },
+    {
+      "wire": 34,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 0,
+      "constant": 0
+    },
+    {
+      "wire": 35,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 1,
+      "constant": 0
+    },
+    {
+      "wire": 36,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 2,
+      "constant": 0
+    },
+    {
+      "wire": 37,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 3,
+      "constant": 0
+    },
+    {
+      "wire": 38,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 4,
+      "constant": 0
+    },
+    {
+      "wire": 39,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 5,
+      "constant": 0
+    },
+    {
+      "wire": 40,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 6,
+      "constant": 0
+    },
+    {
+      "wire": 41,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 7,
+      "constant": 0
+    },
+    {
+      "wire": 42,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 8,
+      "constant": 0
+    },
+    {
+      "wire": 43,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 9,
+      "constant": 0
+    },
+    {
+      "wire": 44,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 10,
+      "constant": 0
+    },
+    {
+      "wire": 45,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 11,
+      "constant": 0
+    },
+    {
+      "wire": 46,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 12,
+      "constant": 0
+    },
+    {
+      "wire": 47,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 13,
+      "constant": 0
+    },
+    {
+      "wire": 48,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 14,
+      "constant": 0
+    },
+    {
+      "wire": 49,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 15,
+      "constant": 0
+    },
+    {
+      "wire": 50,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 16,
+      "constant": 0
+    },
+    {
+      "wire": 51,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 17,
+      "constant": 0
+    },
+    {
+      "wire": 52,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 18,
+      "constant": 0
+    },
+    {
+      "wire": 53,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 19,
+      "constant": 0
+    },
+    {
+      "wire": 54,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 20,
+      "constant": 0
+    },
+    {
+      "wire": 55,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 21,
+      "constant": 0
+    },
+    {
+      "wire": 56,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 22,
+      "constant": 0
+    },
+    {
+      "wire": 57,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 23,
+      "constant": 0
+    },
+    {
+      "wire": 58,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 24,
+      "constant": 0
+    },
+    {
+      "wire": 59,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 25,
+      "constant": 0
+    },
+    {
+      "wire": 60,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 26,
+      "constant": 0
+    },
+    {
+      "wire": 61,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 27,
+      "constant": 0
+    },
+    {
+      "wire": 62,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 28,
+      "constant": 0
+    },
+    {
+      "wire": 63,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 29,
+      "constant": 0
+    },
+    {
+      "wire": 64,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 30,
+      "constant": 0
+    },
+    {
+      "wire": 65,
+      "kind": "argument",
+      "argument": 1,
+      "bit": 31,
+      "constant": 0
+    },
+    {
+      "wire": 66,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 67,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 68,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 69,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 70,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 71,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 72,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 73,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 74,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 75,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 76,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 77,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 78,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 79,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 80,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 81,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 82,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 83,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 84,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 85,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 86,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 87,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 88,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 89,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 90,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 91,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 92,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 93,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 94,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 95,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 96,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 97,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 98,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 99,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 100,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 101,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 102,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 103,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 104,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 105,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 106,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 107,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 108,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 109,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 110,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 111,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 112,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 113,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 114,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 115,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 116,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 117,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 118,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 119,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 120,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 121,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 122,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 123,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 124,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 125,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 126,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 127,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 128,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 130,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 131,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 132,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 133,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 134,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 135,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 136,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 137,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 138,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 139,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 140,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 141,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 142,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 143,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 144,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 145,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 146,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 147,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 148,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 149,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 150,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 151,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 152,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 153,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 154,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 155,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 156,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 157,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 158,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 159,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 160,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 161,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 162,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 163,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 164,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 165,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 166,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 167,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 168,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 169,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 170,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 171,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 172,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 173,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 174,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 175,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 176,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 177,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 178,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 179,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 180,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 181,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 182,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 183,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 184,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 185,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 186,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 187,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 188,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 189,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 190,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 191,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 192,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 193,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 194,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 195,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 196,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 197,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 198,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 199,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 200,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 201,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 202,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 203,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 204,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 205,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 206,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 207,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 208,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 209,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 210,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 211,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 212,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 213,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 214,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 215,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 216,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 217,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 218,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 219,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 220,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 221,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 222,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 223,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 224,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 225,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 226,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 227,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 228,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 229,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 230,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 231,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 232,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 233,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 234,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 235,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 236,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 237,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 238,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 239,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 240,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 241,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 242,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 243,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 244,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 245,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 246,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 247,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 248,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 249,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 250,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 251,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 252,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 253,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 254,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    },
+    {
+      "wire": 255,
+      "kind": "gate",
+      "argument": -1,
+      "bit": -1,
+      "constant": 0
+    }
+  ],
+  "results": [
+    [
+      220,
+      221,
+      222,
+      223,
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230,
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237,
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244,
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251
+    ]
+  ],
+  "flags": {
+    "trap.undefined_behavior": 252,
+    "trap.invalid_memory": 253,
+    "limit.block_steps": 254,
+    "trap.poison_result": 255
+  },
+  "metrics": {
+    "wires": 254,
+    "gates": 189,
+    "glyphs": 699,
+    "lookups": 128,
+    "font_bytes": 26164,
+    "gate_groups": 126,
+    "lookup_batch_size": 1,
+    "unpacked_gate_groups": 126,
+    "class_singleton_groups": 126,
+    "gate_subtables": 126,
+    "coalesced_gate_groups": 0
+  },
+  "font_sha256": "4db8dcad00e5caed8a83ed5c079cd0187f1b0e3b51ceb4bd9690f16d5b1db601",
+  "language": "llvm",
+  "llvm_subset": "bounded-integer-v1",
+  "function": "mix",
+  "parameters": [
+    "0",
+    "1"
+  ],
+  "llvm_version": [
+    20,
+    1,
+    8
+  ],
+  "optimized": false,
+  "limits": {
+    "max_steps": 32,
+    "max_call_depth": 3,
+    "max_memory_bytes": 64,
+    "max_gates": 24000,
+    "max_lowered_instructions": 20000,
+    "max_indirect_targets": 16,
+    "max_initializers": 32
+  },
+  "lowered_instructions": 12
+}

@@ -1,0 +1,4 @@
+# Python 3.10–3.14; a system HarfBuzz shared library is required for execution.
+fonttools==4.63.0
+llvmlite==0.46.0
+pytest==9.0.2
